@@ -23,9 +23,29 @@
         <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <div class="ozp-toolbar-top ozp-toolbar">
+            <form class="" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control ozp-search" placeholder="Search">
+                </div>
+            </form>
+        </div>
 
         <!-- Webtop workspace will go in ng-view -->
         <div class="container" ng-view=""></div>
+
+        <div class="ozp-toolbar-bottom ozp-toolbar">
+            <div class="btn-group dropup">
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                    Ozone
+                </button>
+                <ul class="dropdown-menu">
+                    <li>One</li>
+                    <li>Two</li>
+                    <li>Three</li>
+                </ul>
+            </div>
+        </div>
 
         <!--[if lt IE 9]>
         <script src="bower_components/es5-shim/es5-shim.js"></script>

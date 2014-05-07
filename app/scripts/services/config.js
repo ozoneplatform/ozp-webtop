@@ -1,8 +1,18 @@
 'use strict';
 
+/**
+ * Service to handle loading JSON configuration data.
+ *
+ * @class Config
+ * @constructor
+ */
 angular.module('ozpWebtopApp.services').service('Config', function($http) {
     var promise;
 
+    /**
+     * Retrieve configuration data.
+     * @method configure
+     */
     var configure = function() {
         // Only retrieve configuration once
         if (!promise) {
@@ -15,6 +25,7 @@ angular.module('ozpWebtopApp.services').service('Config', function($http) {
         return promise;
     };
 
+    // Return service object to Angular
     return {
         configure: configure
     };

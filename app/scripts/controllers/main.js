@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('ozpWebtopApp')
-    .controller('MainCtrl', function ($scope) {
-        $scope.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
-    });
+angular.module('ozpWebtopApp.controllers').controller('MainCtrl', function ($scope) {
+    $scope.awesomeThings = [
+        'HTML5 Boilerplate',
+        'AngularJS',
+        'Karma'
+    ];
+});

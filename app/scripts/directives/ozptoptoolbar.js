@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('ozpWebtopApp')
-    .directive('ozpTopToolbar', function () {
-        return {
-            templateUrl: 'templates/ozptoptoolbar.html',
-            restrict: 'A'
-        };
-    });
+/**
+ * Directive for the top toolbar on the webtop. Contains a search bar.
+ */
+angular.module('ozpWebtopApp.directives').directive('ozpTopToolbar', function () {
+    return {
+        templateUrl: 'templates/ozptoptoolbar.html',
+        restrict: 'AE'
+    };
+});

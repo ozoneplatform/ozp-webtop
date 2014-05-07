@@ -10,7 +10,9 @@ var ozpWebtopApp = angular.module('ozpWebtopApp', [
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'ozpWebtopApp.directives'
+    'ozpWebtopApp.controllers',
+    'ozpWebtopApp.directives',
+    'ozpWebtopApp.services'
 ]);
 
 // App routing configurations
@@ -30,6 +32,14 @@ ozpWebtopApp.config(function ($routeProvider) {
  * @submodule controllers
  */
 angular.module('ozpWebtopApp.controllers', []);
+
+/**
+ * Services for the Webtop
+ *
+ * @module ozpWebtopApp
+ * @submodule services
+ */
+angular.module('ozpWebtopApp.services', []);
 
 /**
  * Directives for the Webtop

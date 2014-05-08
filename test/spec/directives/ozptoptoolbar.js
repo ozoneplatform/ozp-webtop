@@ -2,19 +2,36 @@
 
 describe('Directive: ozpTopToolbar', function () {
 
-  // load the directive's module
-  beforeEach(module('ozpWebtopApp'));
+    // Load the directive's module
+    beforeEach(module('ozpWebtopApp.directives'));
 
-  var element,
+    // Load the template module
+    beforeEach(module('Templates'));
+
+    var element,
     scope;
 
-  beforeEach(inject(function ($rootScope) {
-    scope = $rootScope.$new();
-  }));
+    beforeEach(inject(function ($rootScope) {
+        scope = $rootScope.$new();
+    }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<ozp-top-toolbar></ozp-top-toolbar>');
-    element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the ozpTopToolbar directive');
-  }));
+    beforeEach(inject(function($rootScope, $compile) {
+        element = angular.element('<div ozp-top-toolbar></div>');
+ 
+        scope = $rootScope;
+ 
+        scope.search = '';
+ 
+        $compile(element)(scope);
+        scope.$digest();
+    }));
+
+    it('should include a search bar', function () {
+        var searchBar = element.find('input[type="text"]');
+        expect(searchBar.length).toEqual(1);
+        expect(searchBar).toHaveClass('ozp-search');
+    });
+
+    //it('')
+
 });

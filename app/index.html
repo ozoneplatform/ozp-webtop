@@ -24,12 +24,12 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="ozp-toolbar-top ozp-toolbar" ozp-top-toolbar></div>
+        <div ozp-toolbar="top"></div>
 
         <!-- Webtop workspace will go in ng-view -->
         <div class="container" ng-view=""></div>
 
-        <div class="ozp-toolbar-bottom ozp-toolbar" ozp-bottom-toolbar></div>
+        <div ozp-toolbar="bottom"></div>
 
         <!--[if lt IE 9]>
         <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -50,11 +50,13 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/services/WorkspaceState.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/directives/ozptoptoolbar.js"></script>
         <script src="scripts/directives/ozpbottomtoolbar.js"></script>
         <script src="scripts/services/config.js"></script>
         <script src="scripts/directives/menu.js"></script>
+        <script src="scripts/directives/ozpToolbar.js"></script>
         <!-- endbuild -->
     </body>
 </html>

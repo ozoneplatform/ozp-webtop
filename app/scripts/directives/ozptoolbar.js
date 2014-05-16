@@ -2,6 +2,15 @@
 
 angular.module('ozpWebtopApp.directives')
     .directive('ozpToolbar', function (WorkspaceState) {
+
+        var state;
+
+        var buildToolbar = function(state) {
+            angular.forEach(state.buttons, function(value) {
+
+            });
+        };
+
         return {
             templateUrl: 'templates/toolbar.html',
             restrict: 'EA',
@@ -13,15 +22,13 @@ angular.module('ozpWebtopApp.directives')
                 // Based on location specified, include the correct template
                 $scope.contentUrl = 'templates/ozp' + location + 'toolbar.html';
 
-                var state;
-
                 if (location === 'top') {
                     state = WorkspaceState.getTopToolbarState();
                 } else {
                     state = WorkspaceState.getBottomToolbarState();
                 }
 
-                console.log(state);
+
             }
         };
     });

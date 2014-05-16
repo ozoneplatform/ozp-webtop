@@ -1,6 +1,6 @@
 .ozp-toolbar {
     height: 40px;
-    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.21);
 }
 
 .ozp-toolbar-top > form, .ozp-toolbar-bottom > div {
@@ -8,12 +8,15 @@
 }
 
 .ozp-search {
-    width: 30%;
     height: 30px;
 }
 
-.ozp-btm-btns {
-    float: right;
+.ozp-icon-text {
+    display: block;
+}
+
+.ozp-toolbar-internal, div.ozp-toolbar-top {
+    display: flex;
 }
 
 /* Yeoman generated CSS below... */

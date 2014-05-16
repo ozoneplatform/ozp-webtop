@@ -1,13 +1,8 @@
-<div ozp-menu></div>
+<div class="ozp-toolbar-bottom ozp-toolbar">
 
-<div class="btn-group ozp-btm-btns">
-    <button type="button" class="btn btn-primary btn-sm">
-        <span class="glyphicon glyphicon-globe"></span>
-    </button>
-    <button type="button" class="btn btn-primary btn-sm">
-        <span class="glyphicon glyphicon-user"></span>
-    </button>
-    <button type="button" class="btn btn-primary btn-sm">
-        <span class="glyphicon glyphicon-cog"></span>
-    </button>
+    <div class="ozp-toolbar-internal">
+        <div ozp-button ng-repeat="button in state.buttons | orderBy:button.index"></div>
+        <div ozp-icon ng-repeat="icon in state.icons | orderBy:icon.index"></div>
+    </div>
+
 </div>

@@ -22,14 +22,14 @@ angular.module('ozpWebtopApp.directives').directive('ozpMenu', function() {
          */
         controller: function($scope){
             $scope.menu = [{
-                "name": "Analysis",
-                "url": "#"
+                'name': 'Analysis',
+                'url': '#'
             },{
-                "name": "Development",
-                "url": "#"
+                'name': 'Development',
+                'url': '#'
             },{
-                "name": "Business",
-                "url": "#"
+                'name': 'Business',
+                'url': '#'
             }];
         }
 

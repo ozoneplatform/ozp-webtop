@@ -24,7 +24,23 @@
         {
           "icon": "glyphicon-home",
           "text": "Home",
-          "elliptical": true,
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "icons": [
+        {
+          "icon": "glyphicon-road",
+          "text": "Icon 1",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        },
+        {
+          "icon": "glyphicon-wrench",
+          "text": "Icon 2",
+          "elliptical": false,
           "index": 0,
           "url": "#"
         }
@@ -35,8 +51,24 @@
       "buttons": [
         {
           "icon": "glyphicon-plus",
-          "text": "Ozone",
-          "elliptical": true,
+          "text": "Ozp Button 1",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        },
+        {
+          "icon": "glyphicon-fire",
+          "text": "Ozp Button 2",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "icons": [
+        {
+          "icon": "glyphicon-flag",
+          "text": "Icon",
+          "elliptical": false,
           "index": 0,
           "url": "#"
         }

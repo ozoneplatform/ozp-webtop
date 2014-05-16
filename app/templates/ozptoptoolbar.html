@@ -4,4 +4,9 @@
             <input type="text" class="form-control ozp-search" placeholder="Search">
         </div>
     </form>
+
+    <div class="ozp-toolbar-internal">
+        <div ozp-button ng-repeat="button in state.buttons | orderBy:button.index"></div>
+        <div ozp-icon ng-repeat="icon in state.icons | orderBy:icon.index"></div>
+    </div>
 </div>

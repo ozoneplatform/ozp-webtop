@@ -1,9 +1,13 @@
 .ozp-toolbar {
     height: 40px;
-    background-color: rgba(0, 0, 0, 0.21);
+    background-color: #000000;
 }
 
-.ozp-toolbar-top > form, .ozp-toolbar-bottom > div {
+.ozp-toolbar-top, .ozp-toolbar-bottom, .ozp-toolbar-internal {
+    height: inherit;
+}
+
+.ozp-toolbar-top > form {
     padding: 4px;
 }
 
@@ -11,11 +15,19 @@
     height: 30px;
 }
 
-.ozp-icon-text {
-    display: block;
+.ozp-icon, .ozp-button {
+    margin: 2px 20px;
 }
 
-.ozp-toolbar-internal, div.ozp-toolbar-top {
+.ozp-icon-icon {
+    max-width: 20px;
+}
+
+.ozp-button-icon {
+    max-width: 20px;
+}
+
+.ozp-toolbar-internal, .ozp-toolbar-top {
     display: flex;
 }
 

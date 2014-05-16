@@ -7,7 +7,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.services').service('WorkspaceState', function($http) {
-    var promise = {}, state;
+    var promise, state;
 
     /**
      * Retrieve workspace state configuration data.
@@ -16,14 +16,14 @@ angular.module('ozpWebtopApp.services').service('WorkspaceState', function($http
      */
     var getState = function(workspace) {
         // Only retrieve configuration once
-        if (!promise[workspace]) {
+        if (!promise) {
             // Get the JSON data.
-            promise[workspace] = $http.get('config/' + workspace + '.json', { cache: true }).then(function(response) {
+            promise = $http.get('config/' + workspace + '.json', { cache: true }).then(function(response) {
                 // Request suceeded, set our variable
                 return response.data;
             });
         }
-        return promise[workspace];
+        return promise;
     };
 
     // Retrieve the state upon instantiation of this service

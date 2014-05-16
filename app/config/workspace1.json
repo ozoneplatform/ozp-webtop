@@ -15,14 +15,14 @@
       },
       "windowState": "normal",
       "name": "Example 1",
-      "icon": "glypicon-cloud"
+      "icon": "images/UserFolder.png"
     }
   ],
   "toolbars": [
     {
       "buttons": [
         {
-          "icon": "glyphicon-home",
+          "icon": "images/home-icon.png",
           "text": "Home",
           "elliptical": false,
           "index": 0,
@@ -31,14 +31,14 @@
       ],
       "icons": [
         {
-          "icon": "glyphicon-road",
+          "icon": "images/key-icon.png",
           "text": "Icon 1",
           "elliptical": false,
           "index": 1,
           "url": "#"
         },
         {
-          "icon": "glyphicon-wrench",
+          "icon": "images/Glossy-Developer-icon.png",
           "text": "Icon 2",
           "elliptical": false,
           "index": 0,
@@ -50,14 +50,14 @@
     {
       "buttons": [
         {
-          "icon": "glyphicon-plus",
+          "icon": "images/earth.png",
           "text": "Ozp Button 1",
           "elliptical": false,
           "index": 1,
           "url": "#"
         },
         {
-          "icon": "glyphicon-fire",
+          "icon": "images/broken-dvd-icon.png",
           "text": "Ozp Button 2",
           "elliptical": false,
           "index": 0,
@@ -66,7 +66,7 @@
       ],
       "icons": [
         {
-          "icon": "glyphicon-flag",
+          "icon": "images/nero-icon.png",
           "text": "Icon",
           "elliptical": false,
           "index": 0,

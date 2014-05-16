@@ -45,10 +45,10 @@ angular.module('ozpWebtopApp.services').service('WorkspaceState', function($http
         return state.frames;
     };
 
-    var findToolbar = function(position) {
+    var findToolbar = function(location) {
         var toolbar = {};
         angular.forEach(state.toolbars, function(value){
-            if (value.position === position){
+            if (value.location === location){
                 toolbar = value;
             }
         });

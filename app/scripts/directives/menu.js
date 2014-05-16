@@ -20,10 +20,17 @@ angular.module('ozpWebtopApp.directives').directive('ozpMenu', function() {
          * Controller to handle retrieving menu data. It hands this data to the directive scope.
          * @method controller
          */
-        controller: function($scope, Config){
-            Config.configure().then(function(data){
-                $scope.menu = data;
-            });
+        controller: function($scope){
+            $scope.menu = [{
+                "name": "Analysis",
+                "url": "#"
+            },{
+                "name": "Development",
+                "url": "#"
+            },{
+                "name": "Business",
+                "url": "#"
+            }];
         }
 
     };

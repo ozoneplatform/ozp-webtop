@@ -8,14 +8,14 @@ angular.module('ozpWebtopApp.directives')
             scope: true,
             link: function ($scope, $element, $attrs) {
                 console.log(WorkspaceState);
-                var position = $attrs.ozpToolbar.toLowerCase();
+                var location = $attrs.ozpToolbar.toLowerCase();
 
-                // Based on position specified, include the correct template
-                $scope.contentUrl = 'templates/ozp' + position + 'toolbar.html';
+                // Based on location specified, include the correct template
+                $scope.contentUrl = 'templates/ozp' + location + 'toolbar.html';
 
                 var state;
 
-                if (position === 'top') {
+                if (location === 'top') {
                     state = WorkspaceState.getTopToolbarState();
                 } else {
                     state = WorkspaceState.getBottomToolbarState();

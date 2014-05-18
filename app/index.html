@@ -29,6 +29,10 @@
         <!-- Webtop workspace will go in ng-view -->
         <div class="container" ng-view=""></div>
 
+        <div ng-controller="FramesController">
+            <div ozp-managed-frame ng-repeat="frame in frames"></div>
+        </div>
+
         <div ozp-toolbar="bottom"></div>
 
         <!--[if lt IE 9]>
@@ -56,6 +60,9 @@
         <script src="scripts/directives/ozpToolbar.js"></script>
         <script src="scripts/directives/ozpButton.js"></script>
         <script src="scripts/directives/ozpIcon.js"></script>
+        <script src="scripts/directives/ozpManagedFrame.js"></script>
+        <script src="scripts/services/myWorkspace.js"></script>
+        <script src="scripts/controllers/frame.js"></script>
         <!-- endbuild -->
     </body>
 </html>

@@ -4,7 +4,7 @@
       "frameId": "ae34rt92",
       "index": 0,
       "zIndex": 1,
-      "url": "www.foo.com/bar.html",
+      "url": "http://localhost:8080/ozp-webtop/app/examples/square.html",
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {

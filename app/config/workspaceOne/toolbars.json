@@ -1,0 +1,60 @@
+{
+  "toolbars": [
+    {
+      "buttons": [
+        {
+          "icon": "images/home-icon.png",
+          "text": "Home",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "icons": [
+        {
+          "icon": "images/key-icon.png",
+          "text": "Icon 1",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        },
+        {
+          "icon": "images/Glossy-Developer-icon.png",
+          "text": "Icon 2",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "location": "top"
+    },
+    {
+      "buttons": [
+        {
+          "icon": "images/earth.png",
+          "text": "Ozp Button 1",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        },
+        {
+          "icon": "images/broken-dvd-icon.png",
+          "text": "Ozp Button 2",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "icons": [
+        {
+          "icon": "images/nero-icon.png",
+          "text": "Icon",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "location": "bottom"
+    }
+  ]
+}

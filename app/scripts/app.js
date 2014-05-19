@@ -5,7 +5,7 @@
  *
  * @module ozpWebtopApp
  */
-var ozpWebtopApp = angular.module('ozpWebtopApp', [
+angular.module('ozpWebtopApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',

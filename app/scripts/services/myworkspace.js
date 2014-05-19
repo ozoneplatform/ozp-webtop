@@ -7,4 +7,4 @@
  * @class myWorkspace
  * @constructor
  */
-angular.module('ozpWebtopApp.services').value('myWorkspace', 'workspaceTwo');
+angular.module('ozpWebtopApp.services').value('myWorkspace', 'workspaceOne');

@@ -12,7 +12,8 @@ var ozpWebtopApp = angular.module('ozpWebtopApp', [
     'ngRoute',
     'ozpWebtopApp.controllers',
     'ozpWebtopApp.directives',
-    'ozpWebtopApp.services'
+    'ozpWebtopApp.services',
+    'ozpWebtopApp.filters'
 ]);
 
 // App routing configurations
@@ -50,3 +51,11 @@ angular.module('ozpWebtopApp.services', []);
  * @submodule directives
  */
 angular.module('ozpWebtopApp.directives', []);
+
+/**
+ * Filters for the Webtop
+ *
+ * @module ozpWebtopApp
+ * @submodule filters
+ */
+angular.module('ozpWebtopApp.filters', []);

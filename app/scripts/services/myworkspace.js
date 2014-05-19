@@ -1,3 +1,10 @@
 'use strict';
 
-angular.module('ozpWebtopApp').value('myWorkspace', 'workspaceOne');
+/**
+ * myWorkspace Indicates the current workspace
+ *
+ * @namespace services
+ * @class myWorkspace
+ * @constructor
+ */
+angular.module('ozpWebtopApp.services').value('myWorkspace', 'workspaceOne');

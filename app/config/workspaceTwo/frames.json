@@ -1,0 +1,21 @@
+{
+  "frames": [
+    {
+      "frameId": "ae34rt92",
+      "index": 0,
+      "zIndex": 1,
+      "url": "examples/square.html",
+      "registryUrl": "#",
+      "version": "1.2.3",
+      "size": {
+        "top": 0,
+        "left": 0,
+        "horizontalSize": 300,
+        "verticalSize": 300
+      },
+      "windowState": "normal",
+      "name": "Example 1",
+      "icon": "images/UserFolder.png"
+    }
+  ]
+}

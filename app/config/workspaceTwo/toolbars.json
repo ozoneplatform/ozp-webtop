@@ -1,0 +1,74 @@
+{
+  "toolbars": [
+    {
+      "buttons": [
+        {
+          "icon": "images/Network-icon.png",
+          "text": "Eins",
+          "elliptical": false,
+          "index": 2,
+          "url": "#"
+        },
+        {
+          "icon": "images/Network-Utility-icon.png",
+          "text": "Zwei",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        },
+        {
+          "icon": "images/Moleskine-Blank-Book-icon.png",
+          "text": "Drei",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "icons": [
+        {
+          "icon": "images/red-camera-icon.png",
+          "text": "Uno",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        },
+        {
+          "icon": "images/PublicFolder.png",
+          "text": "Dos",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "location": "top"
+    },
+    {
+      "buttons": [
+        {
+          "icon": "images/anti-virus-icon.png",
+          "text": "En",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "icons": [
+        {
+          "icon": "images/Briefcase-icon.png",
+          "text": "To",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        },
+        {
+          "icon": "images/burn-icon.png",
+          "text": "Tre",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        }
+      ],
+      "location": "bottom"
+    }
+  ]
+}

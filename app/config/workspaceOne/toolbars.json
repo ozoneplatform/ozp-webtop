@@ -5,7 +5,7 @@
         {
           "icon": "images/home-icon.png",
           "text": "Home",
-          "elliptical": false,
+          "elliptical": true,
           "index": 0,
           "url": "#"
         }
@@ -40,7 +40,7 @@
         {
           "icon": "images/broken-dvd-icon.png",
           "text": "Ozp Button 2",
-          "elliptical": true,
+          "elliptical": false,
           "index": 0,
           "url": "#"
         }

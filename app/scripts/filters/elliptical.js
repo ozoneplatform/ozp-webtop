@@ -1,24 +1,28 @@
 'use strict';
 
 /**
- * ozpManagedFrame includes an html document in the webtop
+ * elliptical Filter to truncate a string of text and add an ellipsis, if desired by the state
  *
- * @namespace directives
+ * @namespace filters
  * @method elliptical
  * @param {String} text a string of text
- * @param {Number} maxLength the maximum length the string can be
+ * @param {Boolean} ellipOption a flag if an ellipsis is desired
+ * @param {Number} [maxLength] the maximum length the string can be
  */
 angular.module('ozpWebtopApp.filters')
     .filter('elliptical', function () {
         // Specifying a maxLength is optional
         var LENGTH_DEFAULT = 8;
 
-        return function (text, maxLength) {
+        return function (text, ellipOption, maxLength) {
             maxLength = maxLength || LENGTH_DEFAULT;
-            if (text.length < maxLength) {
+
+            // If text is shorter than the maxLength, or if we don't want an ellisis...
+            if (text.length < maxLength || !ellipOption) {
+                // Do nothing.
                 return text;
             } else {
-                // If we want to use '&hellip;' we will need to override $sce here
+                // Note: If we want to use '&hellip;' we will need to override $sce here
                 return text.slice(0, maxLength) + ' ...';
             }
 

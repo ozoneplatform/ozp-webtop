@@ -3,22 +3,8 @@
     {
       "buttons": [
         {
-          "icon": "images/Network-icon.png",
-          "text": "Eins",
-          "elliptical": false,
-          "index": 2,
-          "url": "#"
-        },
-        {
-          "icon": "images/Network-Utility-icon.png",
-          "text": "Zwei",
-          "elliptical": false,
-          "index": 1,
-          "url": "#"
-        },
-        {
-          "icon": "images/Moleskine-Blank-Book-icon.png",
-          "text": "Drei",
+          "icon": "images/anti-virus-icon.png",
+          "text": "En",
           "elliptical": false,
           "index": 0,
           "url": "#"
@@ -45,8 +31,22 @@
     {
       "buttons": [
         {
-          "icon": "images/anti-virus-icon.png",
-          "text": "En",
+          "icon": "images/Network-icon.png",
+          "text": "Eins",
+          "elliptical": false,
+          "index": 2,
+          "url": "#"
+        },
+        {
+          "icon": "images/Network-Utility-icon.png",
+          "text": "Zwei",
+          "elliptical": false,
+          "index": 1,
+          "url": "#"
+        },
+        {
+          "icon": "images/Moleskine-Blank-Book-icon.png",
+          "text": "Drei",
           "elliptical": false,
           "index": 0,
           "url": "#"

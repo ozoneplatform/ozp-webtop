@@ -26,7 +26,7 @@
 
         <div ozp-toolbar="top"></div>
 
-        <!-- Webtop workspace will go in ng-view -->
+        <!-- Workspace will go here, placeholder content for now. -->
         <div class="container">
             <div class="header">
                 <h3 class="text-muted">ozp webtop</h3>
@@ -39,11 +39,14 @@
                 </p>
                 <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
             </div>
+
+            <!-- Test Managed Frames -->
+            <div ng-controller="FramesController">
+                <div ozp-managed-frame ng-repeat="frame in frames"></div>
+            </div>
         </div>
 
-        <div ng-controller="FramesController">
-            <div ozp-managed-frame ng-repeat="frame in frames"></div>
-        </div>
+
 
         <div ozp-toolbar="bottom"></div>
 
@@ -74,7 +77,7 @@
         <script src="scripts/directives/ozpIcon.js"></script>
         <script src="scripts/directives/ozpManagedFrame.js"></script>
         <script src="scripts/services/myWorkspace.js"></script>
-        <script src="scripts/controllers/frame.js"></script>
+        <script src="scripts/controllers/frames.js"></script>
         <!-- endbuild -->
     </body>
 </html>

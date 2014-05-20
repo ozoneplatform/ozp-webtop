@@ -22,7 +22,7 @@ angular.module('ozpWebtopApp.filters')
                 // Do nothing.
                 return text;
             } else {
-                // Note: If we want to use '&hellip;' we will need to override $sce here
+                // Note: If we want to use '&hellip;' we will need use ngBindHtml
                 return text.slice(0, maxLength) + ' ...';
             }
 

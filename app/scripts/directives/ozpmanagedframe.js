@@ -75,14 +75,14 @@ angular.module('ozpWebtopApp.directives')
                 template = '<h3>DIFFERENT origin</h3>';
             }
             return template;
-        }
+        };
 
         return {
             // Temporary inline template
             // template: '<iframe src="{{frame.url}}"></iframe>',
             restrict: 'EA',
             scope: true,
-            link: function(scope, element, attrs) {
+            link: function(scope, element) {
                 var origin = determineSameOrigin(scope.frame.url);
                 // If a different origin, use
                 var display = getTemplate(origin);

@@ -1,3 +1,6 @@
+/* jshint quotmark: false */
+/* jshint ignore:start */
+
 'use strict';
 
 angular.module('ozpWebtopApp.services')
@@ -39,10 +42,10 @@ angular.module('ozpWebtopApp.services')
             }
         };
 
-        var meaningOfLife = 42;
-
         // Public service API
         return {
             parse: parseUri
         };
     });
+
+/* jshint ignore:end */

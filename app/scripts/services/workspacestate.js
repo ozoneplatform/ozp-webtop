@@ -6,7 +6,7 @@
  * @class WorkspaceState
  * @constructor
  */
-angular.module('ozpWebtopApp.services').service('WorkspaceState', function($http, myWorkspace) {
+angular.module('ozpWebtopApp.services').factory('WorkspaceState', function($http, myWorkspace) {
     var promise = {};
 
     /**

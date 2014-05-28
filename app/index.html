@@ -24,7 +24,7 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div ozp-toolbar="top"></div>
+        <ozp-toolbar location="top"></ozp-toolbar>
 
         <!-- Workspace will go here, placeholder content for now. -->
         <div class="container">
@@ -34,6 +34,7 @@
 
             <div class="jumbotron">
                 <h1>ozp-webtop</h1>
+                <!-- Temporary view -->
                 <p class="lead" ng-view></p>
                 <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
             </div>
@@ -44,7 +45,7 @@
             </div>
         </div>
 
-        <div ozp-toolbar="bottom"></div>
+        <ozp-toolbar location="bottom"></ozp-toolbar>
 
         <!--[if lt IE 9]>
         <script src="bower_components/es5-shim/es5-shim.js"></script>

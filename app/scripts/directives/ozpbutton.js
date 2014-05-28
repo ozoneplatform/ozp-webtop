@@ -12,6 +12,6 @@ angular.module('ozpWebtopApp.directives')
         return {
             replace: true,
             templateUrl: 'templates/ozpbutton.html',
-            restrict: 'EA'
+            restrict: 'E'
         };
     });

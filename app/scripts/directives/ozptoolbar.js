@@ -5,7 +5,7 @@
  * 'bottom'.
  *
  * @example
- *     <div ozp-toolbar="top"></div>
+ *     <ozp-toolbar location="top"></ozp-toolbar>
  *
  * @namespace directives
  * @class ozpToolbar
@@ -33,11 +33,11 @@ angular.module('ozpWebtopApp.directives')
         // Directive definition object
         return {
             templateUrl: 'templates/toolbar.html',
-            restrict: 'EA',
+            restrict: 'E',
             scope: true,
             link: function ($scope, $element, $attrs) {
 
-                var location = $attrs.ozpToolbar.toLowerCase();
+                var location = $attrs.location.toLowerCase();
 
                 // Based on location specified, include the correct template
                 $scope.contentUrl = 'templates/ozp' + location + 'toolbar.html';

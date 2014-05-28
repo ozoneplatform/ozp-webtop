@@ -37,11 +37,6 @@ angular.module('ozpWebtopApp.directives')
                 var parsedAppUrl = UriParser.parse(appUrl);
                 var parsedFrameUrl = UriParser.parse(frameUrl);
 
-                console.log('parsed app object');
-                console.dir(parsedAppUrl);
-                console.log('parsed frame object');
-                console.dir(parsedFrameUrl);
-
                 // Assign values to comparison objects
                 angular.forEach(app, function(value, key) {
                     app[key] = parsedAppUrl[key];
@@ -51,16 +46,8 @@ angular.module('ozpWebtopApp.directives')
                     frame[key] = parsedFrameUrl[key];
                 });
 
-                console.log('app object');
-                console.dir(app);
-                console.log('frame object');
-                console.dir(frame);
-
-                var comparison = ((app.protocol === frame.protocol) && (app.host === frame.host) && (app.port === frame.port));
-
-                console.log('Comparison is: ' + comparison);
-
-                if (comparison) {
+                if ((app.protocol === frame.protocol) && (app.host === frame.host) &&
+                    (app.port === frame.port)) {
                     sameOrigin = true;
                 }
 
@@ -86,24 +73,16 @@ angular.module('ozpWebtopApp.directives')
 
         return {
             templateUrl: 'templates/ozpmanagedframe.html',
-            restrict: 'EA',
+            restrict: 'E',
             scope: {
                 frame: '='
             },
-            link: function(scope, element, attrs) {
-                var frameUrl = scope.frame.url;
+            link: function(scope) {
 
                 // Is the origin the same as the webtop?
                 var origin = determineSameOrigin(scope.frame.url);
 
-                console.log('Origin return value is: ' + origin);
-
-                // Set template to use, and trust it if necessary
-                var templateUrl = getTemplate(origin);
-
-                console.log('Template URL value is: ' + templateUrl);
-
-                scope.contentUrl = templateUrl;
+                scope.contentUrl = getTemplate(origin);
 
             }
         };

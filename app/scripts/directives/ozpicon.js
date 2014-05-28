@@ -12,6 +12,6 @@ angular.module('ozpWebtopApp.directives')
         return {
             replace: true,
             templateUrl: 'templates/ozpicon.html',
-            restrict: 'EA'
+            restrict: 'E'
         };
     });

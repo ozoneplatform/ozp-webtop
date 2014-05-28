@@ -42,11 +42,9 @@
 
             <!-- Test Managed Frames -->
             <div ng-controller="FramesController">
-                <div ozp-managed-frame ng-repeat="frame in frames"></div>
+                <ozp-managed-frame ng-repeat="frame in frames" frame="frame"></ozp-managed-frame>
             </div>
         </div>
-
-
 
         <div ozp-toolbar="bottom"></div>
 
@@ -79,7 +77,9 @@
         <script src="scripts/services/myWorkspace.js"></script>
         <script src="scripts/controllers/frames.js"></script>
         <script src="scripts/filters/elliptical.js"></script>
-        <script src="scripts/services/urlParser.js"></script>
+        <script src="scripts/services/uriParser.js"></script>
+        <script src="scripts/controllers/Iframe.js"></script>
+        <script src="scripts/controllers/Frame.js"></script>
         <!-- endbuild -->
     </body>
 </html>

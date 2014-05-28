@@ -8,7 +8,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.directives')
-    .directive('ozpManagedFrame', function ($location, $compile, UrlParser) {
+    .directive('ozpManagedFrame', function ($location, $compile, $sce, UriParser) {
 
         var determineSameOrigin = function(frameUrl) {
             // Return value
@@ -34,8 +34,8 @@ angular.module('ozpWebtopApp.directives')
                 };
 
                 // Parse the URLs
-                var parsedAppUrl = UrlParser.parse(appUrl);
-                var parsedFrameUrl = UrlParser.parse(frameUrl);
+                var parsedAppUrl = UriParser.parse(appUrl);
+                var parsedFrameUrl = UriParser.parse(frameUrl);
 
                 console.log('parsed app object');
                 console.dir(parsedAppUrl);
@@ -55,8 +55,12 @@ angular.module('ozpWebtopApp.directives')
                 console.dir(app);
                 console.log('frame object');
                 console.dir(frame);
-                if ((app.protocol === frame.protocol) && (app.host === frame.host) &&
-                    (app.port === frame.port)) {
+
+                var comparison = ((app.protocol === frame.protocol) && (app.host === frame.host) && (app.port === frame.port));
+
+                console.log('Comparison is: ' + comparison);
+
+                if (comparison) {
                     sameOrigin = true;
                 }
 
@@ -69,27 +73,38 @@ angular.module('ozpWebtopApp.directives')
             var template = '';
 
             // Temporary
-            if (sameOrigin) {
-                template = '<h3>SAME origin</h3>';
-            } else {
-                template = '<h3>DIFFERENT origin</h3>';
+            // If different origin, use an iframe template
+            if (!sameOrigin) {
+                template = 'templates/managediframe.html';
+            }
+            // otherwise, use a 'frame' (div) template
+            else {
+                template = 'templates/managedframe.html';
             }
             return template;
         };
 
         return {
-            // Temporary inline template
-            // template: '<iframe src="{{frame.url}}"></iframe>',
+            templateUrl: 'templates/ozpmanagedframe.html',
             restrict: 'EA',
-            scope: true,
-            link: function(scope, element) {
+            scope: {
+                frame: '='
+            },
+            link: function(scope, element, attrs) {
+                var frameUrl = scope.frame.url;
+
+                // Is the origin the same as the webtop?
                 var origin = determineSameOrigin(scope.frame.url);
-                // If a different origin, use
-                var display = getTemplate(origin);
 
-                element.html(display).show();
+                console.log('Origin return value is: ' + origin);
 
-                $compile(element.contents())(scope);
+                // Set template to use, and trust it if necessary
+                var templateUrl = getTemplate(origin);
+
+                console.log('Template URL value is: ' + templateUrl);
+
+                scope.contentUrl = templateUrl;
+
             }
         };
     });

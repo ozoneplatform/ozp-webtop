@@ -3,6 +3,7 @@
 /**
  * Service to handle loading JSON configuration data.
  *
+ * @namespace services
  * @class WorkspaceState
  * @constructor
  */

@@ -3,11 +3,12 @@
 /**
  * compareUrl compares the current location of the webtop to a specified frame URL
  *
- * @namespace directives
+ * @namespace services
  * @method compareUrl
  * @param {String} frameUrl the url of a frame
+ * @return {Boolean} true if the url represents the same origin as the webtop, false otherwise
  */
-angular.module('ozpWebtopApp')
+angular.module('ozpWebtopApp.services')
     .factory('compareUrl', function ($location, parseUri) {
 
         var compareUrl = function (frameUrl) {

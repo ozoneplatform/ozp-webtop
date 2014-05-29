@@ -1,4 +1,3 @@
-/* jshint quotmark: false */
 /* jshint ignore:start */
 
 'use strict';
@@ -11,7 +10,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.services')
-    .factory('UriParser', function () {
+    .factory('parseUri', function () {
 
         // Taken from http://stevenlevithan.com/demo/parseuri/js/assets/parseuri.js
         // More information at: http://blog.stevenlevithan.com/archives/parseuri
@@ -49,12 +48,13 @@ angular.module('ozpWebtopApp.services')
             }
         };
 
-        // End Steven' Levithan's code
+        // End Steven Levithan's code
+
+        // Configuration for our use
+        parseUri.options.strictMode = true;
 
         // Public service API
-        return {
-            parse: parseUri
-        };
+        return parseUri;
     });
 
 /* jshint ignore:end */

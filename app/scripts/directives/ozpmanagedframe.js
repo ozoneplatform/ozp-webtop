@@ -8,58 +8,19 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.directives')
-    .directive('ozpManagedFrame', function ($location, $compile, $sce, UriParser) {
+    .directive('ozpManagedFrame', function (compareUrl) {
 
-        var determineSameOrigin = function(frameUrl) {
-            // Return value
-            var sameOrigin = false;
-
-            var appUrl = $location.absUrl();
-
-            // Check if the URLs are the same string (simple check)
-            if (appUrl === frameUrl) {
-                sameOrigin = true;
-            } else {
-                // Objects to use for comparison
-                var app = {
-                    protocol: '',
-                    host: '',
-                    port: ''
-                };
-
-                var frame = {
-                    protocol: '',
-                    host: '',
-                    port: ''
-                };
-
-                // Parse the URLs
-                var parsedAppUrl = UriParser.parse(appUrl);
-                var parsedFrameUrl = UriParser.parse(frameUrl);
-
-                // Assign values to comparison objects
-                angular.forEach(app, function(value, key) {
-                    app[key] = parsedAppUrl[key];
-                });
-
-                angular.forEach(frame, function(value, key) {
-                    frame[key] = parsedFrameUrl[key];
-                });
-
-                if ((app.protocol === frame.protocol) && (app.host === frame.host) &&
-                    (app.port === frame.port)) {
-                    sameOrigin = true;
-                }
-
-            }
-
-            return sameOrigin;
-        };
-
-        var getTemplate = function(sameOrigin) {
+        /**
+         * Decides which template to use.
+         *
+         * @method getTemplate
+         * @private
+         * @param {Boolean} sameOrigin True if the frame comes from the same origin as the webtop,
+         *     false otherwise.
+         */
+        var getTemplate = function (sameOrigin) {
             var template = '';
 
-            // Temporary
             // If different origin, use an iframe template
             if (!sameOrigin) {
                 template = 'templates/managediframe.html';
@@ -71,19 +32,22 @@ angular.module('ozpWebtopApp.directives')
             return template;
         };
 
+        // Directive definition object
         return {
             templateUrl: 'templates/ozpmanagedframe.html',
             restrict: 'E',
             scope: {
                 frame: '='
             },
-            link: function(scope) {
+            link: function (scope) {
 
                 // Is the origin the same as the webtop?
-                var origin = determineSameOrigin(scope.frame.url);
+                var origin = compareUrl(scope.frame.url);
 
+                // Load template based on the origin
                 scope.contentUrl = getTemplate(origin);
 
             }
         };
+
     });

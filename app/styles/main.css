@@ -31,6 +31,11 @@
     display: flex;
 }
 
+/* Frames must be absolute position */
+.ozp-managed-frame {
+    position: absolute;
+}
+
 /* Yeoman generated CSS below... */
 
 /* Everything but the jumbotron gets side spacing for mobile first views */

@@ -39,7 +39,7 @@ angular.module('ozpWebtopApp.directives')
             scope: {
                 frame: '='
             },
-            link: function (scope) {
+            link: function (scope, element) {
 
                 // Is the origin the same as the webtop?
                 var origin = compareUrl(scope.frame.url);
@@ -47,6 +47,13 @@ angular.module('ozpWebtopApp.directives')
                 // Load template based on the origin
                 scope.contentUrl = getTemplate(origin);
 
+                scope.styles = {
+                    'top': scope.frame.size.top,
+                    'left': scope.frame.size.left,
+                    'height': scope.frame.size.verticalSize,
+                    'width': scope.frame.size.horizontalSize,
+                    'z-index': scope.frame.zIndex
+                };
             }
         };
 

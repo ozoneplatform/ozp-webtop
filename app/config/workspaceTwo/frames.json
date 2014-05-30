@@ -8,10 +8,10 @@
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {
-        "top": 0,
-        "left": 0,
-        "horizontalSize": 300,
-        "verticalSize": 300
+        "top": 250,
+        "left": 900,
+        "horizontalSize": 150,
+        "verticalSize": 150
       },
       "windowState": "normal",
       "name": "Example 1",

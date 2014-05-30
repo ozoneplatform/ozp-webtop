@@ -3,13 +3,13 @@
     {
       "frameId": "q1w2e3r4",
       "index": 0,
-      "zIndex": 1,
+      "zIndex": -1,
       "url": "http://127.0.0.1:9000/examples/square.html",
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {
-        "top": 0,
-        "left": 0,
+        "top": 400,
+        "left": 200,
         "horizontalSize": 300,
         "verticalSize": 300
       },

@@ -3,15 +3,32 @@
     {
       "frameId": "q1w2e3r4",
       "index": 0,
-      "zIndex": -1,
+      "zIndex": 2,
       "url": "http://127.0.0.1:9000/examples/square.html",
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {
-        "top": 400,
+        "top": 275,
+        "left": 180,
+        "horizontalSize": 150,
+        "verticalSize": 150
+      },
+      "windowState": "normal",
+      "name": "Example 1",
+      "icon": "images/UserFolder.png"
+    },
+    {
+      "frameId": "5t4r3e2w",
+      "index": 1,
+      "zIndex": 1,
+      "url": "http://localhost:8080/ozp-webtop/app/examples/circle.html",
+      "registryUrl": "#",
+      "version": "1.2.3",
+      "size": {
+        "top": 220,
         "left": 200,
-        "horizontalSize": 300,
-        "verticalSize": 300
+        "horizontalSize": 220,
+        "verticalSize": 220
       },
       "windowState": "normal",
       "name": "Example 1",

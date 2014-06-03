@@ -9,48 +9,42 @@
  * @return {Boolean} true if the url represents the same origin as the webtop, false otherwise
  */
 angular.module('ozpWebtopApp.services')
-    .factory('compareUrl', function ($location, parseUri) {
+    .factory('compareUrl', function () {
 
-        var compareUrl = function (frameUrl) {
-            // Return value
-            var sameOrigin = false;
+        var compareUrl = function(url) {
+            var loc = window.location,
+            a = document.createElement('a');
 
-            var appUrl = $location.absUrl();
+            a.href = url;
 
-            // Check if the URLs are the same string (simple check)
-            if (appUrl === frameUrl) {
-                sameOrigin = true;
-            } else {
-                // Objects to use for comparison
-                var app = {
-                    protocol: '',
-                    host: '',
-                    port: ''
-                };
-
-                var frame = angular.extend({}, app);
-
-                // Parse the URLs
-                var parsedAppUrl = parseUri(appUrl);
-                var parsedFrameUrl = parseUri(frameUrl);
-
-                // Assign values to comparison objects
-                angular.forEach(app, function(value, key) {
-                    app[key] = parsedAppUrl[key];
-                });
-
-                angular.forEach(frame, function(value, key) {
-                    frame[key] = parsedFrameUrl[key];
-                });
-
-                if ((app.protocol === frame.protocol) && (app.host === frame.host) &&
-                    (app.port === frame.port)) {
-                    sameOrigin = true;
-                }
-
+            // If either port is an empty string, infer it
+            if (!a.port) {
+                inferPort(a);
+            }
+            if (!loc.port) {
+                inferPort(loc);
             }
 
-            return sameOrigin;
+            // If all comparisons are true, the url represents the same origin
+            return a.hostname === loc.hostname &&
+                a.port === loc.port &&
+                a.protocol === loc.protocol;
+        };
+
+        /**
+         * An internal method to infer the port based on other information provided
+         *
+         * @method inferPort
+         * @private
+         * @param {Object} obj an object representing either an anchor tag or the window.location
+         */
+        var inferPort = function (obj) {
+            // Infer the port based on the specified protocol
+            if (obj.protocol === 'https:') {
+                obj.port = '443';
+            } else if (obj.protocol === 'http:') {
+                obj.port = '80';
+            }
         };
 
         return compareUrl;

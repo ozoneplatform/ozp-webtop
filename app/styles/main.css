@@ -31,6 +31,12 @@
     display: flex;
 }
 
+ozp-toolbar[location="bottom"] {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
 /* Frames must be absolute position */
 .ozp-managed-frame {
     position: absolute;

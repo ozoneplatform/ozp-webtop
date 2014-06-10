@@ -8,8 +8,8 @@
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {
-        "top": 275,
-        "left": 180,
+        "top": 175,
+        "left": 200,
         "horizontalSize": 150,
         "verticalSize": 150
       },
@@ -25,7 +25,7 @@
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {
-        "top": 220,
+        "top": 140,
         "left": 200,
         "horizontalSize": 220,
         "verticalSize": 220

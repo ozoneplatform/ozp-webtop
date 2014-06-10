@@ -4,10 +4,10 @@
       "buttons": [
         {
           "icon": "images/home-icon.png",
-          "text": "Home",
+          "text": "Grid",
           "elliptical": true,
           "index": 0,
-          "url": "#"
+          "url": "#/grid"
         }
       ],
       "icons": [
@@ -32,10 +32,10 @@
       "buttons": [
         {
           "icon": "images/earth.png",
-          "text": "Ozp Button 1",
+          "text": "Desktop",
           "elliptical": true,
           "index": 1,
-          "url": "#"
+          "url": "#/desktop"
         },
         {
           "icon": "images/broken-dvd-icon.png",

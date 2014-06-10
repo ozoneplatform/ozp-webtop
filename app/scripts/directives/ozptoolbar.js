@@ -12,13 +12,14 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.directives')
-    .directive('ozpToolbar', function (WorkspaceState) {
+    .directive('ozpToolbar', function (WorkspaceState, $http, $compile) {
 
         /**
          * Helper function to find either the top or bottom toolbar in the toolbar array.
          *
          * @method findToolbar
          * @private
+         * @return {Object} toolbar the toolbar state object pertaining to the specified location
          */
         var findToolbar = function(toolbars, location) {
             var toolbar = {};
@@ -30,25 +31,50 @@ angular.module('ozpWebtopApp.directives')
             return toolbar;
         };
 
+        /**
+         * Decides which template to use based on a specified location
+         *
+         * @method getTemplate
+         * @private
+         * @param {String} location either a
+         * @return {String} template a template's url
+         */
+        var getTemplate = function (location) {
+            var template = '';
+
+            // Use top or bottom template
+            if (location === 'top') {
+                template = 'templates/toptoolbar.html';
+            } else if (location === 'bottom') {
+                template = 'templates/bottomtoolbar.html';
+            }
+            return template;
+        };
+
         // Directive definition object
         return {
-            templateUrl: 'templates/toolbar.html',
+
             restrict: 'E',
-            scope: true,
-            link: function ($scope, $element, $attrs) {
 
-                var location = $attrs.location.toLowerCase();
+            link: function (scope, element, attrs) {
 
-                // Based on location specified, include the correct template
-                $scope.contentUrl = 'templates/ozp' + location + 'toolbar.html';
+                var location = attrs.location.toLowerCase();
+
+                // Instead of templateUrl, use $http/$compile to load one of two templates
+                $http.get(getTemplate(location)).then(function(response) {
+                    element.html($compile(response.data)(scope));
+                });
+
+            },
+
+            controller: function ($scope, $element, $attrs) {
 
                 // Get the toolbar state file and set state on an Angular scope
                 WorkspaceState.getStateFile('toolbars').then(function(data) {
-                    if (location === 'top') {
-                        $scope.state = findToolbar(data.toolbars, 'top');
-                    } else if (location === 'bottom') {
-                        $scope.state = findToolbar(data.toolbars, 'bottom');
-                    }
+
+                    $scope.top = findToolbar(data.toolbars, 'top');
+                    $scope.bottom = findToolbar(data.toolbars, 'bottom');
+
                 });
 
             }

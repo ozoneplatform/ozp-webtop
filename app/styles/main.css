@@ -1,10 +1,6 @@
-.ozp-toolbar {
+.ozp-toolbar-top, .ozp-toolbar-bottom {
     height: 40px;
     background-color: #000000;
-}
-
-.ozp-toolbar-top, .ozp-toolbar-bottom, .ozp-toolbar-internal {
-    height: inherit;
 }
 
 .ozp-toolbar-top > form {

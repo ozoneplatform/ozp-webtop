@@ -8,7 +8,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.directives')
-    .directive('ozpManagedFrame', function (compareUrl) {
+    .directive('ozpManagedFrame', function (compareUrl, $http, $compile) {
 
         /**
          * Decides which template to use.
@@ -34,18 +34,18 @@ angular.module('ozpWebtopApp.directives')
 
         // Directive definition object
         return {
-            templateUrl: 'templates/ozpmanagedframe.html',
+
             restrict: 'E',
-            scope: {
-                frame: '='
-            },
+
             link: function (scope, element) {
 
                 // Is the origin the same as the webtop?
                 var origin = compareUrl(scope.frame.url);
 
-                // Load template based on the origin
-                scope.contentUrl = getTemplate(origin);
+                // Instead of templateUrl, use $http to load one of two templates
+                $http.get(getTemplate(origin)).then(function(response) {
+                    element.html($compile(response.data)(scope));
+                });
 
                 scope.styles = {
                     'top': scope.frame.size.top,

@@ -38,8 +38,12 @@ ozp-toolbar[location="bottom"] {
 }
 
 /* Frames must be absolute position */
-.ozp-managed-frame {
+.managed-frame, .managed-iframe {
     position: absolute;
+}
+
+.managed-iframe {
+    background-color: white;
 }
 
 /* Yeoman generated CSS below... */

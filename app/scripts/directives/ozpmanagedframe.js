@@ -54,7 +54,9 @@ angular.module('ozpWebtopApp.directives')
                     'width': scope.frame.size.horizontalSize,
                     'z-index': scope.frame.zIndex
                 };
+
             }
+
         };
 
     });

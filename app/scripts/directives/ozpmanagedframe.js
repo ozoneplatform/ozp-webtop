@@ -47,6 +47,8 @@ angular.module('ozpWebtopApp.directives')
                     element.html($compile(response.data)(scope));
                 });
 
+                // Note: in iframe template height and width of the iframe is calculated based on
+                // these styles. May need to change it in the future.
                 scope.styles = {
                     'top': scope.frame.size.top,
                     'left': scope.frame.size.left,

@@ -27,6 +27,7 @@
     display: flex;
 }
 
+/* Set bottom toolbar to the bottom of the rendering window */
 ozp-toolbar[location="bottom"] {
     position: absolute;
     bottom: 0px;
@@ -36,20 +37,27 @@ ozp-toolbar[location="bottom"] {
 /* Frames must be absolute position */
 .ozp-managed-frame {
     position: absolute;
-}
-
-.managed-frame, .managed-iframe {
-    /* position: absolute; */
     background-color: white;
-    height: inherit;
-}
-
-/* Frame chrome */
-.managed-frame, .managed-iframe {
     border: 1px solid grey;
 }
 
+/* Frame border to signify a window */
+.managed-frame, .managed-iframe {
+
+}
+
+/* Seperate chrome from the frame */
+.ozp-chrome {
+    border-bottom: 1px solid grey;
+}
+
+/* Chrome icon sizing */
 .ozp-chrome > .chrome-icon {
     max-height: 19px;
     max-width: 19px;
+}
+
+/* Chrome button sizing */
+.chrome-btn {
+    padding: 5px;
 }

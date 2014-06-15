@@ -11,12 +11,23 @@
     height: 30px;
 }
 
-.ozp-icon, .ozp-button {
+/* Space out buttons a bit */
+.ozp-button {
     margin: 2px 20px;
 }
 
+.ozp-icon {
+    margin: 5px 5px;
+}
+
+/* Icons should be a good size */
 .ozp-icon-icon {
-    max-width: 20px;
+    max-width: 40px;
+}
+
+/* Space icon's internal pieces */
+.ozp-icon-icon, .ozp-icon-text {
+    margin: 2px;
 }
 
 .ozp-button-icon {

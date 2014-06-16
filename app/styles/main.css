@@ -45,16 +45,11 @@ ozp-toolbar[location="bottom"] {
     width: 100%;
 }
 
-/* Frames must be absolute position */
+/* Frames must be absolute position, and border signifies a 'window' */
 .ozp-managed-frame {
     position: absolute;
     background-color: white;
     border: 1px solid grey;
-}
-
-/* Frame border to signify a window */
-.managed-frame, .managed-iframe {
-
 }
 
 /* Seperate chrome from the frame */
@@ -71,4 +66,9 @@ ozp-toolbar[location="bottom"] {
 /* Chrome button sizing */
 .chrome-btn {
     padding: 5px;
+}
+
+/* Display icons with Flexbox */
+.icon-container {
+    display: flex;
 }

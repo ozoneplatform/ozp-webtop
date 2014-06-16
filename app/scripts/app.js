@@ -24,7 +24,7 @@ angular.module('ozpWebtopApp').config(function ($routeProvider) {
         templateUrl: 'views/desktop.html',
         controller: 'DesktopController'
     }).otherwise({
-        redirectTo: '/grid'
+        redirectTo: '/desktop'
     });
 });
 

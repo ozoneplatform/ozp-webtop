@@ -69,12 +69,38 @@ angular.module('ozpWebtopApp.directives')
 
             controller: function ($scope, $element, $attrs) {
 
+                // Private var to differentiate this toolbar controller by location
+                var toolbarLocation = $attrs.location.toLowerCase();
+
+                // Helper function to add a button to the specified toolbar
+                var addButton = function (location, button) {
+
+                    // Add to the specified scope
+                    if (location === 'top') {
+                        $scope.top.buttons.push(button);
+                    } else if (location === 'bottom') {
+                        $scope.bottom.buttons.push(button);
+                    }
+
+                };
+
                 // Get the toolbar state file and set state on an Angular scope
                 WorkspaceState.getStateFile('toolbars').then(function(data) {
 
                     $scope.top = findToolbar(data.toolbars, 'top');
                     $scope.bottom = findToolbar(data.toolbars, 'bottom');
 
+                });
+
+
+                // Handle the icon click event by adding a button to the toolbar
+                $scope.$on('iconClick', function (event, icon) {
+                    if (toolbarLocation === 'bottom'){
+                        // For now, only add buttons to the bottom toolbar
+                        addButton('bottom', icon);
+                    }
+
+                    // Todo: revisit button/icon relationship. For now they are structured the same
                 });
 
             }

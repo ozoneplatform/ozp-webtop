@@ -8,7 +8,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.directives')
-    .directive('ozpManagedFrame', function (compareUrl, $http, $compile) {
+    .directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document) {
 
         /**
          * Decides which template to use.
@@ -38,6 +38,43 @@ angular.module('ozpWebtopApp.directives')
             restrict: 'E',
 
             link: function (scope, element) {
+
+                // Logic for dragging is influenced by Angular directive documentation, under the
+                // heading "Creating a Directive that Adds Event Listeners".
+                // See: https://docs.angularjs.org/guide/directive
+
+                // Get starting positions from state
+                var startX = scope.frame.size.left, startY = scope.frame.size.top;
+
+                // 'Current' positions are changed as the element moves
+                var x = startX, y = startY;
+
+                // React to a mousedown and allow the element to move
+                element.on('mousedown', function(event) {
+                    // Prevent default dragging of selected content
+                    event.preventDefault();
+                    startX = event.pageX - x;
+                    startY = event.pageY - y;
+                    $document.on('mousemove', mousemove);
+                    $document.on('mouseup', mouseup);
+                    console.log('Starting x is ' + startX + ', startY is ' + startY);
+                });
+
+                function mousemove(event) {
+                    y = event.pageY - startY;
+                    x = event.pageX - startX;
+                    element.css({
+                        top: y + 'px',
+                        left:  x + 'px'
+                    });
+                }
+
+                function mouseup() {
+                    $document.off('mousemove', mousemove);
+                    $document.off('mouseup', mouseup);
+                    // TODO: Write new position back to the server and update state
+                    console.log('New X is ' + x + ', and new Y is ' + y);
+                }
 
                 // Is the origin the same as the webtop?
                 var origin = compareUrl(scope.frame.url);

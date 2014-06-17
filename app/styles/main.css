@@ -73,3 +73,9 @@ ozp-toolbar[location="bottom"] {
 .icon-container {
     display: flex;
 }
+
+/* Grid styles */
+div.gridster > ul > li {
+    list-style: none;
+    border: 1px solid red;
+}

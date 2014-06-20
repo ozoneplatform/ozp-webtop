@@ -1,5 +1,5 @@
 {
-  "frames": [
+  "tiles": [
     {
       "frameId": "q1w2e3r4",
       "index": 0,
@@ -7,12 +7,10 @@
       "url": "http://127.0.0.1:9000/examples/square.html",
       "registryUrl": "#",
       "version": "1.2.3",
-      "size": {
-        "top": 125,
-        "left": 100,
-        "horizontalSize": 200,
-        "verticalSize": 200
-      },
+      "col" : 1,
+      "row": 1,
+      "sizey": 1,
+      "sizex": 1,
       "windowState": "normal",
       "name": "Square",
       "icon": "images/UserFolder.png"
@@ -24,12 +22,10 @@
       "url": "http://localhost:8080/ozp-webtop/app/examples/circle.html",
       "registryUrl": "#",
       "version": "1.2.3",
-      "size": {
-        "top": 50,
-        "left": 500,
-        "horizontalSize": 250,
-        "verticalSize": 250
-      },
+      "col" : 2,
+      "row": 1,
+      "sizey": 1,
+      "sizex": 1,
       "windowState": "normal",
       "name": "Circle",
       "icon": "images/maps.png"
@@ -41,12 +37,10 @@
       "url": "http://localhost:8080/ozp-webtop/app/examples/text.html",
       "registryUrl": "#",
       "version": "1.2.3",
-      "size": {
-        "top": 325,
-        "left": 380,
-        "horizontalSize": 200,
-        "verticalSize": 200
-      },
+      "col" : 1,
+      "row": 2,
+      "sizey": 1,
+      "sizex": 1,
       "windowState": "normal",
       "name": "Text",
       "icon": "images/Network-icon.png"
@@ -58,12 +52,10 @@
       "url": "http://localhost:8080/ozp-webtop/app/examples/mbrot.html",
       "registryUrl": "#",
       "version": "1.2.3",
-      "size": {
-        "top": 200,
-        "left": 600,
-        "horizontalSize": 250,
-        "verticalSize": 250
-      },
+      "col" : 2,
+      "row": 2,
+      "sizey": 1,
+      "sizex": 1,
       "windowState": "normal",
       "name": "Mbrot",
       "icon": "images/MusicFolder.png"

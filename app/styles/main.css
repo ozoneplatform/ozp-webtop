@@ -55,6 +55,7 @@ ozp-toolbar[location="bottom"] {
 /* Seperate chrome from the frame */
 .ozp-chrome {
     border-bottom: 1px solid grey;
+    cursor: pointer;
 }
 
 /* Chrome icon sizing */

@@ -75,7 +75,7 @@ ozp-toolbar[location="bottom"] {
 }
 
 /* Grid styles */
-div.gridster > ul > li {
+li.gs-w {
     list-style: none;
-    border: 1px solid red;
+    border: 1px solid black;
 }

@@ -1,31 +1,20 @@
 # ozp-webtop
 
-## Core Directives
+Next Gen OZONE UI
 
-This repo is comprised of core Angular directives that will make-up the next generation OZONE User Interface (UI). The directives can be thought of as compononents which will make up the functionality of the UI. The directives are the focus and everything else should be thought of as a placeholder (for now).
-
-## Set Up
+## Prerequisites
 Install Node.js and npm. Head over to [the Node.js website](http://nodejs.org/) if you need to do that.
 Next, install [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/) with the command below.
 
     (sudo) npm install -g bower grunt-cli
 
-## Usage
-First clone the repo. Then install development dependencies with npm:
+## Getting Started
+First clone the repo. Then install development dependencies with npm. Install frontend app dependencies with Bower:
 
     cd ozp-webtop
-    npm install
+    npm install && bower install
     
-Install frontend app dependencies with Bower:
-
-    bower install
-    
-Development tasks are run with Grunt. The most common are listed below.
-
-    # Run the preview server (opens a browser for you)
-    grunt serve
-    # Run JSHint on the code
-    grunt jshint
+Development tasks are run with Grunt. Run `grunt serve` to bring up a live preview of the webtop. Run `grunt -h` for a full list of Grunt tasks.
 
 ## Development Notes
 

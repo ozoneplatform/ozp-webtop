@@ -1,7 +1,11 @@
 'use strict';
 
 /**
+ * GridController retrieves the state of a number of tiles and binds it to an Angular scope.
  *
+ * @namespace controllers
+ * @class GridController
+ * @constructor
  */
 angular.module('ozpWebtopApp.controllers')
 

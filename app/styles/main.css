@@ -79,3 +79,7 @@ li.gs-w {
     list-style: none;
     border: 1px solid black;
 }
+
+li.preview-holder {
+    display: none;
+}

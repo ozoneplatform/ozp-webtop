@@ -83,3 +83,17 @@ li.gs-w {
 li.preview-holder {
     display: none;
 }
+
+li {
+    list-style: none;
+    border: 1px solid black;
+}
+
+.gridster .gridster-item {
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    color: #004756;
+    background: #ffffff;
+    padding: 10px;
+}

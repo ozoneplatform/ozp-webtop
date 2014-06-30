@@ -6,13 +6,13 @@ describe('Service: Workspacestate', function () {
   beforeEach(module('ozpWebtopApp'));
 
   // instantiate service
-  var Workspacestate;
-  beforeEach(inject(function (_Workspacestate_) {
-    Workspacestate = _Workspacestate_;
+  var WorkspaceState;
+  beforeEach(inject(function (_WorkspaceState_) {
+    WorkspaceState = _WorkspaceState_;
   }));
 
   it('should do something', function () {
-    expect(!!Workspacestate).toBe(true);
+    expect(!!WorkspaceState).toBe(true);
   });
 
 });

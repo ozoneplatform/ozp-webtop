@@ -37,6 +37,8 @@ angular.module('ozpWebtopApp.directives')
 
             restrict: 'E',
 
+            template: '<div ng-include="getContentUrl()"></div>',
+
             link: function (scope, element) {
 
                 // Logic for dragging is influenced by Angular directive documentation, under the
@@ -79,10 +81,10 @@ angular.module('ozpWebtopApp.directives')
                 // Is the origin the same as the webtop?
                 var origin = compareUrl(scope.frame.url);
 
-                // Instead of templateUrl, use $http to load one of two templates
-                $http.get(getTemplate(origin)).then(function(response) {
-                    element.html($compile(response.data)(scope));
-                });
+                // configure dynamic template without using $http for ease of testing
+                scope.getContentUrl = function() {
+                    return getTemplate(origin);
+                }
 
                 // Note: in iframe template height and width of the iframe is calculated based on
                 // these styles. May need to change it in the future.

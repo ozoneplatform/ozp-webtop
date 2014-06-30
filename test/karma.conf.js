@@ -5,6 +5,11 @@
 
 module.exports = function(config) {
   config.set({
+
+    preprocessors: {
+      'app/templates/*.html': 'ng-html2js'
+    },
+
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
@@ -24,7 +29,8 @@ module.exports = function(config) {
       'app/bower_components/angular-sanitize/angular-sanitize.js',
       'app/scripts/**/*.js',
 //      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'test/spec/**/*.js',
+      'app/templates/*.html'
     ],
 
     // list of files / patterns to exclude
@@ -32,6 +38,10 @@ module.exports = function(config) {
 
     // web server port
     port: 8080,
+
+    ngHtml2JsPreprocessor: {
+        stripPrefix: 'app/'
+    },
 
     // Start these browsers, currently available:
     // - Chrome
@@ -48,7 +58,8 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor'
     ],
 
     // Continuous Integration mode

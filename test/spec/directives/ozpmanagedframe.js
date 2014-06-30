@@ -5,16 +5,44 @@ describe('Directive: ozpManagedFrame', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
 
-  var element,
-    scope;
+  beforeEach(module('templates/managedframe.html'));
+  beforeEach(module('templates/managediframe.html'));
+  beforeEach(module('templates/ozpchrome.html'));
 
-  beforeEach(inject(function ($rootScope) {
+  var element,
+    scope,
+    $httpBackend;
+
+  beforeEach(inject(function ($rootScope, _$httpBackend_) {
+    $httpBackend = _$httpBackend_;
     scope = $rootScope.$new();
+    scope.frame = {
+      "frameId": "q1w2e3r4",
+      "index": 0,
+      "zIndex": 1,
+      // this origin yields a normal frame during testing 
+      //   any other would yield an iframe
+      "url": "http://localhost:8080/examples/square.html",
+      "registryUrl": "#",
+      "version": "1.2.3",
+      "size": {
+        "top": 125,
+        "left": 100,
+        "horizontalSize": 200,
+        "verticalSize": 200
+      },
+      "windowState": "normal",
+      "name": "Square",
+      "icon": "images/UserFolder.png"
+    };
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
+    $httpBackend.whenGET("http://localhost:8080/examples/square.html").respond();
+
     element = angular.element('<ozp-managed-frame></ozp-managed-frame>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the ozpManagedFrame directive');
+    scope.$digest();
+    expect(element.children().length).toBeGreaterThan(0);
   }));
 });

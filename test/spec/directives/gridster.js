@@ -5,6 +5,8 @@ describe('Directive: gridster', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
 
+  beforeEach(module('templates/gridster.html'));
+
   var element,
     scope;
 
@@ -15,6 +17,7 @@ describe('Directive: gridster', function () {
   it('should make hidden element visible', inject(function ($compile) {
     element = angular.element('<gridster></gridster>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the gridster directive');
+    scope.$digest();
+    expect(element.attr("class")).toBe('ng-scope');
   }));
 });

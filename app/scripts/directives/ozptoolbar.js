@@ -56,14 +56,22 @@ angular.module('ozpWebtopApp.directives')
 
             restrict: 'E',
 
+            template: '<div ng-include="getTemplateUrl()"></div>',
+
             link: function (scope, element, attrs) {
 
                 var location = attrs.location.toLowerCase();
 
+                // Adds to div soup, but makes testing easier
+                // See comments below for alternative
+                scope.getTemplateUrl = function() {
+                    return getTemplate(location);
+                }
+
                 // Instead of templateUrl, use $http/$compile to load one of two templates
-                $http.get(getTemplate(location)).then(function(response) {
-                    element.html($compile(response.data)(scope));
-                });
+                // $http.get(getTemplate(location)).then(function(response) {
+                //     element.html($compile(response.data)(scope));
+                // });
 
             },
 

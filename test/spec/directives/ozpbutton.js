@@ -5,16 +5,25 @@ describe('Directive: ozpButton', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
 
+  beforeEach(module('templates/ozpbutton.html'));
+
   var element,
     scope;
 
   beforeEach(inject(function ($rootScope) {
     scope = $rootScope.$new();
+    scope.button = {
+        url:  'http://www.example.com/',
+        icon: 'example.png',
+        text: 'descriptive text',
+        elliptical: false
+    };
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
+  it('should should attach an image', inject(function ($compile) {
     element = angular.element('<ozp-button></ozp-button>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the ozpButton directive');
+    scope.$digest();
+    expect(element.find('img').length).toBe(1);
   }));
 });

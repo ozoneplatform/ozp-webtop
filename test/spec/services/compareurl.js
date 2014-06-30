@@ -21,4 +21,5 @@ describe('Service: Compareurl', function () {
     expect(compareUrl(location)).toBe(true);
   });
 
+
 });

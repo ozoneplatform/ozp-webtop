@@ -13,7 +13,8 @@ angular.module('ozpWebtopApp', [
     'ozpWebtopApp.controllers',
     'ozpWebtopApp.directives',
     'ozpWebtopApp.services',
-    'ozpWebtopApp.filters'
+    'ozpWebtopApp.filters',
+    'gridster'
 ]);
 
 // App routing configurations

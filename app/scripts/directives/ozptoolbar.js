@@ -12,7 +12,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.directives')
-    .directive('ozpToolbar', function (WorkspaceState, $http, $compile) {
+    .directive('ozpToolbar', function (WorkspaceState) {
 
         /**
          * Helper function to find either the top or bottom toolbar in the toolbar array.
@@ -56,23 +56,9 @@ angular.module('ozpWebtopApp.directives')
 
             restrict: 'E',
 
-            template: '<div ng-include="getTemplateUrl()"></div>',
-
-            link: function (scope, element, attrs) {
-
-                var location = attrs.location.toLowerCase();
-
-                // Adds to div soup, but makes testing easier
-                // See comments below for alternative
-                scope.getTemplateUrl = function() {
-                    return getTemplate(location);
-                }
-
-                // Instead of templateUrl, use $http/$compile to load one of two templates
-                // $http.get(getTemplate(location)).then(function(response) {
-                //     element.html($compile(response.data)(scope));
-                // });
-
+            templateUrl: function(tElements, tAttrs) {
+                var location = tAttrs.location.toLowerCase();
+                return getTemplate(location);
             },
 
             controller: function ($scope, $element, $attrs) {

@@ -22,4 +22,18 @@ describe('Directive: ozpToolbar', function () {
         scope.$digest();
         expect(element.children().length).toBeGreaterThan(0);
     }));
+
+    it('should load a top and bottom toolbar when asked', inject(function($compile) {
+        element = angular.element('<div><ozp-toolbar location="top"></ozp-toolbar>' +
+                      '<ozp-toolbar location="bottom"></ozp-toolbar></div>');
+        element = $compile(element)(scope);
+        scope.$digest();
+        var tbs = element.find('ozp-toolbar');
+
+        var top = angular.element(tbs[0]);
+        expect(top.attr('location')).toBe('top');
+
+        var bottom = angular.element(tbs[1]);
+        expect(bottom.attr('location')).toBe('bottom');
+    }));
 });

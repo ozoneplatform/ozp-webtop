@@ -1,5 +1,7 @@
 # ozp-webtop
 
+[![Build Status](https://travis-ci.org/ozone-development/ozp-webtop.svg?branch=master)](https://travis-ci.org/ozone-development/ozp-webtop)
+
 Next Gen OZONE UI
 
 ## Prerequisites

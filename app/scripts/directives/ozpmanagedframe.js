@@ -84,7 +84,7 @@ angular.module('ozpWebtopApp.directives')
                 // configure dynamic template without using $http for ease of testing
                 scope.getContentUrl = function() {
                     return getTemplate(origin);
-                }
+                };
 
                 // Note: in iframe template height and width of the iframe is calculated based on
                 // these styles. May need to change it in the future.

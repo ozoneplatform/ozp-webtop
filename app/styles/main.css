@@ -73,3 +73,13 @@ ozp-toolbar[location="bottom"] {
 .icon-container {
     display: flex;
 }
+
+/* Grid styles */
+li.gs-w {
+    list-style: none;
+    border: 1px solid black;
+}
+
+li.preview-holder {
+    display: none;
+}

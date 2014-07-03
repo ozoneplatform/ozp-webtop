@@ -19,7 +19,7 @@ angular.module('ozpWebtopApp.services').factory('WorkspaceState', function($http
         // Only retrieve configuration once
         if (!promise[file]) {
             // Get the JSON data.
-            promise[file] = $http.get('config/' + myWorkspace + '/' + file + '.json', { cache: true })
+            promise[file] = $http.get('mock/' + myWorkspace + '/' + file + '.json', { cache: true })
             .then(function(response) {
                 // Request suceeded, set our variable
                 return response.data;

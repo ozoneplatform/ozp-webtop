@@ -19,12 +19,13 @@ angular.module('ozpWebtopApp', [
 // App routing configurations
 angular.module('ozpWebtopApp').config(function ($routeProvider) {
     $routeProvider.when('/grid', {
-        templateUrl: 'views/grid.html'
+        templateUrl: 'views/grid.html',
+        controller: 'GridController'
     }).when('/desktop', {
         templateUrl: 'views/desktop.html',
         controller: 'DesktopController'
     }).otherwise({
-        redirectTo: '/desktop'
+        redirectTo: '/grid'
     });
 });
 

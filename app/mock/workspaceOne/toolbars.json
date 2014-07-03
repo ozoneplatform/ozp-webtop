@@ -3,6 +3,13 @@
     {
       "buttons": [
         {
+          "icon": "images/earth.png",
+          "text": "Desktop",
+          "elliptical": true,
+          "index": 1,
+          "url": "#/desktop"
+        },
+        {
           "icon": "images/home-icon.png",
           "text": "Grid",
           "elliptical": true,
@@ -14,13 +21,6 @@
     },
     {
       "buttons": [
-        {
-          "icon": "images/earth.png",
-          "text": "Desktop",
-          "elliptical": true,
-          "index": 1,
-          "url": "#/desktop"
-        },
         {
           "icon": "images/broken-dvd-icon.png",
           "text": "Ozp Button 2",

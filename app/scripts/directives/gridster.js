@@ -123,6 +123,9 @@ angular.module('ozpWebtopApp.directives')
                 // Instead of templateUrl, use $http to load one of two templates
                 $http.get(getTemplate(origin)).then(function(response) {
                     element.html($compile(response.data)(scope));
+
+                    // Add the managed frame class to take advantage of the styles
+                    element.addClass('ozp-managed-frame');
                 });
 
                 // TODO: make these dynamic

@@ -53,6 +53,17 @@ angular.module('ozpWebtopApp.directives')
 
                 // React to a mousedown and allow the element to move
                 element.on('mousedown', function(event) {
+                    // Bring frame to foreground
+                    if (scope.frame.zIndex < scope.max.zIndex) {
+                        scope.frame.zIndex = scope.max.zIndex + 1;
+                        scope.max.zIndex = scope.frame.zIndex;
+
+                        element.css({
+                            zIndex: scope.frame.zIndex
+                        });
+                        console.log('Update zIndex to ' + scope.max.zIndex);
+                    }
+
                     // Prevent default dragging of selected content
                     event.preventDefault();
                     startX = event.pageX - x;

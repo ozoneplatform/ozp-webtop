@@ -19,7 +19,7 @@ angular.module('ozpWebtopApp.directives')
             widget_selector: 'li',
             min_cols: 5,
             draggable: {
-                handle: 'div.ozp-chrome'
+                handle: 'div.ozp-chrome, div.ozp-chrome > .chrome-icon, div.ozp-chrome > .chrome-name'
             }
         };
 

@@ -3,30 +3,31 @@
 angular.module('ozpWebtopApp').factory('WorkspaceState', function($q) {
     return {
         getStateFile : function() {
-            var tiles = { 'tiles' : [] };
-            return $q.when(tiles);
+            var state = { 'frames' : [], 'icons' : [] };
+            return $q.when(state);
         }
     };
 });
 
-describe('Controller: GridcontrollerCtrl', function () {
+describe('Controller: DesktopController', function () {
 
     // load the controller's module
     beforeEach(module('ozpWebtopApp'));
 
-    var GridcontrollerCtrl,
-    scope;
+    var desktopcontrollerCtrl,
+        scope;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function ($controller, $rootScope, _WorkspaceState_) {
         scope = $rootScope.$new();
-        GridcontrollerCtrl = $controller('GridController', {
+        desktopcontrollerCtrl = $controller('DesktopController', {
             $scope: scope,
             WorkspaceState: _WorkspaceState_
         });
     }));
 
-    it('should attach grid data to the scope', function () {
-        expect(scope.grid).not.toBeNull();
+    it('should attach icon and frame data to the scope', function () {
+        expect(scope.frames).not.toBeNull();
+        expect(scope.icons).not.toBeNull();
     });
 });

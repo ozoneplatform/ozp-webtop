@@ -21,7 +21,7 @@
       "frameId": "5t4r3e2w",
       "index": 1,
       "zIndex": 1,
-      "url": "http://localhost:8080/ozp-webtop/app/examples/circle.html",
+      "url": "http://127.0.0.1:8080/ozone-development/ozp-webtop/app/examples/circle.html",
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {
@@ -38,7 +38,7 @@
       "frameId": "4y5u6i7o",
       "index": 2,
       "zIndex": 1,
-      "url": "http://localhost:8080/ozp-webtop/app/examples/text.html",
+      "url": "http://127.0.0.1:8080/ozone-development/ozp-webtop/app/examples/text.html",
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {
@@ -55,7 +55,7 @@
       "frameId": "1q2w3e4r",
       "index": 3,
       "zIndex": 2,
-      "url": "http://localhost:8080/ozp-webtop/app/examples/mbrot.html",
+      "url": "http://127.0.0.1:8080/ozone-development/ozp-webtop/app/examples/mbrot.html",
       "registryUrl": "#",
       "version": "1.2.3",
       "size": {

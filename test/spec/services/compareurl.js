@@ -2,17 +2,23 @@
 
 describe('Service: Compareurl', function () {
 
-  // load the service's module
-  beforeEach(module('ozpWebtopApp'));
+    // load the service's module
+    beforeEach(module('ozpWebtopApp'));
 
-  // instantiate service
-  var Compareurl;
-  beforeEach(inject(function (_Compareurl_) {
-    Compareurl = _Compareurl_;
-  }));
+    // instantiate service
+    var compareUrl;
 
-  it('should do something', function () {
-    expect(!!Compareurl).toBe(true);
-  });
+    beforeEach(inject(function (_compareUrl_) {
+        compareUrl = _compareUrl_;
+    }));
+
+    it('should do something', function () {
+        expect(angular.isFunction(compareUrl)).toBe(true);
+    });
+
+    it('should compare origins', function() {
+        var location = window.location;
+        expect(compareUrl(location)).toBe(true);
+    });
 
 });

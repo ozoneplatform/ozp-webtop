@@ -2,19 +2,27 @@
 
 describe('Directive: ozpChrome', function () {
 
-  // load the directive's module
-  beforeEach(module('ozpWebtopApp'));
+    // load the directive's module
+    beforeEach(module('ozpWebtopApp'));
 
-  var element,
-    scope;
+    beforeEach(module('templates/ozpchrome.html'));
 
-  beforeEach(inject(function ($rootScope) {
-    scope = $rootScope.$new();
-  }));
+    var element,
+        scope;
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<ozp-chrome></ozp-chrome>');
-    element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the ozpChrome directive');
-  }));
+    beforeEach(inject(function ($rootScope) {
+        scope = $rootScope.$new();
+        scope.frame = {
+            name: 'ChromeName',
+            icon: 'chromeIcon.png'
+        };
+    }));
+
+    it('should have a chrome icon', inject(function ($compile) {
+        element = angular.element('<ozp-chrome></ozp-chrome>');
+        element = $compile(element)(scope);
+        scope.$digest();
+        expect(element.find('img').length).toBe(1);
+    }));
 });
+

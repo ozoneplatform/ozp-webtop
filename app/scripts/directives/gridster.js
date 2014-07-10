@@ -11,17 +11,19 @@ angular.module('ozpWebtopApp.directives')
 
     .directive('ozpGridster', function ($timeout) {
 
+        /* jshint camelcase: false */
+
         var gridsterConfig = {
             widget_margins: [5, 5],
             widget_base_dimensions: [200, 200],
             widget_selector: 'li',
             min_cols: 5,
             draggable: {
-                handle: 'div.ozp-chrome'
+                handle: 'div.ozp-chrome, div.ozp-chrome > .chrome-icon, div.ozp-chrome > .chrome-name'
             }
         };
 
-
+        /* jshint camelcase: true */
 
         return {
 
@@ -51,11 +53,13 @@ angular.module('ozpWebtopApp.directives')
                     gridster = el.data('gridster');
 
                     // When a drag stops...
-                    gridster.options.draggable.stop = function (event, ui) {
+                    gridster.options.draggable.stop = function () {
                         // Update the model
                         angular.forEach(el.find('li'), function (item, index) {
                             var li = angular.element(item);
-                            if (li.attr('class') === 'preview-holder') return;
+                            if (li.attr('class') === 'preview-holder') {
+                                return;
+                            }
                             var frame = scope.ngModel[index];
                             frame.row = li.attr('data-row');
                             frame.col = li.attr('data-col');
@@ -65,15 +69,10 @@ angular.module('ozpWebtopApp.directives')
 
                 });
 
-            },
-
-            controller: function ($scope, $element, $attrs) {
-
-                // TODO
-                this.addFrame = function (frame) {
-                };
-
             }
+
+            // TODO: Create controller API
+            // controller: function ($scope, $element, $attrs) {}
         };
 
     })
@@ -107,15 +106,14 @@ angular.module('ozpWebtopApp.directives')
 
             restrict: 'AE',
 
-            require: '^ozpGridster',
+            // TODO: use controller for inter-directive communication
+            // require: '^ozpGridster',
 
             scope: {
                 frame: '='
             },
 
-            link: function (scope, element, attributes, controller) {
-
-                console.log('Item link fn called ' + scope.frame.frameId);
+            link: function (scope, element) {
 
                 // Is the origin the same as the webtop?
                 var origin = compareUrl(scope.frame.url);
@@ -123,6 +121,9 @@ angular.module('ozpWebtopApp.directives')
                 // Instead of templateUrl, use $http to load one of two templates
                 $http.get(getTemplate(origin)).then(function(response) {
                     element.html($compile(response.data)(scope));
+
+                    // Add the managed frame class to take advantage of the styles
+                    element.addClass('ozp-managed-frame');
                 });
 
                 // TODO: make these dynamic

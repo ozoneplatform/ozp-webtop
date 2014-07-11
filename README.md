@@ -50,3 +50,12 @@ test/
     spec/           # Child directories correspond to the code in app/scripts/         
         ...
 ```
+
+## Copyrights
+> Software (c) 2014 [Department of Defense](http://defense.gov/ "DoD")
+
+> The United States Government has unlimited rights in this software.  
+ 
+The OZONE Platform Webtop is released to the public as Open Source Software, because it's the Right Thing To Do. Also, it was required by [Section 924 of the 2012 National Defense Authorization Act](http://www.gpo.gov/fdsys/pkg/PLAW-112publ81/pdf/PLAW-112publ81.pdf "NDAA FY12").
+
+Released under the [Apache License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.html "Apache License v2").

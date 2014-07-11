@@ -37,10 +37,10 @@ The directory structure is a result of the Yeoman scaffolding, however some addi
 
 ```
 app/            
-    config/         # JSON which mocks a server response
     examples/       # HTML to use as webtop frames
     fonts/          # Provided by Yeoman
     images/         # Placeholder images 
+    mock/           # JSON which mocks a server response
     scripts/        # Contains JavaScript with Angular pieces of the application
         ...
     templates/      # Templates are HTML fragments that are used by one or more directives

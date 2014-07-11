@@ -84,7 +84,7 @@ angular.module('ozpWebtopApp.directives')
      * @class gridsterItem
      * @constructor
      */
-    .directive('gridsterItem', function ($compile, $http, compareUrl) {
+    .directive('ozpGridsterItem', function ($compile, $http, compareUrl) {
 
         var getTemplate = function (sameOrigin) {
             var template = '';
@@ -137,4 +137,3 @@ angular.module('ozpWebtopApp.directives')
         };
 
     });
-

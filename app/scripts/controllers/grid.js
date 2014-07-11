@@ -12,37 +12,16 @@ angular.module('ozpWebtopApp.controllers')
     .controller('GridController', function ($scope, WorkspaceState) {
 
         // GET the state of the grid
-        /*
         WorkspaceState.getStateFile('tiles').then(function (data) {
             $scope.grid = data.tiles;
         });
-        */
 
-        $scope.grid = [{
-                sizeX: 2,
-                sizeY: 1,
-                row: 0,
-                col: 0,
-                name: "Shrubbery"
-            }, {
-                sizeX: 2,
-                sizeY: 2,
-                row: 0,
-                col: 2,
-                name: "Foo"
-            }, {
-                sizeX: 2,
-                sizeY: 1,
-                row: 2,
-                col: 1,
-                name: "Grid"
-            }, {
-                sizeX: 1,
-                sizeY: 1,
-                row: 2,
-                col: 3,
-                name: "Bar"
-            }];
+        $scope.customItemMap = {
+            sizeX: 'item.sizex',
+            sizeY: 'item.sizey',
+            row: 'item.row',
+            col: 'item.row'
+        };
 
         $scope.gridOptions =  {
             columns: 6, // the width of the grid, in columns
@@ -60,7 +39,7 @@ angular.module('ozpWebtopApp.controllers')
                enabled: true,
                handles: 'se',
                start: function(event, uiWidget, $element) {}, // optional callback fired when resize is started,
-               resize: function(event, uiWidget, $element) {}, // optional callback fired when item is resized,
+               resize: function(event, uiWidget, $element) { console.log(event); console.log(uiWidget); console.log($element);}, // optional callback fired when item is resized,
                stop: function(event, uiWidget, $element) {} // optional callback fired when item is finished resizing
             },
             draggable: {

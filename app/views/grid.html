@@ -1,8 +1,8 @@
 <div class="container">
     <div gridster="gridOptions">
         <ul>
-            <li gridster-item="item" ng-repeat="item in grid" >
-                {{item.name}}
+            <li gridster-item="customItemMap" ng-repeat="item in grid"
+                ozp-gridster-item frame="item">
             </li>
         </ul>
     </div>

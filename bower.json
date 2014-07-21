@@ -10,10 +10,15 @@
     "angular-cookies": "1.2.6",
     "angular-sanitize": "1.2.6",
     "angular-route": "1.2.6",
-    "gridster": "~0.5.2"
+    "gridster": "~0.5.2",
+    "ozp-classification": "ozone-development/ozp-classification"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",
     "angular-scenario": "1.2.6"
+  },
+  "resolutions": {
+    "jquery": "~2.1.1",
+    "angular": "~1.2.20"
   }
 }

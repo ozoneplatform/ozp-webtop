@@ -102,6 +102,22 @@ module.exports = function (grunt) {
                 options: {
                     base: '<%= yeoman.dist %>'
                 }
+            },
+
+            // Demo Apps server
+            demoApps: {
+                options: {
+                    port: 9005,
+                    base: './demoApps'
+                }
+            },
+
+            // Examples server
+            examples: {
+                options: {
+                    port: 9006,
+                    base: '<%= yeoman.app %>/examples'
+                }
             }
         },
 
@@ -346,7 +362,10 @@ module.exports = function (grunt) {
             'concurrent:server',
             'autoprefixer',
             'connect:livereload',
+            'connect:demoApps',
+            'connect:examples',
             'watch'
+
         ]);
     });
 

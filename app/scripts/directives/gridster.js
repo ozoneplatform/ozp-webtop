@@ -15,7 +15,7 @@ angular.module('ozpWebtopApp.directives')
 
         var gridsterConfig = {
             widget_margins: [5, 5],
-            widget_base_dimensions: [200, 200],
+            widget_base_dimensions: [250, 250],
             widget_selector: 'li',
             min_cols: 5,
             draggable: {
@@ -128,8 +128,8 @@ angular.module('ozpWebtopApp.directives')
 
                 // TODO: make these dynamic
                 scope.styles = {
-                    'height': 181,
-                    'width': 150
+                    'height': 225,
+                    'width': 250
                 };
 
             }

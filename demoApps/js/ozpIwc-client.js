@@ -12,7 +12,7 @@ ozpIwc.AsyncAction=function() {
 
 ozpIwc.AsyncAction.prototype.when=function(state,callback,self) {
     self=self || this;
-	
+
 	if(this.resolution === state) {
 		callback.apply(self,this.value);
 	} else {
@@ -29,7 +29,7 @@ ozpIwc.AsyncAction.prototype.resolve=function(status) {
 	var callback=this.callbacks[status];
 	this.resolution=status;
 	this.value=Array.prototype.slice.call(arguments,1);
-	
+
 	if(callback) {
 		callback.apply(this,this.value);
 	}
@@ -262,8 +262,8 @@ ozpIwc.util.clone=function(value) {
  */
 ozpIwc.util.arrayContainsAll=function(haystack,needles,equal) {
     equal=equal || function(a,b) { return a===b;};
-    return needles.every(function(needle) { 
-        return haystack.some(function(hay) { 
+    return needles.every(function(needle) {
+        return haystack.some(function(hay) {
             return equal(hay,needle);
         });
     });
@@ -271,7 +271,7 @@ ozpIwc.util.arrayContainsAll=function(haystack,needles,equal) {
 
 
 /**
- * Returns true if the value every attribute in needs is equal to 
+ * Returns true if the value every attribute in needs is equal to
  * value of the same attribute in haystack.
  * @param {array} haystack - The object that must contain all attributes and values.
  * @param {array} needles - The reference object for the attributes and values.
@@ -280,7 +280,7 @@ ozpIwc.util.arrayContainsAll=function(haystack,needles,equal) {
  */
 ozpIwc.util.objectContainsAll=function(haystack,needles,equal) {
     equal=equal || function(a,b) { return a===b;};
-    
+
     for(var attribute in needles) {
         if(!equal(haystack[attribute],needles[attribute])) {
             return false;
@@ -320,8 +320,8 @@ ozpIwc.Client=function(config) {
 	this.peerOrigin=a.protocol + "//" + a.hostname;
 	if(a.port)
 		this.peerOrigin+= ":" + a.port;
-	
-	
+
+
 	this.autoPeer=("autoPeer" in config) ? config.autoPeer : true;
 	this.msgIdSequence=0;
 	this.events=new ozpIwc.Event();
@@ -451,7 +451,7 @@ ozpIwc.Client.prototype.createIframePeer=function(peerUrl) {
         self.iframe.src=peerUrl+"/iframe_peer.html";
         self.iframe.height=1;
         self.iframe.width=1;
-        self.iframe.style="display:none !important;";
+        self.iframe.style.display="none";
         self.iframe.addEventListener("load",function() { self.requestAddress(); },false);
         document.body.appendChild(self.iframe);
         self.peer=self.iframe.contentWindow;

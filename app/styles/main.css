@@ -114,11 +114,16 @@ a img {
         margin: 7px 0 0 7px;
     }
 
-/* Set bottom toolbar to the bottom of the rendering window */
+/* Set bottom toolbar to the bottom of the rendering window, adjusted for security banners */
 ozp-toolbar[location="bottom"] {
     position: absolute;
-    bottom: 0px;
+    bottom: 16px;
     width: 100%;
+}
+
+body > div.classBanner:last-of-type {
+    position: absolute;
+    bottom: 0px;
 }
 
 

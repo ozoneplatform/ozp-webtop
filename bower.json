@@ -10,9 +10,9 @@
     "angular-cookies": "~1.2.10",
     "angular-sanitize": "~1.2.10",
     "angular-route": "~1.2.10",
-    "gridster": "~0.5.2",
     "angular-gridster": "~0.9.11",
-    "angular-ui-bootstrap": "~0.11.0"
+    "angular-ui-bootstrap": "~0.11.0",
+    "ozp-classification": "ozone-development/ozp-classification"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.10",

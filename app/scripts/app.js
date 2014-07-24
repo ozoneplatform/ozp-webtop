@@ -14,6 +14,7 @@ angular.module('ozpWebtopApp', [
     'ozpWebtopApp.directives',
     'ozpWebtopApp.services',
     'ozpWebtopApp.filters',
+    'gridster',
     'ozpClassification'
 ]);
 

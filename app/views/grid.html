@@ -1,4 +1,9 @@
 <div class="container">
-    <ozp-gridster class="ozp-gridster" ng-model="grid"></ozp-gridster>
+    <div gridster="gridOptions">
+        <ul>
+            <li gridster-item="customItemMap" ng-repeat="item in grid"
+                ozp-gridster-item frame="item">
+            </li>
+        </ul>
+    </div>
 </div>
-

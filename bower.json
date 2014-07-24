@@ -2,23 +2,20 @@
   "name": "ozp-webtop",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "1.2.6",
+    "angular": "1.2.20",
     "json3": "~3.2.6",
     "es5-shim": "~2.1.0",
-    "jquery": "~1.10.2",
-    "angular-resource": "1.2.6",
-    "angular-cookies": "1.2.6",
-    "angular-sanitize": "1.2.6",
-    "angular-route": "1.2.6",
-    "gridster": "~0.5.2",
+    "jquery": "2.1.1",
+    "angular-resource": "~1.2.10",
+    "angular-cookies": "~1.2.10",
+    "angular-sanitize": "~1.2.10",
+    "angular-route": "~1.2.10",
+    "angular-gridster": "~0.9.11",
+    "angular-ui-bootstrap": "~0.11.0",
     "ozp-classification": "ozone-development/ozp-classification"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.6",
-    "angular-scenario": "1.2.6"
-  },
-  "resolutions": {
-    "jquery": "~2.1.1",
-    "angular": "~1.2.20"
+    "angular-mocks": "~1.2.10",
+    "angular-scenario": "~1.2.10"
   }
 }

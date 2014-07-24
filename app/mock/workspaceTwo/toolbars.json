@@ -4,10 +4,17 @@
       "buttons": [
         {
           "icon": "images/anti-virus-icon.png",
-          "text": "En",
+          "text": "Grid",
           "elliptical": false,
           "index": 0,
-          "url": "#"
+          "url": "#/grid"
+        },
+        {
+          "icon": "images/yellow-tag-icon.png",
+          "text": "Desktop",
+          "elliptical": false,
+          "index": 1,
+          "url": "#/desktop"
         }
       ],
       "location": "top"

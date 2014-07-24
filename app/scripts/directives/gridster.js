@@ -60,8 +60,8 @@ angular.module('ozpWebtopApp.directives')
 
                 // TODO: make these dynamic
                 scope.styles = {
-                    'height': 181,
-                    'width': 150
+                    'height': 205,
+                    'width': 205
                 };
 
             }

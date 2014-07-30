@@ -11,6 +11,7 @@
  * - added grunt-contrib-connect to support (manually) serving the app via
  *    grunt connect:test:keepalive (or similar)
  * - added 'serve' task using grunt connect
+ * - delta:less also needs to run the concat:build_css task
  */
 
 
@@ -586,7 +587,7 @@ module.exports = function ( grunt ) {
        */
       less: {
         files: [ 'src/**/*.less' ],
-        tasks: [ 'less:build' ]
+        tasks: [ 'less:build', 'concat:build_css' ]
       },
 
       /**

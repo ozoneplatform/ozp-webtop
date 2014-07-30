@@ -1,0 +1,25 @@
+{
+  "icons": [
+    {
+      "icon": "img/key-icon.png",
+      "text": "Icon 1",
+      "elliptical": false,
+      "index": 1,
+      "url": "#"
+    },
+    {
+      "icon": "img/Glossy-Developer-icon.png",
+      "text": "Icon 0",
+      "elliptical": false,
+      "index": 0,
+      "url": "#"
+    },
+    {
+      "icon": "img/nero-icon.png",
+      "text": "Icon 2",
+      "elliptical": false,
+      "index": 2,
+      "url": "#"
+    }
+  ]
+}

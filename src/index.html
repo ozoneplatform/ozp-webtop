@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<!-- detect older browsers -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>OZP Webtop</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+    <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+
+    <!-- Standard iPhone -->
+    <!-- TODO: is there a better way? -->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/img/touch-icon-iphone-114.png" />
+    <!-- Retina iPhone -->
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/img/touch-icon-iphone-114.png" />
+    <!-- Standard iPad -->
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/img/touch-icon-ipad-144.png" />
+    <!-- Retina iPad -->
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/img/touch-icon-ipad-144.png" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+
+    <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+
+  </head>
+  <body ng-app="ozpWebtopApp" ozp-classification="U">
+
+    <div ng-include="'dashboardToolbar/dashboardToolbar.tpl.html'"></div>
+
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser.
+      Please <a href="http://browsehappy.com/">upgrade your browser</a> to
+      improve your experience.</p>
+    <![endif]-->
+
+    <!-- View is used as the 'workspace' -->
+    <div class="ui-view-style" ui-view=""></div>
+
+    <div class="app-toolbar-ng-include"
+      ng-include="'appToolbar/appToolbar.tpl.html'">
+    </div>
+
+    <!-- TODO: handle this nicer - should come from gruntfile, not be hard coded -->
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

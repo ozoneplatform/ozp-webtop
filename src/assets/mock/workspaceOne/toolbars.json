@@ -1,0 +1,35 @@
+{
+  "toolbars": [
+    {
+      "buttons": [
+        {
+          "icon": "images/earth.png",
+          "text": "Desktop",
+          "elliptical": true,
+          "index": 1,
+          "url": "#/desktop"
+        },
+        {
+          "icon": "images/home-icon.png",
+          "text": "Grid",
+          "elliptical": true,
+          "index": 0,
+          "url": "#/grid"
+        }
+      ],
+      "location": "top"
+    },
+    {
+      "buttons": [
+        {
+          "icon": "images/broken-dvd-icon.png",
+          "text": "Ozp Button 2",
+          "elliptical": false,
+          "index": 0,
+          "url": "#"
+        }
+      ],
+      "location": "bottom"
+    }
+  ]
+}

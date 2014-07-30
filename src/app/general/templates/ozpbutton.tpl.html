@@ -1,0 +1,7 @@
+<a class="btn" ng-href="{{button.url}}">
+    <!-- Bootstrap icon
+    <span class="glyphicon {{button.icon}}"></span>
+    -->
+    <img ng-src="{{button.icon}}">
+    <span>{{button.text | elliptical:button.elliptical}}</span>
+</a>

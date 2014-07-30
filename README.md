@@ -19,8 +19,13 @@ frontend app dependencies with Bower:
     cd ozp-webtop
     npm install && bower install
     
-Development tasks are run with Grunt. Run `grunt serve` to bring up a live 
-preview of the webtop. Run `grunt -h` for a full list of Grunt tasks.
+### Grunt Tasks
+Development tasks are run with Grunt. 
+
+ - `grunt serve` - brings up a live preview of the webtop
+ - `grunt build` - executes unit tests
+
+Run `grunt -h` for a full list of Grunt tasks.
 
 ## Development Notes
 

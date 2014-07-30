@@ -5,6 +5,7 @@ angular.module('ozpWebtopApp')
   return {
     templateUrl: 'general/templates/ozpchrome.tpl.html',
     restrict: 'E',
-    replace: true
+    replace: true,
+    controller: 'ChromeController'
   };
 });

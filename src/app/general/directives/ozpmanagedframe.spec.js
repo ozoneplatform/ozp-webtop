@@ -6,7 +6,7 @@ describe('Directive: ozpManagedFrame', function () {
 
   beforeEach(module('general/templates/managedframe.tpl.html'));
   beforeEach(module('general/templates/managediframe.tpl.html'));
-  beforeEach(module('general/templates/ozpchrome.tpl.html'));
+  beforeEach(module('components/chrome/ozpchrome.tpl.html'));
 
   var element,
     scope,

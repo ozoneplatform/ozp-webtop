@@ -54,9 +54,9 @@ angular.module('ozpWebtopApp.dashboardView')
 
       // Instead of templateUrl, use $http to load one of two templates
       if (origin === true) {
-        template = $templateCache.get('general/templates/managedframe.tpl.html');
+        template = $templateCache.get('dashboardView/templates/managedframe.tpl.html');
       } else {
-        template = $templateCache.get('general/templates/managediframe.tpl.html');
+        template = $templateCache.get('dashboardView/templates/managediframe.tpl.html');
       }
 
       element.html($compile(template)(scope));

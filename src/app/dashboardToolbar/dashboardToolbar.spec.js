@@ -13,10 +13,15 @@ describe('Dashboard Toolbar', function () {
     $controller('dashboardToolbarCtrl', {$scope: scope});
   }));
 
+  var allowedLayouts = ['grid','desktop'];
+
   it('should expose the clock', function() {
     expect(scope.clock).toBeDefined();
   });
 
+  it('webtop should have layout grid or desktop', function() {
+    expect(allowedLayouts).toContain(scope.layout);
+  });
   // TODO: more tests
 
 

@@ -11,7 +11,7 @@ describe('Service: Compareurl', function () {
     compareUrl = _compareUrl_;
   }));
 
-  it('should do something', function () {
+  it('test compareUrl function', function () {
     expect(angular.isFunction(compareUrl)).toBe(true);
   });
 

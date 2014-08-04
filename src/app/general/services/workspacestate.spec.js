@@ -10,7 +10,7 @@ describe('Service: Workspacestate', function () {
     WorkspaceState = _WorkspaceState_;
   }));
 
-  it('should do something', function () {
-    expect(!!WorkspaceState).toBe(true);
+  it('workspace should be truthy', function () {
+    expect(!!WorkspaceState).toBeTruthy();
   });
 });

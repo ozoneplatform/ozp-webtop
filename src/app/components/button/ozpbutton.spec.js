@@ -3,7 +3,7 @@
 describe('Directive: ozpButton', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
-  beforeEach(module('general/templates/ozpbutton.tpl.html'));
+  beforeEach(module('components/button/ozpbutton.tpl.html'));
 
   var element,
       scope;

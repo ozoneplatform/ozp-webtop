@@ -3,15 +3,15 @@
 /**
  * ozpButton Renders button with an icon to the left and text to the right.
  *
- * @namespace directives
+ * @namespace components
  * @class ozpButton
  * @constructor
  */
-angular.module('ozpWebtopApp.general')
+angular.module('ozpWebtopApp.components')
 .directive('ozpButton', function () {
   return {
     replace: true,
-    templateUrl: 'general/templates/ozpbutton.tpl.html',
+    templateUrl: 'components/button/ozpbutton.tpl.html',
     restrict: 'E'
   };
 });

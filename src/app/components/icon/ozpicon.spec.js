@@ -4,7 +4,7 @@ describe('Directive: ozpIcon', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
 
-  beforeEach(module('general/templates/ozpicon.tpl.html'));
+  beforeEach(module('components/icon/ozpicon.tpl.html'));
 
   var element,
       scope;

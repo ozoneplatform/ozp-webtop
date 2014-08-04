@@ -1,28 +1,26 @@
 'use strict';
 
-describe('Directive: ozpButton', function () {
+describe('Directive: ozpIcon', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
-  beforeEach(module('general/templates/ozpbutton.tpl.html'));
+
+  beforeEach(module('components/icon/ozpicon.tpl.html'));
 
   var element,
       scope;
 
   beforeEach(inject(function ($rootScope) {
     scope = $rootScope.$new();
-    scope.button = {
-      url:  'http://www.example.com/',
+    scope.icon = {
       icon: 'example.png',
-      text: 'descriptive text',
-      elliptical: false
+      text: 'Some text'
     };
   }));
 
-  it('should should attach an image', inject(function ($compile) {
-    element = angular.element('<ozp-button></ozp-button>');
+  it('should attach an image', inject(function ($compile) {
+    element = angular.element('<ozp-icon></ozp-icon>');
     element = $compile(element)(scope);
     scope.$digest();
     expect(element.find('img').length).toBe(1);
   }));
 });
-

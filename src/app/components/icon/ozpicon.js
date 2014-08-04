@@ -3,15 +3,15 @@
 /**
  * ozpIcon Renders an icon as an anchor. It has an image on top and text below.
  *
- * @namespace directives
+ * @namespace components
  * @class ozpIcon
  * @constructor
  */
-angular.module('ozpWebtopApp.general')
+angular.module('ozpWebtopApp.components')
 .directive('ozpIcon', function () {
   return {
     replace: true,
-    templateUrl: 'general/templates/ozpicon.tpl.html',
+    templateUrl: 'components/icon/ozpicon.tpl.html',
     restrict: 'E',
     // Controller is a placeholder, this may need to be removed/refactored...
     controller: function ($scope) {

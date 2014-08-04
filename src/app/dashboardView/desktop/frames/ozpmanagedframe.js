@@ -7,7 +7,7 @@
  * @class ozpManagedFrame
  * @constructor
  */
-angular.module('ozpWebtopApp.general')
+angular.module('ozpWebtopApp.dashboardView')
 .directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document) {
   /**
    * Decides which template to use.
@@ -22,11 +22,11 @@ angular.module('ozpWebtopApp.general')
 
     // If different origin, use an iframe template
     if (!sameOrigin) {
-      template = 'general/templates/managediframe.tpl.html';
+      template = 'dashboardView/templates/managediframe.tpl.html';
     }
     // otherwise, use a 'frame' (div) template
     else {
-      template = 'general/templates/managedframe.tpl.html';
+      template = 'dashboardView/templates/managedframe.tpl.html';
     }
     return template;
   };

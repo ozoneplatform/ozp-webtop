@@ -4,9 +4,9 @@ describe('Directive: ozpManagedFrame', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
 
-  beforeEach(module('general/templates/managedframe.tpl.html'));
-  beforeEach(module('general/templates/managediframe.tpl.html'));
-  beforeEach(module('general/templates/ozpchrome.tpl.html'));
+  beforeEach(module('dashboardView/templates/managedframe.tpl.html'));
+  beforeEach(module('dashboardView/templates/managediframe.tpl.html'));
+  beforeEach(module('components/chrome/ozpchrome.tpl.html'));
 
   var element,
     scope,

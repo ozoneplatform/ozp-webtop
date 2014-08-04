@@ -4,6 +4,7 @@ angular.module( 'ozpWebtopApp', [
   'templates-app',
   'templates-common',
   'ozpWebtopApp.general',
+  'ozpWebtopApp.components',
   'ozpwebtop.dashboardToolbar',
   'ozpwebtop.appToolbar',
   'ozpWebtopApp.dashboardView',
@@ -67,6 +68,7 @@ angular.module( 'ozpWebtopApp', [
 
 
 angular.module('ozpWebtopApp.general', []);
+angular.module('ozpWebtopApp.components', []);
 angular.module('ozpWebtopApp.dashboardToolbar', []);
 angular.module('ozpWebtopApp.appToolbar', []);
 angular.module('ozpWebtopApp.dashboardView', []);

@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('ozpWebtopApp')
+angular.module('ozpWebtopApp.components')
 .directive('ozpChrome', function () {
   return {
-    templateUrl: 'general/templates/ozpchrome.tpl.html',
+    templateUrl: 'components/chrome/ozpchrome.tpl.html',
     restrict: 'E',
     replace: true,
     controller: 'ChromeController'

@@ -46,6 +46,12 @@
         </li>
         <li class="divider-vertical"></li>
         <li>
+          <a ng-click="themeToggle()" ng-class="{navLinkSelected: layout == 'desktop'}">
+            <i ng-class="{iconWhite: layout == 'desktop'}" class="fa fa-rebel fa-lg">&nbsp&nbspTheme</i>
+          </a>
+        </li>
+        <li class="divider-vertical"></li>
+        <li>
           <a href="#"><span class="badge">{{messages.unread}}</span></a>
         </li>
         <li class="divider-vertical"></li>

@@ -2,8 +2,8 @@
 
 angular.module( 'ozpwebtop.dashboardToolbar', [
 ])
-.controller('dashboardToolbarCtrl', ['$scope',
-  function($scope) {
+.controller('dashboardToolbarCtrl', ['$scope', '$rootScope',
+  function($scope, $rootScope) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                      Data from services
@@ -24,6 +24,8 @@ angular.module( 'ozpwebtop.dashboardToolbar', [
     ];
 
     $scope.clock = '15:30 GMT';
+
+    $rootScope.theme = 'light';
 
     $scope.messages = {
       'unread': 2,
@@ -61,6 +63,15 @@ angular.module( 'ozpwebtop.dashboardToolbar', [
 
     $scope.useDesktopLayout = function() {
       $scope.layout = 'desktop';
+    };
+
+    $scope.themeToggle = function() {
+      if($rootScope.theme === 'light'){
+        $rootScope.theme = 'dark';
+      }
+      else{
+        $rootScope.theme = 'light';
+      }
     };
 
     $scope.layout = 'grid';

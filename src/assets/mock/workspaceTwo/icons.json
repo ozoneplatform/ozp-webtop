@@ -1,28 +1,28 @@
 {
   "icons": [
     {
-      "icon": "img/red-camera-icon.png",
+      "icon": "img/nero-icon.png",
       "text": "Uno",
       "elliptical": false,
       "index": 1,
       "url": "#"
     },
     {
-      "icon": "img/PublicFolder.png",
+      "icon": "img/UserFolder.png",
       "text": "Dos",
       "elliptical": false,
       "index": 3,
       "url": "#"
     },
     {
-      "icon": "img/Briefcase-icon.png",
+      "icon": "img/maps.png",
       "text": "To",
       "elliptical": false,
       "index": 2,
       "url": "#"
     },
     {
-      "icon": "img/burn-icon.png",
+      "icon": "img/key-icon.png",
       "text": "Tre",
       "elliptical": false,
       "index": 0,

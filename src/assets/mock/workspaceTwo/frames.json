@@ -15,7 +15,7 @@
       },
       "windowState": "normal",
       "name": "Red Ball",
-      "icon": "images/UserFolder.png"
+      "icon": "img/UserFolder.png"
     },
     {
       "frameId": "5t4r3e2w",
@@ -32,7 +32,7 @@
       },
       "windowState": "normal",
       "name": "Blue Ball",
-      "icon": "images/maps.png"
+      "icon": "img/maps.png"
     },
     {
       "frameId": "4y5u6i7o",
@@ -49,7 +49,7 @@
       },
       "windowState": "normal",
       "name": "Black Ball",
-      "icon": "images/Network-icon.png"
+      "icon": "img/Network-icon.png"
     },
     {
       "frameId": "1q2w3e4r",
@@ -66,7 +66,7 @@
       },
       "windowState": "normal",
       "name": "Green Ball",
-      "icon": "images/MusicFolder.png"
+      "icon": "img/MusicFolder.png"
     }
   ]
 }

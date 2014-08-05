@@ -9,11 +9,12 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
 
-.controller('GridController', function ($scope, WorkspaceState) {
+.controller('GridController', function ($scope, WorkspaceState, $rootScope) {
 
   // GET the state of the grid
   WorkspaceState.getStateFile('tiles').then(function (data) {
     $scope.grid = data.tiles;
+    $rootScope.activeFrames = data.tiles;
   });
 
   $scope.customItemMap = {
@@ -41,11 +42,16 @@ angular.module('ozpWebtopApp.dashboardView')
       // TODO: breaking jshint
       start: function(/*event, uiWidget, $element*/) {}, // optional callback fired when resize is started,
       resize: function(/*event, uiWidget, $element*/) {
-        console.log(event);
-        console.log(/*uiWidget*/);
-        console.log(/*$element*/);
+        // console.log(event);
+        // console.log(uiWidget);
+        // console.log(/*$element*/);
       }, // optional callback fired when item is resized,
-      stop: function(/*event, uiWidget, $element*/) {} // optional callback fired when item is finished resizing
+      // stop: function(/*event, uiWidget, $element*/) {
+      stop: function(event, uiWidget, $element){
+        console.log(event);
+        console.log(uiWidget);
+        console.log($element);
+      } // optional callback fired when item is finished resizing
     },
     draggable: {
       enabled: true, // whether dragging items is supported

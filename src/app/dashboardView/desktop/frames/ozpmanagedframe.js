@@ -43,6 +43,7 @@ angular.module('ozpWebtopApp.dashboardView')
       // Get starting positions from state
       var startX = scope.frame.size.left, startY = scope.frame.size.top;
 
+
       // 'Current' positions are changed as the element moves
       var x = startX, y = startY;
 
@@ -97,7 +98,10 @@ angular.module('ozpWebtopApp.dashboardView')
       scope.styles = {
         'top': scope.frame.size.top,
         'left': scope.frame.size.left,
-        'height': scope.frame.size.verticalSize,
+        'height': function(){
+          console.log(scope.frame.size.verticalSize);
+          return scope.frame.size.verticalSize;
+        },
         'width': scope.frame.size.horizontalSize,
         'z-index': scope.frame.zIndex
       };

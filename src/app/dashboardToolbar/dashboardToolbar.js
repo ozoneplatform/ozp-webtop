@@ -9,6 +9,8 @@ angular.module( 'ozpwebtop.dashboardToolbar', [
     //                      Data from services
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // TODO: all of this data will need to come from a real service, obviously
+    // console.log('setting up gridVals listener');
+
     $scope.dashboards = [
       {'name': 'dashboard one',
       'index': 0,

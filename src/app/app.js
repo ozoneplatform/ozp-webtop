@@ -19,43 +19,18 @@ angular.module( 'ozpWebtopApp', [
 
     $stateProvider
     .state('grid', {
-      url: '/grid',
+      url: '/grid/{currentDashboardIndex}',
       templateUrl: 'dashboardView/grid/grid.tpl.html',
       controller: 'GridController'
     })
     .state('desktop', {
-      url: '/desktop',
+      url: '/desktop/{currentDashboardIndex}',
       templateUrl: 'dashboardView/desktop/desktop.tpl.html',
       controller: 'DesktopController'
     });
 
-    $urlRouterProvider.otherwise('/grid');
+    $urlRouterProvider.otherwise('/grid/0');
   })
-
-// App routing configurations
-//.config(function ($routeProvider) {
-//  $routeProvider.when('/grid', {
-//    templateUrl: 'dashboardView/grid/grid.tpl.html',
-//    controller: 'GridController'
-//  }).when('/desktop', {
-//    templateUrl: 'dashboardView/desktop/desktop.tpl.html',
-//    controller: 'DesktopController'
-//  }).otherwise({
-//    redirectTo: '/grid'
-//  });
-//})
-
-//.config( function myAppConfig ( $routeProvider ) {
-//  $routeProvider.when('/grid', {
-//    templateUrl: 'dashboardView/grid/grid.tpl.html',
-//    controller: 'GridController'
-//  }).when('/desktop', {
-//    templateUrl: 'dashboardView/grid/desktop.tpl.html',
-//    controller: 'DesktopController'
-//  }).otherwise({
-//    redirectTo: '/grid'
-//  });
-//})
 
 .run( function run (dashboardApi, marketplaceApi) {
     // create example marketplace and dashboard resources

@@ -1,27 +1,16 @@
 'use strict';
 
-angular.module( 'ozpWebtopApp.dashboardToolbar', [
-])
-.controller('dashboardToolbarCtrl', ['$scope', '$rootScope',
-  function($scope, $rootScope) {
+angular.module( 'ozpWebtopApp.dashboardToolbar')
+.controller('dashboardToolbarCtrl',
+  function($scope, $rootScope, dashboardApi) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                      Data from services
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // TODO: all of this data will need to come from a real service, obviously
-    // console.log('setting up gridVals listener');
-
-    $scope.dashboards = [
-      {'name': 'dashboard one',
-      'index': 0,
-      'uuid': 'asdfdsa3'},
-      {'name': 'dashboard two',
-      'index': 1,
-      'uuid': 'fds43'},
-      {'name': 'dashboard three',
-      'index': 2,
-      'uuid': 'gher43'}
-    ];
+    $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
+    // default board is 0
+    $scope.currentDashboard = $scope.dashboards[0];
 
     $rootScope.theme = 'light';
 
@@ -50,10 +39,8 @@ angular.module( 'ozpWebtopApp.dashboardToolbar', [
     //                        Dashboard dropdown
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     $scope.setCurrentDashboard = function(board) {
-      $scope.currentDashboardName = board.name;
+      $scope.currentDashboard = board;
     };
-
-    $scope.currentDashboardName = 'Dashboards';
 
     $scope.useGridLayout = function() {
       $scope.layout = 'grid';
@@ -74,4 +61,4 @@ angular.module( 'ozpWebtopApp.dashboardToolbar', [
 
     $scope.layout = 'grid';
   }
-]);
+);

@@ -15,7 +15,6 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.currentDashboardIndex = $scope.currentDashboard.index;
         console.log('loading dashboard ' + dashboardIndex);
         $scope.apps = $scope.currentDashboard.apps;
-        $scope.activeFrames = $scope.currentDashboard.apps;
         console.log('reloadng GridCtrl for dashboard ' + $scope.currentDashboard);
 
         // get app data
@@ -43,6 +42,8 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.max.zIndex = $scope.frames.length - 1;
       }
     }
+
+    $rootScope.activeFrames = $scope.currentDashboard.apps;
 
     $scope.frames.sort(function(a, b) {
       return ((a.desktopLayout.zIndex < b.desktopLayout.zIndex) ? -1 :

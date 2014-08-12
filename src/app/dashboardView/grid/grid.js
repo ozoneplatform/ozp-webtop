@@ -49,6 +49,8 @@ angular.module('ozpWebtopApp.dashboardView')
       }
     }
 
+    $rootScope.activeFrames = $scope.apps;
+
   $scope.gridOptions =  {
     columns: 6, // the width of the grid, in columns
     pushing: true, // whether to push other items out of the way on move or resize

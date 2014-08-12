@@ -16,7 +16,6 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     $scope.$watch(function() {
       return $location.path();
     }, function() {
-      console.log('url changed: ' + $location.path());
       var n = $location.path().indexOf('grid');
       if (n !== -1) {
         $scope.layout = 'grid';

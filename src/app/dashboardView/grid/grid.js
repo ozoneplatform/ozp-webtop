@@ -17,7 +17,6 @@ angular.module('ozpWebtopApp.dashboardView')
   $scope.$watch(function() {
     return $location.path();
   }, function() {
-    console.log('url changed: ' + $location.path());
     // Get the dashboard index
     // TODO: make this a regex or something less hacky than this
     var dashboardIndex = $location.path().slice(-1);

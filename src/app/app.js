@@ -4,9 +4,10 @@ angular.module( 'ozpWebtopApp', [
   'templates-app',
   'templates-common',
   'ozpWebtopApp.general',
+  'ozpWebtopApp.apis',
   'ozpWebtopApp.components',
-  'ozpwebtop.dashboardToolbar',
-  'ozpwebtop.appToolbar',
+  'ozpWebtopApp.dashboardToolbar',
+  'ozpWebtopApp.appToolbar',
   'ozpWebtopApp.dashboardView',
   'ui.router',
   'ui.bootstrap',
@@ -56,7 +57,10 @@ angular.module( 'ozpWebtopApp', [
 //  });
 //})
 
-.run( function run () {
+.run( function run (dashboardApi, marketplaceApi) {
+    // create example marketplace and dashboard resources
+    marketplaceApi.createExampleMarketplace();
+    dashboardApi.createExampleDashboards();
 })
 .controller( 'AppCtrl', function AppCtrl ( $scope ) {
   $scope.$on('$stateChangeSuccess', function(event, toState){
@@ -68,8 +72,9 @@ angular.module( 'ozpWebtopApp', [
 
 
 angular.module('ozpWebtopApp.general', []);
+angular.module('ozpWebtopApp.apis', ['ozpWebtopApp.general']);
 angular.module('ozpWebtopApp.components', []);
-angular.module('ozpWebtopApp.dashboardToolbar', []);
-angular.module('ozpWebtopApp.appToolbar', []);
-angular.module('ozpWebtopApp.dashboardView', []);
+angular.module('ozpWebtopApp.dashboardToolbar', ['ozpWebtopApp.apis']);
+angular.module('ozpWebtopApp.appToolbar', ['ozpWebtopApp.apis']);
+angular.module('ozpWebtopApp.dashboardView', ['ozpWebtopApp.apis']);
 

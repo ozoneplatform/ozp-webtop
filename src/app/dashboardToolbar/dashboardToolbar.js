@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'ozpwebtop.dashboardToolbar', [
+angular.module( 'ozpWebtopApp.dashboardToolbar', [
 ])
 .controller('dashboardToolbarCtrl', ['$scope', '$rootScope',
   function($scope, $rootScope) {

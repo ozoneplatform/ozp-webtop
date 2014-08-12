@@ -9,20 +9,47 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
 
-.controller('GridController', function ($scope, WorkspaceState, $rootScope) {
+.controller('GridController', function ($scope, $rootScope, dashboardApi, marketplaceApi) {
 
-  // GET the state of the grid
-  WorkspaceState.getStateFile('tiles').then(function (data) {
-    $scope.grid = data.tiles;
-    $rootScope.activeFrames = data.tiles;
-  });
+  // Get state of the dashboard grid
+  $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
 
-  $scope.customItemMap = {
-    sizeX: 'item.sizex',
-    sizeY: 'item.sizey',
-    row: 'item.row',
-    col: 'item.col'
-  };
+  // TODO: get this index from the URL
+  var dashboardIndex = '0';
+    for (var i=0; i < $scope.dashboards.length; i++) {
+      if ($scope.dashboards[i].index.toString() === dashboardIndex) {
+        $scope.currentDashboard = $scope.dashboards[i];
+        $scope.currentDashboardIndex = $scope.currentDashboard.index;
+        console.log('loading dashboard ' + dashboardIndex);
+        $scope.apps = $scope.currentDashboard.apps;
+        console.log('reloading GridCtrl for dashboard ' + $scope.currentDashboard);
+
+        // get app data
+        // TODO: There should be a method in Marketplace to get only my apps
+        var allApps = marketplaceApi.getAllApps();
+        for (i = 0; i < allApps.length; i++) {
+          // check if this app is on our dashboard
+          for (var j = 0; j < $scope.apps.length; j++) {
+            if ($scope.apps[j].uuid === allApps[i].uuid) {
+              // if it is, then get all relevant info
+              $scope.apps[j].icon = allApps[i].icon;
+              $scope.apps[j].url = allApps[i].url;
+              $scope.apps[j].name = allApps[i].name;
+              $scope.apps[j].shortDescription = allApps[i].shortDescription;
+            }
+          }
+        }
+
+        $scope.customItemMap = {
+          sizeX: 'item.gridLayout.sizex',
+          sizeY: 'item.gridLayout.sizey',
+          row: 'item.gridLayout.row',
+          col: 'item.gridLayout.col'
+        };
+      }
+    }
+
+    $rootScope.activeFrames = $scope.apps;
 
   $scope.gridOptions =  {
     columns: 6, // the width of the grid, in columns

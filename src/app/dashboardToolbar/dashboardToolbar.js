@@ -23,8 +23,6 @@ angular.module( 'ozpWebtopApp.dashboardToolbar', [
       'uuid': 'gher43'}
     ];
 
-    $scope.clock = '15:30 GMT';
-
     $rootScope.theme = 'light';
 
     $scope.messages = {

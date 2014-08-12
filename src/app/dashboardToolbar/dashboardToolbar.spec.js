@@ -15,8 +15,8 @@ describe('Dashboard Toolbar', function () {
 
   var allowedLayouts = ['grid','desktop'];
 
-  it('should expose the clock', function() {
-    expect(scope.clock).toBeDefined();
+  it('should expose the layout', function() {
+    expect(scope.layout).toBeDefined();
   });
 
   it('webtop should have layout grid or desktop', function() {

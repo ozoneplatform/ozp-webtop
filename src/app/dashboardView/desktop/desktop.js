@@ -1,14 +1,17 @@
 'use strict';
 
 angular.module('ozpWebtopApp.dashboardView')
-  .controller('DesktopController', function ($scope, $rootScope, dashboardApi, marketplaceApi) {
+  .controller('DesktopController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi) {
 
     $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
     $scope.frames = $scope.dashboards[0].apps;  // to make tests happy
 
-    // TODO: get the dashboard index from the URL
-    var dashboardIndex = '0';
-    for (var i=0; i < $scope.dashboards.length; i++) {
+    $scope.$watch(function() {
+      return $location.path();
+    }, function() {
+      // TODO: use a regex or something less hacky
+      var dashboardIndex = $location.path().slice(-1);
+      for (var i=0; i < $scope.dashboards.length; i++) {
       if ($scope.dashboards[i].index.toString() === dashboardIndex) {
         $scope.currentDashboard = $scope.dashboards[i];
         $scope.icons = $scope.currentDashboard.desktopIcons;
@@ -42,8 +45,9 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.max.zIndex = $scope.frames.length - 1;
       }
     }
-
     $rootScope.activeFrames = $scope.currentDashboard.apps;
+    });
+
 
     $scope.frames.sort(function(a, b) {
       return ((a.desktopLayout.zIndex < b.desktopLayout.zIndex) ? -1 :

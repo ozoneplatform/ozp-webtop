@@ -8,9 +8,11 @@ describe('Dashboard Toolbar', function () {
   beforeEach(module('ozpWebtopApp.dashboardToolbar'));
 
    // mock out the filtrfy service before each test
-  beforeEach(inject(function($rootScope, $controller) {
+  beforeEach(inject(function($rootScope, $controller, _dashboardApi_) {
     scope = $rootScope.$new();
-    $controller('dashboardToolbarCtrl', {$scope: scope});
+    $controller('dashboardToolbarCtrl', {
+      $scope: scope,
+      dashboardApi: _dashboardApi_});
   }));
 
   var allowedLayouts = ['grid','desktop'];

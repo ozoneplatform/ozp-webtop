@@ -9,13 +9,18 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
 
-.controller('GridController', function ($scope, $rootScope, dashboardApi, marketplaceApi) {
+.controller('GridController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi) {
 
   // Get state of the dashboard grid
   $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
 
-  // TODO: get this index from the URL
-  var dashboardIndex = '0';
+  $scope.$watch(function() {
+    return $location.path();
+  }, function() {
+    // Get the dashboard index
+    // TODO: make this a regex or something less hacky than this
+    var dashboardIndex = $location.path().slice(-1);
+
     for (var i=0; i < $scope.dashboards.length; i++) {
       if ($scope.dashboards[i].index.toString() === dashboardIndex) {
         $scope.currentDashboard = $scope.dashboards[i];
@@ -48,8 +53,9 @@ angular.module('ozpWebtopApp.dashboardView')
         };
       }
     }
-
     $rootScope.activeFrames = $scope.apps;
+  });
+
 
   $scope.gridOptions =  {
     columns: 6, // the width of the grid, in columns

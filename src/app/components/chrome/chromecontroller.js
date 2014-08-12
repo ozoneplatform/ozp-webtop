@@ -18,4 +18,16 @@ angular.module('ozpWebtopApp.components')
       }
     }
   };
+
+  $scope.minimizeFrame = function(e){
+    // Loop through the frames that are on rootScope, 
+    //   if the id of the frameId of the grid object matches the frameId of the object on rootScope, 
+    //    that oblect is removed from rootScope and changes are reflected in other things that are 
+    //    watching activeFrames on rootScope
+    for (var i = 0; i < $rootScope.activeFrames.length; i++){
+      if($rootScope.activeFrames[i].frameId.indexOf(e) !== -1){
+    $rootScope.activeFrames.splice(i, 1);
+      }
+    }
+  };
 });

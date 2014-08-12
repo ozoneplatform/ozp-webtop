@@ -16,21 +16,23 @@ describe('Directive: ozpManagedFrame', function () {
     $httpBackend = _$httpBackend_;
     scope = $rootScope.$new();
     scope.frame = {
-      'frameId': 'q1w2e3r4',
-      'index': 0,
-      'zIndex': 1,
+      'uuid': '342f3680-18c9-11e4-8c21-0800200c9a66',
+      'gridLayout': {
+        'row': 1,
+        'col': 1,
+        'sizex': 1,
+        'sizey': 1
+      },
+      'desktopLayout': {
+        'zIndex': 0,
+        'top': 25,
+        'left': 100,
+        'width': 200,
+        'height': 200
+      },
       // this origin yields a normal frame during testing
       //   any other would yield an iframe
       'url': 'http://localhost:8080/demoApps/square/square.html',
-      'registryUrl': '#',
-      'version': '1.2.3',
-      'size': {
-        'top': 125,
-        'left': 100,
-        'horizontalSize': 200,
-        'verticalSize': 200
-      },
-      'windowState': 'normal',
       'name': 'Square',
       'icon': 'images/UserFolder.png'
     };

@@ -5,7 +5,7 @@ describe('App Toolbar', function () {
   var scope;
 
   // load the filter's module
-  beforeEach(module('ozpwebtop.appToolbar'));
+  beforeEach(module('ozpWebtopApp.appToolbar'));
 
    // mock out the filtrfy service before each test
   beforeEach(inject(function($rootScope, $controller) {

@@ -41,7 +41,8 @@ angular.module('ozpWebtopApp.dashboardView')
       // See: https://docs.angularjs.org/guide/directive
 
       // Get starting positions from state
-      var startX = scope.frame.size.left, startY = scope.frame.size.top;
+      var startX = scope.frame.desktopLayout.left;
+      var startY = scope.frame.desktopLayout.top;
 
 
       // 'Current' positions are changed as the element moves
@@ -50,12 +51,12 @@ angular.module('ozpWebtopApp.dashboardView')
       // React to a mousedown and allow the element to move
       element.on('mousedown', function(event) {
         // Bring frame to foreground
-        if (scope.frame.zIndex < scope.max.zIndex) {
-          scope.frame.zIndex = scope.max.zIndex + 1;
-          scope.max.zIndex = scope.frame.zIndex;
+        if (scope.frame.desktopLayout.zIndex < scope.max.zIndex) {
+          scope.frame.desktopLayout.zIndex = scope.max.zIndex + 1;
+          scope.max.zIndex = scope.frame.desktopLayout.zIndex;
 
           element.css({
-            zIndex: scope.frame.zIndex
+            zIndex: scope.frame.desktopLayout.zIndex
           });
           console.log('Update zIndex to ' + scope.max.zIndex);
         }
@@ -96,14 +97,14 @@ angular.module('ozpWebtopApp.dashboardView')
       // Note: in iframe template height and width of the iframe is calculated based on
       // these styles. May need to change it in the future.
       scope.styles = {
-        'top': scope.frame.size.top,
-        'left': scope.frame.size.left,
+        'top': scope.frame.desktopLayout.top,
+        'left': scope.frame.desktopLayout.left,
         'height': function(){
-          console.log(scope.frame.size.verticalSize);
-          return scope.frame.size.verticalSize;
+          console.log(scope.frame.desktopLayout.height);
+          return scope.frame.desktopLayout.height;
         },
-        'width': scope.frame.size.horizontalSize,
-        'z-index': scope.frame.zIndex
+        'width': scope.frame.desktopLayout.width,
+        'z-index': scope.frame.desktopLayout.zIndex
       };
     }
   };

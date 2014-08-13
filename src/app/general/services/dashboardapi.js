@@ -43,10 +43,21 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
         this.setAllDashboards(dashboards);
       }
     }
-
   };
 
-  this.updateCurrentDashboardDesktop = function() {};
+  this.updateCurrentDashboardDesktop = function(dashboardIndex, appUuid, x, y, zIndex) {
+    var dashboards = this.getAllDashboards();
+    var dashboard = dashboards.dashboards[dashboardIndex];
+    for (var i=0; i < dashboard.apps.length; i++) {
+      if (dashboard.apps[i].uuid === appUuid) {
+        dashboard.apps[i].desktopLayout.left = x;
+        dashboard.apps[i].desktopLayout.top = y;
+        dashboard.apps[i].desktopLayout.zIndex = zIndex;
+        this.setAllDashboards(dashboards);
+        console.log('updated application ' + appUuid + ' on dashboard ' + dashboardIndex + ', x: ' + x + ', y: ' + y + ', zIndex: ' + zIndex);
+      }
+    }
+  };
 
   this.createExampleDashboards = function() {
     console.log('Creating example dashboards...');
@@ -91,7 +102,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
           ],
           'apps': [
             {
-              'uuid': '342f3680-18c9-11e4-8c21-0800200c9a66',
+              'uuid': '342f3680-18c9-11e4-8c21-0800200c9a66', // purple circle
               'gridLayout': {
                 'row': 1,
                 'col': 1,
@@ -107,7 +118,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4',
+              'uuid': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4', // red square
               'gridLayout': {
                 'row': 1,
                 'col': 2,
@@ -123,7 +134,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': 'c3d895d5-f332-4154-b963-c5dd63f8ca49',
+              'uuid': 'c3d895d5-f332-4154-b963-c5dd63f8ca49', // some text
               'gridLayout': {
                 'row': 2,
                 'col': 1,
@@ -139,7 +150,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5',
+              'uuid': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5', //mbrot
               'gridLayout': {
                 'row': 2,
                 'col': 2,

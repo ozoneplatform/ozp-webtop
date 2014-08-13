@@ -8,7 +8,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.dashboardView')
-.directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document) {
+.directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document, dashboardApi) {
   /**
    * Decides which template to use.
    *
@@ -82,8 +82,8 @@ angular.module('ozpWebtopApp.dashboardView')
       function mouseup() {
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
-        // TODO: Write new position back to the server and update state
-        console.log('New X is ' + x + ', and new Y is ' + y);
+        dashboardApi.updateCurrentDashboardDesktop(scope.currentDashboardIndex,
+          scope.frame.uuid, x, y, scope.max.zIndex);
       }
 
       // Is the origin the same as the webtop?

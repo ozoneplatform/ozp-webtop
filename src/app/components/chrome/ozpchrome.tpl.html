@@ -2,10 +2,10 @@
   <img class="chrome-icon" ng-src="{{frame.icon}}">
   <span class="chrome-name">{{frame.name}}</span>
   <span class="chrome-controls" >
-    <button type="button" class="btn chrome-minimize" ng-hide="isGrid" ng-click="minimizeFrame(frame.frameId)">
+    <button type="button" class="btn chrome-minimize" ng-hide="isGrid" ng-click="minimizeFrame(frame)">
       <span class="glyphicon glyphicon-minus"></span>
     </button>
-    <button type="button" class="btn chrome-maximize" ng-hide="isGrid">
+    <button type="button" class="btn chrome-maximize" ng-hide="isGrid" ng-click="maximizeFrame()">
       <span class="glyphicon glyphicon-plus"></span>
     </button>
     <button type="button" class="btn chrome-close" ng-click="isDisabled(frame.uuid)">

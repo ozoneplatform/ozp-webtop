@@ -68,7 +68,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
       'user': 'joebloe',
       'dashboards': [
         {
-          'name': 'Great Dashboard',
+          'name': 'Simple Apps',
           'index': 0,
           'layout': 'grid',
           'desktopIcons': [
@@ -168,7 +168,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
           ] // end apps in dashboard
         },
         {
-          'name': 'Secondary Dashboard',
+          'name': 'Just One Thing',
           'index': 1,
           'layout': 'desktop',
           'desktopIcons': [
@@ -213,6 +213,79 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
                 'zIndex': 0,
                 'top': 125,
                 'left': 200,
+                'width': 300,
+                'height': 300
+              }
+            }
+          ] // end apps in dashboard
+        },
+        {
+          'name': 'Bouncing Balls',
+          'index': 2,
+          'layout': 'grid',
+          'desktopIcons': [
+          ],
+          'apps': [
+            {
+              'uuid': '998437ef-9191-4d57-91a7-6ab049361583',
+              'gridLayout': {
+                'col': 1,
+                'row': 1,
+                'sizeX': 1,
+                'sizeY': 1
+              },
+              'desktopLayout': {
+                'zIndex': 0,
+                'top': 125,
+                'left': 200,
+                'width': 300,
+                'height': 300
+              }
+            },
+            {
+              'uuid': '3af849aa-dad0-4223-b15b-9da3b48d1845',
+              'gridLayout': {
+                'col': 2,
+                'row': 1,
+                'sizeX': 1,
+                'sizeY': 1
+              },
+              'desktopLayout': {
+                'zIndex': 0,
+                'top': 125,
+                'left': 700,
+                'width': 300,
+                'height': 300
+              }
+            },
+            {
+              'uuid': 'e5f52929-3f00-4766-a820-f0452ff74572',
+              'gridLayout': {
+                'col': 1,
+                'row': 1,
+                'sizeX': 1,
+                'sizeY': 1
+              },
+              'desktopLayout': {
+                'zIndex': 0,
+                'top': 500,
+                'left': 200,
+                'width': 300,
+                'height': 300
+              }
+            },
+            {
+              'uuid': '93eb7a1d-618c-4478-a59e-326eccbe86d5',
+              'gridLayout': {
+                'col': 2,
+                'row': 1,
+                'sizeX': 1,
+                'sizeY': 1
+              },
+              'desktopLayout': {
+                'zIndex': 0,
+                'top': 500,
+                'left': 700,
                 'width': 300,
                 'height': 300
               }

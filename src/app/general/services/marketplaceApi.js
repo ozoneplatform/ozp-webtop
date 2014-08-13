@@ -76,6 +76,46 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'keywords': ['population', 'counter', 'people'],
           'url': 'http://somewhere.popcounter/popcounter',
           'uuid': 'bc6b3ac9-4f68-4d92-966d-f50170914997'
+        },
+        {
+          'name': 'Green Bouncing Ball',
+          'icon': 'img/green_ball.png',
+          'shortDescription': 'Bouncing Ball IWC demo - Green',
+          'description': 'Balls that bounce and talk to each other',
+          'version': '1.0.0',
+          'keywords': ['bouncing', 'ball', 'demo'],
+          'url': 'http://127.0.0.1:9005/index.html?color=green',
+          'uuid': '998437ef-9191-4d57-91a7-6ab049361583'
+        },
+        {
+          'name': 'Blue Bouncing Ball',
+          'icon': 'img/blue_ball.png',
+          'shortDescription': 'Bouncing Ball IWC demo - Blue',
+          'description': 'Balls that bounce and talk to each other',
+          'version': '1.0.0',
+          'keywords': ['bouncing', 'ball', 'demo'],
+          'url': 'http://127.0.0.1:9005/index.html?color=blue',
+          'uuid': '3af849aa-dad0-4223-b15b-9da3b48d1845'
+        },
+        {
+          'name': 'Red Bouncing Ball',
+          'icon': 'img/red_ball.png',
+          'shortDescription': 'Bouncing Ball IWC demo - Red',
+          'description': 'Balls that bounce and talk to each other',
+          'version': '1.0.0',
+          'keywords': ['bouncing', 'ball', 'demo'],
+          'url': 'http://127.0.0.1:9005/index.html?color=red',
+          'uuid': 'e5f52929-3f00-4766-a820-f0452ff74572'
+        },
+        {
+          'name': 'Black Bouncing Ball',
+          'icon': 'img/black_ball.png',
+          'shortDescription': 'Bouncing Ball IWC demo - Black',
+          'description': 'Balls that bounce and talk to each other',
+          'version': '1.0.0',
+          'keywords': ['bouncing', 'ball', 'demo'],
+          'url': 'http://127.0.0.1:9005/index.html?color=black',
+          'uuid': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
         }
       ]
     };

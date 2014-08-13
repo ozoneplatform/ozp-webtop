@@ -39,6 +39,8 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.frames = $scope.apps;
 
 
+        sortFrames();
+
         for (var k = 0, len = $scope.frames.length; k < len; k++) {
           $scope.frames[k].desktopLayout.zIndex = k;
         }
@@ -58,8 +60,12 @@ angular.module('ozpWebtopApp.dashboardView')
       }
     };
 
-    $scope.frames.sort(function(a, b) {
-      return ((a.desktopLayout.zIndex < b.desktopLayout.zIndex) ? -1 :
-        ((a.desktopLayout.zIndex > b.desktopLayout.zIndex) ? 1 : 0));
-    });
+    function sortFrames() {
+      $scope.frames.sort(function(a, b) {
+        console.log('sorting frames');
+        return ((a.desktopLayout.zIndex < b.desktopLayout.zIndex) ? -1 :
+          ((a.desktopLayout.zIndex > b.desktopLayout.zIndex) ? 1 : 0));
+      });
+    }
+
   });

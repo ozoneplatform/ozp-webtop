@@ -46,8 +46,8 @@ angular.module('ozpWebtopApp.dashboardView')
         }
 
         $scope.customItemMap = {
-          sizeX: 'item.gridLayout.sizex',
-          sizeY: 'item.gridLayout.sizey',
+          sizeX: 'item.gridLayout.sizeX',
+          sizeY: 'item.gridLayout.sizeY',
           row: 'item.gridLayout.row',
           col: 'item.gridLayout.col'
         };
@@ -55,6 +55,16 @@ angular.module('ozpWebtopApp.dashboardView')
     }
     $rootScope.activeFrames = $scope.apps;
   });
+
+  $scope.$watch('apps', function(apps){
+    // TODO: is there a more efficient way? This will try to update every
+    // item on the grid, even though only one of them has changed
+    for (var j=0; j < apps.length; j++) {
+      dashboardApi.updateCurrentDashboardGrid($scope.currentDashboardIndex,
+        apps[j].uuid, apps[j].gridLayout.row, apps[j].gridLayout.col,
+        apps[j].gridLayout.sizeX, apps[j].gridLayout.sizeY);
+    }
+  }, true);
 
 
   $scope.gridOptions =  {
@@ -72,19 +82,9 @@ angular.module('ozpWebtopApp.dashboardView')
     resizable: {
       enabled: true,
       handles: 'n, e, s, w, ne, se, sw, nw',
-      // TODO: breaking jshint
       start: function(/*event, uiWidget, $element*/) {}, // optional callback fired when resize is started,
-      resize: function(/*event, uiWidget, $element*/) {
-        // console.log(event);
-        // console.log(uiWidget);
-        // console.log(/*$element*/);
-      }, // optional callback fired when item is resized,
-      // stop: function(/*event, uiWidget, $element*/) {
-      stop: function(event, uiWidget, $element){
-        console.log(event);
-        console.log(uiWidget);
-        console.log($element);
-      } // optional callback fired when item is finished resizing
+      resize: function(/*event, uiWidget, $element*/) {}, // optional callback fired when item is resized,
+      stop: function(/*event, uiWidget, $element*/){} // optional callback fired when item is finished resizing
     },
     draggable: {
       enabled: true, // whether dragging items is supported

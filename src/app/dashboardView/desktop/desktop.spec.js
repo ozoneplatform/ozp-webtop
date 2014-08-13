@@ -1,28 +1,25 @@
 'use strict';
 
-angular.module('ozpWebtopApp').factory('WorkspaceState', function($q) {
-  return {
-    getStateFile : function() {
-      var state = { 'frames' : [], 'icons' : [] };
-      return $q.when(state);
-    }
-  };
-});
 
 describe('Controller: DesktopController', function () {
 
   // load the controller's module
   beforeEach(module('ozpWebtopApp'));
 
-  var desktopcontrollerCtrl, scope;
+  var desktopcontrollerCtrl, scope, dashboardApi, marketplaceApi;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, _WorkspaceState_) {
+  beforeEach(inject(function ($controller, $rootScope, _dashboardApi_, _marketplaceApi_) {
     scope = $rootScope.$new();
+    dashboardApi = _dashboardApi_;
+    marketplaceApi = _marketplaceApi_;
+
     desktopcontrollerCtrl = $controller('DesktopController', {
       $scope: scope,
-      WorkspaceState: _WorkspaceState_
+      dashboardApi: dashboardApi,
+      marketplaceApi: marketplaceApi
     });
+
   }));
 
   it('should attach icon and frame data to the scope', function () {

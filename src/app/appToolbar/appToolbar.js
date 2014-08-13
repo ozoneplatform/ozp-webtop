@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module( 'ozpwebtop.appToolbar', [
+angular.module( 'ozpWebtopApp.appToolbar', [
 ])
 .controller('appToolbarCtrl', ['$scope', '$rootScope',
   function($scope, $rootScope) {

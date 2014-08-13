@@ -31,7 +31,18 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     this.setAllDashboards(dashboards);
   };
 
-  this.updateCurrentDashboardGrid = function(/*dashboardIndex, appUuid, row, col, sizeX, sizeY*/) {
+  this.updateCurrentDashboardGrid = function(dashboardIndex, appUuid, row, col, sizeX, sizeY) {
+    var dashboards = this.getAllDashboards();
+    var dashboard = dashboards.dashboards[dashboardIndex];
+    for (var i=0; i < dashboard.apps.length; i++) {
+      if (dashboard.apps[i].uuid === appUuid) {
+        dashboard.apps[i].gridLayout.row = row;
+        dashboard.apps[i].gridLayout.col = col;
+        dashboard.apps[i].gridLayout.sizeX = sizeX;
+        dashboard.apps[i].gridLayout.sizeY = sizeY;
+        this.setAllDashboards(dashboards);
+      }
+    }
 
   };
 
@@ -84,8 +95,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               'gridLayout': {
                 'row': 1,
                 'col': 1,
-                'sizex': 1,
-                'sizey': 1
+                'sizeX': 1,
+                'sizeY': 1
               },
               'desktopLayout': {
                 'zIndex': 0,
@@ -100,8 +111,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               'gridLayout': {
                 'row': 1,
                 'col': 2,
-                'sizex': 1,
-                'sizey': 1
+                'sizeX': 1,
+                'sizeY': 1
               },
               'desktopLayout': {
                 'zIndex': 0,
@@ -116,8 +127,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               'gridLayout': {
                 'row': 2,
                 'col': 1,
-                'sizex': 1,
-                'sizey': 1
+                'sizeX': 1,
+                'sizeY': 1
               },
               'desktopLayout': {
                 'zIndex': 1,
@@ -132,8 +143,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               'gridLayout': {
                 'row': 2,
                 'col': 2,
-                'sizex': 1,
-                'sizey': 1
+                'sizeX': 1,
+                'sizeY': 1
               },
               'desktopLayout': {
                 'zIndex': 1,
@@ -184,8 +195,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               'gridLayout': {
                 'col': 1,
                 'row': 1,
-                'sizex': 3,
-                'sizey': 3
+                'sizeX': 3,
+                'sizeY': 3
               },
               'desktopLayout': {
                 'zIndex': 0,

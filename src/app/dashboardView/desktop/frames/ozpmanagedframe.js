@@ -8,7 +8,7 @@
  * @constructor
  */
 angular.module('ozpWebtopApp.dashboardView')
-.directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document) {
+.directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document, dashboardApi) {
   /**
    * Decides which template to use.
    *
@@ -51,14 +51,15 @@ angular.module('ozpWebtopApp.dashboardView')
       // React to a mousedown and allow the element to move
       element.on('mousedown', function(event) {
         // Bring frame to foreground
-        if (scope.frame.desktopLayout.zIndex < scope.max.zIndex) {
+        if (scope.frame.desktopLayout.zIndex <= scope.max.zIndex) {
           scope.frame.desktopLayout.zIndex = scope.max.zIndex + 1;
           scope.max.zIndex = scope.frame.desktopLayout.zIndex;
 
           element.css({
             zIndex: scope.frame.desktopLayout.zIndex
           });
-          console.log('Update zIndex to ' + scope.max.zIndex);
+          dashboardApi.updateCurrentDashboardDesktop(scope.currentDashboardIndex,
+            scope.frame.uuid, x, y, scope.max.zIndex);
         }
 
         // Prevent default dragging of selected content
@@ -67,7 +68,7 @@ angular.module('ozpWebtopApp.dashboardView')
         startY = event.pageY - y;
         $document.on('mousemove', mousemove);
         $document.on('mouseup', mouseup);
-        console.log('Starting x is ' + startX + ', startY is ' + startY);
+        // console.log('Starting x is ' + startX + ', startY is ' + startY);
       });
 
       function mousemove(event) {
@@ -82,8 +83,8 @@ angular.module('ozpWebtopApp.dashboardView')
       function mouseup() {
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
-        // TODO: Write new position back to the server and update state
-        console.log('New X is ' + x + ', and new Y is ' + y);
+        dashboardApi.updateCurrentDashboardDesktop(scope.currentDashboardIndex,
+          scope.frame.uuid, x, y, scope.max.zIndex);
       }
 
       // Is the origin the same as the webtop?

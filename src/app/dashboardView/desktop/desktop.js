@@ -54,7 +54,6 @@ angular.module('ozpWebtopApp.dashboardView')
       // the isMinimized value is set in the chromecontroller.js controller, $scope.minimizeFrame is toggled when the minus button is clicked in the frames
       for (var i = 0; i < $rootScope.activeFrames.length; i++){
         if($rootScope.activeFrames[i].uuid === e.uuid){
-          console.log($rootScope.activeFrames[i].isMinimized);
           return $rootScope.activeFrames[i].isMinimized;
         }
       }

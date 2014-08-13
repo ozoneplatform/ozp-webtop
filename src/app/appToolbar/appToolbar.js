@@ -21,6 +21,12 @@ angular.module( 'ozpWebtopApp.appToolbar', [
         $scope.myPinnedApps = $rootScope.activeFrames;
       }
     });
+
+    $scope.maximizeFrame = function(e) {
+      if(e.isMinimized === true){
+        e.isMinimized = false;
+      }
+    };
     //$scope.myPinnedApps = $rootScope.gridVals;
     $scope.myApps = [
       {'name': 'Music',

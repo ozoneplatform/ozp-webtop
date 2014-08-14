@@ -29,3 +29,6 @@ node_modules
 build/
 bin/
 vendor/
+
+# Webstorm
+.idea/

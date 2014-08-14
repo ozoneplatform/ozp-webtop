@@ -59,6 +59,67 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     }
   };
 
+  this.isAppOnDashboard = function(dashboardIndex, appUuid) {
+    var dashboards = this.getAllDashboards();
+    var dashboard = dashboards.dashboards[dashboardIndex];
+    for (var i=0; i < dashboard.apps.length; i++) {
+      if (dashboard.apps[i].uuid === appUuid) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  this.addApplication = function(dashboardIndex, appUuid, gridMaxRows) {
+    var dashboards = this.getAllDashboards();
+    var dashboard = dashboards.dashboards[dashboardIndex];
+    // for the grid layout, place new app in first col of first empty row
+    // for the desktop layout, just put it on and let user move it
+    var usedRows = [];
+    for (var i=0; i < dashboard.apps.length; i++) {
+      usedRows.push(dashboard.apps[i].gridLayout.row);
+    }
+    var maxUsedRow = Math.max.apply(Math, usedRows);
+    var row = maxUsedRow + 1;
+    if (row > gridMaxRows) {
+      // TODO: handle error
+      console.log('ERROR: not enough rows in grid');
+    }
+    var col = 0;
+    var sizeX = 1;
+    var sizeY = 1;
+
+    // for the desktop layout, just put it on and let the user move it
+    var zIndex = 0;
+    var top = 100;
+    var left = 100;
+    var width = 200;
+    var height = 200;
+
+    // update the dashboard with this app
+    var newApp = {
+      'uuid': appUuid,
+      'gridLayout': {
+        'row': row,
+        'col': col,
+        'sizeX': sizeX,
+        'sizeY': sizeY
+      },
+      'desktopLayout': {
+        'zIndex': zIndex,
+        'top': top,
+        'left': left,
+        'width': width,
+        'height': height
+      }
+    };
+
+    console.log('adding app ' + appUuid + ' to dashboard ' + dashboard.index + ' at row ' + row + ', col ' + col);
+
+    dashboard.apps.push(newApp);
+    this.setAllDashboards(dashboards);
+  };
+
   this.createExampleDashboards = function() {
     console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched

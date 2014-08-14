@@ -27,7 +27,7 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.currentDashboardIndex = $scope.currentDashboard.index;
         console.log('loading dashboard ' + dashboardIndex);
         $scope.apps = $scope.currentDashboard.apps;
-        console.log('reloading GridCtrl for dashboard ' + $scope.currentDashboard);
+        // console.log('reloading GridCtrl for dashboard ' + $scope.currentDashboard);
 
         // get app data
         // TODO: There should be a method in Marketplace to get only my apps
@@ -65,6 +65,9 @@ angular.module('ozpWebtopApp.dashboardView')
         apps[j].gridLayout.sizeX, apps[j].gridLayout.sizeY);
     }
   }, true);
+
+  // TODO: broadcast a message with these grid options so other components
+  // have access to the information
 
 
   $scope.gridOptions =  {

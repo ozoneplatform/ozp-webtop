@@ -1,51 +1,40 @@
 'use strict';
 
-angular.module( 'ozpWebtopApp.appToolbar', [
-])
-.controller('appToolbarCtrl', ['$scope', '$rootScope',
-  function($scope, $rootScope) {
+angular.module( 'ozpWebtopApp.appToolbar')
+.controller('appToolbarCtrl', function($scope, $rootScope, $location, marketplaceApi, dashboardApi) {
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //                      Data from services
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // TODO: all of this data will need to come from a real service, obviously
-    // $scope.$on('gridVals', function(event,data){
-    //   console.log(event);
-    //   console.log(data);
-    // });
-    $rootScope.$watch('activeFrames', function(){
-      // for (var i in $rootScope.gridVals.length){
-      //   console.log($rootScope.gridVals[i]);
-      // }
-      if($rootScope.activeFrames){
-        $scope.myPinnedApps = $rootScope.activeFrames;
-      }
-    });
-    //$scope.myPinnedApps = $rootScope.gridVals;
-    $scope.myApps = [
-      {'name': 'Music',
-        'icon': '/path/to/icon'},
-      {'name': 'Graph',
-        'icon': '/path/to/icon'},
-      {'name': 'Thermometer',
-        'icon': '/path/to/icon'}
-    ];
-    // console.log($scope.$parent.$parent);
-    //console.log($rootScope.gridVals);
-    // $scope.myPinnedApps = [
-    //   {
-    //     'name': 'Music',
-    //     'toolbarIndex': 0
-    //   },
-    //   {
-    //     'name': 'Graph',
-    //     'toolbarIndex': 1
-    //   },
-    //   {
-    //     'name': 'Thermometer',
-    //     'toolbarIndex': 2
-    //   }
-    // ];
-  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //                      Data from services
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  $rootScope.$watch('activeFrames', function () {
 
-]);
+    if ($rootScope.activeFrames) {
+      $scope.myPinnedApps = $rootScope.activeFrames;
+    }
+  });
+
+   $scope.$watch(function() {
+      return $location.path();
+    }, function() {
+     // TODO: use a regex or something less hacky
+     $scope.currentDashboardIndex = $location.path().slice(-1);
+   });
+
+  $scope.myApps = marketplaceApi.getAllApps();
+
+  $scope.appClicked = function(app) {
+    // check if the app is already on the current dashboard
+    var isOnDashboard = dashboardApi.isAppOnDashboard($scope.currentDashboardIndex, app.uuid);
+    if (isOnDashboard) {
+      alert('This application is already on your dashboard');
+    } else {
+      // add this app to the dashboard
+      // TODO: use message broadcast to get grid max rows and grid max cols
+      dashboardApi.addApplication($scope.currentDashboardIndex, app.uuid, 10);
+      // reload this dashboard
+
+    }
+
+  };
+
+  });

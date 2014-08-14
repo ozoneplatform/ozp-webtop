@@ -326,7 +326,9 @@ module.exports = function ( grunt ) {
           'xit': false,
           'expect': false,
           'jasmine': false,
-          '$scope': false
+          '$scope': false,
+          'alert': false,
+          '$state': false
         }
       }
     },

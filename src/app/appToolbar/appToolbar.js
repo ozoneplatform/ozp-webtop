@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module( 'ozpWebtopApp.appToolbar')
-.controller('appToolbarCtrl', function($scope, $rootScope, $location, marketplaceApi, dashboardApi) {
+.controller('appToolbarCtrl', function($scope, $rootScope, $location, $state, marketplaceApi, dashboardApi) {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                      Data from services
@@ -32,6 +32,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
       // TODO: use message broadcast to get grid max rows and grid max cols
       dashboardApi.addApplication($scope.currentDashboardIndex, app.uuid, 10);
       // reload this dashboard
+      $state.go($state.$current, null, { reload: true });
 
     }
 

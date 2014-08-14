@@ -20,6 +20,12 @@ angular.module( 'ozpWebtopApp.appToolbar')
      $scope.currentDashboardIndex = $location.path().slice(-1);
    });
 
+   $scope.maximizeFrame = function(e) {
+     if(e.isMinimized === true){
+       e.isMinimized = false;
+     }
+   };
+
   $scope.myApps = marketplaceApi.getAllApps();
 
   $scope.appClicked = function(app) {

@@ -50,6 +50,15 @@ angular.module('ozpWebtopApp.dashboardView')
     $rootScope.activeFrames = $scope.currentDashboard.apps;
     });
 
+    $scope.isFrameMinimized = function(e) {
+      // the isMinimized value is set in the chromecontroller.js controller, $scope.minimizeFrame is toggled when the minus button is clicked in the frames
+      for (var i = 0; i < $rootScope.activeFrames.length; i++){
+        if($rootScope.activeFrames[i].uuid === e.uuid){
+          return $rootScope.activeFrames[i].isMinimized;
+        }
+      }
+    };
+
     function sortFrames() {
       $scope.frames.sort(function(a, b) {
         console.log('sorting frames');

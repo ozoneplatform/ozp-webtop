@@ -44,6 +44,9 @@
     <!-- View is used as the 'workspace' -->
     <div class="ui-view-style" ui-view=""></div>
 
+    <!-- user settings modal -->
+    <div ng-include="userSettings/settingsModal.tpl.html" ng-controller="UserSettingsCtrl"></div>
+
     <div class="app-toolbar-ng-include"
       ng-include="'appToolbar/appToolbar.tpl.html'">
     </div>

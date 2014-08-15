@@ -120,6 +120,26 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     this.setAllDashboards(dashboards);
   };
 
+  this.updateDefaultDashboard = function(dashboardName) {
+    var dashboards = this.getAllDashboards();
+    for (var i=0; i < dashboards.dashboards.length; i++) {
+      if (dashboards.dashboards[i].name === dashboardName) {
+        dashboards.defaultDashboard = dashboards.dashboards[i].index;
+      }
+    }
+    this.setAllDashboards(dashboards);
+  };
+
+  this.getDefaultDashboardName = function() {
+    var dashboards = this.getAllDashboards();
+    var defaultDashboardIndex = dashboards.defaultDashboard;
+    for (var i=0; i < dashboards.dashboards.length; i++) {
+      if (dashboards.dashboards[i].index === defaultDashboardIndex) {
+        return dashboards.dashboards[i].name;
+      }
+    }
+  };
+
   this.createExampleDashboards = function() {
     console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched
@@ -127,6 +147,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     var dashboards = {
       'name': 'dashboards',
       'user': 'joebloe',
+      'defaultDashboard': 0,
       'dashboards': [
         {
           'name': 'Simple Apps',

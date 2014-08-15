@@ -42,12 +42,6 @@
         </li>
         <li class="divider-vertical"></li>
         <li>
-          <a ng-click="themeToggle()" ng-class="{navLinkSelected: layout == 'desktop'}">
-            <i ng-class="{iconWhite: layout == 'desktop'}" class="fa fa-rebel fa-lg">&nbsp&nbspTheme</i>
-          </a>
-        </li>
-        <li class="divider-vertical"></li>
-        <li>
           <a href="#"><span class="badge">{{messages.unread}}</span></a>
         </li>
         <li class="divider-vertical"></li>
@@ -57,7 +51,7 @@
             <i class="fa fa-user fa-lg">&nbsp</i>{{user.username}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="#"><i class="fa fa-cogs">&nbsp&nbsp</i>Settings</a>
+              <a ng-click="launchSettingsModal()" class="link-pointer"><i class="fa fa-cogs">&nbsp&nbsp</i>Settings</a>
             </li>
             <li>
               <a href="#"><i class="fa fa-question-circle">&nbsp&nbsp</i>Take a tour</a>

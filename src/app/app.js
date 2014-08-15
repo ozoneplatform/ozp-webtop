@@ -50,7 +50,7 @@ angular.module( 'ozpWebtopApp', [
 
 
 angular.module('ozpWebtopApp.general', []);
-angular.module('ozpWebtopApp.userSettings', []);
+angular.module('ozpWebtopApp.userSettings', ['ozpWebtopApp.apis']);
 angular.module('ozpWebtopApp.apis', ['ozpWebtopApp.general']);
 angular.module('ozpWebtopApp.components', []);
 angular.module('ozpWebtopApp.dashboardToolbar', ['ozpWebtopApp.apis']);

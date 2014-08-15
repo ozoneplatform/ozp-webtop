@@ -9,25 +9,38 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
 
-.controller('GridController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi) {
+.controller('GridController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi, dashboardChangeMonitor) {
 
   // Get state of the dashboard grid
   $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
 
+  dashboardChangeMonitor.run();
+  $scope.$on('dashboardChange', function(/*event, data*/) {
+    // console.log('grid.js received dashboard change msg: ' + JSON.stringify(data));
+  });
+
+  // TODO: Originally tried sending broadcast events from dashboardChangeMonitor,
+  // but that did not work out - led to lots of problems such as the desktop
+  // and grid controllers not being loaded/unloaded properly. So instead, we'll
+  // just reach into the internal state of the dashboardChangeMonitor to get
+  // this info and use $watch on $location.path to trigger the update. To
+  // see what happens, just uncomment the console.logs in $on.(...) in
+  // grid.js and desktop.js
   $scope.$watch(function() {
     return $location.path();
   }, function() {
+    updateDashboard();
+  });
+
+  function updateDashboard() {
     // Get the dashboard index
-    // TODO: make this a regex or something less hacky than this
-    var dashboardIndex = $location.path().slice(-1);
+    var dashboardIndex = dashboardChangeMonitor.dashboardIndex;
 
     for (var i=0; i < $scope.dashboards.length; i++) {
       if ($scope.dashboards[i].index.toString() === dashboardIndex) {
         $scope.currentDashboard = $scope.dashboards[i];
         $scope.currentDashboardIndex = $scope.currentDashboard.index;
-        console.log('loading dashboard ' + dashboardIndex);
         $scope.apps = $scope.currentDashboard.apps;
-        // console.log('reloading GridCtrl for dashboard ' + $scope.currentDashboard);
 
         // get app data
         // TODO: There should be a method in Marketplace to get only my apps
@@ -54,7 +67,7 @@ angular.module('ozpWebtopApp.dashboardView')
       }
     }
     $rootScope.activeFrames = $scope.apps;
-  });
+  }
 
   $scope.$watch('apps', function(apps){
     // TODO: is there a more efficient way? This will try to update every

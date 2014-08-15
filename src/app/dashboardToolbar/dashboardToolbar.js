@@ -2,27 +2,19 @@
 
 angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('dashboardToolbarCtrl',
-  function($scope, $rootScope, $location, dashboardApi) {
+  function($scope, $rootScope, dashboardApi, dashboardChangeMonitor) {
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //                      Data from services
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
     // default board is 0
     $scope.currentDashboard = $scope.dashboards[0];
     // default layout is grid
     $scope.layout = 'grid';
 
-    $scope.$watch(function() {
-      return $location.path();
-    }, function() {
-      var n = $location.path().indexOf('grid');
-      if (n !== -1) {
-        $scope.layout = 'grid';
-      } else {
-        $scope.layout = 'desktop';
-      }
+    // register to receive notifications if dashboard layout changes
+    dashboardChangeMonitor.run();
 
+    $scope.$on('dashboardChange', function(event, dashboardChange) {
+      $scope.layout = dashboardChange.layout;
     });
 
     $scope.messages = {

@@ -328,7 +328,8 @@ module.exports = function ( grunt ) {
           'jasmine': false,
           '$scope': false,
           'alert': false,
-          '$state': false
+          '$state': false,
+          'spyOn': false
         }
       }
     },

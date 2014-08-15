@@ -9,6 +9,7 @@ angular.module( 'ozpWebtopApp', [
   'ozpWebtopApp.dashboardToolbar',
   'ozpWebtopApp.appToolbar',
   'ozpWebtopApp.dashboardView',
+  'ozpWebtopApp.userSettings',
   'ui.router',
   'ui.bootstrap',
   'gridster',
@@ -32,10 +33,12 @@ angular.module( 'ozpWebtopApp', [
     $urlRouterProvider.otherwise('/grid/0');
   })
 
-.run( function run (dashboardApi, marketplaceApi) {
+.run( function run (dashboardApi, marketplaceApi, userSettingsApi) {
     // create example marketplace and dashboard resources
     marketplaceApi.createExampleMarketplace();
     dashboardApi.createExampleDashboards();
+    // create example user settings
+    userSettingsApi.createExampleUserSettings();
 })
 .controller( 'AppCtrl', function AppCtrl ( $scope ) {
   $scope.$on('$stateChangeSuccess', function(event, toState){
@@ -47,6 +50,7 @@ angular.module( 'ozpWebtopApp', [
 
 
 angular.module('ozpWebtopApp.general', []);
+angular.module('ozpWebtopApp.userSettings', []);
 angular.module('ozpWebtopApp.apis', ['ozpWebtopApp.general']);
 angular.module('ozpWebtopApp.components', []);
 angular.module('ozpWebtopApp.dashboardToolbar', ['ozpWebtopApp.apis']);

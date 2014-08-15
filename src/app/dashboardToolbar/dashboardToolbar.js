@@ -71,5 +71,12 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
         $rootScope.theme = 'light';
       }
     };
+
+    $scope.launchSettingsModal = function() {
+      console.log('broadcasting launchSettingsModal event...');
+      $rootScope.$broadcast('launchSettingsModal', {
+        launch: 'true'
+      });
+    };
   }
 );

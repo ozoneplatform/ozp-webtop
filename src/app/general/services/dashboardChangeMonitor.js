@@ -22,7 +22,7 @@ angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',
 
         // get dashboard index
         var urlPath = $location.path();
-        var pattern = new RegExp('/(?:grid|desktop)/([0-9])+');
+        var pattern = new RegExp('/(?:grid|desktop)/([0-9]+)');
         var res = pattern.exec(urlPath);
         if (res) {
           service.dashboardIndex = res[1];

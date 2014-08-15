@@ -25,8 +25,6 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
 
     });
 
-    $rootScope.theme = 'light';
-
     $scope.messages = {
       'unread': 2,
       'messages': [
@@ -61,15 +59,6 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
 
     $scope.useDesktopLayout = function() {
       $scope.layout = 'desktop';
-    };
-
-    $scope.themeToggle = function() {
-      if($rootScope.theme === 'light'){
-        $rootScope.theme = 'dark';
-      }
-      else{
-        $rootScope.theme = 'light';
-      }
     };
 
     $scope.launchSettingsModal = function() {

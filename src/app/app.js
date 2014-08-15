@@ -39,15 +39,7 @@ angular.module( 'ozpWebtopApp', [
     dashboardApi.createExampleDashboards();
     // create example user settings
     userSettingsApi.createExampleUserSettings();
-})
-.controller( 'AppCtrl', function AppCtrl ( $scope ) {
-  $scope.$on('$stateChangeSuccess', function(event, toState){
-    if ( angular.isDefined( toState.data.pageTitle ) ) {
-      $scope.pageTitle = toState.data.pageTitle + ' | filtrfy' ;
-    }
-  });
 });
-
 
 angular.module('ozpWebtopApp.general', []);
 angular.module('ozpWebtopApp.userSettings', ['ozpWebtopApp.apis']);

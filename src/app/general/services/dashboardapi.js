@@ -140,6 +140,21 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     }
   };
 
+  this.mergeApplicationData = function(dashboardApps, marketplaceApps) {
+    for (var i=0; i < marketplaceApps.length; i++) {
+      // check if this app is on our dashboard
+      for (var j=0; j < dashboardApps.length; j++) {
+        if (dashboardApps[j].uuid === marketplaceApps[i].uuid) {
+          // if it is, then get all relevant info
+          dashboardApps[j].icon = marketplaceApps[i].icon;
+          dashboardApps[j].url = marketplaceApps[i].url;
+          dashboardApps[j].name = marketplaceApps[i].name;
+          dashboardApps[j].shortDescription = marketplaceApps[i].shortDescription;
+        }
+      }
+    }
+  };
+
   this.createExampleDashboards = function() {
     console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched

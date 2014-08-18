@@ -33,24 +33,14 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.currentDashboardIndex = $scope.currentDashboard.index;
         $scope.apps = $scope.currentDashboard.apps;
 
-        // get app data
         // TODO: There should be a method in Marketplace to get only my apps
         var allApps = marketplaceApi.getAllApps();
-        for (i=0; i < allApps.length; i++) {
-          // check if this app is on our dashboard
-          for (var j=0; j < $scope.apps.length; j++) {
-            if ($scope.apps[j].uuid === allApps[i].uuid) {
-              // if it is, then get all relevant info
-              $scope.apps[j].icon = allApps[i].icon;
-              $scope.apps[j].url = allApps[i].url;
-              $scope.apps[j].name = allApps[i].name;
-              $scope.apps[j].shortDescription = allApps[i].shortDescription;
-            }
-          }
-        }
+        // Merge application data (app name, icons, descriptions, url, etc)
+        // with dashboard app data
+        dashboardApi.mergeApplicationData($scope.apps, allApps);
+
         $scope.max = {};
         $scope.frames = $scope.apps;
-
 
         sortFrames();
 

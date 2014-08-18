@@ -10,9 +10,9 @@ describe('App Toolbar', function () {
    // mock out the filtrfy service before each test
   beforeEach(inject(function($rootScope, $controller, _marketplaceApi_) {
     scope = $rootScope.$new();
-    $controller('appToolbarCtrl', {$scope: scope});
     marketplaceApi = _marketplaceApi_;
     marketplaceApi.createExampleMarketplace();
+    $controller('appToolbarCtrl', {$scope: scope});
   }));
 
   it('should expose myApps', function() {

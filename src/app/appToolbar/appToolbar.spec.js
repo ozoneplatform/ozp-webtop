@@ -2,14 +2,16 @@
 
 describe('App Toolbar', function () {
 
-  var scope;
+  var scope, marketplaceApi;
 
   // load the filter's module
   beforeEach(module('ozpWebtopApp.appToolbar'));
 
    // mock out the filtrfy service before each test
-  beforeEach(inject(function($rootScope, $controller) {
+  beforeEach(inject(function($rootScope, $controller, _marketplaceApi_) {
     scope = $rootScope.$new();
+    marketplaceApi = _marketplaceApi_;
+    marketplaceApi.createExampleMarketplace();
     $controller('appToolbarCtrl', {$scope: scope});
   }));
 

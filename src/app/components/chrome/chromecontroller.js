@@ -4,9 +4,20 @@
  * ChromeController aids the ozpChrome directive in knowing its location (grid or desktop).
  */
 angular.module('ozpWebtopApp.components')
-.controller('ChromeController', function ($scope, $location, $rootScope) {
-  // Determine if chrome is being used in the grid view
-  $scope.isGrid = ($location.path() === '/grid');
+.controller('ChromeController', function ($scope, $rootScope, dashboardChangeMonitor) {
+
+  // register to receive notifications if dashboard changes
+  dashboardChangeMonitor.run();
+
+  $scope.$on('dashboardChange', function(event, dashboardChange) {
+    // Determine if chrome is being used in the grid view
+    if (dashboardChange.layout === 'grid') {
+      $scope.isGrid = true;
+    } else {
+      $scope.isGrid = false;
+    }
+  });
+
   $scope.isDisabled = function(e){
   	// Loop through the frames that are on rootScope, 
   	//   if the id of the frameId of the grid object matches the frameId of the object on rootScope, 

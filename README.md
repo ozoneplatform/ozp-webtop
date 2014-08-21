@@ -106,10 +106,8 @@ To run the production version of Webtop (files minified, concatenated, etc):
 1. Follow the steps in the Prerequisites and Getting Started sections above
 2. Run ```grunt```. This will create a ```bin/``` directory - statically host
 ```bin/``` and you're good to go!
-3. For testing the production version, run ```grunt connect:dist```
+3. For testing the production version, run ```grunt run```
 
-Note: The instructions above assume Webtop will be using applications/widgets
-that are actively served elsewhere. 
 
 ## Copyrights
 > Software (c) 2014 [Department of Defense](http://defense.gov/ "DoD")

@@ -36,6 +36,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     var dashboard = dashboards.dashboards[dashboardIndex];
     for (var i=0; i < dashboard.apps.length; i++) {
       if (dashboard.apps[i].uuid === appUuid) {
+        console.log('updating grid dashboard for app ' + appUuid);
         dashboard.apps[i].gridLayout.row = row;
         dashboard.apps[i].gridLayout.col = col;
         dashboard.apps[i].gridLayout.sizeX = sizeX;
@@ -153,6 +154,17 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
         }
       }
     }
+  };
+
+  this.getAppInfo = function(dashboardIndex, appUuid) {
+    var dashboards = this.getAllDashboards();
+    var dashboard = dashboards.dashboards[dashboardIndex];
+    for (var i=0; i < dashboard.apps.length; i++) {
+      if (dashboard.apps[i].uuid === appUuid) {
+        return dashboard.apps[i];
+      }
+    }
+    return {};
   };
 
   this.createExampleDashboards = function() {

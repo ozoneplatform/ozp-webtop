@@ -1,8 +1,14 @@
 <div class="container gridster-container-settings">
   <div gridster="gridOptions">
     <ul>
+      <!--
       <li gridster-item="customItemMap" ng-repeat="item in apps"
           ozp-gridster-item="" frame="item" ng-hide="isDisabled">
+      </li> -->
+      <li gridster-item="customItemMap" ng-repeat="item in apps"
+          style="color: black; background-color: lightslategrey;" id="{{item.uuid}}">
+        <h4> Gridster item</h4>
+        <p> {{item.name}}</p>
       </li>
     </ul>
   </div>

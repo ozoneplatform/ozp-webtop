@@ -70,6 +70,12 @@ angular.module('ozpWebtopApp.dashboardView')
         // element.addClass('ozp-managed-frame');
     //});
 
+      scope.$on('gridSizeChanged', function(event, data) {
+        scope.styles.height = data.height;
+        scope.styles.width = data.width;
+        console.log('changing size to height: ' + data.height + ', width: ' + data.width);
+      });
+
       // TODO: make these dynamic
       scope.styles = {
         'height': 205,

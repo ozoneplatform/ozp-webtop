@@ -410,7 +410,9 @@ module.exports = function ( grunt ) {
       },
       dist: {
         options: {
-          base: '<%= compile_dir %>'
+          port: 9037,
+          keepalive: true,
+          base: ['<%= compile_dir %>']
         }
       },
       // Demo Apps server

@@ -85,7 +85,11 @@ module.exports = {
       'vendor/components-font-awesome/fonts/fontawesome-webfont.eot',
       'vendor/components-font-awesome/fonts/fontawesome-webfont.svg',
       'vendor/components-font-awesome/fonts/fontawesome-webfont.ttf',
-      'vendor/components-font-awesome/fonts/fontawesome-webfont.woff'
+      'vendor/components-font-awesome/fonts/fontawesome-webfont.woff',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.eot',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.svg',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff'
     ]
   }
 };

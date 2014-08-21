@@ -32,6 +32,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
     console.log('delete dashboard ' + dashboard.name);
   };
 };
+// Required to make minification-safe
+ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'dashboardApi', 'userSettingsApi'];
 
 angular.module( 'ozpWebtopApp.userSettings')
 .controller('UserSettingsCtrl', function($scope, $modal, $log) {

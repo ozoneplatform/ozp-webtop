@@ -100,6 +100,14 @@ package.json            # metadata about our app, used by NPM and the build
 * HTML style - use 2 space indentation 
 * Try to keep lines to 80 characters whenever possible
 
+## Production Deployment
+To run the production version of Webtop (files minified, concatenated, etc):
+
+1. Follow the steps in the Prerequisites and Getting Started sections above
+2. Run ```grunt```. This will create a ```bin/``` directory - statically host
+```bin/``` and you're good to go!
+3. For testing the production version, run ```grunt connect:dist```
+
 ## Copyrights
 > Software (c) 2014 [Department of Defense](http://defense.gov/ "DoD")
 

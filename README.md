@@ -108,6 +108,9 @@ To run the production version of Webtop (files minified, concatenated, etc):
 ```bin/``` and you're good to go!
 3. For testing the production version, run ```grunt connect:dist```
 
+Note: The instructions above assume Webtop will be using applications/widgets
+that are actively served elsewhere. 
+
 ## Copyrights
 > Software (c) 2014 [Department of Defense](http://defense.gov/ "DoD")
 

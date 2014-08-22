@@ -14,13 +14,9 @@ angular.module('ozpWebtopApp.dashboardView')
                                         dashboardApi, marketplaceApi,
                                         dashboardChangeMonitor) {
 
-  // Get state of the dashboard grid
-  // TODO remove this
-  $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
-
   dashboardChangeMonitor.run();
   $scope.$on('dashboardChange', function(event, data) {
-    $scope.currentDashboardIndex = data.dashboardIndex;
+    $scope.dashboardId = data.dashboardId;
     // console.log('grid.js received dashboard change msg: ' + JSON.stringify(data));
   });
 
@@ -37,58 +33,53 @@ angular.module('ozpWebtopApp.dashboardView')
     updateDashboard();
   });
 
+  // invoked whenever the user switches dashboards or changes the dashboard
+  // layout
   function updateDashboard() {
-    // Get the dashboard index
-    var dashboardIndex = dashboardChangeMonitor.dashboardIndex;
-    $scope.currentDashboard = dashboardApi.getDashboardById(dashboardIndex);
+    // Get the dashboard
+    $scope.dashboardId = dashboardChangeMonitor.dashboardId;
+    $scope.dashboard = dashboardApi.getDashboardById($scope.dashboardId);
+    // Get frames on this dashboard
+    $scope.frames = $scope.dashboard.frames;
 
-    for (var i=0; i < $scope.dashboards.length; i++) {
-      if ($scope.dashboards[i].index.toString() === dashboardIndex) {
-        $scope.currentDashboard = $scope.dashboards[i];
-        $scope.currentDashboardIndex = $scope.currentDashboard.index;
-        $scope.apps = $scope.currentDashboard.apps;
+    // TODO: There should be a method in Marketplace to get only my apps
+    var allApps = marketplaceApi.getAllApps();
+    // Merge application data (app name, icons, descriptions, url, etc)
+    // with dashboard app data
+    dashboardApi.mergeApplicationData($scope.frames, allApps);
 
-        // TODO: There should be a method in Marketplace to get only my apps
-        var allApps = marketplaceApi.getAllApps();
-        // Merge application data (app name, icons, descriptions, url, etc)
-        // with dashboard app data
-        dashboardApi.mergeApplicationData($scope.apps, allApps);
+    // calculate the size (in px) for each frame and send an update message
+    for (var j=0; j < $scope.frames.length; j++) {
+      var widgetSize = $scope.updateGridFrameSize($scope.frames[j].id);
 
-        // update the pixel size for this application, used to put dimensions
-        // on the iframe
-        for (var j=0; j < $scope.apps.length; j++) {
-          var widgetSize = $scope.updateWidgetPixelSize($scope.apps[j].uuid);
-          // update this widget's state to save its size
-          dashboardApi.updateAppSize($scope.currentDashboardIndex, $scope.apps[j], widgetSize.width, widgetSize.height);
-
-            $rootScope.$broadcast('gridSizeChanged', {
-              'uuid': $scope.apps[j].uuid,
-              'height': widgetSize.height,
-              'width': widgetSize.width
-            });
-        }
-
-        $scope.customItemMap = {
-          sizeX: 'item.gridLayout.sizeX',
-          sizeY: 'item.gridLayout.sizeY',
-          row: 'item.gridLayout.row',
-          col: 'item.gridLayout.col'
-        };
-      }
+        $rootScope.$broadcast('gridSizeChanged', {
+          'frameId': $scope.frames[j].id,
+          'height': widgetSize.height,
+          'width': widgetSize.width
+        });
     }
-    $rootScope.activeFrames = $scope.apps;
+
+    $scope.customItemMap = {
+      sizeX: 'item.gridLayout.sizeX',
+      sizeY: 'item.gridLayout.sizeY',
+      row: 'item.gridLayout.row',
+      col: 'item.gridLayout.col'
+    };
+
+    // TODO: clean this up
+    $rootScope.activeFrames = $scope.frames;
   }
 
-  $scope.$watch('apps', function(apps){
-    // This will be invoked every time a widget is resized (as the cursor
+  $scope.$watch('frames', function(frames){
+    // This will be invoked every time a frame is resized (as the cursor
     // moves, not just once when the mouse button is released). So each time
-    // a widget is 'temporarily' resized, this dashboardApi call is made for
+    // a frame is 'temporarily' resized, this dashboardApi call is made for
     // each app on the dashboard.
     // TODO: This could be a performance issue
-    for (var j=0; j < apps.length; j++) {
-      dashboardApi.updateCurrentDashboardGrid($scope.currentDashboardIndex,
-        apps[j].uuid, apps[j].gridLayout.row, apps[j].gridLayout.col,
-        apps[j].gridLayout.sizeX, apps[j].gridLayout.sizeY);
+    for (var j=0; j < frames.length; j++) {
+      dashboardApi.updateGridFrame(frames[j].id, frames[j].gridLayout.row,
+        frames[j].gridLayout.col, frames[j].gridLayout.sizeX,
+        frames[j].gridLayout.sizeY);
     }
   }, true);
 
@@ -113,21 +104,21 @@ angular.module('ozpWebtopApp.dashboardView')
       enabled: true,
       handles: 'n, e, s, w, ne, se, sw, nw',
       start: function(event, uiWidget) {
-        // reduce the size of the widget when resizing is started so that
+        // reduce the size of the frame when resizing is started so that
         // gridster behaves itself
-        var appUuid = uiWidget.element.context.id;
-        for (var i=0; i < $scope.apps.length; i++) {
-          if ($scope.apps[i].uuid === appUuid) {
+        var frameId = uiWidget.element.context.id;
+        for (var i=0; i < $scope.frames.length; i++) {
+          if ($scope.frames[i].id === frameId) {
             // trying to do something smarter here didn't work out well - be
             // sure to perform ample testing if these values are changed
-            $scope.apps[i].gridLayout.width = 100;
-            $scope.apps[i].gridLayout.height = 100;
+            $scope.frames[i].gridLayout.width = 100;
+            $scope.frames[i].gridLayout.height = 100;
 
             $rootScope.$broadcast('gridSizeChanged', {
-              'uuid': appUuid,
+              'frameId': frameId,
               'height': 100,
               'width': 100
-        });
+            });
           }
         }
       }, // optional callback fired when resize is started,
@@ -136,17 +127,18 @@ angular.module('ozpWebtopApp.dashboardView')
       stop: function(event, uiWidget){
         // The dimensions reported by uiWidget are wrong - use custom function
         // to calculate new size
-        var appUuid = uiWidget.element.context.id;
-        var widgetSize = $scope.updateWidgetPixelSize(appUuid);
+        var frameId = uiWidget.element.context.id;
+        var frameSize = $scope.updateGridFrameSize(frameId);
 
-        // update this widget's state to save its size
-        dashboardApi.updateAppSize($scope.currentDashboardIndex, appUuid, widgetSize.width, widgetSize.height);
+        // update this frame's state to save its size
+        dashboardApi.updateFrameSizeOnGrid(frameId, frameSize.width,
+          frameSize.height);
 
         // send the message so the app can adjust their contents appropriately
         $rootScope.$broadcast('gridSizeChanged', {
-          'uuid': appUuid,
-          'height': widgetSize.height,
-          'width': widgetSize.width
+          'frameId': frameId,
+          'height': frameSize.height,
+          'width': frameSize.width
         });
       } // optional callback fired when item is finished resizing
     },
@@ -160,8 +152,8 @@ angular.module('ozpWebtopApp.dashboardView')
   };
 
   // necessary because the built-in angular-gridster method that calculates a
-  // grid tile's size after resizing does not yield the correct results
-  $scope.calculateWidgetSize = function(appUuid) {
+  // grid tile's size after resizing does not yield the correct results.
+  $scope.calculateGridFrameSize = function(frameId) {
     // padding on left and right sides of container
     var gridsterContainerPadding = 15;
     var cols = $scope.gridOptions.columns;
@@ -172,7 +164,7 @@ angular.module('ozpWebtopApp.dashboardView')
     // assume row margins and height are same as for columns
     var baseWidgetHeight = baseWidgetWidth;
 
-    var appInfo = dashboardApi.getAppInfo($scope.currentDashboardIndex, appUuid);
+    var appInfo = dashboardApi.getFrameById(frameId);
     var sizeX = appInfo.gridLayout.sizeX;
     var sizeY = appInfo.gridLayout.sizeY;
     var widgetWidth = baseWidgetWidth * sizeX + (colMargin*(sizeX-1));
@@ -184,17 +176,18 @@ angular.module('ozpWebtopApp.dashboardView')
   };
 
   // Update this instance's pixel size
-  $scope.updateWidgetPixelSize = function(appUuid) {
-    var widgetSize = $scope.calculateWidgetSize(appUuid);
-      for (var i=0; i < $scope.apps.length; i++) {
-        if ($scope.apps[i].uuid === appUuid) {
+  $scope.updateGridFrameSize = function(frameId) {
+    var widgetSize = $scope.calculateGridFrameSize(frameId);
+      for (var i=0; i < $scope.frames.length; i++) {
+        if ($scope.frames[i].id === frameId) {
           widgetSize.width -= 10;   // for good measure
           widgetSize.height -= 30;  // minus height of chrome
-          $scope.apps[i].gridLayout.width = widgetSize.width;
-          $scope.apps[i].gridLayout.height = widgetSize.height;
+          $scope.frames[i].gridLayout.width = widgetSize.width;
+          $scope.frames[i].gridLayout.height = widgetSize.height;
 
           // update this widget's state to save its size
-          dashboardApi.updateAppSize($scope.currentDashboardIndex, appUuid, widgetSize.width, widgetSize.height);
+          dashboardApi.updateFrameSizeOnGrid(frameId, widgetSize.width,
+            widgetSize.height);
           return widgetSize;
         }
       }

@@ -5,13 +5,16 @@ var app = angular.module('ozpWebtopApp.apis');
 app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
   var cache = new LocalStorage(localStorage, JSON);
 
-  this.getAllDashboards = function() {
+  this.getAllDashboards = function(getDashboardsOnly) {
     if (!cache.hasItem('dashboards')) {
       // TODO: handle error
       console.log('ERROR: No dashboards');
       return {};
     }
     var dashboards = cache.getItem('dashboards');
+    if (getDashboardsOnly) {
+      return dashboards.dashboards;
+    }
     return dashboards;
   };
 
@@ -117,7 +120,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Change the user's default dashboard
   this.updateDefaultDashboard = function(dashboardName) {
-    var dashboards = this.getAllDashboards();
+    var dashboards = this.getAllDashboards(false);
     for (var i=0; i < dashboards.dashboards.length; i++) {
       if (dashboards.dashboards[i].name === dashboardName) {
         dashboards.defaultDashboard = dashboards.dashboards[i].id;
@@ -128,7 +131,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Return the name of the user's default dashboard
   this.getDefaultDashboardName = function() {
-    var dashboards = this.getAllDashboards();
+    var dashboards = this.getAllDashboards(false);
     var defaultDashboardId = dashboards.defaultDashboard;
     for (var i=0; i < dashboards.dashboards.length; i++) {
       if (dashboards.dashboards[i].id === defaultDashboardId) {
@@ -175,7 +178,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Save a dashboard
   this.saveDashboard = function(dashboard) {
-    var dashboards = this.getAllDashboards();
+    var dashboards = this.getAllDashboards(true);
     for (var i=0; i < dashboards.length; i++) {
       if (dashboards[i].id === dashboard.id) {
         dashboards[i] = dashboard;
@@ -186,7 +189,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Save a frame in a dashboard
   this.saveFrame = function(frame) {
-    var dashboards = this.getAllDashboards();
+    var dashboards = this.getAllDashboards(true);
     for (var i=0; i < dashboards.length; i++) {
       var frames = dashboards[i].frames;
       for (var j=0; j < frames.length; j++) {
@@ -200,7 +203,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Retrieve a frame by id
   this.getFrameById = function(id) {
-    var dashboards = this.getAllDashboards();
+    var dashboards = this.getAllDashboards(true);
     for (var i=0; i < dashboards.length; i++) {
       var frames = dashboards[i].frames;
       for (var j=0; j < frames.length; j++) {
@@ -213,9 +216,9 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Retrieve a dashboard by id
   this.getDashboardById = function(id) {
-    var dashboards = this.getAllDashboards();
+    var dashboards = this.getAllDashboards(true);
     for (var i=0; i < dashboards.length; i++) {
-      if (dashboards[i].id === id) {
+      if (dashboards[i].id.toString() === id.toString()) {
         return dashboards[i];
       }
     }

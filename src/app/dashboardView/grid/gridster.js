@@ -16,7 +16,8 @@ angular.module('ozpWebtopApp.dashboardView')
  * @class gridsterItem
  * @constructor
  */
-.directive('ozpGridsterItem', function ($compile, $http, $templateCache, $timeout, compareUrl, dashboardApi, dashboardChangeMonitor) {
+.directive('ozpGridsterItem', function ($compile, $http, $templateCache,
+                                        $timeout, compareUrl, dashboardApi) {
 
     // TODO: review this before removing
 //  var getTemplate = function (sameOrigin) {
@@ -49,10 +50,6 @@ angular.module('ozpWebtopApp.dashboardView')
 
     link: function (scope, element) {
 
-        dashboardChangeMonitor.run();
-        scope.$on('dashboardChange', function(event, data) {
-          scope.currentDashboardIndex = data.dashboardIndex;
-        });
       // Is the origin the same as the webtop?
       var origin = compareUrl(scope.frame.url);
       var template;
@@ -76,7 +73,7 @@ angular.module('ozpWebtopApp.dashboardView')
     //});
 
       scope.$on('gridSizeChanged', function(event, data) {
-        if (data.uuid === scope.uuid) {
+        if (data.frameId === scope.frameId) {
           scope.styles.height = data.height;
           scope.styles.width = data.width;
           console.log('changing size to height: ' + data.height + ', width: ' + data.width);
@@ -96,12 +93,12 @@ angular.module('ozpWebtopApp.dashboardView')
       // see answer by aaronfrost:
       // http://stackoverflow.com/questions/12729122/prevent-error-digest-already-in-progress-when-calling-scope-apply
       $timeout(function() {
-        scope.uuid = element.context.id;
-        var widgetSize = dashboardApi.getAppSize(scope.currentDashboardIndex, scope.uuid);
-        console.log('setting intitial style: ' + widgetSize.width + ', ' + widgetSize.height);
+        scope.frameId = element.context.id;
+        var frameSize = dashboardApi.getFrameSizeOnGrid(scope.frameId);
+        console.log('setting initial style: ' + frameSize.width + ', ' + frameSize.height);
         scope.styles = {
-          'height': widgetSize.height,
-          'width': widgetSize.width
+          'height': frameSize.height,
+          'width': frameSize.width
         };
       });
     }

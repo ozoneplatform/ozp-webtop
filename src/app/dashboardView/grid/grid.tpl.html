@@ -1,19 +1,8 @@
 <div class="container gridster-container-settings">
   <div gridster="gridOptions">
     <ul>
-      <li gridster-item="customItemMap" ng-repeat="item in apps" id="{{item.uuid}}"
+      <li gridster-item="customItemMap" ng-repeat="item in frames" id="{{item.id}}"
           ozp-gridster-item="" frame="item" ng-hide="isDisabled">
-      </li>
-
-      <!-- DEBUG
-      <li gridster-item="customItemMap" ng-repeat="item in apps"
-          style="color: black; background-color: lightslategrey;" id="{{item.uuid}}">
-        <ozp-chrome></ozp-chrome>
-        <h4> {{item.name}}</h4>
-        <p> {{item.shortDescription}}</p>
-
-         <iframe src="http://www.w3schools.com" width="{{item.gridLayout.width}}" height="{{item.gridLayout.height}}"></iframe>
-         -->
       </li>
     </ul>
   </div>

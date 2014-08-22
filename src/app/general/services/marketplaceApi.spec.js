@@ -25,7 +25,7 @@ describe('Service: marketplaceApi', function () {
     expect(purpleCircleApp.description).toBeDefined();
     expect(purpleCircleApp.url).toBeDefined();
     expect(purpleCircleApp.icon).toBeDefined();
-    expect(purpleCircleApp.uuid).toBeDefined();
+    expect(purpleCircleApp.id).toBeDefined();
     expect(purpleCircleApp.keywords).toBeDefined();
   });
 });

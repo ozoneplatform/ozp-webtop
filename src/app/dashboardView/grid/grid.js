@@ -1,7 +1,8 @@
 'use strict';
 
 /**
- * GridController retrieves the state of a number of tiles and binds it to an Angular scope.
+ * GridController retrieves the state of a number of tiles and binds it to an
+ * Angular scope.
  *
  * @namespace controllers
  * @class GridController
@@ -9,9 +10,12 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
 
-.controller('GridController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi, dashboardChangeMonitor) {
+.controller('GridController', function ($scope, $rootScope, $location,
+                                        dashboardApi, marketplaceApi,
+                                        dashboardChangeMonitor) {
 
   // Get state of the dashboard grid
+  // TODO remove this
   $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
 
   dashboardChangeMonitor.run();
@@ -36,6 +40,7 @@ angular.module('ozpWebtopApp.dashboardView')
   function updateDashboard() {
     // Get the dashboard index
     var dashboardIndex = dashboardChangeMonitor.dashboardIndex;
+    $scope.currentDashboard = dashboardApi.getDashboardById(dashboardIndex);
 
     for (var i=0; i < $scope.dashboards.length; i++) {
       if ($scope.dashboards[i].index.toString() === dashboardIndex) {
@@ -53,6 +58,9 @@ angular.module('ozpWebtopApp.dashboardView')
         // on the iframe
         for (var j=0; j < $scope.apps.length; j++) {
           var widgetSize = $scope.updateWidgetPixelSize($scope.apps[j].uuid);
+          // update this widget's state to save its size
+          dashboardApi.updateAppSize($scope.currentDashboardIndex, $scope.apps[j], widgetSize.width, widgetSize.height);
+
             $rootScope.$broadcast('gridSizeChanged', {
               'uuid': $scope.apps[j].uuid,
               'height': widgetSize.height,
@@ -131,6 +139,9 @@ angular.module('ozpWebtopApp.dashboardView')
         var appUuid = uiWidget.element.context.id;
         var widgetSize = $scope.updateWidgetPixelSize(appUuid);
 
+        // update this widget's state to save its size
+        dashboardApi.updateAppSize($scope.currentDashboardIndex, appUuid, widgetSize.width, widgetSize.height);
+
         // send the message so the app can adjust their contents appropriately
         $rootScope.$broadcast('gridSizeChanged', {
           'uuid': appUuid,
@@ -175,14 +186,15 @@ angular.module('ozpWebtopApp.dashboardView')
   // Update this instance's pixel size
   $scope.updateWidgetPixelSize = function(appUuid) {
     var widgetSize = $scope.calculateWidgetSize(appUuid);
-      // update this widget's state to save its size
-      dashboardApi.updateAppSize($scope.currentDashboardIndex, appUuid, widgetSize.width, widgetSize.height);
       for (var i=0; i < $scope.apps.length; i++) {
         if ($scope.apps[i].uuid === appUuid) {
           widgetSize.width -= 10;   // for good measure
           widgetSize.height -= 30;  // minus height of chrome
           $scope.apps[i].gridLayout.width = widgetSize.width;
           $scope.apps[i].gridLayout.height = widgetSize.height;
+
+          // update this widget's state to save its size
+          dashboardApi.updateAppSize($scope.currentDashboardIndex, appUuid, widgetSize.width, widgetSize.height);
           return widgetSize;
         }
       }

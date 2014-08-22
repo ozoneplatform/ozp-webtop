@@ -50,6 +50,11 @@ angular.module('ozpWebtopApp.dashboardView')
         // with dashboard app data
         dashboardApi.mergeApplicationData($scope.apps, allApps);
 
+        // update pixel size of apps
+        for (var j=0; j < $scope.apps.length; j++) {
+          $scope.updateWidgetPixelSize($scope.apps[j].uuid);
+        }
+
         $scope.customItemMap = {
           sizeX: 'item.gridLayout.sizeX',
           sizeY: 'item.gridLayout.sizeY',
@@ -95,12 +100,24 @@ angular.module('ozpWebtopApp.dashboardView')
     resizable: {
       enabled: true,
       handles: 'n, e, s, w, ne, se, sw, nw',
-      start: function(/*event, uiWidget, $element*/) {}, // optional callback fired when resize is started,
-      resize: function(/*event, uiWidget, $element*/) {}, // optional callback fired when item is resized,
+      start: function(event, uiWidget) {
+        var appUuid = uiWidget.element.context.id;
+        for (var i=0; i < $scope.apps.length; i++) {
+          if ($scope.apps[i].uuid === appUuid) {
+            $scope.apps[i].gridLayout.width = 100;
+            $scope.apps[i].gridLayout.height = 100;
+          }
+        }
+      }, // optional callback fired when resize is started,
+      resize: function(/*event, uiWidget, $element */) {
+      }, // optional callback fired when item is resized,
       stop: function(event, uiWidget){
         // The dimensions reported by uiWidget are wrong - use custom function
         // to calculate new size
-        var widgetSize = $scope.calculateWidgetSize(uiWidget.element.context.id);
+        var appUuid = uiWidget.element.context.id;
+        var widgetSize = $scope.updateWidgetPixelSize(appUuid);
+
+        // send the message so the app can adjust their contents appropriately
         $rootScope.$broadcast('gridSizeChanged', {
           'height': widgetSize.height,
           'width': widgetSize.width
@@ -109,8 +126,7 @@ angular.module('ozpWebtopApp.dashboardView')
     },
     draggable: {
       enabled: true, // whether dragging items is supported
-      handle: 'h4',
-      //handle: 'div.ozp-chrome, div.ozp-chrome > .chrome-icon, div.ozp-chrome > .chrome-name', // optional selector for resize handle
+      handle: 'div.ozp-chrome, div.ozp-chrome > .chrome-icon, div.ozp-chrome > .chrome-name', // optional selector for resize handle
       start: function(/*event, uiWidget, $element*/) {}, // optional callback fired when drag is started,
       drag: function(/*event, uiWidget, $element*/) {}, // optional callback fired when item is moved,
       stop: function(/*event, uiWidget, $element*/) {} // optional callback fired when item is finished dragging
@@ -131,7 +147,6 @@ angular.module('ozpWebtopApp.dashboardView')
     // assume row margins and height are same as for columns
     var baseWidgetHeight = baseWidgetWidth;
 
-    // get saved data for this app
     var appInfo = dashboardApi.getAppInfo($scope.currentDashboardIndex, appUuid);
     var sizeX = appInfo.gridLayout.sizeX;
     var sizeY = appInfo.gridLayout.sizeY;
@@ -142,6 +157,20 @@ angular.module('ozpWebtopApp.dashboardView')
       'height': widgetHeight,
       'width': widgetWidth
     };
+  };
+
+  $scope.updateWidgetPixelSize = function(appUuid) {
+    var widgetSize = $scope.calculateWidgetSize(appUuid);
+      // update this widget's state to save its size
+      dashboardApi.updateAppSize($scope.currentDashboardIndex, appUuid, widgetSize.width, widgetSize.height);
+      for (var i=0; i < $scope.apps.length; i++) {
+        if ($scope.apps[i].uuid === appUuid) {
+          $scope.apps[i].gridLayout.width = widgetSize.width - 10;  // for good measure
+          $scope.apps[i].gridLayout.height = widgetSize.height - 30;  // minus height of chrome
+          return widgetSize;
+
+        }
+      }
   };
 
 });

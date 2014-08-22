@@ -167,6 +167,18 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     return {};
   };
 
+  this.updateAppSize = function(dashboardIndex, appUuid, width, height) {
+    var dashboards = this.getAllDashboards();
+    var dashboard = dashboards.dashboards[dashboardIndex];
+    for (var i=0; i < dashboard.apps.length; i++) {
+      if (dashboard.apps[i].uuid === appUuid) {
+        dashboard.apps[i].gridLayout.width = width;
+        dashboard.apps[i].gridLayout.height = height;
+      }
+    }
+
+  };
+
   this.createExampleDashboards = function() {
     console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched

@@ -1,29 +1,19 @@
 <div class="container gridster-container-settings">
   <div gridster="gridOptions">
     <ul>
-      <!--
-      <li gridster-item="customItemMap" ng-repeat="item in apps"
+      <li gridster-item="customItemMap" ng-repeat="item in apps" id="{{item.uuid}}"
           ozp-gridster-item="" frame="item" ng-hide="isDisabled">
-      </li> -->
+      </li>
+
+      <!-- DEBUG
       <li gridster-item="customItemMap" ng-repeat="item in apps"
           style="color: black; background-color: lightslategrey;" id="{{item.uuid}}">
         <ozp-chrome></ozp-chrome>
-        <!--<h4> {{item.name}}</h4>-->
-        <!--<p> {{item.shortDescription}}</p>-->
+        <h4> {{item.name}}</h4>
+        <p> {{item.shortDescription}}</p>
 
-        <!--<canvas id="square" width="{{item.gridLayout.width}}" height="{{item.gridLayout.height}}" style="border:1px solid #c3c3c3;">-->
-        <!--Your browser does not support the HTML5 canvas tag.-->
-        <!--</canvas>-->
-        <!--<script>-->
-
-        <!--var c=document.getElementById("square");-->
-        <!--var ctx=c.getContext("2d");-->
-        <!--ctx.fillStyle="#FF0000";-->
-        <!--ctx.fillRect(0,0,{{item.gridLayout.width}},{{item.gridLayout.height}});-->
-
-        <!--</script>-->
-
-        <iframe src="http://www.w3schools.com" width="{{item.gridLayout.width}}" height="{{item.gridLayout.height}}"></iframe>
+         <iframe src="http://www.w3schools.com" width="{{item.gridLayout.width}}" height="{{item.gridLayout.height}}"></iframe>
+         -->
       </li>
     </ul>
   </div>

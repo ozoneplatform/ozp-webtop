@@ -16,7 +16,7 @@ angular.module('ozpWebtopApp.dashboardView')
  * @class gridsterItem
  * @constructor
  */
-.directive('ozpGridsterItem', function ($compile, $http, $templateCache, compareUrl) {
+.directive('ozpGridsterItem', function ($compile, $http, $templateCache, $timeout, compareUrl) {
 
     // TODO: review this before removing
 //  var getTemplate = function (sameOrigin) {
@@ -42,12 +42,12 @@ angular.module('ozpWebtopApp.dashboardView')
     // TODO: use controller for inter-directive communication
     // require: '^ozpGridster',
 
+
     scope: {
       frame: '='
     },
 
     link: function (scope, element) {
-
       // Is the origin the same as the webtop?
       var origin = compareUrl(scope.frame.url);
       var template;
@@ -71,16 +71,28 @@ angular.module('ozpWebtopApp.dashboardView')
     //});
 
       scope.$on('gridSizeChanged', function(event, data) {
-        scope.styles.height = data.height;
-        scope.styles.width = data.width;
-        console.log('changing size to height: ' + data.height + ', width: ' + data.width);
+        if (data.uuid === scope.uuid) {
+          scope.styles.height = data.height;
+          scope.styles.width = data.width;
+          console.log('changing size to height: ' + data.height + ', width: ' + data.width);
+        }
       });
 
-      // TODO: make these dynamic
+      // TODO: get minimum values from somewhere based on the size of the
+      //      current grid
       scope.styles = {
-        'height': 205,
-        'width': 205
+        'height': 100,
+        'width': 100
       };
+
+      // element.context.id will === {{item.uuid}} until the scope.$apply() is
+      // invoked and the template is compiled. Using a timeout with no delay is
+      // a best-practice as a way to wait until scope.$apply() is invoked
+      // see answer by aaronfrost:
+      // http://stackoverflow.com/questions/12729122/prevent-error-digest-already-in-progress-when-calling-scope-apply
+      $timeout(function() {
+        scope.uuid = element.context.id;
+      });
     }
   };
 });

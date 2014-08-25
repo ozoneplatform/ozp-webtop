@@ -21,6 +21,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   };
 
   this.setDashboardData = function(dashboardData) {
+    cache.removeItem('dashboards');
     cache.setItem('dashboards', dashboardData);
   };
 
@@ -61,6 +62,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   // Check to see if an application is already on a given dashboard
   this.isAppOnDashboard = function(dashboardId, applicationId) {
     var dashboard = this.getDashboardById(dashboardId);
+    console.log(dashboard);
     for (var i=0; i < dashboard.frames.length; i++) {
       if (dashboard.frames[i].appId === applicationId) {
         return true;
@@ -128,6 +130,16 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     this.saveDashboard(dashboard);
   };
 
+  this.removeFrame = function(dashboardId, appId) {
+    var dashboard = this.getDashboardById(dashboardId);
+    for (var i=0; i < dashboard.frames.length; i++) {
+      if(dashboard.frames[i].appId === appId){
+        dashboard.frames.splice(i,1);
+      }
+    }
+    this.saveDashboard(dashboard);
+  };
+
   // Change the user's default dashboard
   this.updateDefaultDashboard = function(dashboardName) {
     var dashboardData = this.getDashboardData();
@@ -189,6 +201,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   // Save a dashboard
   this.saveDashboard = function(dashboard) {
     var dashboards = this.getDashboards();
+    console.log(dashboards);
     for (var i=0; i < dashboards.length; i++) {
       if (dashboards[i].id === dashboard.id) {
         dashboards[i] = dashboard;

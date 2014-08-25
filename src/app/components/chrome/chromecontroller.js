@@ -4,7 +4,7 @@
  * ChromeController aids the ozpChrome directive in knowing its location (grid or desktop).
  */
 angular.module('ozpWebtopApp.components')
-.controller('ChromeController', function ($scope, $rootScope, dashboardChangeMonitor) {
+.controller('ChromeController', function ($scope, $rootScope, dashboardApi, dashboardChangeMonitor) {
 
   // register to receive notifications if dashboard changes
   dashboardChangeMonitor.run();
@@ -28,6 +28,7 @@ angular.module('ozpWebtopApp.components')
 		    $rootScope.activeFrames.splice(i, 1);
       }
     }
+    dashboardApi.removeFrame($rootScope.currentDashboardId, $scope.frame.appId);
   };
 
   $scope.minimizeFrame = function(e){

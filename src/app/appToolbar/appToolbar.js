@@ -20,6 +20,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
 
     $scope.$on('dashboardChange', function(event, dashboardChange) {
       $scope.currentDashboardId = dashboardChange.dashboardId;
+      $rootScope.currentDashboardId = dashboardChange.dashboardId;
     });
 
      $scope.maximizeFrame = function(e) {

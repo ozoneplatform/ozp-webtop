@@ -13,8 +13,14 @@ describe('Service: dashboardApi', function () {
   }));
 
   it('dashboardApi can create a sample set of dashboards', function() {
-    var dashboards = dashboardApi.getAllDashboards();
-    expect(dashboards.user).toBe('joebloe');
+    var dashboardData = dashboardApi.getDashboardData();
+    expect(dashboardData.user).toBe('joebloe');
+  });
+
+  it('getFrameById', function() {
+    spyOn(dashboardApi, 'getFrameById');
+    dashboardApi.getFrameById('madeupid');
+    expect(dashboardApi.getFrameById).toHaveBeenCalled();
   });
 
 });

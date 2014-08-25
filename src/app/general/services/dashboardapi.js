@@ -2,10 +2,10 @@
 
 var app = angular.module('ozpWebtopApp.apis');
 
-app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
+app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
   var cache = new LocalStorage(localStorage, JSON);
 
-  this.getAllDashboards = function() {
+  this.getDashboardData = function() {
     if (!cache.hasItem('dashboards')) {
       // TODO: handle error
       console.log('ERROR: No dashboards');
@@ -15,69 +15,72 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     return dashboards;
   };
 
-  this.setAllDashboards = function(dashboards) {
-    cache.setItem('dashboards', dashboards);
+  this.getDashboards = function() {
+    var dashboardData = this.getDashboardData();
+    return dashboardData.dashboards;
   };
 
-  // layout should be 'grid' or 'desktop'
-  this.updateCurrentDashboardLayoutType = function(layout) {
-    var dashboards = this.getAllDashboards();
-    var currentDashboardIdx = dashboards.currentDashboardIndex;
-    for (var i=0; i < dashboards.dashboards.length; i++) {
-      if (dashboards.dashboards[i].index === currentDashboardIdx) {
-        dashboards.dashboards[i].layout = layout;
-      }
-    }
-    this.setAllDashboards(dashboards);
+  this.setDashboardData = function(dashboardData) {
+    cache.setItem('dashboards', dashboardData);
   };
 
-  this.updateCurrentDashboardGrid = function(dashboardIndex, appUuid, row, col, sizeX, sizeY) {
-    var dashboards = this.getAllDashboards();
-    var dashboard = dashboards.dashboards[dashboardIndex];
-    for (var i=0; i < dashboard.apps.length; i++) {
-      if (dashboard.apps[i].uuid === appUuid) {
-        dashboard.apps[i].gridLayout.row = row;
-        dashboard.apps[i].gridLayout.col = col;
-        dashboard.apps[i].gridLayout.sizeX = sizeX;
-        dashboard.apps[i].gridLayout.sizeY = sizeY;
-        this.setAllDashboards(dashboards);
-      }
-    }
+  this.setDashboards = function(dashboards) {
+    var dashboardData = this.getDashboardData();
+    dashboardData.dashboards = dashboards;
+    this.setDashboardData(dashboardData);
   };
 
-  this.updateCurrentDashboardDesktop = function(dashboardIndex, appUuid, x, y, zIndex) {
-    var dashboards = this.getAllDashboards();
-    var dashboard = dashboards.dashboards[dashboardIndex];
-    for (var i=0; i < dashboard.apps.length; i++) {
-      if (dashboard.apps[i].uuid === appUuid) {
-        dashboard.apps[i].desktopLayout.left = x;
-        dashboard.apps[i].desktopLayout.top = y;
-        dashboard.apps[i].desktopLayout.zIndex = zIndex;
-        this.setAllDashboards(dashboards);
-        console.log('updated application ' + appUuid + ' on dashboard ' + dashboardIndex + ', x: ' + x + ', y: ' + y + ', zIndex: ' + zIndex);
-      }
-    }
+  // Update dashboard layout
+  // @param layout should be 'grid' or 'desktop'
+  this.updateLayoutType = function(dashboardId, layout) {
+    var dashboard = this.getDashboardById(dashboardId);
+    dashboard.layout = layout;
+    this.saveDashboard(dashboard);
   };
 
-  this.isAppOnDashboard = function(dashboardIndex, appUuid) {
-    var dashboards = this.getAllDashboards();
-    var dashboard = dashboards.dashboards[dashboardIndex];
-    for (var i=0; i < dashboard.apps.length; i++) {
-      if (dashboard.apps[i].uuid === appUuid) {
+  // Update the grid layout of a frame in a dashboard
+  this.updateGridFrame = function(frameId, row, col, sizeX, sizeY) {
+    var frame = this.getFrameById(frameId);
+    frame.gridLayout.row = row;
+    frame.gridLayout.col = col;
+    frame.gridLayout.sizeX = sizeX;
+    frame.gridLayout.sizeY = sizeY;
+    this.saveFrame(frame);
+  };
+
+  // Update the desktop layout of a frame in a dashboard
+  // TODO: what about width and height?
+  this.updateDesktopFrame = function(frameId, x, y, zIndex) {
+    var frame = this.getFrameById(frameId);
+    frame.desktopLayout.left = x;
+    frame.desktopLayout.top = y;
+    frame.desktopLayout.zIndex = zIndex;
+    this.saveFrame(frame);
+  };
+
+  // Check to see if an application is already on a given dashboard
+  this.isAppOnDashboard = function(dashboardId, applicationId) {
+    var dashboard = this.getDashboardById(dashboardId);
+    for (var i=0; i < dashboard.frames.length; i++) {
+      if (dashboard.frames[i].appId === applicationId) {
         return true;
       }
     }
     return false;
   };
 
-  this.addApplication = function(dashboardIndex, appUuid, gridMaxRows) {
-    var dashboards = this.getAllDashboards();
-    var dashboard = dashboards.dashboards[dashboardIndex];
+  // Create a new frame in a dashboard for a given application
+  // Creates a frame with with both grid and desktop layout data
+  this.createFrame = function(dashboardId, appId, gridMaxRows) {
+    var dashboard = this.getDashboardById(dashboardId);
+
+    // Calculate the row to place this frame in (for grid layout)
+
     // for the grid layout, place new app in first col of first empty row
     // for the desktop layout, just put it on and let user move it
     var usedRows = [];
-    for (var i=0; i < dashboard.apps.length; i++) {
-      usedRows.push(dashboard.apps[i].gridLayout.row);
+    for (var i=0; i < dashboard.frames.length; i++) {
+      usedRows.push(dashboard.frames[i].gridLayout.row);
     }
     var maxUsedRow = Math.max.apply(Math, usedRows);
     var row = maxUsedRow + 1;
@@ -85,6 +88,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
       // TODO: handle error
       console.log('ERROR: not enough rows in grid');
     }
+
+    // by default, new frames will have minimal size
     var col = 0;
     var sizeX = 1;
     var sizeY = 1;
@@ -96,9 +101,14 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     var width = 200;
     var height = 200;
 
+
+    var utils = new Utilities();
+    var frameId = utils.generateUuid();
+
     // update the dashboard with this app
     var newApp = {
-      'uuid': appUuid,
+      'appId': appId,
+      'id': frameId,
       'gridLayout': {
         'row': row,
         'col': col,
@@ -114,43 +124,112 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
       }
     };
 
-    console.log('adding app ' + appUuid + ' to dashboard ' + dashboard.index + ' at row ' + row + ', col ' + col);
-
-    dashboard.apps.push(newApp);
-    this.setAllDashboards(dashboards);
+    dashboard.frames.push(newApp);
+    this.saveDashboard(dashboard);
   };
 
+  // Change the user's default dashboard
   this.updateDefaultDashboard = function(dashboardName) {
-    var dashboards = this.getAllDashboards();
-    for (var i=0; i < dashboards.dashboards.length; i++) {
-      if (dashboards.dashboards[i].name === dashboardName) {
-        dashboards.defaultDashboard = dashboards.dashboards[i].index;
+    var dashboardData = this.getDashboardData();
+    for (var i=0; i < dashboardData.dashboards.length; i++) {
+      if (dashboardData.dashboards[i].name === dashboardName) {
+        dashboardData.defaultDashboard = dashboardData.dashboards[i].id;
       }
     }
-    this.setAllDashboards(dashboards);
+    this.setDashboardData(dashboardData);
   };
 
+  // Return the name of the user's default dashboard
   this.getDefaultDashboardName = function() {
-    var dashboards = this.getAllDashboards();
-    var defaultDashboardIndex = dashboards.defaultDashboard;
+    var dashboards = this.getDashboardData();
+    var defaultDashboardId = dashboards.defaultDashboard;
     for (var i=0; i < dashboards.dashboards.length; i++) {
-      if (dashboards.dashboards[i].index === defaultDashboardIndex) {
+      if (dashboards.dashboards[i].id === defaultDashboardId) {
         return dashboards.dashboards[i].name;
       }
     }
   };
 
-  this.mergeApplicationData = function(dashboardApps, marketplaceApps) {
+  // Augment the dashboard.frames data with application-specific data
+  // Note: data is not persisted, but rather the 'frames' object
+  //  is modified by reference
+  this.mergeApplicationData = function(frames, marketplaceApps) {
     for (var i=0; i < marketplaceApps.length; i++) {
       // check if this app is on our dashboard
-      for (var j=0; j < dashboardApps.length; j++) {
-        if (dashboardApps[j].uuid === marketplaceApps[i].uuid) {
+      for (var j=0; j < frames.length; j++) {
+        if (frames[j].appId === marketplaceApps[i].id) {
           // if it is, then get all relevant info
-          dashboardApps[j].icon = marketplaceApps[i].icon;
-          dashboardApps[j].url = marketplaceApps[i].url;
-          dashboardApps[j].name = marketplaceApps[i].name;
-          dashboardApps[j].shortDescription = marketplaceApps[i].shortDescription;
+          frames[j].icon = marketplaceApps[i].icon;
+          frames[j].url = marketplaceApps[i].url;
+          frames[j].name = marketplaceApps[i].name;
+          frames[j].shortDescription = marketplaceApps[i].shortDescription;
         }
+      }
+    }
+  };
+
+  // Updates the dynamically generated fields for grid frame size in px
+  this.updateFrameSizeOnGrid = function(frameId, width, height) {
+    var frame = this.getFrameById(frameId);
+    frame.gridLayout.width = width;
+    frame.gridLayout.height = height;
+    this.saveFrame(frame);
+  };
+
+  // Return the frame size (in px) for a given frame in the grid layout
+  // Note that these values are dynamically generated
+  this.getFrameSizeOnGrid = function(frameId) {
+    var frame = this.getFrameById(frameId);
+    var widgetSize = {};
+    widgetSize.width = frame.gridLayout.width;
+    widgetSize.height = frame.gridLayout.height;
+    return widgetSize;
+  };
+
+  // Save a dashboard
+  this.saveDashboard = function(dashboard) {
+    var dashboards = this.getDashboards();
+    for (var i=0; i < dashboards.length; i++) {
+      if (dashboards[i].id === dashboard.id) {
+        dashboards[i] = dashboard;
+        this.setDashboards(dashboards);
+      }
+    }
+  };
+
+  // Save a frame in a dashboard
+  this.saveFrame = function(frame) {
+    var dashboards = this.getDashboards();
+    for (var i=0; i < dashboards.length; i++) {
+      var frames = dashboards[i].frames;
+      for (var j=0; j < frames.length; j++) {
+        if (frames[j].id === frame.id) {
+          dashboards[i].frames[j] = frame;
+          this.setDashboards(dashboards);
+        }
+      }
+    }
+  };
+
+  // Retrieve a frame by id
+  this.getFrameById = function(frameId) {
+    var dashboards = this.getDashboards();
+    for (var i=0; i < dashboards.length; i++) {
+      var frames = dashboards[i].frames;
+      for (var j=0; j < frames.length; j++) {
+        if (frames[j].id === frameId) {
+          return frames[j];
+        }
+      }
+    }
+  };
+
+  // Retrieve a dashboard by id
+  this.getDashboardById = function(dashboardId) {
+    var dashboards = this.getDashboards();
+    for (var i=0; i < dashboards.length; i++) {
+      if (dashboards[i].id.toString() === dashboardId.toString()) {
+        return dashboards[i];
       }
     }
   };
@@ -159,47 +238,19 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
     console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched
     // via http, but that led to all sorts of issues with testing.
-    var dashboards = {
+    var dashboardData = {
       'name': 'dashboards',
       'user': 'joebloe',
       'defaultDashboard': 0,
       'dashboards': [
         {
           'name': 'Simple Apps',
-          'index': 0,
+          'id': 0,
           'layout': 'grid',
-          'desktopIcons': [
+          'frames': [
             {
-              'icon': 'img/key-icon.png',
-              'text': 'Icon 1',
-              'elliptical': false,
-              'index': 1,
-              'url': '#',
-              'top': 100,
-              'left': 100
-            },
-            {
-              'icon': 'img/Glossy-Developer-icon.png',
-              'text': 'Icon 0',
-              'elliptical': false,
-              'index': 0,
-              'url': '#',
-              'top': 100,
-              'left': 125
-            },
-            {
-              'icon': 'img/nero-icon.png',
-              'text': 'Icon 2',
-              'elliptical': false,
-              'index': 2,
-              'url': '#',
-              'top': 100,
-              'left': 150
-            }
-          ],
-          'apps': [
-            {
-              'uuid': '342f3680-18c9-11e4-8c21-0800200c9a66', // purple circle
+              'appId': '342f3680-18c9-11e4-8c21-0800200c9a66', // purple circle
+              'id': '45a08744-686b-4b14-820a-ebc8c24fbfb0',
               'gridLayout': {
                 'row': 1,
                 'col': 1,
@@ -215,7 +266,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4', // red square
+              'appId': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4', // red square
+              'id': '59891c69-dde5-4926-b4b1-e53dac90b271',
               'gridLayout': {
                 'row': 1,
                 'col': 2,
@@ -231,7 +283,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': 'c3d895d5-f332-4154-b963-c5dd63f8ca49', // some text
+              'appId': 'c3d895d5-f332-4154-b963-c5dd63f8ca49', // some text
+              'id': '23baefc8-872a-4da4-84ed-e8fa62c09819',
               'gridLayout': {
                 'row': 2,
                 'col': 1,
@@ -247,7 +300,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5', //mbrot
+              'appId': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5', //mbrot
+              'id': '8ca6dba0-b7bb-47e4-a1a1-06e451f9a0f1',
               'gridLayout': {
                 'row': 2,
                 'col': 2,
@@ -262,44 +316,16 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
                 'height': 200
               }
             }
-          ] // end apps in dashboard
+          ] // end frames in dashboard
         },
         {
           'name': 'Just One Thing',
-          'index': 1,
+          'id': 1,
           'layout': 'desktop',
-          'desktopIcons': [
+          'frames': [
             {
-              'icon': 'img/key-icon.png',
-              'text': 'Icon 1',
-              'elliptical': false,
-              'index': 1,
-              'url': '#',
-              'top': 100,
-              'left': 100
-            },
-            {
-              'icon': 'img/Glossy-Developer-icon.png',
-              'text': 'Icon 0',
-              'elliptical': false,
-              'index': 0,
-              'url': '#',
-              'top': 100,
-              'left': 125
-            },
-            {
-              'icon': 'img/nero-icon.png',
-              'text': 'Icon 2',
-              'elliptical': false,
-              'index': 2,
-              'url': '#',
-              'top': 100,
-              'left': 150
-            }
-          ],
-          'apps': [
-            {
-              'uuid': '342f3680-18c9-11e4-8c21-0800200c9a66',
+              'appId': '342f3680-18c9-11e4-8c21-0800200c9a66',
+              'id': '04648023-6ab0-448d-83a1-bb378639237f',
               'gridLayout': {
                 'col': 1,
                 'row': 1,
@@ -314,17 +340,16 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
                 'height': 300
               }
             }
-          ] // end apps in dashboard
+          ] // end frames in dashboard
         },
         {
           'name': 'Bouncing Balls',
-          'index': 2,
+          'id': 2,
           'layout': 'grid',
-          'desktopIcons': [
-          ],
-          'apps': [
+          'frames': [
             {
-              'uuid': '998437ef-9191-4d57-91a7-6ab049361583',
+              'appId': '998437ef-9191-4d57-91a7-6ab049361583',
+              'id': '6c84a76c-f149-4c4d-90a8-1df397ed588b',
               'gridLayout': {
                 'col': 1,
                 'row': 1,
@@ -340,7 +365,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': '3af849aa-dad0-4223-b15b-9da3b48d1845',
+              'appId': '3af849aa-dad0-4223-b15b-9da3b48d1845',
+              'id': 'c951a160-0917-45cf-8c7f-a3748958ced1',
               'gridLayout': {
                 'col': 2,
                 'row': 1,
@@ -356,7 +382,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': 'e5f52929-3f00-4766-a820-f0452ff74572',
+              'appId': 'e5f52929-3f00-4766-a820-f0452ff74572',
+              'id': 'dad15d4a-0da1-4181-9e99-15c9197a0180',
               'gridLayout': {
                 'col': 1,
                 'row': 1,
@@ -372,7 +399,8 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
               }
             },
             {
-              'uuid': '93eb7a1d-618c-4478-a59e-326eccbe86d5',
+              'appId': '93eb7a1d-618c-4478-a59e-326eccbe86d5',
+              'id': '32769aa5-2c34-45e9-9a63-a155f3d77073',
               'gridLayout': {
                 'col': 2,
                 'row': 1,
@@ -387,20 +415,20 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage) {
                 'height': 300
               }
             }
-          ] // end apps in dashboard
+          ] // end frames in dashboard
         }
       ]
     };
-    this.setAllDashboards(dashboards);
+    this.setDashboardData(dashboardData);
   };
 
 });
 
 
 app.service('iwcDashboardApiImpl', function(/*dependencies*/) {
-  this.getAllDashboards = function() {};
+  this.getDashboards = function() {};
 
-  this.setAllDashboards = function() {};
+  this.setDashboardData = function() {};
 
   this.updateCurrentDashboardLayoutType = function() {};
 

@@ -16,7 +16,8 @@ angular.module('ozpWebtopApp.dashboardView')
  * @class gridsterItem
  * @constructor
  */
-.directive('ozpGridsterItem', function ($compile, $http, $templateCache, compareUrl) {
+.directive('ozpGridsterItem', function ($compile, $http, $templateCache,
+                                        $timeout, compareUrl, dashboardApi) {
 
     // TODO: review this before removing
 //  var getTemplate = function (sameOrigin) {
@@ -41,6 +42,7 @@ angular.module('ozpWebtopApp.dashboardView')
 
     // TODO: use controller for inter-directive communication
     // require: '^ozpGridster',
+
 
     scope: {
       frame: '='
@@ -70,11 +72,35 @@ angular.module('ozpWebtopApp.dashboardView')
         // element.addClass('ozp-managed-frame');
     //});
 
-      // TODO: make these dynamic
+      scope.$on('gridSizeChanged', function(event, data) {
+        if (data.frameId === scope.frameId) {
+          scope.styles.height = data.height;
+          scope.styles.width = data.width;
+          // console.log('changing size to height: ' + data.height + ', width: ' + data.width);
+        }
+      });
+
+      // TODO: get minimum values from somewhere based on the size of the
+      //      current grid
       scope.styles = {
-        'height': 205,
-        'width': 205
+        'height': 100,
+        'width': 100
       };
+
+      // element.context.id will === {{item.id}} until the scope.$apply() is
+      // invoked and the template is compiled. Using a timeout with no delay is
+      // a best-practice as a way to wait until scope.$apply() is invoked
+      // see answer by aaronfrost:
+      // http://stackoverflow.com/questions/12729122/prevent-error-digest-already-in-progress-when-calling-scope-apply
+      $timeout(function() {
+        scope.frameId = element.context.id;
+        var frameSize = dashboardApi.getFrameSizeOnGrid(scope.frameId);
+        // console.log('setting initial style: ' + frameSize.width + ', ' + frameSize.height);
+        scope.styles = {
+          'height': frameSize.height,
+          'width': frameSize.width
+        };
+      });
     }
   };
 });

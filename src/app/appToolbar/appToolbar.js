@@ -5,8 +5,9 @@ angular.module( 'ozpWebtopApp.appToolbar')
                                        marketplaceApi, dashboardApi,
                                        dashboardChangeMonitor) {
 
-    $scope.currentDashboardIndex = '0';
+    $scope.currentDashboardId = '0';
 
+    // TODO: clean this up
     $rootScope.$watch('activeFrames', function () {
 
       if ($rootScope.activeFrames) {
@@ -18,7 +19,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
     dashboardChangeMonitor.run();
 
     $scope.$on('dashboardChange', function(event, dashboardChange) {
-      $scope.currentDashboardIndex = dashboardChange.dashboardIndex;
+      $scope.currentDashboardId = dashboardChange.dashboardId;
     });
 
      $scope.maximizeFrame = function(e) {
@@ -31,14 +32,15 @@ angular.module( 'ozpWebtopApp.appToolbar')
 
     $scope.appClicked = function(app) {
       // check if the app is already on the current dashboard
+      // TODO: support non-singleton apps
       var isOnDashboard = dashboardApi.isAppOnDashboard(
-        $scope.currentDashboardIndex, app.uuid);
+        $scope.currentDashboardId, app.id);
       if (isOnDashboard) {
         alert('This application is already on your dashboard');
       } else {
         // add this app to the dashboard
         // TODO: use message broadcast to get grid max rows and grid max cols
-        dashboardApi.addApplication($scope.currentDashboardIndex, app.uuid, 10);
+        dashboardApi.createFrame($scope.currentDashboardId, app.id, 10);
         // reload this dashboard
         $state.go($state.$current, null, { reload: true });
       }

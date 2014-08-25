@@ -25,7 +25,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '1.0.1',
           'keywords': ['purple', 'circle'],
           'url': 'http://127.0.0.1:9006/circle/circle.html',
-          'uuid': '342f3680-18c9-11e4-8c21-0800200c9a66'
+          'id': '342f3680-18c9-11e4-8c21-0800200c9a66'
         },
         {
           'name': 'Red Square',
@@ -35,7 +35,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '1.4.1',
           'keywords': ['red', 'square'],
           'url': 'http://127.0.0.1:9006/square/square.html',
-          'uuid': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4'
+          'id': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4'
         },
         {
           'name': 'Some Text',
@@ -45,7 +45,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '0.9.8',
           'keywords': ['some', 'text'],
           'url': 'http://127.0.0.1:9006/text/text.html',
-          'uuid': 'c3d895d5-f332-4154-b963-c5dd63f8ca49'
+          'id': 'c3d895d5-f332-4154-b963-c5dd63f8ca49'
         },
         {
           'name': 'Mandelbrot',
@@ -55,7 +55,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '5.5.2',
           'keywords': ['benoit', 'mandelbrot'],
           'url': 'http://127.0.0.1:9006/mbrot/mbrot.html',
-          'uuid': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5'
+          'id': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5'
         },
         {
           'name': 'Clock',
@@ -65,7 +65,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '2.2.5',
           'keywords': ['clock', 'date', 'time'],
           'url': 'http://somewhere.clock/clock',
-          'uuid': '19179c15-4cbb-45af-9fde-c6b35a343424'
+          'id': '19179c15-4cbb-45af-9fde-c6b35a343424'
         },
         {
           'name': 'People Counter',
@@ -75,7 +75,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '3.5.4',
           'keywords': ['population', 'counter', 'people'],
           'url': 'http://somewhere.popcounter/popcounter',
-          'uuid': 'bc6b3ac9-4f68-4d92-966d-f50170914997'
+          'id': 'bc6b3ac9-4f68-4d92-966d-f50170914997'
         },
         {
           'name': 'Green Bouncing Ball',
@@ -85,7 +85,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
           'url': 'http://127.0.0.1:9005/index.html?color=green',
-          'uuid': '998437ef-9191-4d57-91a7-6ab049361583'
+          'id': '998437ef-9191-4d57-91a7-6ab049361583'
         },
         {
           'name': 'Blue Bouncing Ball',
@@ -95,7 +95,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
           'url': 'http://127.0.0.1:9005/index.html?color=blue',
-          'uuid': '3af849aa-dad0-4223-b15b-9da3b48d1845'
+          'id': '3af849aa-dad0-4223-b15b-9da3b48d1845'
         },
         {
           'name': 'Red Bouncing Ball',
@@ -105,7 +105,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
           'url': 'http://127.0.0.1:9005/index.html?color=red',
-          'uuid': 'e5f52929-3f00-4766-a820-f0452ff74572'
+          'id': 'e5f52929-3f00-4766-a820-f0452ff74572'
         },
         {
           'name': 'Black Bouncing Ball',
@@ -115,7 +115,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
           'url': 'http://127.0.0.1:9005/index.html?color=black',
-          'uuid': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
+          'id': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
         }
       ]
     };

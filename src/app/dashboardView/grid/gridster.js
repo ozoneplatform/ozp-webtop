@@ -76,7 +76,7 @@ angular.module('ozpWebtopApp.dashboardView')
         if (data.frameId === scope.frameId) {
           scope.styles.height = data.height;
           scope.styles.width = data.width;
-          console.log('changing size to height: ' + data.height + ', width: ' + data.width);
+          // console.log('changing size to height: ' + data.height + ', width: ' + data.width);
         }
       });
 
@@ -87,7 +87,7 @@ angular.module('ozpWebtopApp.dashboardView')
         'width': 100
       };
 
-      // element.context.id will === {{item.uuid}} until the scope.$apply() is
+      // element.context.id will === {{item.id}} until the scope.$apply() is
       // invoked and the template is compiled. Using a timeout with no delay is
       // a best-practice as a way to wait until scope.$apply() is invoked
       // see answer by aaronfrost:
@@ -95,7 +95,7 @@ angular.module('ozpWebtopApp.dashboardView')
       $timeout(function() {
         scope.frameId = element.context.id;
         var frameSize = dashboardApi.getFrameSizeOnGrid(scope.frameId);
-        console.log('setting initial style: ' + frameSize.width + ', ' + frameSize.height);
+        // console.log('setting initial style: ' + frameSize.width + ', ' + frameSize.height);
         scope.styles = {
           'height': frameSize.height,
           'width': frameSize.width

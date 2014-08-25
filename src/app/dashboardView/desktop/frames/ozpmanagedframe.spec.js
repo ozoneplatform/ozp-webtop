@@ -16,7 +16,8 @@ describe('Directive: ozpManagedFrame', function () {
     $httpBackend = _$httpBackend_;
     scope = $rootScope.$new();
     scope.frame = {
-      'uuid': '342f3680-18c9-11e4-8c21-0800200c9a66',
+      'id': '342f3680-18c9-11e4-8c21-0800200c9a66',
+      'appId': '194f3680-18c9-11e4-8c21-0800200c9b98',
       'gridLayout': {
         'row': 1,
         'col': 1,

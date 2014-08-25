@@ -5,21 +5,29 @@ var app = angular.module('ozpWebtopApp.apis');
 app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
   var cache = new LocalStorage(localStorage, JSON);
 
-  this.getAllDashboards = function(getDashboardsOnly) {
+  this.getDashboardData = function() {
     if (!cache.hasItem('dashboards')) {
       // TODO: handle error
       console.log('ERROR: No dashboards');
       return {};
     }
     var dashboards = cache.getItem('dashboards');
-    if (getDashboardsOnly) {
-      return dashboards.dashboards;
-    }
     return dashboards;
   };
 
-  this.setAllDashboards = function(dashboards) {
-    cache.setItem('dashboards', dashboards);
+  this.getDashboards = function() {
+    var dashboardData = this.getDashboardData();
+    return dashboardData.dashboards;
+  };
+
+  this.setDashboardData = function(dashboardData) {
+    cache.setItem('dashboards', dashboardData);
+  };
+
+  this.setDashboards = function(dashboards) {
+    var dashboardData = this.getDashboardData();
+    dashboardData.dashboards = dashboards;
+    this.setDashboardData(dashboardData);
   };
 
   // Update dashboard layout
@@ -51,10 +59,10 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   };
 
   // Check to see if an application is already on a given dashboard
-  this.isAppOnDashboard = function(dashboardId, appId) {
+  this.isAppOnDashboard = function(dashboardId, applicationId) {
     var dashboard = this.getDashboardById(dashboardId);
     for (var i=0; i < dashboard.frames.length; i++) {
-      if (dashboard.frames[i].appId === appId) {
+      if (dashboard.frames[i].appId === applicationId) {
         return true;
       }
     }
@@ -93,7 +101,9 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     var width = 200;
     var height = 200;
 
-    var frameId = Utilities.generateUuid();
+
+    var utils = new Utilities();
+    var frameId = utils.generateUuid();
 
     // update the dashboard with this app
     var newApp = {
@@ -120,18 +130,18 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Change the user's default dashboard
   this.updateDefaultDashboard = function(dashboardName) {
-    var dashboards = this.getAllDashboards(false);
-    for (var i=0; i < dashboards.dashboards.length; i++) {
-      if (dashboards.dashboards[i].name === dashboardName) {
-        dashboards.defaultDashboard = dashboards.dashboards[i].id;
+    var dashboardData = this.getDashboardData();
+    for (var i=0; i < dashboardData.dashboards.length; i++) {
+      if (dashboardData.dashboards[i].name === dashboardName) {
+        dashboardData.defaultDashboard = dashboardData.dashboards[i].id;
       }
     }
-    this.setAllDashboards(dashboards);
+    this.setDashboardData(dashboardData);
   };
 
   // Return the name of the user's default dashboard
   this.getDefaultDashboardName = function() {
-    var dashboards = this.getAllDashboards(false);
+    var dashboards = this.getDashboardData();
     var defaultDashboardId = dashboards.defaultDashboard;
     for (var i=0; i < dashboards.dashboards.length; i++) {
       if (dashboards.dashboards[i].id === defaultDashboardId) {
@@ -178,36 +188,36 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   // Save a dashboard
   this.saveDashboard = function(dashboard) {
-    var dashboards = this.getAllDashboards(true);
+    var dashboards = this.getDashboards();
     for (var i=0; i < dashboards.length; i++) {
       if (dashboards[i].id === dashboard.id) {
         dashboards[i] = dashboard;
-        this.setAllDashboards(dashboards);
+        this.setDashboards(dashboards);
       }
     }
   };
 
   // Save a frame in a dashboard
   this.saveFrame = function(frame) {
-    var dashboards = this.getAllDashboards(true);
+    var dashboards = this.getDashboards();
     for (var i=0; i < dashboards.length; i++) {
       var frames = dashboards[i].frames;
       for (var j=0; j < frames.length; j++) {
         if (frames[j].id === frame.id) {
           dashboards[i].frames[j] = frame;
-          this.setAllDashboards(dashboards);
+          this.setDashboards(dashboards);
         }
       }
     }
   };
 
   // Retrieve a frame by id
-  this.getFrameById = function(id) {
-    var dashboards = this.getAllDashboards(true);
+  this.getFrameById = function(frameId) {
+    var dashboards = this.getDashboards();
     for (var i=0; i < dashboards.length; i++) {
       var frames = dashboards[i].frames;
       for (var j=0; j < frames.length; j++) {
-        if (frames[j].id === id) {
+        if (frames[j].id === frameId) {
           return frames[j];
         }
       }
@@ -215,10 +225,10 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   };
 
   // Retrieve a dashboard by id
-  this.getDashboardById = function(id) {
-    var dashboards = this.getAllDashboards(true);
+  this.getDashboardById = function(dashboardId) {
+    var dashboards = this.getDashboards();
     for (var i=0; i < dashboards.length; i++) {
-      if (dashboards[i].id.toString() === id.toString()) {
+      if (dashboards[i].id.toString() === dashboardId.toString()) {
         return dashboards[i];
       }
     }
@@ -228,7 +238,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched
     // via http, but that led to all sorts of issues with testing.
-    var dashboards = {
+    var dashboardData = {
       'name': 'dashboards',
       'user': 'joebloe',
       'defaultDashboard': 0,
@@ -409,16 +419,16 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
         }
       ]
     };
-    this.setAllDashboards(dashboards);
+    this.setDashboardData(dashboardData);
   };
 
 });
 
 
 app.service('iwcDashboardApiImpl', function(/*dependencies*/) {
-  this.getAllDashboards = function() {};
+  this.getDashboards = function() {};
 
-  this.setAllDashboards = function() {};
+  this.setDashboardData = function() {};
 
   this.updateCurrentDashboardLayoutType = function() {};
 

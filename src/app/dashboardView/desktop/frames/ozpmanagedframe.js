@@ -58,8 +58,7 @@ angular.module('ozpWebtopApp.dashboardView')
           element.css({
             zIndex: scope.frame.desktopLayout.zIndex
           });
-          dashboardApi.updateCurrentDashboardDesktop(scope.currentDashboardIndex,
-            scope.frame.uuid, x, y, scope.max.zIndex);
+          dashboardApi.updateDesktopFrame(scope.frame.id, x, y, scope.max.zIndex);
         }
 
         // Prevent default dragging of selected content
@@ -83,8 +82,7 @@ angular.module('ozpWebtopApp.dashboardView')
       function mouseup() {
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
-        dashboardApi.updateCurrentDashboardDesktop(scope.currentDashboardIndex,
-          scope.frame.uuid, x, y, scope.max.zIndex);
+        dashboardApi.updateDesktopFrame(scope.frame.id, x, y, scope.max.zIndex);
       }
 
       // Is the origin the same as the webtop?

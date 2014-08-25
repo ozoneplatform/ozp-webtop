@@ -6,7 +6,7 @@
 var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSettingsApi) {
 
   $scope.preferences = userSettingsApi.getUserSettings();
-  $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
+  $scope.dashboards = dashboardApi.getDashboards();
   $scope.preferences.defaultDashboard = dashboardApi.getDefaultDashboardName();
   $scope.themes = ['light', 'dark'];
 

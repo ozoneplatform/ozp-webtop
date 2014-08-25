@@ -24,7 +24,7 @@ angular.module('ozpWebtopApp.components')
   	//    that oblect is removed from rootScope and changes are reflected in other things that are 
   	//    watching activeFrames on rootScope
     for (var i = 0; i < $rootScope.activeFrames.length; i++){
-      if($rootScope.activeFrames[i].uuid.indexOf(e) !== -1){
+      if($rootScope.activeFrames[i].id.indexOf(e) !== -1){
 		    $rootScope.activeFrames.splice(i, 1);
       }
     }
@@ -32,7 +32,7 @@ angular.module('ozpWebtopApp.components')
 
   $scope.minimizeFrame = function(e){
     for (var i = 0; i < $rootScope.activeFrames.length; i++){
-      if($rootScope.activeFrames[i].uuid === e.uuid){
+      if($rootScope.activeFrames[i].id === e.id){
         // if the frame's isMinimized value is false or doesn't exist yet, set it to true (because the minus button was clicked)
         if(($rootScope.activeFrames[i].isMinimized === false) || (!$rootScope.activeFrames[i].isMinimized)){
           $rootScope.activeFrames[i].isMinimized = true;

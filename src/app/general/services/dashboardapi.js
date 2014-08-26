@@ -9,7 +9,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     if (!cache.hasItem('dashboards')) {
       // TODO: handle error
       console.log('ERROR: No dashboards');
-      return {};
+      return null;
     }
     var dashboards = cache.getItem('dashboards');
     return dashboards;
@@ -17,26 +17,36 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
   this.getDashboards = function() {
     var dashboardData = this.getDashboardData();
-    return dashboardData.dashboards;
+    if (dashboardData) {
+      return dashboardData.dashboards;
+    } else {
+      return null;
+    }
   };
 
-  this.setDashboardData = function(dashboardData) {
+  this._setDashboardData = function(dashboardData) {
     cache.removeItem('dashboards');
     cache.setItem('dashboards', dashboardData);
   };
 
-  this.setDashboards = function(dashboards) {
+  this.setAllDashboards = function(dashboards) {
     var dashboardData = this.getDashboardData();
     dashboardData.dashboards = dashboards;
-    this.setDashboardData(dashboardData);
+    this._setDashboardData(dashboardData);
   };
 
   // Update dashboard layout
   // @param layout should be 'grid' or 'desktop'
   this.updateLayoutType = function(dashboardId, layout) {
+    var validInputs = ['grid', 'desktop'];
+    if (validInputs.indexOf(layout) === -1) {
+      return false;
+    }
+
     var dashboard = this.getDashboardById(dashboardId);
     dashboard.layout = layout;
     this.saveDashboard(dashboard);
+    return true;
   };
 
   // Update the grid layout of a frame in a dashboard
@@ -89,6 +99,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     if (row > gridMaxRows) {
       // TODO: handle error
       console.log('ERROR: not enough rows in grid');
+      return null;
     }
 
     // by default, new frames will have minimal size
@@ -128,16 +139,23 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
     dashboard.frames.push(newApp);
     this.saveDashboard(dashboard);
+    return newApp;
   };
 
-  this.removeFrame = function(dashboardId, appId) {
-    var dashboard = this.getDashboardById(dashboardId);
-    for (var i=0; i < dashboard.frames.length; i++) {
-      if(dashboard.frames[i].appId === appId){
-        dashboard.frames.splice(i,1);
+  // Remove a frame from a dashboard
+  this.removeFrame = function(frameId) {
+    var dashboards = this.getDashboards();
+    for (var i=0; i < dashboards.length; i++) {
+      var frames = dashboards[i].frames;
+      for (var j=0; j < frames.length; j++) {
+        if (frameId === frames[j].id) {
+          dashboards[i].frames.splice(j,1);
+          this.saveDashboard(dashboards[i]);
+          return true;
+        }
       }
+      return false;
     }
-    this.saveDashboard(dashboard);
   };
 
   // Change the user's default dashboard
@@ -148,7 +166,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
         dashboardData.defaultDashboard = dashboardData.dashboards[i].id;
       }
     }
-    this.setDashboardData(dashboardData);
+    this._setDashboardData(dashboardData);
   };
 
   // Return the name of the user's default dashboard
@@ -160,6 +178,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
         return dashboards.dashboards[i].name;
       }
     }
+    return null;
   };
 
   // Augment the dashboard.frames data with application-specific data
@@ -199,18 +218,21 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   };
 
   // Save a dashboard
+  // TODO: make sure input is a valid dashboard:
+  //  dashboard.id should be unique
+  //  all frame.id's should be unique
   this.saveDashboard = function(dashboard) {
     var dashboards = this.getDashboards();
-    console.log(dashboards);
     for (var i=0; i < dashboards.length; i++) {
       if (dashboards[i].id === dashboard.id) {
         dashboards[i] = dashboard;
-        this.setDashboards(dashboards);
+        this.setAllDashboards(dashboards);
       }
     }
   };
 
   // Save a frame in a dashboard
+  // TODO: make sure input is a valid frame
   this.saveFrame = function(frame) {
     var dashboards = this.getDashboards();
     for (var i=0; i < dashboards.length; i++) {
@@ -218,10 +240,12 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
       for (var j=0; j < frames.length; j++) {
         if (frames[j].id === frame.id) {
           dashboards[i].frames[j] = frame;
-          this.setDashboards(dashboards);
+          this.setAllDashboards(dashboards);
+          return true;
         }
       }
     }
+    return false;
   };
 
   // Retrieve a frame by id
@@ -245,6 +269,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
         return dashboards[i];
       }
     }
+    return null;
   };
 
   this.createExampleDashboards = function() {
@@ -432,7 +457,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
         }
       ]
     };
-    this.setDashboardData(dashboardData);
+    this._setDashboardData(dashboardData);
   };
 
 });
@@ -441,7 +466,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 app.service('iwcDashboardApiImpl', function(/*dependencies*/) {
   this.getDashboards = function() {};
 
-  this.setDashboardData = function() {};
+  this._setDashboardData = function() {};
 
   this.updateCurrentDashboardLayoutType = function() {};
 

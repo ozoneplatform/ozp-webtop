@@ -17,7 +17,20 @@ describe('Controller: ChromeController', function () {
     scope.$apply();
   }));
 
-  it('should $scope.isGrid to true when in a grid view', function () {
+  it('should set $scope.isGrid to true when in a grid view', function () {
     expect(scope.isGrid).toBeTruthy();
+  });
+
+  it('should set $scope.isGrid to false when not in a grid view', function () {
+    $location.path('/desktop/0');
+    scope.$apply();
+    expect(scope.isGrid).toBeFalsy();
+  });
+
+  it('should respond to a "dashboardChange" event', function () {
+    var dashboardChange = { layout: 'foo' };
+    scope.$broadcast('dashboardChange', dashboardChange);
+    scope.$apply();
+    expect(scope.isGrid).toBeFalsy();
   });
 });

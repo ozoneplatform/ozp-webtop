@@ -8,7 +8,7 @@ describe('Directive: ozpButton', function () {
   var element,
       scope;
 
-  beforeEach(inject(function ($rootScope) {
+  beforeEach(inject(function ($rootScope, $compile) {
     scope = $rootScope.$new();
     scope.button = {
       url:  'http://www.example.com/',
@@ -16,13 +16,21 @@ describe('Directive: ozpButton', function () {
       text: 'descriptive text',
       elliptical: false
     };
-  }));
-
-  it('should should attach an image', inject(function ($compile) {
     element = angular.element('<ozp-button></ozp-button>');
     element = $compile(element)(scope);
     scope.$digest();
-    expect(element.find('img').length).toBe(1);
+  }));
+
+  it('should attach an image', inject(function () {
+    expect(element.find('img').attr('src')).toBe(scope.button.icon);
+  }));
+
+  xit('should attach a URL', inject(function () {
+    expect(element.find('.btn').attr('ng-href')).toBe(scope.button.url);
+  }));
+
+  it('should attach text', inject(function () {
+    expect(element.find('span').html()).toBe(scope.button.text);
   }));
 });
 

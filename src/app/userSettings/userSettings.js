@@ -12,7 +12,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
 
   $scope.ok = function () {
     $modalInstance.close();
-    dashboardApi.updateDefaultDashboard($scope.preferences.defaultDashboard);
+    dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard);
     // Don't need defaultDashboard in preferences
     delete $scope.preferences.defaultDashboard;
     userSettingsApi.updateAllUserSettings($scope.preferences);

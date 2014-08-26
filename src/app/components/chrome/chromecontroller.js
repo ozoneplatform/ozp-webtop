@@ -28,7 +28,7 @@ angular.module('ozpWebtopApp.components')
 		    $rootScope.activeFrames.splice(i, 1);
       }
     }
-    dashboardApi.removeFrame($rootScope.currentDashboardId, $scope.frame.appId);
+    dashboardApi.removeFrame($scope.frame.id);
   };
 
   $scope.minimizeFrame = function(e){

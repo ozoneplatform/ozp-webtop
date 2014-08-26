@@ -10,6 +10,7 @@ describe('Controller: ChromeController', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function($controller, $rootScope, _$location_) {
     $location = _$location_;
+
     // Set dummy location
     $location.path('/grid/0');
     scope = $rootScope.$new();
@@ -32,5 +33,13 @@ describe('Controller: ChromeController', function () {
     scope.$broadcast('dashboardChange', dashboardChange);
     scope.$apply();
     expect(scope.isGrid).toBeFalsy();
+  });
+
+  xit('should minimize a frame', function () {
+    // TODO: Minimize a frame and test that it is done
+  });
+
+  xit('should maximize a frame', function () {
+    // TODO: Maximize a frame and ensure it is done
   });
 });

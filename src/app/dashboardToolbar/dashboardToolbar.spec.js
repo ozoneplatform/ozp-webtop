@@ -1,18 +1,25 @@
 'use strict';
 
-describe('Dashboard Toolbar', function () {
+describe('Controller: DashboardToolbar', function () {
 
-  var scope;
+  var scope, rootScope;
 
-  // load the filter's module
   beforeEach(module('ozpWebtopApp.dashboardToolbar'));
 
-   // mock out the filtrfy service before each test
-  beforeEach(inject(function($rootScope, $controller, _dashboardApi_) {
-    scope = $rootScope.$new();
+  beforeEach(inject(function(_$rootScope_, $controller, _dashboardApi_, _dashboardChangeMonitor_) {
+    rootScope = _$rootScope_;
+
+    // For testing $rootScope events
+    spyOn(rootScope, '$broadcast').andCallThrough();
+
+    // Scope setup 
+    scope = rootScope.$new();
+    scope.layout = 'foo';
     $controller('dashboardToolbarCtrl', {
       $scope: scope,
-      dashboardApi: _dashboardApi_});
+      dashboardApi: _dashboardApi_,
+      dashboardChangeMonitor: _dashboardChangeMonitor_
+    });
   }));
 
   var allowedLayouts = ['grid','desktop'];
@@ -24,7 +31,33 @@ describe('Dashboard Toolbar', function () {
   it('webtop should have layout grid or desktop', function() {
     expect(allowedLayouts).toContain(scope.layout);
   });
-  // TODO: more tests
+  
+  it('should get a list of dashboards from the dashboardApi', function() {
+    expect(scope.dashboards.length).toBeGreaterThan(0);
+  });
 
+  it('should expose a setCurrentDashboard method', function() {
+    var dashboard = 'test dashboard foo';
+    scope.setCurrentDashboard(dashboard);
+    scope.$apply();
+    expect(scope.currentDashboard).toBe(dashboard);
+  });
 
+  it('should expose a useGridLayout method', function() {
+    scope.useGridLayout();
+    scope.$apply();
+    expect(scope.layout).toBe('grid');
+  });
+
+  it('should expose a useDesktopLayout method', function() {
+    scope.useDesktopLayout();
+    scope.$apply();
+    expect(scope.layout).toBe('desktop');
+  });
+
+  it('should fire a launchSettingsModal event', function() {
+    var settingsLaunchObj = { launch: 'true' };
+    scope.launchSettingsModal();
+    expect(rootScope.$broadcast).toHaveBeenCalledWith('launchSettingsModal', settingsLaunchObj);
+  });  
 });

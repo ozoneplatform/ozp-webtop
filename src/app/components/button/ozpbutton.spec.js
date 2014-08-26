@@ -25,6 +25,7 @@ describe('Directive: ozpButton', function () {
     expect(element.find('img').attr('src')).toBe(scope.button.icon);
   }));
 
+  // TODO: fix this if we are actually using the ozpButton directive
   xit('should attach a URL', inject(function () {
     expect(element.find('.btn').attr('ng-href')).toBe(scope.button.url);
   }));

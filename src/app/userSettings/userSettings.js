@@ -6,13 +6,13 @@
 var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSettingsApi) {
 
   $scope.preferences = userSettingsApi.getUserSettings();
-  $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
+  $scope.dashboards = dashboardApi.getDashboards();
   $scope.preferences.defaultDashboard = dashboardApi.getDefaultDashboardName();
   $scope.themes = ['light', 'dark'];
 
   $scope.ok = function () {
     $modalInstance.close();
-    dashboardApi.updateDefaultDashboard($scope.preferences.defaultDashboard);
+    dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard);
     // Don't need defaultDashboard in preferences
     delete $scope.preferences.defaultDashboard;
     userSettingsApi.updateAllUserSettings($scope.preferences);
@@ -32,6 +32,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
     console.log('delete dashboard ' + dashboard.name);
   };
 };
+// Required to make minification-safe
+ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'dashboardApi', 'userSettingsApi'];
 
 angular.module( 'ozpWebtopApp.userSettings')
 .controller('UserSettingsCtrl', function($scope, $modal, $log) {

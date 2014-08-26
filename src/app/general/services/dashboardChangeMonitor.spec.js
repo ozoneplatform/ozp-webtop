@@ -28,15 +28,15 @@ describe('Service: dashboardChangeMonitor', function () {
     expect(dashboardChangeMonitor.layout).toBe('desktop');
   });
 
-  it('exposes the dashboardIndex property', function() {
+  it('exposes the dashboardId property', function() {
     dashboardChangeMonitor.run();
     $location.path('/grid/0');
     $rootScope.$apply();
-    expect(dashboardChangeMonitor.dashboardIndex).toBe('0');
+    expect(dashboardChangeMonitor.dashboardId).toBe('0');
 
     $location.path('/grid/0');
     $rootScope.$apply();
-    expect(dashboardChangeMonitor.dashboardIndex).toBe('0');
+    expect(dashboardChangeMonitor.dashboardId).toBe('0');
   });
 
   it('sends messages when the url changes', function() {
@@ -44,7 +44,7 @@ describe('Service: dashboardChangeMonitor', function () {
 
     $location.path('/grid/0');
     $rootScope.$apply();
-    var obj = {'layout': 'grid', 'dashboardIndex': '0'};
+    var obj = {'layout': 'grid', 'dashboardId': '0'};
     expect($rootScope.$broadcast).toHaveBeenCalledWith('dashboardChange', obj);
   });
 
@@ -52,7 +52,7 @@ describe('Service: dashboardChangeMonitor', function () {
     dashboardChangeMonitor.run();
     $location.path('/desktop/12');
     $rootScope.$apply();
-    var obj = {'layout': 'desktop', 'dashboardIndex': '12'};
+    var obj = {'layout': 'desktop', 'dashboardId': '12'};
     expect($rootScope.$broadcast).toHaveBeenCalledWith('dashboardChange', obj);
   });
 

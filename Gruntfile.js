@@ -408,9 +408,11 @@ module.exports = function ( grunt ) {
           ]
         }
       },
-      dist: {
+      production: {
         options: {
-          base: '<%= compile_dir %>'
+          port: 9037,
+          keepalive: true,
+          base: ['<%= compile_dir %>', '<%= compile_dir %>/assets/mock']
         }
       },
       // Demo Apps server
@@ -699,6 +701,11 @@ module.exports = function ( grunt ) {
   grunt.registerTask('serve', [
     'build', 'connect:livereload', 'connect:demoApps', 'connect:examples',
     'watch'
+  ]);
+
+  // Run production version of the application (and demo apps)
+  grunt.registerTask('run', [
+    'connect:demoApps', 'connect:examples', 'connect:production'
   ]);
 
   /**

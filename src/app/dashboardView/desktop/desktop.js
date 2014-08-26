@@ -3,8 +3,8 @@
 angular.module('ozpWebtopApp.dashboardView')
   .controller('DesktopController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi, dashboardChangeMonitor) {
 
-    $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
-    $scope.frames = $scope.dashboards[0].apps;  // to make tests happy
+    $scope.dashboards = dashboardApi.getDashboards();
+    $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
 
     dashboardChangeMonitor.run();
     $scope.$on('dashboardChange', function(/*event, data*/) {
@@ -25,22 +25,21 @@ angular.module('ozpWebtopApp.dashboardView')
     });
 
     function updateDashboard() {
-      var dashboardIndex = dashboardChangeMonitor.dashboardIndex;
+      var dashboardId = dashboardChangeMonitor.dashboardId;
       for (var i=0; i < $scope.dashboards.length; i++) {
-      if ($scope.dashboards[i].index.toString() === dashboardIndex) {
+      if ($scope.dashboards[i].id.toString() === dashboardId) {
         $scope.currentDashboard = $scope.dashboards[i];
         $scope.icons = $scope.currentDashboard.desktopIcons;
-        $scope.currentDashboardIndex = $scope.currentDashboard.index;
-        $scope.apps = $scope.currentDashboard.apps;
+        $scope.currentDashboardId = $scope.currentDashboard.id;
+        $scope.frames = $scope.currentDashboard.frames;
 
         // TODO: There should be a method in Marketplace to get only my apps
         var allApps = marketplaceApi.getAllApps();
         // Merge application data (app name, icons, descriptions, url, etc)
         // with dashboard app data
-        dashboardApi.mergeApplicationData($scope.apps, allApps);
+        dashboardApi.mergeApplicationData($scope.frames, allApps);
 
         $scope.max = {};
-        $scope.frames = $scope.apps;
 
         sortFrames();
 
@@ -50,13 +49,13 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.max.zIndex = $scope.frames.length - 1;
       }
     }
-    $rootScope.activeFrames = $scope.currentDashboard.apps;
+    $rootScope.activeFrames = $scope.currentDashboard.frames;
     }
 
     $scope.isFrameMinimized = function(e) {
       // the isMinimized value is set in the chromecontroller.js controller, $scope.minimizeFrame is toggled when the minus button is clicked in the frames
       for (var i = 0; i < $rootScope.activeFrames.length; i++){
-        if($rootScope.activeFrames[i].uuid === e.uuid){
+        if($rootScope.activeFrames[i].id === e.id){
           return $rootScope.activeFrames[i].isMinimized;
         }
       }

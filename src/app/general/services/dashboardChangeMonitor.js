@@ -12,7 +12,7 @@ angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',
     // detect a change in dashboard layout
     var service = {};
     service.layout = '';
-    service.dashboardIndex = '';
+    service.dashboardId = '';
 
     service.run =  function() {
       $rootScope.$watch(function() {
@@ -20,12 +20,12 @@ angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',
       }, function() {
         var dashboardChange = {};
 
-        // get dashboard index
+        // get dashboard id
         var urlPath = $location.path();
         var pattern = new RegExp('/(?:grid|desktop)/([0-9]+)');
         var res = pattern.exec(urlPath);
         if (res) {
-          service.dashboardIndex = res[1];
+          service.dashboardId = res[1];
         } else {
           // if the url regex doesn't match, this page must be something else
           return;
@@ -40,7 +40,7 @@ angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',
         }
 
         dashboardChange.layout = service.layout;
-        dashboardChange.dashboardIndex = service.dashboardIndex;
+        dashboardChange.dashboardId = service.dashboardId;
         // console.log('broadcasting dashboard change msg: ' + JSON.stringify(dashboardChange));
         $rootScope.$broadcast('dashboardChange', dashboardChange);
       });

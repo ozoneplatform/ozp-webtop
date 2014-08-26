@@ -4,7 +4,7 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('dashboardToolbarCtrl',
   function($scope, $rootScope, dashboardApi, dashboardChangeMonitor) {
 
-    $scope.dashboards = dashboardApi.getAllDashboards().dashboards;
+    $scope.dashboards = dashboardApi.getDashboards();
     // default board is 0
     $scope.currentDashboard = $scope.dashboards[0];
     // default layout is grid

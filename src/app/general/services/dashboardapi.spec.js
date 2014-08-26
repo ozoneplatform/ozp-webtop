@@ -201,22 +201,75 @@ describe('Service: dashboardApi', function () {
 
   // update the frame size (in pixels) on grid layout
   it('should have a updateFrameSizeOnGrid method', function() {
-    expect(dashboardApi.updateFrameSizeOnGrid).toBeDefined();
+    var frame = dashboardApi.getDashboardById(0).frames[0];
+    var width = 120, height = 240;
+    dashboardApi.updateFrameSizeOnGrid(frame.id, width, height);
+    frame = dashboardApi.getFrameById(frame.id);
+    expect(frame.gridLayout.width).toEqual(width);
+    expect(frame.gridLayout.height).toEqual(height);
   });
 
   // update the default dashboard
-  it('should have a updateDefaultDashboard method', function() {
-    expect(dashboardApi.updateDefaultDashboard).toBeDefined();
+  it('should have a updateDefaultDashboardName method', function() {
+    var currentDefaultDashboard = dashboardApi.getDefaultDashboardName();
+    expect(dashboardApi.updateDefaultDashboardName('doesntexist')).toEqual(false);
+    var newDefault = dashboardApi.getDashboardById(1).name;
+    expect(currentDefaultDashboard).not.toEqual(newDefault);
+    expect(newDefault).toBeTruthy();
+    var update = dashboardApi.updateDefaultDashboardName(newDefault);
+    expect(update).toEqual(true);
+    expect(dashboardApi.getDefaultDashboardName()).toEqual(newDefault);
   });
 
   // update the desktop layout of a frame
   it('should have a updateDesktopFrame method', function() {
-    expect(dashboardApi.updateDesktopFrame).toBeDefined();
+    var frame = dashboardApi.getDashboardById(0).frames[0];
+    var newLeft = 100;
+    var newTop = 250;
+    var newZIndex = 3;
+
+    var update = dashboardApi.updateDesktopFrame(frame.id, newLeft, newTop,
+      newZIndex);
+    expect(update).toEqual(true);
+    frame = dashboardApi.getFrameById(frame.id);
+    expect(frame.desktopLayout.left).toEqual(newLeft);
+    expect(frame.desktopLayout.top).toEqual(newTop);
+    expect(frame.desktopLayout.zIndex).toEqual(newZIndex);
+
+    // update should fail on invalid frame id
+    var oldDashboardData = dashboardApi.getDashboardData();
+    update = dashboardApi.updateGridFrame('asdfkjk43222222', newLeft, newTop,
+      newZIndex);
+    var newDashboardData = dashboardApi.getDashboardData();
+
+    expect(update).toEqual(false);
+    expect(oldDashboardData).toEqual(newDashboardData);
   });
 
   // update the grid layout of a frame
   it('should have a updateGridFrame method', function() {
-    expect(dashboardApi.updateGridFrame).toBeDefined();
+    var frame = dashboardApi.getDashboardById(0).frames[0];
+    var newRow = 4;
+    var newCol = 3;
+    var newSizeX = 2;
+    var newSizeY = 1;
+    var update = dashboardApi.updateGridFrame(frame.id, newRow, newCol,
+      newSizeX, newSizeY);
+    expect(update).toEqual(true);
+    frame = dashboardApi.getFrameById(frame.id);
+    expect(frame.gridLayout.row).toEqual(newRow);
+    expect(frame.gridLayout.col).toEqual(newCol);
+    expect(frame.gridLayout.sizeX).toEqual(newSizeX);
+    expect(frame.gridLayout.sizeY).toEqual(newSizeY);
+
+    // update should fail on invalid frame id
+    var oldDashboardData = dashboardApi.getDashboardData();
+    update = dashboardApi.updateGridFrame('asdfkjk43222222', newRow, newCol,
+      newSizeX, newSizeY);
+    var newDashboardData = dashboardApi.getDashboardData();
+
+    expect(update).toEqual(false);
+    expect(oldDashboardData).toEqual(newDashboardData);
   });
 
   // update the layout type of a dashboard

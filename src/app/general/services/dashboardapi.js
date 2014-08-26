@@ -52,21 +52,29 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   // Update the grid layout of a frame in a dashboard
   this.updateGridFrame = function(frameId, row, col, sizeX, sizeY) {
     var frame = this.getFrameById(frameId);
+    if (!frame) {
+      return false;
+    }
     frame.gridLayout.row = row;
     frame.gridLayout.col = col;
     frame.gridLayout.sizeX = sizeX;
     frame.gridLayout.sizeY = sizeY;
     this.saveFrame(frame);
+    return true;
   };
 
   // Update the desktop layout of a frame in a dashboard
   // TODO: what about width and height?
   this.updateDesktopFrame = function(frameId, x, y, zIndex) {
     var frame = this.getFrameById(frameId);
+    if (!frame) {
+      return false;
+    }
     frame.desktopLayout.left = x;
     frame.desktopLayout.top = y;
     frame.desktopLayout.zIndex = zIndex;
     this.saveFrame(frame);
+    return true;
   };
 
   // Check to see if an application is already on a given dashboard
@@ -159,14 +167,16 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   };
 
   // Change the user's default dashboard
-  this.updateDefaultDashboard = function(dashboardName) {
+  this.updateDefaultDashboardName = function(dashboardName) {
     var dashboardData = this.getDashboardData();
     for (var i=0; i < dashboardData.dashboards.length; i++) {
       if (dashboardData.dashboards[i].name === dashboardName) {
         dashboardData.defaultDashboard = dashboardData.dashboards[i].id;
+        this._setDashboardData(dashboardData);
+        return true;
       }
     }
-    this._setDashboardData(dashboardData);
+    return false;
   };
 
   // Return the name of the user's default dashboard
@@ -227,8 +237,10 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
       if (dashboards[i].id === dashboard.id) {
         dashboards[i] = dashboard;
         this.setAllDashboards(dashboards);
+        return true;
       }
     }
+    return false;
   };
 
   // Save a frame in a dashboard

@@ -57,7 +57,7 @@ body {
 // bring back vertical dividers in bootstrap 3.0
 // http://stackoverflow.com/questions/19203816/vertical-divider-wont-work-in-bootstrap-3-0
 .navbar .divider-vertical {
-  height: 50px;
+  height: @navbar-height;
   margin: 0 9px;
   border-right: 1px solid #ffffff;
   border-left: 1px solid #f2f2f2;
@@ -137,6 +137,12 @@ body {
 // useful if you have a link using ng-click with no href-="..."
 .link-pointer {
   cursor: pointer;
+}
+
+.app-toolbar-img {
+  height: 18px;
+  width: 18px;
+  margin-right: 5px;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

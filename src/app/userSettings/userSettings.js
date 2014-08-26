@@ -9,26 +9,33 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
   $scope.dashboards = dashboardApi.getDashboards();
   $scope.preferences.defaultDashboard = dashboardApi.getDefaultDashboardName();
   $scope.themes = ['light', 'dark'];
+  $scope.validNamePattern = /^[a-z_][a-z0-9_ ]+\w$/i; // jshint ignore:line
 
   $scope.ok = function () {
-    $modalInstance.close();
+    for (var i=0; i < $scope.dashboards.length; i++) {
+      var dashboard = dashboardApi.getDashboardById($scope.dashboards[i].id);
+      dashboard.name = $scope.dashboards[i].name;
+      dashboardApi.saveDashboard(dashboard);
+    }
     dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard);
     // Don't need defaultDashboard in preferences
     delete $scope.preferences.defaultDashboard;
     userSettingsApi.updateAllUserSettings($scope.preferences);
+
+    // broadcast message that user's preferences have changed
+    // Can't seem to DI $rootScope in here without errors, so accessing
+    // $rootScope using $parent instead
+    $scope.$parent.$broadcast('UserSettingsChanged', {});
+
+    $modalInstance.close();
   };
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
 
-  $scope.editClicked = function(dashboard) {
-    alert('Sorry, this functionality is not yet implemented');
-    console.log('change name of dashboard ' + dashboard.name);
-  };
-
   $scope.deleteClicked = function(dashboard) {
-    alert('Sorry, this functionality is not yet implemented');
+    alert('Attempting to delete dashboard ' + dashboard.id);
     console.log('delete dashboard ' + dashboard.name);
   };
 };
@@ -36,7 +43,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
 ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'dashboardApi', 'userSettingsApi'];
 
 angular.module( 'ozpWebtopApp.userSettings')
-.controller('UserSettingsCtrl', function($scope, $modal, $log) {
+.controller('UserSettingsCtrl', function($scope, $rootScope, $modal, $log) {
 
   $scope.$on('launchSettingsModal', function(/*event, data*/) {
     $scope.open();
@@ -47,7 +54,8 @@ angular.module( 'ozpWebtopApp.userSettings')
     var modalInstance = $modal.open({
       templateUrl: 'userSettings/settingsModal.tpl.html',
       controller: ModalInstanceCtrl,
-      windowClass: 'app-modal-window'
+      windowClass: 'app-modal-window',
+      scope: $rootScope
     });
 
     modalInstance.result.then(function () {

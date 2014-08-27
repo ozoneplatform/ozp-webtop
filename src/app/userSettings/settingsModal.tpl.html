@@ -49,15 +49,23 @@
           <form class="form-horizontal" role="form" name="editDashboardsForm">
 
             <div class="form-group"
-                 ng-class="{'has-error': editDashboardsForm.$error.pattern || dashboard.flaggedForDelete}"
+                 ng-class="{'has-error': editDashboardsForm.$error.pattern || editDashboardsForm.$error.required || dashboard.flaggedForDelete}"
                  ng-repeat="dashboard in dashboards">
               <div class="col-sm-8 input-append">
-                <label class="control-label" for="dashboardName"
+                <ng-form name="dashboardNameForm">
+                  <label class="control-label" for="dashboardName"
                        ng-show="dashboard.flaggedForDelete">
                   Dashboard will be deleted</label>
-                <input id="dashboardName" type="text" class="form-control"
+                  <label class="control-label" for="dashboardName"
+                       ng-show="dashboardNameForm.dashboardName.$error.pattern">
+                  Invalid name</label>
+                  <label class="control-label" for="dashboardName"
+                       ng-show="dashboardNameForm.dashboardName.$error.required">
+                  Required</label>
+                  <input id="dashboardName" type="text" class="form-control"
                        ng-pattern="validNamePattern"
                        name="dashboardName" ng-model="dashboard.name" required>
+                </ng-form>
               </div>
               <div class="col-sm-2">
                 <button ng-show="dashboard.flaggedForDelete" type="button"
@@ -75,7 +83,10 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button ng-show="editDashboardsForm.$error.pattern || editDashboardsForm.$error.required"
+            class="btn btn-primary" disabled="disabled">Ok</button>
+    <button ng-show="!editDashboardsForm.$error.pattern && !editDashboardsForm.$error.required"
+            class="btn btn-primary" ng-click="ok()">OK</button>
     <button class="btn" ng-click="cancel()">Cancel</button>
   </div>
 </div>

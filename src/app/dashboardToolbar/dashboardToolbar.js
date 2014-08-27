@@ -25,6 +25,8 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
       var dashboard = dashboardApi.getDashboardById($scope.dashboardId);
       if (dashboard) {
         $scope.currentDashboard.name = dashboard.name;
+      } else {
+        console.log('WARNING: Dashboard ' + $scope.dashboardId + ' no longer exists');
       }
     });
 

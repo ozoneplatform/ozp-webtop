@@ -309,6 +309,20 @@ describe('Service: dashboardApi', function () {
     }
   });
 
+  // remove a dashboard
+  it('should have a removeDashboard method', function() {
+    var dashboards = dashboardApi.getDashboards();
+    var origDashboardCount = dashboards.length;
+    var dashboardRemoved = dashboards[1].id;
+    dashboardApi.removeDashboard(1);
+    dashboards = dashboardApi.getDashboards();
+    expect(origDashboardCount).toEqual(dashboards.length+1);
+    for (var i=0; i < dashboards.length; i++) {
+      expect(dashboards[i].id).not.toEqual(dashboardRemoved);
+    }
+
+  });
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                      Misc
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

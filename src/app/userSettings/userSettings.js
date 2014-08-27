@@ -17,6 +17,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
       var dashboard = dashboardApi.getDashboardById($scope.dashboards[i].id);
       if ($scope.dashboards[i].flaggedForDelete) {
         console.log('deleting dashboard ' + dashboard.id);
+        dashboardApi.removeDashboard(dashboard.id);
       } else {
         console.log('updating dashboard ' + dashboard.id);
         dashboard.name = $scope.dashboards[i].name;

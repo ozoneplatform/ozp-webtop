@@ -2,6 +2,13 @@
 
 var app = angular.module('ozpWebtopApp.apis');
 
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
 app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
   var cache = new LocalStorage(localStorage, JSON);
 
@@ -282,6 +289,20 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
       }
     }
     return null;
+  };
+
+  // Delete a dashboard
+  this.removeDashboard = function(dashboardId) {
+    var dashboardData = this.getDashboardData();
+    var dashboards = dashboardData.dashboards;
+    for (var i=0; i < dashboards.length; i++) {
+      if (dashboards[i].id.toString() === dashboardId.toString()) {
+        dashboards.remove(i);
+        this._setDashboardData(dashboardData);
+        return true;
+      }
+    }
+    return false;
   };
 
   this.createExampleDashboards = function() {

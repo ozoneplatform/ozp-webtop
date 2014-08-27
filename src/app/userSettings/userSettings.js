@@ -12,12 +12,20 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
   $scope.validNamePattern = /^[a-z_][a-z0-9_ ]+\w$/i; // jshint ignore:line
 
   $scope.ok = function () {
+    // Save all dashboards
     for (var i=0; i < $scope.dashboards.length; i++) {
       var dashboard = dashboardApi.getDashboardById($scope.dashboards[i].id);
-      dashboard.name = $scope.dashboards[i].name;
-      dashboardApi.saveDashboard(dashboard);
+      if ($scope.dashboards[i].flaggedForDelete) {
+        console.log('deleting dashboard ' + dashboard.id);
+      } else {
+        console.log('updating dashboard ' + dashboard.id);
+        dashboard.name = $scope.dashboards[i].name;
+        dashboardApi.saveDashboard(dashboard);
+      }
     }
+    // Update default dashboard
     dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard);
+
     // Don't need defaultDashboard in preferences
     delete $scope.preferences.defaultDashboard;
     userSettingsApi.updateAllUserSettings($scope.preferences);
@@ -35,8 +43,20 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, dashboardApi, userSett
   };
 
   $scope.deleteClicked = function(dashboard) {
-    alert('Attempting to delete dashboard ' + dashboard.id);
-    console.log('delete dashboard ' + dashboard.name);
+    for (var i=0; i < $scope.dashboards.length; i++) {
+      if ($scope.dashboards[i].id === dashboard.id) {
+        $scope.dashboards[i].flaggedForDelete = true;
+        console.log('flagging dashboard ' + $scope.dashboards[i].name + ' for delete');
+      }
+    }
+  };
+
+  $scope.undoDeleteClicked = function(dashboard) {
+    for (var i=0; i < $scope.dashboards.length; i++) {
+      if ($scope.dashboards[i].id === dashboard.id) {
+        $scope.dashboards[i].flaggedForDelete = false;
+      }
+    }
   };
 };
 // Required to make minification-safe

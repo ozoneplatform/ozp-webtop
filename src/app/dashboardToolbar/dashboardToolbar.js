@@ -16,12 +16,16 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     $scope.$on('dashboardChange', function(event, dashboardChange) {
       $scope.layout = dashboardChange.layout;
       $scope.dashboardId = dashboardChange.dashboardId;
+      $scope.currentDashboard.name =
+        dashboardApi.getDashboardById($scope.dashboardId).name;
     });
 
     $scope.$on('UserSettingsChanged', function() {
       $scope.dashboards = dashboardApi.getDashboards();
-      $scope.currentDashboard.name =
-        dashboardApi.getDashboardById($scope.dashboardId).name;
+      var dashboard = dashboardApi.getDashboardById($scope.dashboardId);
+      if (dashboard) {
+        $scope.currentDashboard.name = dashboard.name;
+      }
     });
 
     $scope.messages = {

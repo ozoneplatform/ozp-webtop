@@ -20,12 +20,12 @@ angular.module( 'ozpWebtopApp', [
 
     $stateProvider
     .state('grid', {
-      url: '/grid/{currentDashboardIndex}',
+      url: '/grid/{dashboardId}',
       templateUrl: 'dashboardView/grid/grid.tpl.html',
       controller: 'GridController'
     })
     .state('desktop', {
-      url: '/desktop/{currentDashboardIndex}',
+      url: '/desktop/{dashboardId}',
       templateUrl: 'dashboardView/desktop/desktop.tpl.html',
       controller: 'DesktopController'
     });

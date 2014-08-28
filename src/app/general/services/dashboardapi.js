@@ -306,6 +306,36 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     return false;
   };
 
+  // Create a new dashboard
+  this.createDashboard = function(name) {
+    var dashboardData = this.getDashboardData();
+    // get new id for board
+    var dashboardId = this.getNewDashboardId();
+    var newBoard = {
+      'name': name,
+      'id': dashboardId,
+      'layout': 'grid',
+      'frames': [
+      ]
+    };
+    var dashboards = this.getDashboards();
+    dashboards.push(newBoard);
+    dashboardData.dashboards = dashboards;
+    this._setDashboardData(dashboardData);
+  };
+
+  // Get the next available id for a new dashboard
+  // TODO: this assumes ids are integers and not uuids
+  this.getNewDashboardId = function() {
+    var dashboards = this.getDashboards();
+    var existingIds = [];
+    for (var i=0; i < dashboards.length; i++) {
+      existingIds.push(Number(dashboards[i].id));
+    }
+    var newId = Math.max.apply(Math, existingIds) + 1;
+    return newId;
+  };
+
   this.createExampleDashboards = function() {
     console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched

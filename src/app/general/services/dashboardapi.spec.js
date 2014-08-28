@@ -146,6 +146,24 @@ describe('Service: dashboardApi', function () {
     expect(framesBefore).toEqual(framesAfter);
   });
 
+  it('should have a createDashboard method', function() {
+    var name = 'My New Dashboard';
+    dashboardApi.createDashboard(name);
+    var dashboards = dashboardApi.getDashboards();
+    var newBoard = {};
+    for (var i=0; i < dashboards.length; i++) {
+      if (dashboards[i].name === name) {
+        newBoard = dashboards[i];
+      }
+    }
+    expect(newBoard.name).toEqual(name);
+    // arbitrary based on test data
+    expect(newBoard.id).toEqual(3);
+    // current default is grid layout
+    expect(newBoard.layout).toEqual('grid');
+    expect(newBoard.frames).toEqual([]);
+  });
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                      Data updates
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -362,6 +380,11 @@ describe('Service: dashboardApi', function () {
     expect(dashboardApi.isAppOnDashboard(0,'nothere')).toEqual(false);
     var validAppId = dashboardApi.getDashboardById(0).frames[0].appId;
     expect(dashboardApi.isAppOnDashboard(0, validAppId)).toEqual(true);
+  });
+
+  it('should have a getNewDashboardId method', function() {
+    // TODO: better test - this assumes we have 3 existing boards (0,1, and 2)
+    expect(dashboardApi.getNewDashboardId()).toEqual(3);
   });
 
 });

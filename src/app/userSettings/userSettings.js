@@ -12,6 +12,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
   $scope.themes = ['light', 'dark'];
   $scope.validNamePattern = /^[a-z_]+[a-z0-9_ ]*\w$/i;
   $scope.currentDashboardId = currentDashboardId;
+  $scope.newDashboardName = {
+    'name': ''
+  };
+  $scope.addingNewBoard = false;
 
   $scope.ok = function () {
     // Save all dashboards
@@ -36,6 +40,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
     }
     // Update default dashboard
     dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard);
+
+    // Check for new dashboard
+    if ($scope.addingNewBoard) {
+      dashboardApi.createDashboard($scope.newDashboardName.name);
+    }
 
     // Don't need defaultDashboard in preferences
     delete $scope.preferences.defaultDashboard;
@@ -80,6 +89,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
         $scope.dashboards[i].flaggedForDelete = false;
       }
     }
+  };
+
+  $scope.addDashboardClicked = function() {
+    $scope.addingNewBoard = true;
+  };
+
+  $scope.undoAddDashboardClicked = function() {
+    $scope.addingNewBoard = false;
+    $scope.newDashboardName.name = '';
   };
 };
 // Required to make minification-safe

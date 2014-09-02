@@ -84,7 +84,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=green',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=green',
           'id': '998437ef-9191-4d57-91a7-6ab049361583'
         },
         {
@@ -94,7 +94,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=blue',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=blue',
           'id': '3af849aa-dad0-4223-b15b-9da3b48d1845'
         },
         {
@@ -104,7 +104,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=red',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=red',
           'id': 'e5f52929-3f00-4766-a820-f0452ff74572'
         },
         {
@@ -114,7 +114,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=black',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=black',
           'id': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
         }
       ]

@@ -342,7 +342,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     // via http, but that led to all sorts of issues with testing.
     var dashboardData = {
       'name': 'dashboards',
-      'user': 'joebloe',
+      'user': 'J Smith',
       'defaultDashboard': 0,
       'dashboards': [
         {

@@ -19,47 +19,47 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
       'apps': [
         {
           'name': 'Purple Circle',
-          'icon': 'img/maps.png',
+          'icon': 'assets/mock/img/maps.png',
           'shortDescription': 'The best circle in town',
           'description': 'The purple circle application allows users to...',
           'version': '1.0.1',
           'keywords': ['purple', 'circle'],
-          'url': 'http://127.0.0.1:9006/circle/circle.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/circle/circle.html',
           'id': '342f3680-18c9-11e4-8c21-0800200c9a66'
         },
         {
           'name': 'Red Square',
-          'icon': 'img/UserFolder.png',
+          'icon': 'assets/mock/img/UserFolder.png',
           'shortDescription': 'A red polygon with four equal sides',
           'description': 'The Red Square is a marvel of modern engineering...',
           'version': '1.4.1',
           'keywords': ['red', 'square'],
-          'url': 'http://127.0.0.1:9006/square/square.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/square/square.html',
           'id': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4'
         },
         {
           'name': 'Some Text',
-          'icon': 'img/Network-icon.png',
+          'icon': 'assets/mock/img/Network-icon.png',
           'shortDescription': 'A brilliant string of text',
           'description': 'The text shown in this application is one of the best...',
           'version': '0.9.8',
           'keywords': ['some', 'text'],
-          'url': 'http://127.0.0.1:9006/text/text.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/text/text.html',
           'id': 'c3d895d5-f332-4154-b963-c5dd63f8ca49'
         },
         {
           'name': 'Mandelbrot',
-          'icon': 'img/MusicFolder.png',
+          'icon': 'assets/mock/img/MusicFolder.png',
           'shortDescription': 'A beautiful set of complex numbers',
           'description': 'Benoit Mandelbrot would be so proud of this...',
           'version': '5.5.2',
           'keywords': ['benoit', 'mandelbrot'],
-          'url': 'http://127.0.0.1:9006/mbrot/mbrot.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/mbrot/mbrot.html',
           'id': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5'
         },
         {
           'name': 'Clock',
-          'icon': 'img/MusicFolder.png',
+          'icon': 'assets/mock/img/MusicFolder.png',
           'shortDescription': 'A clock that tells time',
           'description': 'Provides the date and time in any country...',
           'version': '2.2.5',
@@ -69,7 +69,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'People Counter',
-          'icon': 'img/MusicFolder.png',
+          'icon': 'assets/mock/img/MusicFolder.png',
           'shortDescription': 'Population counter',
           'description': 'Provides the population in any given country...',
           'version': '3.5.4',
@@ -79,42 +79,42 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Green Bouncing Ball',
-          'icon': 'img/green_ball.png',
+          'icon': 'assets/mock/img/green_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Green',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=green',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=green',
           'id': '998437ef-9191-4d57-91a7-6ab049361583'
         },
         {
           'name': 'Blue Bouncing Ball',
-          'icon': 'img/blue_ball.png',
+          'icon': 'assets/mock/img/blue_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Blue',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=blue',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=blue',
           'id': '3af849aa-dad0-4223-b15b-9da3b48d1845'
         },
         {
           'name': 'Red Bouncing Ball',
-          'icon': 'img/red_ball.png',
+          'icon': 'assets/mock/img/red_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Red',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=red',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=red',
           'id': 'e5f52929-3f00-4766-a820-f0452ff74572'
         },
         {
           'name': 'Black Bouncing Ball',
-          'icon': 'img/black_ball.png',
+          'icon': 'assets/mock/img/black_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Black',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
           'keywords': ['bouncing', 'ball', 'demo'],
-          'url': 'http://127.0.0.1:9005/index.html?color=black',
+          'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=black',
           'id': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
         }
       ]

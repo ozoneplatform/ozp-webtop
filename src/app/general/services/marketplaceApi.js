@@ -19,7 +19,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
       'apps': [
         {
           'name': 'Purple Circle',
-          'icon': 'img/maps.png',
+          'icon': 'assets/mock/img/maps.png',
           'shortDescription': 'The best circle in town',
           'description': 'The purple circle application allows users to...',
           'version': '1.0.1',
@@ -29,7 +29,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Red Square',
-          'icon': 'img/UserFolder.png',
+          'icon': 'assets/mock/img/UserFolder.png',
           'shortDescription': 'A red polygon with four equal sides',
           'description': 'The Red Square is a marvel of modern engineering...',
           'version': '1.4.1',
@@ -39,7 +39,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Some Text',
-          'icon': 'img/Network-icon.png',
+          'icon': 'assets/mock/img/Network-icon.png',
           'shortDescription': 'A brilliant string of text',
           'description': 'The text shown in this application is one of the best...',
           'version': '0.9.8',
@@ -49,7 +49,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Mandelbrot',
-          'icon': 'img/MusicFolder.png',
+          'icon': 'assets/mock/img/MusicFolder.png',
           'shortDescription': 'A beautiful set of complex numbers',
           'description': 'Benoit Mandelbrot would be so proud of this...',
           'version': '5.5.2',
@@ -59,7 +59,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Clock',
-          'icon': 'img/MusicFolder.png',
+          'icon': 'assets/mock/img/MusicFolder.png',
           'shortDescription': 'A clock that tells time',
           'description': 'Provides the date and time in any country...',
           'version': '2.2.5',
@@ -69,7 +69,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'People Counter',
-          'icon': 'img/MusicFolder.png',
+          'icon': 'assets/mock/img/MusicFolder.png',
           'shortDescription': 'Population counter',
           'description': 'Provides the population in any given country...',
           'version': '3.5.4',
@@ -79,7 +79,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Green Bouncing Ball',
-          'icon': 'img/green_ball.png',
+          'icon': 'assets/mock/img/green_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Green',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
@@ -89,7 +89,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Blue Bouncing Ball',
-          'icon': 'img/blue_ball.png',
+          'icon': 'assets/mock/img/blue_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Blue',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
@@ -99,7 +99,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Red Bouncing Ball',
-          'icon': 'img/red_ball.png',
+          'icon': 'assets/mock/img/red_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Red',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',
@@ -109,7 +109,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Black Bouncing Ball',
-          'icon': 'img/black_ball.png',
+          'icon': 'assets/mock/img/black_ball.png',
           'shortDescription': 'Bouncing Ball IWC demo - Black',
           'description': 'Balls that bounce and talk to each other',
           'version': '1.0.0',

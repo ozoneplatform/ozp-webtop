@@ -47,8 +47,8 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     };
 
     $scope.user = {
-      'name': 'Joe Bloe',
-      'username': 'jbloe'
+      'name': 'J Smith',
+      'username': 'J Smith'
     };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

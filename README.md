@@ -24,7 +24,8 @@ Development tasks are run with Grunt.
 
  - `grunt serve` - brings up a live preview of the webtop
  - `grunt build` - executes unit tests
-
+ - `grunt gh-pages` - run after a `grunt build` to publish the build files to [gh-pages](http://ozone-development.github.io/ozp-webtop/)
+ 
 Run `grunt -h` for a full list of Grunt tasks.
 
 ## Development Notes

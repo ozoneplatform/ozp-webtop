@@ -12,6 +12,7 @@
  *    grunt connect:test:keepalive (or similar)
  * - added 'serve' task using grunt connect
  * - delta:less also needs to run the concat:build_css task
+ * - added grunt-gh-pages
  */
 
 

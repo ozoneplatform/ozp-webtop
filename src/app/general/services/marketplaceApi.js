@@ -118,20 +118,10 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'id': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
         },
         {
-          'name': 'daw',
-          'icon': 'assets/mock/img/black_ball.png',
-          'shortDescription': 'This is the daw app',
-          'description': 'This is the daw app',
-          'version': '1.0.0',
-          'keywords': ['daw'],
-          'url': 'http://ozone-development.github.io/ozp-demo/daw/index.html',
-          'id': '6e88fc8e-3338-46ae-9dc2-f7a0f49fc288'
-        },
-        {
           'name': 'Incident List',
-          'icon': 'assets/mock/img/black_ball.png',
-          'shortDescription': 'This is the Incident List app',
-          'description': 'This is the Incident List app',
+          'icon': 'assets/mock/img/alert-icon.png',
+          'shortDescription': 'Aggregates network incidents from monitoring, virus detection, and intrusion detection systems on the corporate network',
+          'description': 'Aggregates network incidents from monitoring, virus detection, and intrusion detection systems on the corporate network',
           'version': '1.0.0',
           'keywords': ['incident'],
           'url': 'http://ozone-development.github.io/ozp-demo/incidentList/index.html',
@@ -139,7 +129,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Greek Analysis',
-          'icon': 'assets/mock/img/black_ball.png',
+          'icon': 'assets/mock/img/math-icon.png',
           'shortDescription': 'This is the Greek Analysis app',
           'description': 'This is the Greek Analysis app',
           'version': '1.0.0',
@@ -149,7 +139,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Stock Trader',
-          'icon': 'assets/mock/img/black_ball.png',
+          'icon': 'assets/mock/img/bull-icon.png',
           'shortDescription': 'This is the Stock Trader app',
           'description': 'This is the Stock Trader app',
           'version': '1.0.0',
@@ -159,7 +149,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
         },
         {
           'name': 'Chart',
-          'icon': 'assets/mock/img/black_ball.png',
+          'icon': 'assets/mock/img/stock-chart-icon.png',
           'shortDescription': 'This is the Chart app',
           'description': 'This is the Chart app',
           'version': '1.0.0',

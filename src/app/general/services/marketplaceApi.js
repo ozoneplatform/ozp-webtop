@@ -116,6 +116,56 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'keywords': ['bouncing', 'ball', 'demo'],
           'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=black',
           'id': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
+        },
+        {
+          'name': 'daw',
+          'icon': 'assets/mock/img/black_ball.png',
+          'shortDescription': 'This is the daw app',
+          'description': 'This is the daw app',
+          'version': '1.0.0',
+          'keywords': ['daw'],
+          'url': 'http://ozone-development.github.io/ozp-demo/daw/index.html',
+          'id': '6e88fc8e-3338-46ae-9dc2-f7a0f49fc288'
+        },
+        {
+          'name': 'Incident List',
+          'icon': 'assets/mock/img/black_ball.png',
+          'shortDescription': 'This is the Incident List app',
+          'description': 'This is the Incident List app',
+          'version': '1.0.0',
+          'keywords': ['incident'],
+          'url': 'http://ozone-development.github.io/ozp-demo/incidentList/index.html',
+          'id': '7702a592-3235-4ce7-af2a-ed806756b92c'
+        },
+        {
+          'name': 'Greek Analysis',
+          'icon': 'assets/mock/img/black_ball.png',
+          'shortDescription': 'This is the Greek Analysis app',
+          'description': 'This is the Greek Analysis app',
+          'version': '1.0.0',
+          'keywords': ['greek analysis', 'stock'],
+          'url': 'http://ozone-development.github.io/ozp-demo/greekAnalysis/index.html',
+          'id': 'cd0e3e24-cae8-4886-a0d4-c7e04b5b104e'
+        },
+        {
+          'name': 'Stock Trader',
+          'icon': 'assets/mock/img/black_ball.png',
+          'shortDescription': 'This is the Stock Trader app',
+          'description': 'This is the Stock Trader app',
+          'version': '1.0.0',
+          'keywords': ['trader', 'stock'],
+          'url': 'http://ozone-development.github.io/ozp-demo/stockTrader/index.html',
+          'id': 'f38e10db-eb3f-4b90-8ec5-cb0a7dbd9191'
+        },
+        {
+          'name': 'Chart',
+          'icon': 'assets/mock/img/black_ball.png',
+          'shortDescription': 'This is the Chart app',
+          'description': 'This is the Chart app',
+          'version': '1.0.0',
+          'keywords': ['chart', 'stock'],
+          'url': 'http://ozone-development.github.io/ozp-demo/chart/index.html',
+          'id': '00605b24-baff-4270-b0b5-2b6bd6455883'
         }
       ]
     };

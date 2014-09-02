@@ -24,7 +24,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'The purple circle application allows users to...',
           'version': '1.0.1',
           'keywords': ['purple', 'circle'],
-          'url': 'http://127.0.0.1:9006/circle/circle.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/circle/circle.html',
           'id': '342f3680-18c9-11e4-8c21-0800200c9a66'
         },
         {
@@ -34,7 +34,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'The Red Square is a marvel of modern engineering...',
           'version': '1.4.1',
           'keywords': ['red', 'square'],
-          'url': 'http://127.0.0.1:9006/square/square.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/square/square.html',
           'id': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4'
         },
         {
@@ -44,7 +44,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'The text shown in this application is one of the best...',
           'version': '0.9.8',
           'keywords': ['some', 'text'],
-          'url': 'http://127.0.0.1:9006/text/text.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/text/text.html',
           'id': 'c3d895d5-f332-4154-b963-c5dd63f8ca49'
         },
         {
@@ -54,7 +54,7 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
           'description': 'Benoit Mandelbrot would be so proud of this...',
           'version': '5.5.2',
           'keywords': ['benoit', 'mandelbrot'],
-          'url': 'http://127.0.0.1:9006/mbrot/mbrot.html',
+          'url': 'http://ozone-development.github.io/ozp-demo/mbrot/mbrot.html',
           'id': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5'
         },
         {

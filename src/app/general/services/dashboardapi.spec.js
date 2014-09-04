@@ -124,7 +124,7 @@ describe('Service: dashboardApi', function () {
     expect(frame.appId).toEqual(appId);
     // TODO: test this better - row should be one greater than the currently
     // used row
-    expect(frame.gridLayout.row).toEqual(3);
+    expect(frame.gridLayout.row).toEqual(2);
     expect(frame.gridLayout.col).toEqual(0);
     expect(frame.gridLayout.sizeX).toEqual(1);
     expect(frame.gridLayout.sizeY).toEqual(1);
@@ -157,8 +157,8 @@ describe('Service: dashboardApi', function () {
       }
     }
     expect(newBoard.name).toEqual(name);
-    // arbitrary based on test data
-    expect(newBoard.id).toEqual(3);
+    // TODO arbitrary based on test data
+    expect(newBoard.id).toEqual(4);
     // current default is grid layout
     expect(newBoard.layout).toEqual('grid');
     expect(newBoard.frames).toEqual([]);
@@ -383,8 +383,8 @@ describe('Service: dashboardApi', function () {
   });
 
   it('should have a getNewDashboardId method', function() {
-    // TODO: better test - this assumes we have 3 existing boards (0,1, and 2)
-    expect(dashboardApi.getNewDashboardId()).toEqual(3);
+    // TODO: better test - this assumes we have 4 existing boards (0,1,2, and 3)
+    expect(dashboardApi.getNewDashboardId()).toEqual(4);
   });
 
 });

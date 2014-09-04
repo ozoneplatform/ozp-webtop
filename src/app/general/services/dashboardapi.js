@@ -346,8 +346,66 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
       'defaultDashboard': 0,
       'dashboards': [
         {
-          'name': 'Simple Apps',
+          'name': 'Stock Trader',
           'id': 0,
+          'layout': 'grid',
+          'frames': [
+            {
+              'appId': 'cd0e3e24-cae8-4886-a0d4-c7e04b5b104e', // Greek analysis
+              'id': '2b585b22-5de9-4389-b536-57bcb602bf3a',
+              'gridLayout': {
+                'row': 0,
+                'col': 0,
+                'sizeX': 6,
+                'sizeY': 1
+              },
+              'desktopLayout': {
+                'zIndex': 0,
+                'top': 200,
+                'left': 100,
+                'width': 200,
+                'height': 200
+              }
+            },
+            {
+              'appId': 'f38e10db-eb3f-4b90-8ec5-cb0a7dbd9191', // Stock Trader
+              'id': '3886bbea-0421-4a2a-9851-b8e1c6a59f5b',
+              'gridLayout': {
+                'row': 1,
+                'col': 0,
+                'sizeX': 3,
+                'sizeY': 1
+              },
+              'desktopLayout': {
+                'zIndex': 1,
+                'top': 300,
+                'left': 200,
+                'width': 200,
+                'height': 200
+              }
+            },
+            {
+              'appId': '00605b24-baff-4270-b0b5-2b6bd6455883', // Chart
+              'id': 'fe9fd6bf-e7be-446a-8ab7-a3fc4ac279a8',
+              'gridLayout': {
+                'row': 1,
+                'col': 3,
+                'sizeX': 3,
+                'sizeY': 2
+              },
+              'desktopLayout': {
+                'zIndex': 0,
+                'top': 125,
+                'left': 400,
+                'width': 200,
+                'height': 200
+              }
+            }
+          ] // end frames in dashboard
+        },
+        {
+          'name': 'Simple Apps',
+          'id': 1,
           'layout': 'grid',
           'frames': [
             {
@@ -422,7 +480,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
         },
         {
           'name': 'Just One Thing',
-          'id': 1,
+          'id': 2,
           'layout': 'desktop',
           'frames': [
             {
@@ -446,7 +504,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
         },
         {
           'name': 'Bouncing Balls',
-          'id': 2,
+          'id': 3,
           'layout': 'grid',
           'frames': [
             {

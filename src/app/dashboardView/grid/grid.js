@@ -168,6 +168,8 @@ angular.module('ozpWebtopApp.dashboardView')
     var sizeX = appInfo.gridLayout.sizeX;
     var sizeY = appInfo.gridLayout.sizeY;
     var widgetWidth = baseWidgetWidth * sizeX + (colMargin*(sizeX-1));
+    // Make small adjustment to width
+    widgetWidth -= 2*sizeX;
     var widgetHeight = baseWidgetHeight * sizeY + (colMargin*(sizeY-1));
     return {
       'height': widgetHeight,

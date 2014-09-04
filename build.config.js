@@ -89,7 +89,21 @@ module.exports = {
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.eot',
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.svg',
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff'
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff',
+      'vendor/ubuntu-font/ubuntu-l.eot',
+      'vendor/ubuntu-font/ubuntu-l.ttf',
+      'vendor/ubuntu-font/ubuntu-li.eot',
+      'vendor/ubuntu-font/ubuntu-li.ttf',
+      'vendor/ubuntu-font/ubuntu-b.eot',
+      'vendor/ubuntu-font/ubuntu-b.ttf',
+      'vendor/ubuntu-font/ubuntu-bi.eot',
+      'vendor/ubuntu-font/ubuntu-bi.ttf',
+      'vendor/ubuntu-font/ubuntu-m.eot',
+      'vendor/ubuntu-font/ubuntu-m.ttf',
+      'vendor/ubuntu-font/ubuntu-mi.eot',
+      'vendor/ubuntu-font/ubuntu-mi.ttf',
+      'vendor/ubuntu-font/ubuntu-r.eot',
+      'vendor/ubuntu-font/ubuntu-r.ttf'
     ]
   }
 };

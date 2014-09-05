@@ -7,8 +7,18 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
                                   dashboardApi, userSettingsApi) {
 
   $scope.preferences = userSettingsApi.getUserSettings();
-  $scope.dashboards = dashboardApi.getDashboards();
-  $scope.preferences.defaultDashboard = dashboardApi.getDefaultDashboardName();
+  dashboardApi.getDashboards().then(function(dashboards) {
+    $scope.dashboards = dashboards;
+  }).catch(function(error) {
+    console.log('should not have happened: ' + error);
+  });
+
+  dashboardApi.getDefaultDashboardName().then(function(name) {
+    $scope.preferences.defaultDashboard = name;
+  }).catch(function(error) {
+    console.log('should not have happened: ' + error);
+  });
+
   $scope.themes = ['light', 'dark'];
   $scope.validNamePattern = /^[a-z_]+[a-z0-9_ ]*\w$/i;
   $scope.currentDashboardId = currentDashboardId;
@@ -17,45 +27,88 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
   };
   $scope.addingNewBoard = false;
 
-  $scope.ok = function () {
-    // Save all dashboards
-    var currentDashboardName = dashboardApi.getDashboardById(
-      $scope.currentDashboardId).name;
+  $scope.updateExistingDashboard = function(dashboardId) {
+    return dashboardApi.getDashboardById(dashboardId).then(function(dashboard) {
+      var scopeDashboard = '';
+      for (var k=0; k < $scope.dashboards.length; k++) {
+        if ($scope.dashboards[k].id === dashboardId) {
+          scopeDashboard = $scope.dashboards[k];
+        }
+      }
+      if (scopeDashboard.flaggedForDelete) {
+        dashboardApi.removeDashboard(dashboard.id).then(function() {
+          // dashboard removed
+        }).catch(function(error) {
+          console.log('should not have happened: ' + error);
+        });
 
-    for (var i=0; i < $scope.dashboards.length; i++) {
-      var dashboard = dashboardApi.getDashboardById($scope.dashboards[i].id);
-      if ($scope.dashboards[i].flaggedForDelete) {
-        dashboardApi.removeDashboard(dashboard.id);
-
+        // TODO: fix this
+        var currentDashboardName = 'not working yet';
         if (currentDashboardName === dashboard.name) {
           // arbitrarily set the default dashboard name to the first one found
-          var newDefaultDashboardName = dashboardApi.getDashboards()[0].name;
-          $scope.preferences.defaultDashboard = newDefaultDashboardName;
+          return dashboardApi.getDashboards().then(function(dashboards) {
+            var newDefaultDashboardName = dashboards[0].name;
+            $scope.preferences.defaultDashboard = newDefaultDashboardName;
+          }).catch(function(error) {
+            console.log('should not have happened: ' + error);
+          });
         }
 
       } else {
-        dashboard.name = $scope.dashboards[i].name;
-        dashboardApi.saveDashboard(dashboard);
+        dashboard.name = scopeDashboard.name;
+        return dashboardApi.saveDashboard(dashboard).then(function() {
+          // dashboard saved
+        }).catch(function(error) {
+          console.log('should not have happened: ' + error);
+        });
       }
-    }
-    // Update default dashboard
-    dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard);
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
 
-    // Check for new dashboard
-    if ($scope.addingNewBoard) {
-      dashboardApi.createDashboard($scope.newDashboardName.name);
-    }
+  };
 
-    // Don't need defaultDashboard in preferences
-    delete $scope.preferences.defaultDashboard;
-    userSettingsApi.updateAllUserSettings($scope.preferences);
+  $scope.ok = function () {
+    // Save all dashboards
+    dashboardApi.getDashboardById($scope.currentDashboardId).then(function(/*currentDashboard*/) {
+      // var currentDashboardName = currentDashboard.name;
 
-    // broadcast message that user's preferences have changed
-    // Can't seem to DI $rootScope in here without errors, so accessing
-    // $rootScope using $parent instead
-    $scope.$parent.$broadcast('UserSettingsChanged', {});
+      $scope.dashboards.reduce(function(previous, current) {
+        return previous.then(function() {
+          var promise = $scope.updateExistingDashboard(current.id);
+          return promise;
+        });
+        }, Promise.resolve()).then(function() {
+          // finished updating all frames
+          // Update default dashboard
+          dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard).then(function() {
+            // update complete
+            // Check for new dashboard
+            if ($scope.addingNewBoard) {
+              dashboardApi.createDashboard($scope.newDashboardName.name).then(function() {
+                // update complete
+                // Don't need defaultDashboard in preferences
+                delete $scope.preferences.defaultDashboard;
+                userSettingsApi.updateAllUserSettings($scope.preferences);
 
-    $modalInstance.close();
+                // broadcast message that user's preferences have changed
+                // Can't seem to DI $rootScope in here without errors, so accessing
+                // $rootScope using $parent instead
+                $scope.$parent.$broadcast('UserSettingsChanged', {});
+
+                $modalInstance.close();
+              }).catch(function(error) {
+                console.log('should not have happened: ' + error);
+              });
+            } else {
+              $scope.$parent.$broadcast('UserSettingsChanged', {});
+              $modalInstance.close();
+            }
+          }).catch(function(error) {
+            console.log('should not have happened: ' + error);
+          });
+      });
+    });
   };
 
   $scope.cancel = function () {
@@ -131,12 +184,20 @@ angular.module( 'ozpWebtopApp.userSettings')
     });
 
     modalInstance.result.then(function () {
-      var dashboard = dashboardApi.getDashboardById($scope.currentDashboardId);
-      if (!dashboard) {
-        // arbitrarily redirect user to their first valid board using grid layout
-        var goToBoard = dashboardApi.getDashboards()[0].id;
-        $state.go('grid', {'dashboardId': goToBoard});
-      }
+      dashboardApi.getDashboardById($scope.currentDashboardId).then(function(dashboard) {
+        if (!dashboard) {
+          // arbitrarily redirect user to their first valid board using grid layout
+          dashboardApi.getDashboards().then(function(dashboards) {
+            var goToBoard = dashboards[0].id;
+            $state.go('grid', {'dashboardId': goToBoard});
+          }).catch(function(error) {
+            console.log('should not have happened: ' + error);
+          });
+        }
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+
     }, function () {
       $log.info('Modal dismissed');
     });

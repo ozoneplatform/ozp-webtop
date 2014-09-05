@@ -28,7 +28,13 @@ angular.module('ozpWebtopApp.components')
 		    $rootScope.activeFrames.splice(i, 1);
       }
     }
-    dashboardApi.removeFrame($scope.frame.id);
+    dashboardApi.removeFrame($scope.frame.id).then(function(response) {
+      if (!response) {
+        console.log('Error removing frame');
+      }
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
   };
 
   $scope.minimizeFrame = function(e){

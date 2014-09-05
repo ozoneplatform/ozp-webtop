@@ -3,6 +3,13 @@
 
 describe('Controller: DesktopController', function () {
 
+    // use IWC for tests?
+    beforeEach(function() {
+      angular.mock.module('ozpWebtopApp.constants', function($provide) {
+        $provide.constant('useIwc', true);
+      });
+    });
+
   // load the controller's module
   beforeEach(module('ozpWebtopApp'));
 
@@ -13,6 +20,12 @@ describe('Controller: DesktopController', function () {
     scope = $rootScope.$new();
     dashboardApi = _dashboardApi_;
     marketplaceApi = _marketplaceApi_;
+
+    // create example dashboards
+    dashboardApi.createExampleDashboards().then(function() {
+    });
+
+    $rootScope.$apply();
 
     desktopcontrollerCtrl = $controller('DesktopController', {
       $scope: scope,

@@ -13,6 +13,7 @@
     "jquery-ui": "~1.11.0",
     "components-font-awesome": "~4.1.0",
     "ubuntu-font": "latest",
+    "ozp-iwc-angular": "ozone-development/ozp-iwc-angular",
     "ozp-classification": "ozone-development/ozp-classification"
   }
 }

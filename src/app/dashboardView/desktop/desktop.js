@@ -3,8 +3,16 @@
 angular.module('ozpWebtopApp.dashboardView')
   .controller('DesktopController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi, dashboardChangeMonitor) {
 
-    $scope.dashboards = dashboardApi.getDashboards();
-    $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
+    dashboardApi.getDashboards().then(function(dashboards) {
+      if (!dashboards) {
+        console.log('No dashboards exist');
+        return;
+      }
+      $scope.dashboards = dashboards;
+      $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
 
     dashboardChangeMonitor.run();
     $scope.$on('dashboardChange', function(/*event, data*/) {
@@ -25,6 +33,10 @@ angular.module('ozpWebtopApp.dashboardView')
     });
 
     function updateDashboard() {
+      if (!$scope.dashboards) {
+        console.log('Dashboard changed, but no dashboards exist');
+        return;
+      }
       var dashboardId = dashboardChangeMonitor.dashboardId;
       for (var i=0; i < $scope.dashboards.length; i++) {
       if ($scope.dashboards[i].id.toString() === dashboardId) {

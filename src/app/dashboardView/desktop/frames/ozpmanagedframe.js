@@ -58,7 +58,13 @@ angular.module('ozpWebtopApp.dashboardView')
           element.css({
             zIndex: scope.frame.desktopLayout.zIndex
           });
-          dashboardApi.updateDesktopFrame(scope.frame.id, x, y, scope.max.zIndex);
+          dashboardApi.updateDesktopFrame(scope.frame.id, x, y, scope.max.zIndex).then(function(update) {
+            if (!update) {
+              console.log('Error updating desktop frame');
+            }
+          }).catch(function(error) {
+            console.log('should not have happened: ' + error);
+          });
         }
 
         // Prevent default dragging of selected content

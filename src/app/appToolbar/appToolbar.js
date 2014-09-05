@@ -34,16 +34,23 @@ angular.module( 'ozpWebtopApp.appToolbar')
     $scope.appClicked = function(app) {
       // check if the app is already on the current dashboard
       // TODO: support non-singleton apps
-      var isOnDashboard = dashboardApi.isAppOnDashboard(
-        $scope.currentDashboardId, app.id);
-      if (isOnDashboard) {
-        alert('This application is already on your dashboard');
-      } else {
-        // add this app to the dashboard
-        // TODO: use message broadcast to get grid max rows and grid max cols
-        dashboardApi.createFrame($scope.currentDashboardId, app.id, 10);
-        // reload this dashboard
-        $state.go($state.$current, null, { reload: true });
-      }
+      dashboardApi.isAppOnDashboard($scope.currentDashboardId, app.id).then(function(isOnDashboard) {
+        if (isOnDashboard) {
+          alert('This application is already on your dashboard');
+        } else {
+          // add this app to the dashboard
+          // TODO: use message broadcast to get grid max rows and grid max cols
+          dashboardApi.createFrame($scope.currentDashboardId, app.id, 10).then(function(response) {
+            // reload this dashboard
+            if (response) {
+              $state.go($state.$current, null, { reload: true });
+            }
+          }).catch(function(error) {
+            console.log('should not have happened: ' + error);
+          });
+        }
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
     };
   });

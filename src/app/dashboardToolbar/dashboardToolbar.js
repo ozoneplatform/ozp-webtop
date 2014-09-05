@@ -67,7 +67,6 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     };
 
     $scope.launchSettingsModal = function() {
-      console.log('broadcasting launchSettingsModal event...');
       $rootScope.$broadcast('launchSettingsModal', {
         launch: 'true'
       });

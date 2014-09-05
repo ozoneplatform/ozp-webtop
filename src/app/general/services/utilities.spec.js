@@ -14,7 +14,6 @@ describe('Service: Utilities', function () {
   it('should generateUuid', function () {
     var utils = new Utilities();
     var uuid = utils.generateUuid();
-    console.log('uuid: ' + uuid);
     var re = /\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/;
     expect(uuid.match(re)).not.toBeNull();
   });

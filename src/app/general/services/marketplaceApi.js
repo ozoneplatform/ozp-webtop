@@ -11,7 +11,6 @@ app.service('localStorageMarketplaceApiImpl', function($http, LocalStorage) {
   };
 
   this.createExampleMarketplace = function() {
-    console.log('Creating example marketplace');
     // TODO: Originally this object was placed in a separate json file and fetched
     // via http, but that led to all sorts of issues with testing.
     var marketplace = {

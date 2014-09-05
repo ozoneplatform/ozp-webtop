@@ -88,7 +88,6 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   // Check to see if an application is already on a given dashboard
   this.isAppOnDashboard = function(dashboardId, applicationId) {
     var dashboard = this.getDashboardById(dashboardId);
-    console.log(dashboard);
     for (var i=0; i < dashboard.frames.length; i++) {
       if (dashboard.frames[i].appId === applicationId) {
         return true;
@@ -114,7 +113,6 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     var row = maxUsedRow + 1;
     if (row > gridMaxRows) {
       // TODO: handle error
-      console.log('ERROR: not enough rows in grid');
       return null;
     }
 
@@ -337,7 +335,6 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
   };
 
   this.createExampleDashboards = function() {
-    console.log('Creating example dashboards...');
     // TODO: Originally this object was placed in a separate json file and fetched
     // via http, but that led to all sorts of issues with testing.
     var dashboardData = {

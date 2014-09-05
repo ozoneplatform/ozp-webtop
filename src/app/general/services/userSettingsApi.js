@@ -15,7 +15,6 @@ app.service('localStorageUserSettingsApiImpl', function($http, LocalStorage) {
   };
 
   this.createExampleUserSettings = function() {
-    console.log('creating exampel user settings');
     var userSettings = {
       'theme': 'dark',
       'autohideToolbars': false

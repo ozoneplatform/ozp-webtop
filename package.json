@@ -7,10 +7,10 @@
     "type": "Apache-2.0",
     "url": "https://spdx.org/licenses/Apache-2.0"
   },
-  "bugs": "https://github.com/arw180/webtop-ngboilerplate/issues",
+  "bugs": "https://github.com/ozone-development/ozp-webtop/issues",
   "repository": {
     "type": "git",
-    "url": "git@github.com:arw180/webtop-ngboilerplate.git"
+    "url": "git@github.com:ozone-development/ozp-webtop.git"
   },
   "dependencies": {},
   "devDependencies": {

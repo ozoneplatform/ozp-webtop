@@ -572,14 +572,14 @@ module.exports = function ( grunt ) {
       },
 
       /**
-       * When our JavaScript source files change, we want to run lint them and
+       * When our JavaScript source files change, we want to run lint them, build docs and
        * run our unit tests.
        */
       jssrc: {
         files: [
           '<%= app_files.js %>'
         ],
-        tasks: [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs' ]
+        tasks: [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs', 'yuidoc' ]
       },
 
       /**

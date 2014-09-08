@@ -116,7 +116,7 @@ body {
   position: absolute;
   margin-top: 0;
   margin-bottom: 0;
-  bottom: 16px; // height of the classification banner
+  bottom: @classification-banner; // height of the classification banner
   width: 100%;
   /* Set the fixed height of the footer here */
   height: @app-toolbar-height;
@@ -248,3 +248,20 @@ a.ozp-icon:hover, a.ozp-icon:active {
  */
 
 // @import '../app/home/home.less';
+
+.fullWidth {
+  z-index: 10000 !important;
+  width: 100% !important;
+  height: auto !important;
+  left: 0 !important;
+  top: @app-toolbar-height + @classification-banner !important;
+  bottom: @app-toolbar-height  + @classification-banner !important;
+}
+
+.active-app {
+  background-color: red;
+}
+
+.inactive-app {
+  background-color: blue;
+}

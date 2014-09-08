@@ -6,32 +6,45 @@ angular.module( 'ozpWebtopApp.appToolbar')
                                        dashboardChangeMonitor) {
 
     $scope.currentDashboardId = '0';
-
+    $scope.superfunframe = 'chris hogan';
     // TODO: clean this up
-    $rootScope.$watch('activeFrames', function () {
+    // $rootScope.$watch('activeFrames', function () {
 
-      if ($rootScope.activeFrames) {
-        $scope.myPinnedApps = $rootScope.activeFrames;
-      }
+    //   if ($rootScope.activeFrames) {
+    //     $scope.myPinnedApps = $rootScope.activeFrames;
+    //   }
+    // });
+    $scope.$on('activeFrames', function(event, data){
+      $scope.myPinnedApps = data;
     });
 
+    $scope.$on('dashboard-change', function(){
+      //
+    });
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
 
     $scope.$on('dashboardChange', function(event, dashboardChange) {
       $scope.currentDashboardId = dashboardChange.dashboardId;
-      $rootScope.currentDashboardId = dashboardChange.dashboardId;
+      // $rootScope.currentDashboardId = dashboardChange.dashboardId;
     });
-
+    // $scope.$on('dashboard-change', function() {
+    //   // $scope.currentDashboardId = dashboardChange.dashboardId;
+    //   // $rootScope.currentDashboardId = dashboardChange.dashboardId;
+    //   $scope.currentDashboardId = dashboardChange.dashboardId;
+    // });
      $scope.maximizeFrame = function(e) {
-       if(e.isMinimized === true){
-         e.isMinimized = false;
-       }
+      dashboardApi.updateFrameKey(e.id, 'isMinimized', 'toggle');
+      // return false;
+       // if(e.isMinimized === true){
+       //   e.isMinimized = false;
+       // }
      };
 
     $scope.myApps = marketplaceApi.getAllApps();
 
     $scope.appClicked = function(app) {
+      console.log($scope);
       // check if the app is already on the current dashboard
       // TODO: support non-singleton apps
       var isOnDashboard = dashboardApi.isAppOnDashboard(
@@ -45,5 +58,6 @@ angular.module( 'ozpWebtopApp.appToolbar')
         // reload this dashboard
         $state.go($state.$current, null, { reload: true });
       }
+      console.log(app);
     };
   });

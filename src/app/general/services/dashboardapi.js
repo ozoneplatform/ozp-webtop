@@ -85,6 +85,28 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     return true;
   };
 
+  this.updateFrameKey = function(frameId, key, toggleVal) {
+    var frame = this.getFrameById(frameId);
+    if (!frame) {
+      return false;
+    }
+    //if the input key is the isMinimized value, toggle it
+    if((key === 'isMinimized')||(key === 'isMaximized')){
+      if(frame[key] === true) {
+        frame[key] = false;
+      }
+      else {
+        frame[key] = true;
+      }
+    }
+    //if the key is not isMinimized, set the key to be the toggleVal
+    else {
+      frame[key] = toggleVal;
+    }
+    this.saveFrame(frame);
+    return frame[key];
+  };
+  
   // Check to see if an application is already on a given dashboard
   this.isAppOnDashboard = function(dashboardId, applicationId) {
     var dashboard = this.getDashboardById(dashboardId);

@@ -7,7 +7,14 @@ angular.module('ozpWebtopApp.dashboardView')
     $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
 
     dashboardChangeMonitor.run();
-    $scope.$on('dashboardChange', function(/*event, data*/) {
+    // $scope.$on('dashboardChange', function(/*event, data*/) {
+    //   // console.log('desktop.js received dashboard change msg: ' + JSON.stringify(data));
+    // });
+    $scope.$on('dashboard-change', function() {
+      $scope.dashboards = dashboardApi.getDashboards();
+      $scope.frames = $scope.dashboards[0].frames; // to make tests happy
+      //console.log($scope.frames);
+      updateDashboard();
       // console.log('desktop.js received dashboard change msg: ' + JSON.stringify(data));
     });
 
@@ -27,38 +34,41 @@ angular.module('ozpWebtopApp.dashboardView')
     function updateDashboard() {
       var dashboardId = dashboardChangeMonitor.dashboardId;
       for (var i=0; i < $scope.dashboards.length; i++) {
-      if ($scope.dashboards[i].id.toString() === dashboardId) {
-        $scope.currentDashboard = $scope.dashboards[i];
-        $scope.icons = $scope.currentDashboard.desktopIcons;
-        $scope.currentDashboardId = $scope.currentDashboard.id;
-        $scope.frames = $scope.currentDashboard.frames;
+        if ($scope.dashboards[i].id.toString() === dashboardId) {
+          $scope.currentDashboard = $scope.dashboards[i];
+          $scope.icons = $scope.currentDashboard.desktopIcons;
+          $scope.currentDashboardId = $scope.currentDashboard.id;
+          $scope.frames = $scope.currentDashboard.frames;
 
-        // TODO: There should be a method in Marketplace to get only my apps
-        var allApps = marketplaceApi.getAllApps();
-        // Merge application data (app name, icons, descriptions, url, etc)
-        // with dashboard app data
-        dashboardApi.mergeApplicationData($scope.frames, allApps);
+          // TODO: There should be a method in Marketplace to get only my apps
+          var allApps = marketplaceApi.getAllApps();
+          // Merge application data (app name, icons, descriptions, url, etc)
+          // with dashboard app data
+          dashboardApi.mergeApplicationData($scope.frames, allApps);
 
-        $scope.max = {};
+          $scope.max = {};
 
-        sortFrames();
+          sortFrames();
 
-        for (var k = 0, len = $scope.frames.length; k < len; k++) {
-          $scope.frames[k].desktopLayout.zIndex = k;
+          for (var k = 0, len = $scope.frames.length; k < len; k++) {
+            $scope.frames[k].desktopLayout.zIndex = k;
+          }
+          $scope.max.zIndex = $scope.frames.length - 1;
         }
-        $scope.max.zIndex = $scope.frames.length - 1;
       }
-    }
-    $rootScope.activeFrames = $scope.currentDashboard.frames;
+    // $rootScope.activeFrames = $scope.currentDashboard.frames;
+      $scope.activeFrames = $scope.currentDashboard.frames;
+      $rootScope.$broadcast('activeFrames', $scope.activeFrames);
     }
 
     $scope.isFrameMinimized = function(e) {
+      return dashboardApi.getFrameById(e.id).isMinimized;
       // the isMinimized value is set in the chromecontroller.js controller, $scope.minimizeFrame is toggled when the minus button is clicked in the frames
-      for (var i = 0; i < $rootScope.activeFrames.length; i++){
-        if($rootScope.activeFrames[i].id === e.id){
-          return $rootScope.activeFrames[i].isMinimized;
-        }
-      }
+      // for (var i = 0; i < $rootScope.activeFrames.length; i++){
+      //   if($rootScope.activeFrames[i].id === e.id){
+      //     return $rootScope.activeFrames[i].isMinimized;
+      //   }
+      // }
     };
 
     function sortFrames() {

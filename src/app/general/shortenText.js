@@ -1,11 +1,12 @@
 'use strict';
 
 /**
- * elliptical Filter to truncate a string of text and add an ellipsis, if
+ * An Angular Filter to truncate a string of text and add an ellipsis, if
  * desired by the state
  *
- * @namespace filters
- * @method elliptical
+ * @namespace general
+ * @class elliptical
+ * @static
  * @param {String} text a string of text
  * @param {Boolean} ellipOption a flag if an ellipsis is desired
  * @param {Number} [maxLength] the maximum length the string can be

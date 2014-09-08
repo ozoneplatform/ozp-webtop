@@ -5,10 +5,12 @@ module.exports = {
   /**
    * The `build_dir` folder is where our projects are compiled during
    * development and the `compile_dir` folder is where our app resides once it's
-   * completely built.
+   * completely built. 
+   * The `docs_dir` specifies where the YUIdoc documentation should be placed.
    */
   build_dir: 'build',
   compile_dir: 'bin',
+  docs_dir: 'docs',
 
   /**
    * This is a collection of file patterns that refer to our app code (the

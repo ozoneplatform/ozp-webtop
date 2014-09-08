@@ -13,6 +13,7 @@
  * - added 'serve' task using grunt connect
  * - delta:less also needs to run the concat:build_css task
  * - added grunt-gh-pages
+ * - added YUIdoc generation
  */
 
 
@@ -34,6 +35,7 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-gh-pages');
   grunt.loadNpmTasks('grunt-html2js');
@@ -111,7 +113,8 @@ module.exports = function ( grunt ) {
      */
     clean: [
       '<%= build_dir %>',
-      '<%= compile_dir %>'
+      '<%= compile_dir %>',
+      '<%= docs_dir %>'
     ],
 
     /**
@@ -437,6 +440,14 @@ module.exports = function ( grunt ) {
           port: 9006,
           base: './demoApps/simpleApps'
         }
+      },
+
+      // Documentation server
+      docs: {
+        options: {
+          port: 9010,
+          base: '<%= docs_dir %>' 
+        }
       }
     },
 
@@ -508,6 +519,22 @@ module.exports = function ( grunt ) {
           '<%= html2js.common.dest %>',
           '<%= test_files.js %>'
         ]
+      }
+    },
+
+    yuidoc: {
+      compile: {
+        name: '<%= pkg.name %>',
+        description: '<%= pkg.description %>',
+        version: '<%= pkg.version %>',
+        url: '<%= pkg.homepage %>',
+        options: {
+          //paths: [ '<%= app_files.js %>' ],
+          paths: './src',
+          // TODO: we probably want a theme at some point, use this to specify it.
+          // themedir: 'path/to/custom/theme/',
+          outdir: '<%= docs_dir %>'
+        }
       }
     },
 
@@ -631,6 +658,7 @@ module.exports = function ( grunt ) {
           livereload: false
         }
       }
+
     }
   };
 
@@ -665,6 +693,7 @@ module.exports = function ( grunt ) {
    * - compile less file (src/less/main.less) into css in file
    *    build_dir/assets/<pkg.name>-<pkg.version>.css (also compresses by removing
    *    spaces and cleans by running clean-css)
+   * - compile YUIdoc documentation from source
    * - concats (adds) vendor css to build_dir/assets/<pkg.name>-<pkg.version>.css
    * - copy src/assets to build_dir/assets (images, fonts, etc)
    * - copy and flatten any vendor assets (defined in build.config.js) to
@@ -682,10 +711,10 @@ module.exports = function ( grunt ) {
    *    specified browser(s), run the tests, and close the browser(s)
    */
   grunt.registerTask( 'build', [
-    'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build',
+    'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build', 'yuidoc',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
     'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig',
-    'karma:continuous'
+    'karma:continuous' 
   ]);
 
   /**
@@ -708,7 +737,7 @@ module.exports = function ( grunt ) {
   ]);
 
   grunt.registerTask('serve', [
-    'build', 'connect:livereload', 'connect:demoApps', 'connect:examples',
+    'build', 'connect:livereload', 'connect:demoApps', 'connect:examples', 'connect:docs',
     'watch'
   ]);
 

@@ -5,7 +5,7 @@ angular.module('ozpWebtopApp.dashboardView')
 
     $scope.dashboards = dashboardApi.getDashboards();
     $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
-
+    $scope.hogan = 'desktopview';
     dashboardChangeMonitor.run();
     // $scope.$on('dashboardChange', function(/*event, data*/) {
     //   // console.log('desktop.js received dashboard change msg: ' + JSON.stringify(data));

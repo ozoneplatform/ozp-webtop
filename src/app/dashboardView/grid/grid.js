@@ -15,9 +15,56 @@ angular.module('ozpWebtopApp.dashboardView')
                                         dashboardChangeMonitor) {
 
   dashboardChangeMonitor.run();
-  $scope.$on('dashboardChange', function(event, data) {
-    $scope.dashboardId = data.dashboardId;
-    // console.log('grid.js received dashboard change msg: ' + JSON.stringify(data));
+  // $scope.$on('dashboardChange', function(event, data) {
+  //   $scope.dashboardId = data.dashboardId;
+  //   // console.log('grid.js received dashboard change msg: ' + JSON.stringify(data));
+  // });
+  $scope.testscope = 'CHRIS hoGAN';
+  $scope.$on('dashboard-change', function(){
+    $scope.dashboards = dashboardApi.getDashboards();
+    if($scope.frames !== $scope.dashboards[0].frames){
+        /*Make an array of old frames and new frames*/
+      var oldFrames = [],
+          newFrames = [];
+      for(var i = 0; i < $scope.frames.length; i++){
+        oldFrames.push($scope.frames[i].appId);
+      }
+      for(var j = 0; j < $scope.dashboards[0].frames.length; j++){
+        newFrames.push($scope.dashboards[0].frames[j].appId);
+      }
+      /*return just the differences between oldFrames and new Frames*/
+      Array.prototype.diff = function(a) {
+        /*this*/
+        return this.filter(function(i) {return a.indexOf(i) < 0;});
+      };
+      //add or remove new frames without reloading the entire scope
+      //if there are items in the currentScope that are not in the updated scope from the service, remove theme here
+      if(oldFrames.diff(newFrames).length > 0){
+        for(var a = 0; a < $scope.frames.length; a++){
+          /*if the removed frame is present, splice it out of the local scope*/
+          if($scope.frames[a].appId === oldFrames.diff(newFrames)[0]){
+            $scope.frames.splice(a, 1);
+          }
+        }
+      }
+      //if there are new frames for this dashboard on the services that are not in the local scope
+      if(newFrames.diff(oldFrames).length > 0){
+        //for item in the dashboardApi on the current Dashboard
+        for(var b = 0; b < dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).frames.length; b++){
+          //if the item from the dashboard api matches the new frame we found in this view
+          if(dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).frames[b].appId === newFrames.diff(oldFrames)[0]){
+            //push that frame to the local scope. since the changes are automatically binded with the view, no refresh
+            $scope.frames.push(
+              dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).frames[b]
+            );
+            //update the frame size so it fits inside its little widget boundary
+            $scope.updateGridFrameSize(dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).frames[b].id);
+            //now quickly merge my local scope for frames with the marketplace api to get important stuff on local scope like url, image, name, etc
+            dashboardApi.mergeApplicationData($scope.frames, marketplaceApi.getAllApps());
+          }
+        }
+      }
+    }
   });
 
   // TODO: Originally tried sending broadcast events from dashboardChangeMonitor,

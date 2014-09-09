@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module( 'ozpWebtopApp.dashboardToolbar')
-.controller('dashboardToolbarCtrl',
+var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar');
+
+
+dashboardApp.controller('dashboardToolbarCtrl',
   function($scope, $rootScope, dashboardApi, dashboardChangeMonitor) {
 
     $scope.dashboards = dashboardApi.getDashboards();
@@ -73,3 +75,11 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     };
   }
 );
+
+
+dashboardApp.directive('dashboardToolbar',function(){
+   return {
+       restrict: 'E',
+       templateUrl: 'dashboardToolbar/dashboardToolbar.tpl.html'
+   };
+});

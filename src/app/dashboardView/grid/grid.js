@@ -13,13 +13,13 @@ angular.module('ozpWebtopApp.dashboardView')
 .controller('GridController', function ($scope, $rootScope, $location,
                                         dashboardApi, marketplaceApi,
                                         dashboardChangeMonitor) {
-
+  if(!$scope.dashboards){
+    $scope.dashboards = dashboardApi.getDashboards();
+  }
+  $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
   dashboardChangeMonitor.run();
-  // $scope.$on('dashboardChange', function(event, data) {
-  //   $scope.dashboardId = data.dashboardId;
-  //   // console.log('grid.js received dashboard change msg: ' + JSON.stringify(data));
-  // });
-  $scope.testscope = 'CHRIS hoGAN';
+
+
   $scope.$on('dashboard-change', function(){
     $scope.dashboards = dashboardApi.getDashboards();
     if($scope.frames !== $scope.dashboards[0].frames){
@@ -65,6 +65,8 @@ angular.module('ozpWebtopApp.dashboardView')
         }
       }
     }
+    // console.debug($scope.frames);
+    // $rootScope.$broadcast('activeFrames', $scope.frames);
   });
 
   // TODO: Originally tried sending broadcast events from dashboardChangeMonitor,
@@ -114,7 +116,10 @@ angular.module('ozpWebtopApp.dashboardView')
     };
 
     // TODO: clean this up
-    $rootScope.activeFrames = $scope.frames;
+    // $scope.activeFrames = $scope.currentDashboard.frames;
+    // $rootScope.$broadcast('activeFrames', $scope.frames);
+    $rootScope.$broadcast('activeFrames', $scope.frames);
+    $rootScope.$broadcast('dashboard-change');
   }
 
   $scope.$watch('frames', function(frames){

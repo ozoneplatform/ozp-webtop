@@ -46,6 +46,5 @@ angular.module( 'ozpWebtopApp.appToolbar')
         //$state.go($state.$current, null, { reload: false });
         $rootScope.$broadcast('dashboard-change');
       }
-      console.log(app);
     };
   });

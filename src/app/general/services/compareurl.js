@@ -3,7 +3,7 @@
 /**
  * compareUrl compares the current location of the webtop to a specified frame URL
  *
- * @namespace services
+ * @namespace ozpWebtopApp.general
  * @method compareUrl
  * @param {String} frameUrl the url of a frame
  * @return {Boolean} true if the url represents the same origin as the webtop, false otherwise

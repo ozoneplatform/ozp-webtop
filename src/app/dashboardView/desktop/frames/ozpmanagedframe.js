@@ -1,14 +1,22 @@
 'use strict';
 
 /**
- * ozpManagedFrame includes an html document in the webtop
+ * Used to include an html document in the webtop. If the html in question is from a different 
+ * origin than the webtop, then an iframe will be used. If the html is from the same origin as
+ * the webtop, a "frame" (div) will be used. 
  *
- * @namespace directives
+ * @namespace dashboardView
  * @class ozpManagedFrame
  * @constructor
+ * @param {Function} compareUrl the URL comparison service
+ * @param {Object} $http the Angular HTTP service
+ * @param {Object} $compile the Angular compile service
+ * @param {Object} $document the Angular document service
+ * @param {Object} dashboardApi the API for dashboard information {{#crossLink "dashboardApi"}}{{/crossLink}}
  */
 angular.module('ozpWebtopApp.dashboardView')
 .directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document, dashboardApi) {
+  
   /**
    * Decides which template to use.
    *

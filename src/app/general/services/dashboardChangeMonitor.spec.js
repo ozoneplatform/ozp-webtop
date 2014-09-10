@@ -10,7 +10,7 @@ describe('Service: dashboardChangeMonitor', function () {
     $rootScope = _$rootScope_;
     $location = _$location_;
     dashboardChangeMonitor = _dashboardChangeMonitor_;
-    spyOn($rootScope, '$broadcast').andCallThrough();
+    spyOn($rootScope, '$broadcast').and.callThrough();
   }));
 
   it('has a run method', function() {

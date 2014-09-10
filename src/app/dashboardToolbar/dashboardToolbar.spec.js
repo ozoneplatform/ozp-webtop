@@ -10,7 +10,7 @@ describe('Controller: DashboardToolbar', function () {
     rootScope = _$rootScope_;
 
     // For testing $rootScope events
-    spyOn(rootScope, '$broadcast').andCallThrough();
+    spyOn(rootScope, '$broadcast').and.callThrough();
 
     // Scope setup 
     scope = rootScope.$new();

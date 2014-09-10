@@ -6,14 +6,14 @@ angular.module( 'ozpWebtopApp.appToolbar')
                                        dashboardChangeMonitor) {
 
     $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
-
+    $scope.hogan = 'hello world';
     $scope.$on('dashboard-change', function() {
       $scope.frames = dashboardApi.getDashboards()[dashboardChangeMonitor.dashboardId].frames;
       var allApps = marketplaceApi.getAllApps();
       dashboardApi.mergeApplicationData($scope.frames, allApps);
       $scope.myPinnedApps = $scope.frames;
+      $scope.layout = dashboardChangeMonitor.layout;
     });
-
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
 

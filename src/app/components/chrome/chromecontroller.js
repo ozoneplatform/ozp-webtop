@@ -24,12 +24,12 @@ angular.module('ozpWebtopApp.components')
   };
 
   $scope.minimizeFrame = function(e){
-    dashboardApi.updateFrameKey(e.id, 'isMinimized', 'toggle');
+    dashboardApi.toggleFrameKey(e.id, 'isMinimized');
     $rootScope.$broadcast('dashboard-change');
   };
 
   $scope.maximizeFrame = function(e){
-    dashboardApi.updateFrameKey(e.id, 'isMaximized', 'toggle');
+    dashboardApi.toggleFrameKey(e.id, 'isMaximized');
     $rootScope.$broadcast('dashboard-change');
   };
 

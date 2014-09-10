@@ -6,7 +6,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
                                        dashboardChangeMonitor) {
 
     $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
-    $scope.hogan = 'catfish';
+
     $scope.$on('dashboard-change', function() {
       $scope.frames = dashboardApi.getDashboards()[dashboardChangeMonitor.dashboardId].frames;
       var allApps = marketplaceApi.getAllApps();

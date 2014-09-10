@@ -26,7 +26,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <!-- stuff on the left side of the nav bar -->
-        <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)" ng-class="app.isMinimized ? 'inactive-app' : 'active-app'">
+        <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)" ng-class="app.isMinimized && layout === 'desktop'? 'inactive-app' : 'active-app'">
           <a><img class="chrome-icon app-toolbar-img" ng-src="{{app.icon}}"/>{{app.name}}</i>
         </li>
       </ul>

@@ -5,43 +5,13 @@ angular.module( 'ozpWebtopApp.appToolbar')
                                        marketplaceApi, dashboardApi,
                                        dashboardChangeMonitor) {
 
-    $scope.currentDashboardId = '0';
+    $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
 
-    $scope.$on('activeFrames', function(event, data){
-      $scope.dashboards = dashboardApi.getDashboards();
-      //if there is a localscope for myPinnedApps
-      if($scope.myPinnedApps){
-        //for item in the scope change
-        for(var a in data){
-          for(var b in $scope.myPinnedApps){
-            if (($scope.myPinnedApps[b].appId === data[a].appId) && ($scope.myPinnedApps[b].isMinimized !== data[a].isMinimized)){
-              //if there isn't a myPinnedApps.AppId OR it is equal to false, set it to be true
-
-              if((!$scope.myPinnedApps[b].isMinimized) || ($scope.myPinnedApps[b].isMinimized === false)){
-
-                $scope.myPinnedApps[b].isMinimized = true;
-              }
-              else {
-
-                $scope.myPinnedApps[b].isMinimized = false;
-              }
-            }
-          }
-        }
-      }
-      // if there is no myPinnedApps on the local scope
-      else {
-        $scope.myPinnedApps = data;
-      }
-
-    });
     $scope.$on('dashboard-change', function() {
-      $scope.dashboards = dashboardApi.getDashboards();
-      if($scope.myPinnedApps !== $scope.dashboards[0].frames){
-        console.debug('no match');
-        console.debug($scope.myPinnedApps);
-        console.debug($scope.dashboards[0].frames);
-      }
+      $scope.frames = dashboardApi.getDashboards()[dashboardChangeMonitor.dashboardId].frames;
+      var allApps = marketplaceApi.getAllApps();
+      dashboardApi.mergeApplicationData($scope.frames, allApps);
+      $scope.myPinnedApps = $scope.frames;
     });
 
     // register to receive notifications if dashboard changes
@@ -60,11 +30,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
      };
 
     $scope.myApps = marketplaceApi.getAllApps();
-    // $scope.isMinimized = function(e) {
-    //   console.log(e.appId);
-    //   console.log('is minimized fired');
-    //   console.log(e);
-    // };
+
     $scope.appClicked = function(app) {
       // check if the app is already on the current dashboard
       // TODO: support non-singleton apps

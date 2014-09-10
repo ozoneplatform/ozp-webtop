@@ -114,9 +114,8 @@ angular.module('ozpWebtopApp.dashboardView')
           $scope.max.zIndex = $scope.frames.length - 1;
         }
       }
-    // $rootScope.activeFrames = $scope.currentDashboard.frames;
-      // $scope.activeFrames = $scope.currentDashboard.frames;
-      $rootScope.$broadcast('activeFrames', $scope.frames);
+
+      $scope.activeFrames = $scope.currentDashboard.frames;
       $rootScope.$broadcast('dashboard-change');
     }
 

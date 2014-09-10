@@ -16,21 +16,23 @@ angular.module('ozpWebtopApp.dashboardView')
   if(!$scope.dashboards){
     $scope.dashboards = dashboardApi.getDashboards();
   }
-  $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
   dashboardChangeMonitor.run();
+  $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
 
 
   $scope.$on('dashboard-change', function(){
+    var currentDashboard = dashboardChangeMonitor.dashboardId;
+
     $scope.dashboards = dashboardApi.getDashboards();
-    if($scope.frames !== $scope.dashboards[0].frames){
+    if($scope.frames !== $scope.dashboards[currentDashboard].frames){
         /*Make an array of old frames and new frames*/
       var oldFrames = [],
           newFrames = [];
       for(var i = 0; i < $scope.frames.length; i++){
         oldFrames.push($scope.frames[i].appId);
       }
-      for(var j = 0; j < $scope.dashboards[0].frames.length; j++){
-        newFrames.push($scope.dashboards[0].frames[j].appId);
+      for(var j = 0; j < $scope.dashboards[currentDashboard].frames.length; j++){
+        newFrames.push($scope.dashboards[currentDashboard].frames[j].appId);
       }
       /*return just the differences between oldFrames and new Frames*/
       Array.prototype.diff = function(a) {
@@ -57,6 +59,8 @@ angular.module('ozpWebtopApp.dashboardView')
             $scope.frames.push(
               dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).frames[b]
             );
+            console.debug('gridScope');
+            console.debug($scope.frames);
             //update the frame size so it fits inside its little widget boundary
             $scope.updateGridFrameSize(dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).frames[b].id);
             //now quickly merge my local scope for frames with the marketplace api to get important stuff on local scope like url, image, name, etc
@@ -65,8 +69,6 @@ angular.module('ozpWebtopApp.dashboardView')
         }
       }
     }
-    // console.debug($scope.frames);
-    // $rootScope.$broadcast('activeFrames', $scope.frames);
   });
 
   // TODO: Originally tried sending broadcast events from dashboardChangeMonitor,
@@ -116,9 +118,6 @@ angular.module('ozpWebtopApp.dashboardView')
     };
 
     // TODO: clean this up
-    // $scope.activeFrames = $scope.currentDashboard.frames;
-    // $rootScope.$broadcast('activeFrames', $scope.frames);
-    $rootScope.$broadcast('activeFrames', $scope.frames);
     $rootScope.$broadcast('dashboard-change');
   }
 

@@ -13,13 +13,14 @@ Array.prototype.remove = function(from, to) {
 /**
  * Angular service which provides a local storage interface to the dashboard api. 
  *
+ * @namespace apis
  * @class localStorageDashboardApiImpl
  * @constructor
  * @param {Object} $http The AngularJS HTTP service
  * @param {Object} LocalStorage the local storage service
  * @param {Object} Utilities the utilites
  */
-app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
+apis.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
   var cache = new LocalStorage(localStorage, JSON);
 
   this.getDashboardData = function() {
@@ -590,8 +591,14 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
 });
 
-
-app.service('iwcDashboardApiImpl', function(/*dependencies*/) {
+/**
+ * Angular service which uses the Inter-Widget Communication (IWC) API to store and retrieve 
+ * dashboards.
+ *
+ * @class iwcDashboardApiImpl
+ * @constructor
+ */
+apis.service('iwcDashboardApiImpl', function(/*dependencies*/) {
   this.getDashboards = function() {};
 
   this._setDashboardData = function() {};
@@ -605,8 +612,14 @@ app.service('iwcDashboardApiImpl', function(/*dependencies*/) {
   this.createExampleDashboards = function() {};
 });
 
-
-app.factory('dashboardApi', function($window, $injector) {
+/**
+ * Angular service which provides an abstraction of the implementations used to store and retrieve
+ * dashboard information.
+ *
+ * @class dashboardApi
+ * @constructor
+ */
+apis.factory('dashboardApi', function($window, $injector) {
   // TODO: what to key off of to determine if IWC impl should be used?
   if ($window.iwc) {
     return $injector.get('iwcDashboardApiImpl');

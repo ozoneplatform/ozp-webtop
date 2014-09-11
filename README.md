@@ -22,7 +22,9 @@ frontend app dependencies with Bower:
 ### Grunt Tasks
 Development tasks are run with Grunt. 
 
- - `grunt serve` - brings up a live preview of the webtop
+ - `grunt serve` 
+     * brings up a live preview of the webtop on http://localhost:9000
+     * live preview of the docs on http://localhost:9010
  - `grunt build` - executes unit tests
  - `grunt gh-pages` - run after a `grunt build` to publish the build files to [gh-pages](http://ozone-development.github.io/ozp-webtop/)
  

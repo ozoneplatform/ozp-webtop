@@ -95,6 +95,22 @@ apis.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utili
     return true;
   };
 
+  this.toggleFrameKey = function(frameId, key) {
+    var frame = this.getFrameById(frameId);
+    if (!frame) {
+      return false;
+    }
+    if(frame[key]){
+      frame[key] = false;
+    }
+    else {
+      console.debug(typeof frame[key]);
+      frame[key] = true;
+    }
+    this.saveFrame(frame);
+    return frame[key];
+  };
+  
   // Check to see if an application is already on a given dashboard
   this.isAppOnDashboard = function(dashboardId, applicationId) {
     var dashboard = this.getDashboardById(dashboardId);

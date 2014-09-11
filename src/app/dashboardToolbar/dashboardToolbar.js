@@ -9,6 +9,7 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     $scope.currentDashboard = $scope.dashboards[0];
     // default layout is grid
     $scope.layout = 'grid';
+    $scope.user = dashboardApi.getDashboardData().user;
 
     // register to receive notifications if dashboard layout changes
     dashboardChangeMonitor.run();
@@ -16,6 +17,11 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     $scope.$on('dashboardChange', function(event, dashboardChange) {
       $scope.layout = dashboardChange.layout;
       $scope.dashboardId = dashboardChange.dashboardId;
+
+      //only change local scopes user if the dashboard api user changes
+      if ($scope.user !== dashboardApi.getDashboardData().user){
+        $scope.user = dashboardApi.getDashboardData().user;
+      }
       $scope.currentDashboard.name =
         dashboardApi.getDashboardById($scope.dashboardId).name;
     });
@@ -44,11 +50,6 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
             ' things!'
         }
       ]
-    };
-
-    $scope.user = {
-      'name': 'J Smith',
-      'username': 'J Smith'
     };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

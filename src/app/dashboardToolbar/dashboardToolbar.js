@@ -19,7 +19,7 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
       $scope.dashboardId = dashboardChange.dashboardId;
 
       //only change local scopes user if the dashboard api user changes
-      if($scope.user !== dashboardApi.getDashboardData().user){
+      if ($scope.user !== dashboardApi.getDashboardData().user){
         $scope.user = dashboardApi.getDashboardData().user;
       }
       $scope.currentDashboard.name =

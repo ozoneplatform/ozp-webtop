@@ -4,9 +4,15 @@
  * GridController retrieves the state of a number of tiles and binds it to an
  * Angular scope.
  *
- * @namespace controllers
+ * @namespace dashboardView
  * @class GridController
  * @constructor
+ * @param {Object} $scope an Angular scope
+ * @param {Object} $rootScope the Angular root scope
+ * @param {Object} $location the Angular location service
+ * @param {Object} dashboardApi the API for dashboard information
+ * @param {Object} marketplaceApi the API for marketplace application information
+ * @param {Object} dashboardChangeMonitor the service that monitors dashboard changes
  */
 angular.module('ozpWebtopApp.dashboardView')
 

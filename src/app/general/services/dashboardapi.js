@@ -94,6 +94,7 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
       frame[key] = false;
     }
     else {
+      console.debug(typeof frame[key]);
       frame[key] = true;
     }
     this.saveFrame(frame);

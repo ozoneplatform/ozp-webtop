@@ -5,6 +5,7 @@
  * layout changes
  *
  * @namespace general
+ * @class dashboardChangeMonitor
  * @constructor
  */
 angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',

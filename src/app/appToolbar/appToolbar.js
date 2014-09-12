@@ -5,28 +5,28 @@ angular.module( 'ozpWebtopApp.appToolbar')
                                        marketplaceApi, dashboardApi,
                                        dashboardChangeMonitor) {
 
-    $scope.currentDashboardId = '0';
+    $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
 
-    // TODO: clean this up
-    $rootScope.$watch('activeFrames', function () {
-
-      if ($rootScope.activeFrames) {
-        $scope.myPinnedApps = $rootScope.activeFrames;
-      }
+    $scope.$on('dashboard-change', function() {
+      $scope.frames = dashboardApi.getDashboards()[dashboardChangeMonitor.dashboardId].frames;
+      var allApps = marketplaceApi.getAllApps();
+      dashboardApi.mergeApplicationData($scope.frames, allApps);
+      $scope.myPinnedApps = $scope.frames;
+      $scope.layout = dashboardChangeMonitor.layout;
     });
-
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
 
     $scope.$on('dashboardChange', function(event, dashboardChange) {
-      $scope.currentDashboardId = dashboardChange.dashboardId;
-      $rootScope.currentDashboardId = dashboardChange.dashboardId;
+      if($scope.currentDashboardId !== dashboardChange.dashboardId){
+        $scope.currentDashboardId = dashboardChange.dashboardId;
+      }
+
     });
 
      $scope.maximizeFrame = function(e) {
-       if(e.isMinimized === true){
-         e.isMinimized = false;
-       }
+      dashboardApi.toggleFrameKey(e.id, 'isMinimized');
+      $rootScope.$broadcast('dashboard-change');
      };
 
     $scope.myApps = marketplaceApi.getAllApps();
@@ -43,7 +43,8 @@ angular.module( 'ozpWebtopApp.appToolbar')
         // TODO: use message broadcast to get grid max rows and grid max cols
         dashboardApi.createFrame($scope.currentDashboardId, app.id, 10);
         // reload this dashboard
-        $state.go($state.$current, null, { reload: true });
+        //$state.go($state.$current, null, { reload: false });
+        $rootScope.$broadcast('dashboard-change');
       }
     };
   });

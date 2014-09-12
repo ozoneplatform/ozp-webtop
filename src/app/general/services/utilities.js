@@ -4,6 +4,7 @@
  * Utility functions
  *
  * @namespace general
+ * @class Utiliites
  * @constructor
  */
 angular.module('ozpWebtopApp.general').factory('Utilities', function() {

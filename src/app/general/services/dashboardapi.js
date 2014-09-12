@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ozpWebtopApp.apis');
+var apis = angular.module('ozpWebtopApp.apis');
 
 // TODO: put this somewhere better
 // Array Remove - By John Resig (MIT Licensed)
@@ -10,7 +10,17 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
-app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
+/**
+ * Angular service which provides a local storage interface to the dashboard api. 
+ *
+ * @namespace apis
+ * @class localStorageDashboardApiImpl
+ * @constructor
+ * @param {Object} $http The AngularJS HTTP service
+ * @param {Object} LocalStorage the local storage service
+ * @param {Object} Utilities the utilites
+ */
+apis.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
   var cache = new LocalStorage(localStorage, JSON);
 
   this.getDashboardData = function() {
@@ -85,6 +95,22 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
     return true;
   };
 
+  this.toggleFrameKey = function(frameId, key) {
+    var frame = this.getFrameById(frameId);
+    if (!frame) {
+      return false;
+    }
+    if(frame[key]){
+      frame[key] = false;
+    }
+    else {
+      console.debug(typeof frame[key]);
+      frame[key] = true;
+    }
+    this.saveFrame(frame);
+    return frame[key];
+  };
+  
   // Check to see if an application is already on a given dashboard
   this.isAppOnDashboard = function(dashboardId, applicationId) {
     var dashboard = this.getDashboardById(dashboardId);
@@ -581,8 +607,14 @@ app.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilit
 
 });
 
-
-app.service('iwcDashboardApiImpl', function(/*dependencies*/) {
+/**
+ * Angular service which uses the Inter-Widget Communication (IWC) API to store and retrieve 
+ * dashboards.
+ *
+ * @class iwcDashboardApiImpl
+ * @constructor
+ */
+apis.service('iwcDashboardApiImpl', function(/*dependencies*/) {
   this.getDashboards = function() {};
 
   this._setDashboardData = function() {};
@@ -596,8 +628,14 @@ app.service('iwcDashboardApiImpl', function(/*dependencies*/) {
   this.createExampleDashboards = function() {};
 });
 
-
-app.factory('dashboardApi', function($window, $injector) {
+/**
+ * Angular service which provides an abstraction of the implementations used to store and retrieve
+ * dashboard information.
+ *
+ * @class dashboardApi
+ * @constructor
+ */
+apis.factory('dashboardApi', function($window, $injector) {
   // TODO: what to key off of to determine if IWC impl should be used?
   if ($window.iwc) {
     return $injector.get('iwcDashboardApiImpl');

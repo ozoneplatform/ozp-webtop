@@ -48,3 +48,11 @@ angular.module( 'ozpWebtopApp.appToolbar')
       }
     };
   });
+
+angular.module( 'ozpWebtopApp.appToolbar')
+    .directive('appToolbar',function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'appToolbar/appToolbar.tpl.html'
+    };
+});

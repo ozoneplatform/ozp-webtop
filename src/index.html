@@ -33,7 +33,8 @@
   </head>
   <body ng-app="ozpWebtopApp" ozp-classification="U">
 
-    <div ng-include="'dashboardToolbar/dashboardToolbar.tpl.html'"></div>
+    <!-- dashboard panel -->
+    <dashboard-toolbar></dashboard-toolbar>
 
     <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser.
@@ -45,11 +46,10 @@
     <div class="ui-view-style" ui-view=""></div>
 
     <!-- user settings modal -->
-    <div ng-include="userSettings/settingsModal.tpl.html" ng-controller="UserSettingsCtrl"></div>
+    <user-settings ng-show=false></user-settings>
 
-    <div class="app-toolbar-ng-include"
-      ng-include="'appToolbar/appToolbar.tpl.html'">
-    </div>
+    <!-- app toolbar panel -->
+    <app-toolbar></app-toolbar>
 
     <!-- TODO: handle this nicer - should come from gruntfile, not be hard coded -->
     <!--[if lt IE 9]>

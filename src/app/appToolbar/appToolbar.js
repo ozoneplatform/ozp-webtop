@@ -3,9 +3,11 @@
 angular.module( 'ozpWebtopApp.appToolbar')
 .controller('appToolbarCtrl', function($scope, $rootScope, $state,
                                        marketplaceApi, dashboardApi,
-                                       dashboardChangeMonitor) {
+                                       dashboardChangeMonitor, userSettingsApi) {
 
     $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
+
+    $scope.appboardhide = false;
 
     $scope.$on('dashboard-change', function() {
       $scope.frames = dashboardApi.getDashboards()[dashboardChangeMonitor.dashboardId].frames;
@@ -46,6 +48,17 @@ angular.module( 'ozpWebtopApp.appToolbar')
         //$state.go($state.$current, null, { reload: false });
         $rootScope.$broadcast('dashboard-change');
       }
+    };
+    $scope.appboardhider = function() {
+      if ((!$scope.appboardhide) || ($scope.appboardhide = false)){
+        $scope.appboardhide = true;
+        userSettingsApi.updateUserSettingByKey('isAppboardHidden', true);
+      }
+      else {
+        $scope.appboardhide = false;
+        userSettingsApi.updateUserSettingByKey('isAppboardHidden', false);
+      }
+      $rootScope.$broadcast('userSettings-change');
     };
   });
 

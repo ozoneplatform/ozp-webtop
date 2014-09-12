@@ -1,35 +1,46 @@
-<nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners navbar-fixed-bottom"
-     role="navigation" ng-controller="appToolbarCtrl">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <div class="dropdown">
-        <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-list"></i></a>
-        <ul class="dropdown-menu">
-          <li ng-repeat="app in myApps">
-            <a ng-click="appClicked(app)" class="link-pointer"
-                tooltip-placement="right" tooltip="{{app.shortDescription}}">
-              <img ng-src="{{app.icon}}" height="20" width="20" />
-              {{app.name}}</a>
+<div ng-controller="appToolbarCtrl">
+  <nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners "
+       role="navigation" ng-class="{true: 'hide', false: ''}[appboardhide]">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="dropdown">
+          <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-list"></i></a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="app in myApps">
+              <a ng-click="appClicked(app)" class="link-pointer"
+                  tooltip-placement="right" tooltip="{{app.shortDescription}}">
+                <img ng-src="{{app.icon}}" height="20" width="20" />
+                {{app.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <!-- stuff on the left side of the nav bar -->
+          <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)" ng-class="app.isMinimized && layout === 'desktop'? 'inactive-app' : 'active-app'">
+            <a><img class="chrome-icon app-toolbar-img" ng-src="{{app.icon}}"/>{{app.name}}</i></a>
           </li>
         </ul>
-      </div>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <!-- stuff on the left side of the nav bar -->
-        <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)" ng-class="app.isMinimized && layout === 'desktop'? 'inactive-app' : 'active-app'">
-          <a><img class="chrome-icon app-toolbar-img" ng-src="{{app.icon}}"/>{{app.name}}</i>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+        <ul class="nav navbar-nav navbar-right">
+        <li class="divider-vertical"></li>
+          <li class='hideToolbarButton'>
+            <a ng-click="appboardhider();">
+              <i class="fa fa-step-forward fa-lg"></i>
+            </a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <button class="hiddenToggle appHiddenToggle" ng-click="appboardhider();" ng-class="{false: 'hide'}[appboardhide]"><i class="fa fa-step-backward"></i></button>
+</div>

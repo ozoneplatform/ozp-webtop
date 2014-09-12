@@ -3,19 +3,6 @@
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used below.
 
-var settingsModal = angular.module( 'ozpWebtopApp.userSettings');
-
-/*
- *  It seems like we haven't been using angular directives so I included that here
- */
-
-settingsModal.directive('userSettings',function(){
-  return {
-    restrict: 'E',
-    templateUrl: 'userSettings/settingsModal.tpl.html'
-  };
-});
-
 var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
                                   dashboardApi, userSettingsApi) {
 
@@ -118,41 +105,51 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
 ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'currentDashboardId',
   'dashboardApi', 'userSettingsApi'];
 
+/*
+ *  It seems like we haven't been using angular directives so I included that here
+ */
 
-settingsModal.controller('UserSettingsCtrl',function($scope, $rootScope, $modal, $log,
-                                         $state, dashboardApi) {
+angular.module( 'ozpWebtopApp.userSettings').directive('userSettings',function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'userSettings/settingsModal.tpl.html',
+        controller: function($scope, $rootScope, $modal, $log,
+                             $state, dashboardApi) {
+            $scope.validNamePattern = /^[a-z_]+[a-z0-9_ ]*\w$/i;
+            $scope.$on('launchSettingsModal', function(/*event, data*/) {
+                $scope.open();
+            });
 
-  $scope.$on('launchSettingsModal', function(/*event, data*/) {
-    $scope.open();
-  });
+            $scope.$on('dashboardChange', function(event, data) {
+                $scope.currentDashboardId = data.dashboardId;
+            });
 
-  $scope.$on('dashboardChange', function(event, data) {
-    $scope.currentDashboardId = data.dashboardId;
-  });
+            $scope.open = function () {
 
-  $scope.open = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'userSettings/settingsModal.tpl.html',
+                    controller: ModalInstanceCtrl,
+                    windowClass: 'app-modal-window',
+                    scope: $rootScope,
+                    resolve: {
+                        currentDashboardId: function () {
+                            return $scope.currentDashboardId;
+                        }
+                    }
+                });
 
-    var modalInstance = $modal.open({
-      templateUrl: 'userSettings/settingsModal.tpl.html',
-      controller: ModalInstanceCtrl,
-      windowClass: 'app-modal-window',
-      scope: $rootScope,
-      resolve: {
-        currentDashboardId: function () {
-          return $scope.currentDashboardId;
-        }
-      }
-    });
-
-    modalInstance.result.then(function () {
-      var dashboard = dashboardApi.getDashboardById($scope.currentDashboardId);
-      if (!dashboard) {
-        // arbitrarily redirect user to their first valid board using grid layout
-        var goToBoard = dashboardApi.getDashboards()[0].id;
-        $state.go('grid', {'dashboardId': goToBoard});
-      }
-    }, function () {
-      $log.info('Modal dismissed');
-    });
-  };
+                modalInstance.result.then(function () {
+                    var dashboard = dashboardApi.getDashboardById($scope.currentDashboardId);
+                    if (!dashboard) {
+                        // arbitrarily redirect user to their first valid board using grid layout
+                        var goToBoard = dashboardApi.getDashboards()[0].id;
+                        $state.go('grid', {'dashboardId': goToBoard});
+                    }
+                }, function () {
+                    $log.info('Modal dismissed');
+                });
+            };
+        },
+        controllerAs: 'UserSettingsCtrl'
+    };
 });

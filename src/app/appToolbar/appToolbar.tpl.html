@@ -1,5 +1,5 @@
 <div ng-controller="appToolbarCtrl">
-  <nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners "
+  <nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners navbar-fixed-bottom"
        role="navigation" ng-class="{true: 'hide', false: ''}[appboardhide]">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -42,5 +42,5 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <button class="hiddenToggle appHiddenToggle" ng-click="appboardhider();" ng-class="{false: 'hide'}[appboardhide]"><i class="fa fa-step-backward"></i></button>
+<button class="hiddenToggle appHiddenToggle" ng-click="appboardhider();" ng-class="{false: 'hide'}[appboardhide]"><i class="fa fa-step-backward"></i></button>
 </div>

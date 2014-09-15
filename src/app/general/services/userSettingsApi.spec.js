@@ -18,4 +18,13 @@ describe('Service: userSettingsApi', function () {
     expect(settings.autohideToolbars).toBeDefined();
   });
 
+  it('should have a updateUserSettingByKey method', function() {
+    userSettingsApi.updateUserSettingByKey('isAppboardHidden', true);
+    console.log(userSettingsApi.getUserSettings().isAppboardHidden);
+    expect(userSettingsApi.getUserSettings().isAppboardHidden).toEqual(true);
+
+    userSettingsApi.updateUserSettingByKey('isDashboardHidden', true);
+    expect(userSettingsApi.getUserSettings().isDashboardHidden).not.toEqual(false);
+  });
+
 });

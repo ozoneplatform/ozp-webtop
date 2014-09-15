@@ -1,6 +1,6 @@
 'use strict';
 
-var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar');
+var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('dashboardToolbarCtrl',
   function($scope, $rootScope, dashboardApi, dashboardChangeMonitor, userSettingsApi) {
 

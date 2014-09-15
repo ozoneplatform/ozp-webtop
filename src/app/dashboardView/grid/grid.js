@@ -18,7 +18,7 @@ angular.module('ozpWebtopApp.dashboardView')
 
 .controller('GridController', function ($scope, $rootScope, $location,
                                         dashboardApi, marketplaceApi,
-                                        dashboardChangeMonitor) {
+                                        dashboardChangeMonitor, userSettingsApi) {
   if(!$scope.dashboards){
     $scope.dashboards = dashboardApi.getDashboards();
   }
@@ -72,6 +72,14 @@ angular.module('ozpWebtopApp.dashboardView')
           }
         }
       }
+    }
+  });
+  $scope.$on('userSettings-change', function() {
+    if (userSettingsApi.getUserSettings().isAppboardHidden === true) {
+      $scope.appBarHidden = true;
+    }
+    else {
+      $scope.appBarHidden = false;
     }
   });
 

@@ -20,7 +20,7 @@ Array.prototype.remove = function(from, to) {
  * @param {Object} LocalStorage the local storage service
  * @param {Object} Utilities the utilites
  */
-apis.service('localStorageDashboardApiImpl', function($http, $rootScope, LocalStorage, Utilities) {
+apis.service('localStorageDashboardApiImpl', function($http, LocalStorage, Utilities) {
   var cache = new LocalStorage(localStorage, JSON);
 
   this.getDashboardData = function() {

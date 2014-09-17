@@ -1,12 +1,27 @@
 'use strict';
 
 angular.module('ozpWebtopApp.dashboardView')
-  .controller('DesktopController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi, dashboardChangeMonitor) {
+  .controller('DesktopController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi, dashboardChangeMonitor, userSettingsApi) {
     if(!$scope.dashboards){
       $scope.dashboards = dashboardApi.getDashboards();
     }
     $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
     dashboardChangeMonitor.run();
+
+    $scope.$on('userSettings-change', function() {
+      if (userSettingsApi.getUserSettings().isDashboardHidden === true) {
+        $scope.dashBarHidden = true;
+      }
+      else {
+        $scope.dashBarHidden = false;
+      }
+      if (userSettingsApi.getUserSettings().isAppboardHidden === true) {
+        $scope.appBarHidden = true;
+      }
+      else {
+        $scope.appBarHidden = false;
+      }
+    });
 
     $scope.$on('dashboard-change', function() {
       /* isminimized */

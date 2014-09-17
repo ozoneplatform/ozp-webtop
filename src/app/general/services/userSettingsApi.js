@@ -14,6 +14,17 @@ app.service('localStorageUserSettingsApiImpl', function($http, LocalStorage) {
     cache.setItem('userSettings', userSettings);
   };
 
+  this.updateUserSettingByKey = function(key, setting) {
+    var userSettings = this.getUserSettings();
+    for (var a in userSettings) {
+      if (a === key) {
+        delete userSettings[a];
+      }
+      userSettings[key] = setting;
+    }
+    cache.setItem('userSettings', userSettings);
+  };
+
   this.createExampleUserSettings = function() {
     var userSettings = {
       'theme': 'dark',

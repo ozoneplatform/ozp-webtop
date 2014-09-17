@@ -162,8 +162,8 @@ body > div.classBanner:last-of-type {
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     filter: alpha(opacity=80);
     opacity: 0.8;
-	-webkit-opacity: 0.8;
-	-moz-opacity: 0.8;
+  -webkit-opacity: 0.8;
+  -moz-opacity: 0.8;
 }
 
 a.ozp-icon:hover, a.ozp-icon:active {
@@ -257,6 +257,9 @@ a.ozp-icon:hover, a.ozp-icon:active {
   bottom: @app-toolbar-height  + @classification-banner !important;
 }
 
+.fullWidthTopHidden {
+  top: @classification-banner !important;
+}
 .active-app {
   margin-right: 5px;
   background-color: #333333;
@@ -269,4 +272,40 @@ a.ozp-icon:hover, a.ozp-icon:active {
 
 .navbar-fixed-bottom {
   border: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.hiddenToggle {
+  width: 5px;
+  height: 30px;
+  right: 0;
+  position: fixed;
+  z-index: 10000;
+  background-color: #212425;
+  border: none;
+  font-size: 5px;
+  color: white;
+}
+
+.dashHiddenToggle {
+  top: @classification-banner;
+}
+
+.appHiddenToggle {
+  bottom: @classification-banner;
+}
+
+.appToggle {
+  bottom: @classification-banner !important;
+}
+
+.dashToggle {
+  top: @classification-banner !important;
+}
+
+.grid-toolbar-padding {
+  padding-bottom: @app-toolbar-height;
 }

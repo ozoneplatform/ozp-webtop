@@ -1,12 +1,12 @@
 'use strict';
 
-var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar');
-
-
-dashboardApp.controller('dashboardToolbarCtrl',
-  function($scope, $rootScope, dashboardApi, dashboardChangeMonitor) {
+var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
+.controller('dashboardToolbarCtrl',
+  function($scope, $rootScope, dashboardApi, dashboardChangeMonitor, userSettingsApi) {
 
     $scope.dashboards = dashboardApi.getDashboards();
+    //default dashboardToolbar is not hidden
+    $scope.dashboardhide = false;
     // default board is 0
     $scope.currentDashboard = $scope.dashboards[0];
     // default layout is grid
@@ -73,6 +73,17 @@ dashboardApp.controller('dashboardToolbarCtrl',
       $rootScope.$broadcast('launchSettingsModal', {
         launch: 'true'
       });
+    };
+    $scope.dashboardhider = function() {
+      if ((!$scope.dashboardhide) || ($scope.dashboardhide = false)){
+        $scope.dashboardhide = true;
+        userSettingsApi.updateUserSettingByKey('isDashboardHidden', true);
+      }
+      else {
+        $scope.dashboardhide = false;
+        userSettingsApi.updateUserSettingByKey('isDashboardHidden', false);
+      }
+      $rootScope.$broadcast('userSettings-change');
     };
   }
 );

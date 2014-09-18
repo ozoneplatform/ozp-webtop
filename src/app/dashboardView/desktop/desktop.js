@@ -41,12 +41,12 @@ angular.module('ozpWebtopApp.dashboardView')
           }
         }
         for (var z in apiDash.frames){
-          for(var y in $scope.frames){
-            if((apiDash.frames[z].appId === $scope.frames[y].appId) && (apiDash.frames[z].isMinimized !== $scope.frames[y].isMinimized)){
+          for (var y in $scope.frames){
+            if ((apiDash.frames[z].appId === $scope.frames[y].appId) && (apiDash.frames[z].isMinimized !== $scope.frames[y].isMinimized)) {
               $scope.frames[y].isMinimized = apiDash.frames[z].isMinimized;
               //
             }
-            if((apiDash.frames[z].appId === $scope.frames[y].appId) && (apiDash.frames[z].isMaximized !== $scope.frames[y].isMaximized)){
+            if((apiDash.frames[z].appId === $scope.frames[y].appId) && (apiDash.frames[z].isMaximized !== $scope.frames[y].isMaximized)) {
               $scope.frames[y].isMaximized = apiDash.frames[z].isMaximized;
               //
             }
@@ -157,11 +157,19 @@ angular.module('ozpWebtopApp.dashboardView')
     }
 
     $scope.isFrameMinimized = function(e) {
-      return dashboardApi.getFrameById(e.id).isMinimized;
+      for (var i=0; i < $scope.frames.length; i++) {
+        if ($scope.frames[i].id === e.id) {
+          return $scope.frames[i].isMinimized;
+        }
+      }
     };
 
     $scope.isFrameMaximized = function(e) {
-      return dashboardApi.getFrameById(e.id).isMaximized;
+      for (var i=0; i < $scope.frames.length; i++) {
+        if ($scope.frames[i].id === e.id) {
+          return $scope.frames[i].isMaximized;
+        }
+      }
     };
 
     function sortFrames() {

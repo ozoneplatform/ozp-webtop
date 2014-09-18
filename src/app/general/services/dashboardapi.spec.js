@@ -86,7 +86,7 @@ describe('Service: dashboardApi', function () {
   // Get a single dashboard
   it('should have a getDashboardById method', function(done) {
     dashboardApi.getDashboardById(0).then(function (dashboard0) {
-      expect(dashboard0.id).toEqual(0);
+      expect(dashboard0.id).toEqual('0');
       done();
     }).catch(function (error) {
       expect(error).toEqual('should not have happened');
@@ -98,7 +98,7 @@ describe('Service: dashboardApi', function () {
   it('should have a getDashboardById method that accepts strings', function(done) {
     // it should work if you pass in a string as well
     dashboardApi.getDashboardById('0').then(function (dashboard0) {
-      expect(dashboard0.id).toEqual(0);
+      expect(dashboard0.id).toEqual('0');
       done();
     }).catch(function (error) {
       expect(error).toEqual('should not have happened');

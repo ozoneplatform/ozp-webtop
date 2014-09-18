@@ -497,11 +497,11 @@ function generalDashboardModel(persistStrategy, Utilities) {
       var dashboardData = {
         'name': 'dashboards',
         'user': 'J Smith',
-        'defaultDashboard': 0,
+        'defaultDashboard': '0',
         'dashboards': [
           {
             'name': 'Stock Trader',
-            'id': 0,
+            'id': '0',
             'layout': 'grid',
             'frames': [
               {
@@ -559,7 +559,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
           },
           {
             'name': 'Simple Apps',
-            'id': 1,
+            'id': '1',
             'layout': 'grid',
             'frames': [
               {
@@ -634,7 +634,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
           },
           {
             'name': 'Just One Thing',
-            'id': 2,
+            'id': '2',
             'layout': 'desktop',
             'frames': [
               {
@@ -658,7 +658,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
           },
           {
             'name': 'Bouncing Balls',
-            'id': 3,
+            'id': '3',
             'layout': 'grid',
             'frames': [
               {

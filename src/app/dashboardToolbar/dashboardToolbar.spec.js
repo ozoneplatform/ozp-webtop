@@ -7,7 +7,7 @@ describe('Controller: DashboardToolbar', function () {
   // use IWC for tests?
   beforeEach(function() {
     angular.mock.module('ozpWebtopApp.constants', function($provide) {
-      $provide.constant('useIwc', true);
+      $provide.constant('useIwc', false);
     });
   });
 
@@ -51,19 +51,20 @@ describe('Controller: DashboardToolbar', function () {
     expect(allowedLayouts).toContain(scope.layout);
   });
 
-  // TODO: Put this back!!!
-  xit('should get a list of dashboards from the dashboardApi', function() {
+  it('should get a list of dashboards from the dashboardApi', function() {
+      if(!scope.$$phase) { scope.$apply(); }
       expect(scope.dashboards.length).toBeGreaterThan(0);
   });
 
   it('should expose a setCurrentDashboard method', function() {
     var dashboard = 'test dashboard foo';
     scope.setCurrentDashboard(dashboard);
-    scope.$apply();
     expect(scope.currentDashboard).toBe(dashboard);
   });
 
   it('should get a user from dashboardApi', function() {
+
+    if(!scope.$$phase) { scope.$apply(); }
     expect(scope.user).toBeDefined();
   });
 
@@ -75,7 +76,6 @@ describe('Controller: DashboardToolbar', function () {
 
   it('should expose a useDesktopLayout method', function() {
     scope.useDesktopLayout();
-    scope.$apply();
     expect(scope.layout).toBe('desktop');
   });
 

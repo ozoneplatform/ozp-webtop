@@ -30,7 +30,7 @@ angular.module('ozpWebtopApp.dashboardView')
     dashboardChangeMonitor.run();
 
     // The applications/widgets on the grid view
-    $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
+    $scope.frames = [];  // to make tests happy
 
     // Make an array of old frames and new frames
     $scope.newFrames = [];
@@ -69,32 +69,24 @@ angular.module('ozpWebtopApp.dashboardView')
           //if there are new frames for this dashboard on the services that are
           // not in the local scope
           if ($scope.newFrames.diff($scope.oldFrames).length > 0) {
-            // for item in the dashboardApi on the current Dashboard
+            // if the item from the dashboard api matches the new frame we found in
+            // this view
             dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).then(function(dashboard) {
-              // if the item from the dashboard api matches the new frame we found in
-              // this view
-              dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).then(function(dashboard) {
-                // TODO: for loop with async call inside, not good
-                for (var c=0; c < dashboard.frames.length; c++) {
-                  if (dashboard.frames[c].appId === $scope.newFrames.diff($scope.oldFrames)[0]) {
-                    // push that frame to the local scope. since the changes are
-                    // automatically bound with the view, no refresh required
-                    $scope.frames.push(dashboard.frames[c]);
-                    // update the frame size so it fits inside its little widget boundary
-                    $scope.updateGridFrameSize(dashboard.frames[c].id).then(function() {
-                      // update finished
-                    }).catch(function (error) {
-                      console.log('should not have happened: ' + error);
-                    });
-                    // now quickly merge my local scope for frames with the marketplace
-                    // api to get important stuff on local scope like url, image, name,
-                    // etc
-                    dashboardApi.mergeApplicationData($scope.frames, marketplaceApi.getAllApps());
-                  }
+              // TODO: for loop with async call inside, not good
+              for (var c=0; c < dashboard.frames.length; c++) {
+                if (dashboard.frames[c].appId === $scope.newFrames.diff($scope.oldFrames)[0]) {
+                  // push that frame to the local scope. since the changes are
+                  // automatically bound with the view, no refresh required
+                  $scope.frames.push(dashboard.frames[c]);
+                  // update the frame size so it fits inside its little widget boundary
+                  // TODO: this might not behave as expected
+                  $scope.updateGridFrameSize(dashboard.frames[c].id);
+                  // now quickly merge my local scope for frames with the marketplace
+                  // api to get important stuff on local scope like url, image, name,
+                  // etc
+                  dashboardApi.mergeApplicationData($scope.frames, marketplaceApi.getAllApps());
                 }
-              }).catch(function (error) {
-                console.log('should not have happened: ' + error);
-              });
+              }
             }).catch(function (error) {
               console.log('should not have happened: ' + error);
             });
@@ -105,10 +97,6 @@ angular.module('ozpWebtopApp.dashboardView')
       });
 
     });
-
-    $scope.bringInNewFrames = function(frame) {
-
-    };
 
 
     $scope.$on('userSettings-change', function() {

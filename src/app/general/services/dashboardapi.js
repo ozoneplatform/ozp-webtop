@@ -89,14 +89,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
         }
         return that.saveFrame(frame).then(function(resp) {
           if (resp) {
-            return return frame[key];
+            return frame[key];
           } else {
             return resp;
           }
         }).catch(function(error) {
           console.log('should not have happened: ' + error);
         });
-        return frame[key];
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
@@ -752,7 +751,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
  * @param {Object} LocalStorage the local storage service
  * @param {Object} Utilities the utilites
  */
-app.service('dashboardModelLocalStorage', function(dashboardLocalStorageInterface, Utilities) {
+apis.service('dashboardModelLocalStorage', function(dashboardLocalStorageInterface, Utilities) {
   var model = generalDashboardModel(dashboardLocalStorageInterface, Utilities);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -768,7 +767,7 @@ app.service('dashboardModelLocalStorage', function(dashboardLocalStorageInterfac
  * @class iwcDashboardApiImpl
  * @constructor
  */
-app.service('dashboardModelIwc', function(dashboardIwcInterface, Utilities) {
+apis.service('dashboardModelIwc', function(dashboardIwcInterface, Utilities) {
   var model = generalDashboardModel(dashboardIwcInterface, Utilities);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -784,7 +783,7 @@ app.service('dashboardModelIwc', function(dashboardIwcInterface, Utilities) {
  * @class dashboardApi
  * @constructor
  */
-app.factory('dashboardApi', function($injector, useIwc) {
+apis.factory('dashboardApi', function($injector, useIwc) {
   if (useIwc) {
     return $injector.get('dashboardModelIwc');
   } else if (useIwc === false){

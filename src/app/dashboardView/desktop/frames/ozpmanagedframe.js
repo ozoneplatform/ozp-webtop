@@ -58,6 +58,12 @@ angular.module('ozpWebtopApp.dashboardView')
 
       // React to a mousedown and allow the element to move
       element.on('mousedown', function(event) {
+        // TODO: find a more maintainable way?
+        // Ignore click event if we clicked a button
+        if (event.target.className.indexOf('glyphicon') > -1) {
+          event.preventDefault();
+          return;
+        }
         // Bring frame to foreground
         if (scope.frame.desktopLayout.zIndex <= scope.max.zIndex) {
           scope.frame.desktopLayout.zIndex = scope.max.zIndex + 1;
@@ -94,6 +100,12 @@ angular.module('ozpWebtopApp.dashboardView')
       }
 
       function mouseup() {
+        // TODO: find a more maintainable way?
+        // Ignore click event if we clicked a button
+        if (event.target.className.indexOf('glyphicon') > -1) {
+          event.preventDefault();
+          return;
+        }
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
         dashboardApi.updateDesktopFrame(scope.frame.id, x, y, scope.max.zIndex);

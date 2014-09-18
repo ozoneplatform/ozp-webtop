@@ -1,21 +1,19 @@
 'use strict';
 
 /**
- * ozpGridster is a wrapper around a 'ul' element used to manage the grid layout.
+ * ozpGridsterItem is a Angular directive and a wrapper around a tile in the grid
  *
- * @namespace directives
- * @class ozpGridster
+ * @namespace dashboardView
+ * @class ozpGridsterItem
  * @constructor
+ * @param {Object} $compile the Angular compile service
+ * @param {Object} $http the Angular HTTP service
+ * @param {Object} $templateCache the Angular template cache
+ * @param {Object} $timeout the Angular timeout service
+ * @param {Function} compareUrl the compareUrl service {{#crossLink "compareUrl"}}{{/crossLink}} 
+ * @param {Object} dashboardApi the dashboard API service {{#crossLink "dashboardApi"}}{{/crossLink}} 
  */
 angular.module('ozpWebtopApp.dashboardView')
-
-/**
- * gridsterItem is a wrapper around a tile in the grid
- *
- * @namespace directives
- * @class gridsterItem
- * @constructor
- */
 .directive('ozpGridsterItem', function ($compile, $http, $templateCache,
                                         $timeout, compareUrl, dashboardApi) {
 

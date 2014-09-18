@@ -63,6 +63,10 @@ describe('Controller: DashboardToolbar', function () {
     expect(scope.currentDashboard).toBe(dashboard);
   });
 
+  it('should get a user from dashboardApi', function() {
+    expect(scope.user).toBeDefined();
+  });
+
   it('should expose a useGridLayout method', function() {
     scope.useGridLayout();
     scope.$apply();

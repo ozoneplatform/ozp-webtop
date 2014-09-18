@@ -5,6 +5,7 @@
  *
  * @namespace ozpWebtopApp.general
  * @method compareUrl
+ * @static
  * @param {String} frameUrl the url of a frame
  * @return {Boolean} true if the url represents the same origin as the webtop, false otherwise
  */

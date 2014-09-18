@@ -1,68 +1,77 @@
-<nav class="navbar navbar-default navbar-inverse dashboard-toolbar
-  no-rounded-corners" role="navigation" ng-controller="dashboardToolbarCtrl">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">OZONE</a>
-    </div>
+<div ng-controller="dashboardToolbarCtrl">
+  <nav class="navbar navbar-default navbar-inverse dashboard-toolbar
+    no-rounded-corners" role="navigation"  ng-class="{true: 'hide', false: ''}[dashboardhide]">
+    <div class="container-fluid" >
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">OZONE</a>
+      </div>
 
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <!-- stuff on the left side of the nav bar -->
-      </ul>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <!-- stuff on the left side of the nav bar -->
+        </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentDashboard.name}} <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="board in dashboards">
-              <a ng-click="setCurrentDashboard(board)" href="#/{{board.layout}}/{{board.id}}">{{board.name}}</a>
-            </li>
-          </ul>
-        </li>
-        <li class="divider-vertical"></li>
-        <li>
-          <a ng-click="useGridLayout()" href="#/grid/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'grid'}">
-            <i ng-class="{iconWhite: layout == 'grid'}" class="fa fa-th fa-lg"></i>
-          </a>
-        </li>
-        <li class="divider-vertical"></li>
-        <li>
-          <a ng-click="useDesktopLayout()" href="#/desktop/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'desktop'}">
-            <i ng-class="{iconWhite: layout == 'desktop'}" class="fa fa-clipboard fa-lg"></i>
-          </a>
-        </li>
-        <li class="divider-vertical"></li>
-        <li>
-          <a href="#"><span class="badge">{{messages.unread}}</span></a>
-        </li>
-        <li class="divider-vertical"></li>
-        <li>
+        <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-          <a href="#" class="dropdown-toggle testt" data-toggle="dropdown">
-            <i class="fa fa-user fa-lg">&nbsp</i>{{user.username}} <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a ng-click="launchSettingsModal()" class="link-pointer"><i class="fa fa-cogs">&nbsp&nbsp</i>Settings</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentDashboard.name}} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="board in dashboards">
+                <a ng-click="setCurrentDashboard(board)" href="#/{{board.layout}}/{{board.id}}">{{board.name}}</a>
+              </li>
+            </ul>
+          </li>
+          <li class="divider-vertical"></li>
+          <li>
+            <a ng-click="useGridLayout()" href="#/grid/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'grid'}">
+              <i ng-class="{iconWhite: layout == 'grid'}" class="fa fa-th fa-lg"></i>
+            </a>
+          </li>
+          <li class="divider-vertical"></li>
+          <li>
+            <a ng-click="useDesktopLayout()" href="#/desktop/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'desktop'}">
+              <i ng-class="{iconWhite: layout == 'desktop'}" class="fa fa-clipboard fa-lg"></i>
+            </a>
+          </li>
+          <li class="divider-vertical"></li>
+          <li>
+            <a href="#"><span class="badge">{{messages.unread}}</span></a>
+          </li>
+          <li class="divider-vertical"></li>
+          <li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle testt" data-toggle="dropdown">
+              <i class="fa fa-user fa-lg">&nbsp</i>{{user}} <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a ng-click="launchSettingsModal()" class="link-pointer"><i class="fa fa-cogs">&nbsp&nbsp</i>Settings</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-question-circle">&nbsp&nbsp</i>Take a tour</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-sign-out">&nbsp&nbsp</i>Logout</a>
+                </li>
+              </ul>
             </li>
-            <li>
-              <a href="#"><i class="fa fa-question-circle">&nbsp&nbsp</i>Take a tour</a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-sign-out">&nbsp&nbsp</i>Logout</a>
-            </li>
-          </ul>
-        </li>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+          </li>
+          <li class="divider-vertical"></li>
+          <li class='hideToolbarButton'>
+            <a ng-click="dashboardhider();">
+              <i class="fa fa-step-forward fa-lg"></i>
+            </a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <button class="hiddenToggle dashToggle" ng-click="dashboardhider();" ng-class="{false: 'hide'}[dashboardhide]"><i class="fa fa-step-backward"></i></button>
+</div>

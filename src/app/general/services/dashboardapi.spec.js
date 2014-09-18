@@ -739,6 +739,28 @@ describe('Service: dashboardApi', function () {
     if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
+  // remove a dashboard
+  it('should have a toggleFrameKey method', function() {
+    var frameId = dashboardApi.getDashboardById(0).frames[0].id;
+    // frame default state is to not be minimized or maximized
+    //isMinimized expect first pass to set as false (minimized)
+    dashboardApi.toggleFrameKey(frameId, 'isMinimized');
+    expect(dashboardApi.getDashboardById(0).frames[0].isMinimized).toEqual(true);
+
+    //isMinimized expect second pass to set as true (not minimized)
+    dashboardApi.toggleFrameKey(frameId, 'isMinimized');
+    expect(dashboardApi.getDashboardById(0).frames[0].isMinimized).toEqual(false);
+
+    //isMaximized expect first pass to set as false (regular sized window)
+    dashboardApi.toggleFrameKey(frameId, 'isMinimized');
+    expect(dashboardApi.getDashboardById(0).frames[0].isMinimized).toEqual(true);
+
+    //isMaximized expect second pass to set as true (maximized sized window)
+    dashboardApi.toggleFrameKey(frameId, 'isMinimized');
+    expect(dashboardApi.getDashboardById(0).frames[0].isMinimized).toEqual(false);
+
+  });
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                      Misc
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

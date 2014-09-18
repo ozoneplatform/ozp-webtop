@@ -1,32 +1,34 @@
 'use strict';
 
 angular.module( 'ozpWebtopApp.appToolbar')
-.controller('appToolbarCtrl', function($scope, $rootScope, $state,
+  .controller('appToolbarCtrl', function($scope, $rootScope, $state,
                                        marketplaceApi, dashboardApi,
-                                       dashboardChangeMonitor) {
+                                       dashboardChangeMonitor, userSettingsApi) {
 
-    $scope.currentDashboardId = '0';
+    $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
 
-    // TODO: clean this up
-    $rootScope.$watch('activeFrames', function () {
+    $scope.appboardhide = false;
 
-      if ($rootScope.activeFrames) {
-        $scope.myPinnedApps = $rootScope.activeFrames;
-      }
+    $scope.$on('dashboard-change', function() {
+      $scope.frames = dashboardApi.getDashboards()[dashboardChangeMonitor.dashboardId].frames;
+      var allApps = marketplaceApi.getAllApps();
+      dashboardApi.mergeApplicationData($scope.frames, allApps);
+      $scope.myPinnedApps = $scope.frames;
+      $scope.layout = dashboardChangeMonitor.layout;
     });
-
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
 
     $scope.$on('dashboardChange', function(event, dashboardChange) {
-      $scope.currentDashboardId = dashboardChange.dashboardId;
-      $rootScope.currentDashboardId = dashboardChange.dashboardId;
+      if($scope.currentDashboardId !== dashboardChange.dashboardId){
+        $scope.currentDashboardId = dashboardChange.dashboardId;
+      }
+
     });
 
      $scope.maximizeFrame = function(e) {
-       if(e.isMinimized === true){
-         e.isMinimized = false;
-       }
+      dashboardApi.toggleFrameKey(e.id, 'isMinimized');
+      $rootScope.$broadcast('dashboard-change');
      };
 
     $scope.myApps = marketplaceApi.getAllApps();
@@ -43,7 +45,8 @@ angular.module( 'ozpWebtopApp.appToolbar')
           dashboardApi.createFrame($scope.currentDashboardId, app.id, 10).then(function(response) {
             // reload this dashboard
             if (response) {
-              $state.go($state.$current, null, { reload: true });
+              // $state.go($state.$current, null, { reload: true });
+              $rootScope.$broadcast('dashboard-change');
             }
           }).catch(function(error) {
             console.log('should not have happened: ' + error);
@@ -53,4 +56,25 @@ angular.module( 'ozpWebtopApp.appToolbar')
         console.log('should not have happened: ' + error);
       });
     };
+
+    $scope.appboardhider = function() {
+      if ((!$scope.appboardhide) || ($scope.appboardhide = false)) {
+        $scope.appboardhide = true;
+        userSettingsApi.updateUserSettingByKey('isAppboardHidden', true);
+      }
+      else {
+        $scope.appboardhide = false;
+        userSettingsApi.updateUserSettingByKey('isAppboardHidden', false);
+      }
+      $rootScope.$broadcast('userSettings-change');
+    };
+
   });
+
+angular.module( 'ozpWebtopApp.appToolbar')
+    .directive('appToolbar',function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'appToolbar/appToolbar.tpl.html'
+    };
+});

@@ -153,54 +153,64 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
     $scope.newDashboardName.name = '';
   };
 };
+
 // Required to make minification-safe
 ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'currentDashboardId',
   'dashboardApi', 'userSettingsApi'];
 
-angular.module( 'ozpWebtopApp.userSettings')
-.controller('UserSettingsCtrl', function($scope, $rootScope, $modal, $log,
-                                         $state, dashboardApi) {
+/*
+ *  It seems like we haven't been using angular directives so I included that here
+ */
 
-  $scope.$on('launchSettingsModal', function(/*event, data*/) {
-    $scope.open();
-  });
+angular.module( 'ozpWebtopApp.userSettings').directive('userSettings', function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'userSettings/settingsModal.tpl.html',
+        controller: function($scope, $rootScope, $modal, $log,
+                             $state, dashboardApi) {
+            $scope.validNamePattern = /^[a-z_]+[a-z0-9_ ]*\w$/i;
+            $scope.$on('launchSettingsModal', function(/*event, data*/) {
+                $scope.open();
+            });
 
-  $scope.$on('dashboardChange', function(event, data) {
-    $scope.currentDashboardId = data.dashboardId;
-  });
+            $scope.$on('dashboardChange', function(event, data) {
+                $scope.currentDashboardId = data.dashboardId;
+            });
 
-  $scope.open = function () {
+            $scope.open = function () {
 
-    var modalInstance = $modal.open({
-      templateUrl: 'userSettings/settingsModal.tpl.html',
-      controller: ModalInstanceCtrl,
-      windowClass: 'app-modal-window',
-      scope: $rootScope,
-      resolve: {
-        currentDashboardId: function () {
-          return $scope.currentDashboardId;
-        }
-      }
-    });
+                var modalInstance = $modal.open({
+                    templateUrl: 'userSettings/settingsModal.tpl.html',
+                    controller: ModalInstanceCtrl,
+                    windowClass: 'app-modal-window',
+                    scope: $rootScope,
+                    resolve: {
+                        currentDashboardId: function () {
+                            return $scope.currentDashboardId;
+                        }
+                    }
+                });
 
-    modalInstance.result.then(function () {
-      dashboardApi.getDashboardById($scope.currentDashboardId).then(function(dashboard) {
-        if (!dashboard) {
-          // arbitrarily redirect user to their first valid board using grid layout
-          dashboardApi.getDashboards().then(function(dashboards) {
-            var goToBoard = dashboards[0].id;
-            $state.go('grid', {'dashboardId': goToBoard});
-          }).catch(function(error) {
-            console.log('should not have happened: ' + error);
-          });
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
+                modalInstance.result.then(function () {
+                    dashboardApi.getDashboardById($scope.currentDashboardId).then(function(dashboard) {
+                      if (!dashboard) {
+                        // arbitrarily redirect user to their first valid board using grid layout
+                        dashboardApi.getDashboards().then(function(dashboard) {
+                          var goToBoard = dashboard[0].id;
+                          $state.go('grid', {'dashboardId': goToBoard});
+                        }).catch(function(error) {
+                          console.log('should not have happened: ' + error);
+                        });
+                      }
+                    }).catch(function(error) {
+                      console.log('should not have happened: ' + error);
+                    });
 
-    }, function () {
-      $log.info('Modal dismissed');
-    });
-  };
+                }, function () {
+                    $log.info('Modal dismissed');
+                });
+            };
+        },
+        controllerAs: 'UserSettingsCtrl'
+    };
 });
-

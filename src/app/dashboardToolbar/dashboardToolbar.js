@@ -1,11 +1,14 @@
 'use strict';
 
-angular.module( 'ozpWebtopApp.dashboardToolbar')
+var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('dashboardToolbarCtrl',
-  function($scope, $rootScope, dashboardApi, dashboardChangeMonitor) {
+  function($scope, $rootScope, dashboardApi, dashboardChangeMonitor, userSettingsApi) {
+
 
     dashboardApi.getDashboards().then(function(dashboards) {
       $scope.dashboards = dashboards;
+      //default dashboardToolbar is not hidden
+      $scope.dashboardhide = false;
       // default board is 0
       if (dashboards) {
         $scope.currentDashboard = $scope.dashboards[0];
@@ -14,9 +17,15 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
       }
       // default layout is grid
       $scope.layout = 'grid';
+      dashboardApi.getDashboardData().then(function(dashboardData) {
+        $scope.user = dashboardData.user;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
     }).catch(function(error) {
       console.log('should not have happened: ' + error);
     });
+
 
     // register to receive notifications if dashboard layout changes
     dashboardChangeMonitor.run();
@@ -24,16 +33,22 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
     $scope.$on('dashboardChange', function(event, dashboardChange) {
       $scope.layout = dashboardChange.layout;
       $scope.dashboardId = dashboardChange.dashboardId;
-      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
-        if (dashboard) {
-          $scope.currentDashboard = dashboard;
-        } else {
-          console.log('Got dashboard changed message for non-existent dashboard');
-        }
 
+      //only change local scopes user if the dashboard api user changes
+      dashboardApi.getDashboardData().then(function(dashboardData) {
+        if ($scope.user !== dashboardData.user) {
+          $scope.user = dashboardData.user;
+        }
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
+
+      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
+        $scope.currentDashboard.name = dashboard.name;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+
     });
 
     $scope.$on('UserSettingsChanged', function() {
@@ -69,11 +84,6 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
       ]
     };
 
-    $scope.user = {
-      'name': 'J Smith',
-      'username': 'J Smith'
-    };
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                        Dashboard dropdown
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -94,5 +104,24 @@ angular.module( 'ozpWebtopApp.dashboardToolbar')
         launch: 'true'
       });
     };
+    $scope.dashboardhider = function() {
+      if ((!$scope.dashboardhide) || ($scope.dashboardhide = false)){
+        $scope.dashboardhide = true;
+        userSettingsApi.updateUserSettingByKey('isDashboardHidden', true);
+      }
+      else {
+        $scope.dashboardhide = false;
+        userSettingsApi.updateUserSettingByKey('isDashboardHidden', false);
+      }
+      $rootScope.$broadcast('userSettings-change');
+    };
   }
 );
+
+
+dashboardApp.directive('dashboardToolbar',function(){
+   return {
+       restrict: 'E',
+       templateUrl: 'dashboardToolbar/dashboardToolbar.tpl.html'
+   };
+});

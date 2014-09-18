@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ozpWebtopApp.apis');
+var apis = angular.module('ozpWebtopApp.apis');
 
 // TODO: put this somewhere better
 // Array Remove - By John Resig (MIT Licensed)
@@ -11,8 +11,6 @@ Array.prototype.remove = function(from, to) {
 };
 
 function generalDashboardModel(persistStrategy, Utilities) {
-
-
 
   return {
     sayHello: function() {
@@ -73,6 +71,34 @@ function generalDashboardModel(persistStrategy, Utilities) {
         return that.saveDashboard(dashboard).then(function(response){
           return response;
         });
+      });
+    },
+    // toggle the value of a key in a frame
+    toggleFrameKey: function(frameId, key) {
+      var that = this;
+      return this.getFrameById(frameId).then(function(frame) {
+        if (!frame) {
+          return false;
+        }
+        if (frame[key]) {
+          frame[key] = false;
+        }
+        else {
+          console.debug(typeof frame[key]);
+          frame[key] = true;
+        }
+        return that.saveFrame(frame).then(function(resp) {
+          if (resp) {
+            return return frame[key];
+          } else {
+            return resp;
+          }
+        }).catch(function(error) {
+          console.log('should not have happened: ' + error);
+        });
+        return frame[key];
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
       });
     },
     // Update the grid layout of a frame in a dashboard
@@ -716,6 +742,16 @@ function generalDashboardModel(persistStrategy, Utilities) {
   };
 }
 
+/**
+ * Angular service which provides a local storage interface to the dashboard api.
+ *
+ * @namespace apis
+ * @class localStorageDashboardApiImpl
+ * @constructor
+ * @param {Object} $http The AngularJS HTTP service
+ * @param {Object} LocalStorage the local storage service
+ * @param {Object} Utilities the utilites
+ */
 app.service('dashboardModelLocalStorage', function(dashboardLocalStorageInterface, Utilities) {
   var model = generalDashboardModel(dashboardLocalStorageInterface, Utilities);
   for (var prop in model) {
@@ -725,6 +761,13 @@ app.service('dashboardModelLocalStorage', function(dashboardLocalStorageInterfac
   }
 });
 
+/**
+ * Angular service which uses the Inter-Widget Communication (IWC) API to store and retrieve
+ * dashboards.
+ *
+ * @class iwcDashboardApiImpl
+ * @constructor
+ */
 app.service('dashboardModelIwc', function(dashboardIwcInterface, Utilities) {
   var model = generalDashboardModel(dashboardIwcInterface, Utilities);
   for (var prop in model) {
@@ -734,11 +777,19 @@ app.service('dashboardModelIwc', function(dashboardIwcInterface, Utilities) {
   }
 });
 
+/**
+ * Angular service which provides an abstraction of the implementations used to store and retrieve
+ * dashboard information.
+ *
+ * @class dashboardApi
+ * @constructor
+ */
 app.factory('dashboardApi', function($injector, useIwc) {
   if (useIwc) {
     return $injector.get('dashboardModelIwc');
   } else if (useIwc === false){
     return $injector.get('dashboardModelLocalStorage');
+
   }
   else {
     console.log('ERROR: useIwc is undefined!');

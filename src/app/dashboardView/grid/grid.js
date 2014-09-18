@@ -282,7 +282,9 @@ angular.module('ozpWebtopApp.dashboardView')
         handle: 'div.ozp-chrome, div.ozp-chrome > .chrome-icon, div.ozp-chrome > .chrome-name', // optional selector for resize handle
         start: function(/*event, uiWidget, $element*/) {}, // optional callback fired when drag is started,
         drag: function(/*event, uiWidget, $element*/) {}, // optional callback fired when item is moved,
-        stop: function(/*event, uiWidget, $element*/) {} // optional callback fired when item is finished dragging
+        stop: function(/*event, uiWidget, $element*/) {
+          $scope.updateAllFramesAfterChange();
+        } // optional callback fired when item is finished dragging
       }
     };
 

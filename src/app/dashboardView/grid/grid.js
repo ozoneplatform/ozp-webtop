@@ -80,7 +80,7 @@ angular.module('ozpWebtopApp.dashboardView')
                   $scope.frames.push(dashboard.frames[c]);
                   // update the frame size so it fits inside its little widget boundary
                   // TODO: this might not behave as expected
-                  $scope.updateGridFrameSize(dashboard.frames[c].id);
+                  $scope.updateDashboardFramePx(dashboard.frames[c].id);
                   // now quickly merge my local scope for frames with the marketplace
                   // api to get important stuff on local scope like url, image, name,
                   // etc

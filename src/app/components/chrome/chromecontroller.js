@@ -29,13 +29,20 @@ angular.module('ozpWebtopApp.components')
   };
 
   $scope.minimizeFrame = function(e){
-    dashboardApi.toggleFrameKey(e.id, 'isMinimized');
-    $rootScope.$broadcast('dashboard-change');
+    dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function() {
+      $rootScope.$broadcast('dashboard-change');
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
+
   };
 
   $scope.maximizeFrame = function(e){
-    dashboardApi.toggleFrameKey(e.id, 'isMaximized');
-    $rootScope.$broadcast('dashboard-change');
+    dashboardApi.toggleFrameKey(e.id, 'isMaximized').then(function() {
+      $rootScope.$broadcast('dashboard-change');
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
   };
 
 });

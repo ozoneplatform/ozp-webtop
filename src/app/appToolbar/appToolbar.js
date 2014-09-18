@@ -10,11 +10,20 @@ angular.module( 'ozpWebtopApp.appToolbar')
     $scope.appboardhide = false;
 
     $scope.$on('dashboard-change', function() {
-      $scope.frames = dashboardApi.getDashboards()[dashboardChangeMonitor.dashboardId].frames;
-      var allApps = marketplaceApi.getAllApps();
-      dashboardApi.mergeApplicationData($scope.frames, allApps);
-      $scope.myPinnedApps = $scope.frames;
-      $scope.layout = dashboardChangeMonitor.layout;
+      dashboardApi.getDashboards().then(function(dashboards) {
+        for (var i=0; i < dashboards.length; i++) {
+          if (dashboards[i].id === dashboardChangeMonitor.dashboardId) {
+            $scope.frames = dashboards[i].frames;
+            var allApps = marketplaceApi.getAllApps();
+            dashboardApi.mergeApplicationData($scope.frames, allApps);
+            $scope.myPinnedApps = $scope.frames;
+            $scope.layout = dashboardChangeMonitor.layout;
+          }
+        }
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+
     });
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();

@@ -101,6 +101,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
                 console.log('should not have happened: ' + error);
               });
             } else {
+              userSettingsApi.updateAllUserSettings($scope.preferences);
               $scope.$parent.$broadcast('UserSettingsChanged', {});
               $modalInstance.close();
             }

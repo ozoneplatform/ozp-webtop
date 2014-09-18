@@ -44,7 +44,7 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       });
 
       dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
-        $scope.currentDashboard.name = dashboard.name;
+        $scope.currentDashboard = dashboard;
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
@@ -56,7 +56,7 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
         $scope.dashboards = dashboards;
         dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
           if (dashboard) {
-            $scope.currentDashboard.name = dashboard.name;
+            $scope.currentDashboard = dashboard;
           } else {
             console.log('WARNING: Dashboard ' + $scope.dashboardId + ' no longer exists');
           }

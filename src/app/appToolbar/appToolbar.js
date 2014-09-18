@@ -9,7 +9,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
 
     $scope.appboardhide = false;
 
-    $scope.$on('dashboard-change', function() {
+    $scope.updateApps = function() {
       dashboardApi.getDashboards().then(function(dashboards) {
         for (var i=0; i < dashboards.length; i++) {
           if (dashboards[i].id === dashboardChangeMonitor.dashboardId) {
@@ -23,7 +23,10 @@ angular.module( 'ozpWebtopApp.appToolbar')
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
+    };
 
+    $scope.$on('dashboard-change', function() {
+      $scope.updateApps();
     });
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
@@ -32,6 +35,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
       if($scope.currentDashboardId !== dashboardChange.dashboardId){
         $scope.currentDashboardId = dashboardChange.dashboardId;
       }
+      $scope.updateApps();
 
     });
 

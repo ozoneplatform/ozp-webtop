@@ -22,7 +22,9 @@
 angular.module( 'ozpWebtopApp', [
   'templates-app',
   'templates-common',
+  'ozpWebtopApp.constants',
   'ozpWebtopApp.general',
+  'ozpWebtopApp.ozpIwcClient',
   'ozpWebtopApp.apis',
   'ozpWebtopApp.components',
   'ozpWebtopApp.dashboardToolbar',
@@ -32,6 +34,7 @@ angular.module( 'ozpWebtopApp', [
   'ui.router',
   'ui.bootstrap',
   'gridster',
+  'ozpIwcAngular',
   'ozpClassification'
 ])
 
@@ -52,12 +55,16 @@ angular.module( 'ozpWebtopApp', [
     $urlRouterProvider.otherwise('/grid/0');
   })
 
-.run( function run (dashboardApi, marketplaceApi, userSettingsApi) {
+.run( function run ($rootScope, dashboardApi, marketplaceApi, userSettingsApi) {
     // create example marketplace and dashboard resources
     marketplaceApi.createExampleMarketplace();
-    dashboardApi.createExampleDashboards();
+    //console.log('attempting to create example dashboards from app.js');
+    dashboardApi.createExampleDashboards().then(function() {
+      //console.log('created example dashboards from app.js');
+    });
     // create example user settings
     userSettingsApi.createExampleUserSettings();
+    //$rootScope.$apply();
 });
 
 /**
@@ -66,7 +73,15 @@ angular.module( 'ozpWebtopApp', [
  *
  * @module ozpWebtopApp.general
  */
-angular.module('ozpWebtopApp.general', []);
+angular.module('ozpWebtopApp.constants', []);
+angular.module('ozpWebtopApp.general', ['ozpWebtopApp.constants']);
+
+/**
+ * Provides an OZP IWC client using a Promises to indicate valid connection
+ *
+ * @module ozpWebtopApp.ozpIwcClient
+ */
+angular.module('ozpWebtopApp.ozpIwcClient', ['ozpIwcAngular', 'ozpWebtopApp.constants']);
 
 /**
  * The modal encompassing user settings functionality.
@@ -82,13 +97,15 @@ angular.module('ozpWebtopApp.userSettings', ['ozpWebtopApp.apis']);
  * @module ozpWebtopApp.apis
  * @requires ozpWebtopApp.general
  */
-angular.module('ozpWebtopApp.apis', ['ozpWebtopApp.general']);
+angular.module('ozpWebtopApp.apis', ['ozpIwcAngular', 'ozpWebtopApp.constants',
+  'ozpWebtopApp.ozpIwcClient', 'ozpWebtopApp.general']);
 
 /**
  * Reusable components for the Webtop.
  *
  * @module ozpWebtopApp.components
  */
+
 angular.module('ozpWebtopApp.components', []);
 
 /**
@@ -114,5 +131,6 @@ angular.module('ozpWebtopApp.appToolbar', ['ui.router', 'ozpWebtopApp.apis']);
  * @module ozpWebtopApp.dashboardView
  * @requires ozpWebtopApp.apis
  */
-angular.module('ozpWebtopApp.dashboardView', ['ozpWebtopApp.apis']);
+angular.module('ozpWebtopApp.dashboardView', ['ozpIwcAngular', 'ozpWebtopApp.apis']);
+
 

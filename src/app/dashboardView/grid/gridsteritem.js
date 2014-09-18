@@ -74,7 +74,7 @@ angular.module('ozpWebtopApp.dashboardView')
         if (data.frameId === scope.frameId) {
           scope.styles.height = data.height;
           scope.styles.width = data.width;
-          // console.log('changing size to height: ' + data.height + ', width: ' + data.width);
+          // console.log('changing size to width: ' + data.width + ', height: ' + data.height);
         }
       });
 
@@ -92,12 +92,16 @@ angular.module('ozpWebtopApp.dashboardView')
       // http://stackoverflow.com/questions/12729122/prevent-error-digest-already-in-progress-when-calling-scope-apply
       $timeout(function() {
         scope.frameId = element.context.id;
-        var frameSize = dashboardApi.getFrameSizeOnGrid(scope.frameId);
-        // console.log('setting initial style: ' + frameSize.width + ', ' + frameSize.height);
-        scope.styles = {
-          'height': frameSize.height,
-          'width': frameSize.width
-        };
+        dashboardApi.getFrameSizeOnGrid(scope.frameId).then(function(frameSize) {
+          // console.log('setting initial style: ' + frameSize.width + ', ' + frameSize.height);
+          scope.styles = {
+            'height': frameSize.height,
+            'width': frameSize.width
+          };
+        }).catch(function(error) {
+          console.log('should not have happened: ' + error);
+        });
+
       });
     }
   };

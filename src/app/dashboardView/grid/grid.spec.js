@@ -20,6 +20,7 @@ describe('Controller: GridcontrollerCtrl', function () {
   }));
 
   it('should attach grid data to the scope', function () {
+    scope.$apply();
     expect(scope.apps).not.toBeNull();
   });
 });

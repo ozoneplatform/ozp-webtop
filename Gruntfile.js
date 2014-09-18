@@ -183,6 +183,25 @@ module.exports = function ( grunt ) {
             expand: true
           }
         ]
+      },
+      // Creates an OZONE bus for testing purposes in demoApps/
+      demo_ozone_bus: {
+        files: [
+          {
+            src: ['vendor/ozp-iwc/dist/iframe_peer.html'],
+            dest: 'demoApps/ozoneBus',
+            cwd: '.',
+            expand: true,
+            flatten: true
+          },
+          {
+            src: ['vendor/ozp-iwc/dist/js/defaultWiring.js', 'vendor/ozp-iwc/dist/js/ozpIwc-bus.js'],
+            dest: 'demoApps/ozoneBus/js',
+            cwd: '.',
+            expand: true,
+            flatten: true
+          }
+        ]
       }
     },
 
@@ -451,12 +470,19 @@ module.exports = function ( grunt ) {
           base: './demoApps/simpleApps'
         }
       },
-
       // Documentation server
       docs: {
         options: {
           port: 9010,
-          base: '<%= docs_dir %>' 
+          base: '<%= docs_dir %>'
+        }
+      },
+      // Example OZONE bus
+      ozoneBus: {
+        options: {
+          port: 9044,
+          hostname: 'localhost',
+          base: './demoApps/ozoneBus'
         }
       }
     },
@@ -747,8 +773,8 @@ module.exports = function ( grunt ) {
   ]);
 
   grunt.registerTask('serve', [
-    'build', 'connect:livereload', 'connect:demoApps', 'connect:examples', 'connect:docs',
-    'watch'
+    'build', 'connect:livereload', 'connect:ozoneBus', 'connect:demoApps',
+    'connect:examples', 'connect:docs', 'watch'
   ]);
 
   // Run production version of the application (and demo apps)

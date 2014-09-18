@@ -4,14 +4,28 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('dashboardToolbarCtrl',
   function($scope, $rootScope, dashboardApi, dashboardChangeMonitor, userSettingsApi) {
 
-    $scope.dashboards = dashboardApi.getDashboards();
-    //default dashboardToolbar is not hidden
-    $scope.dashboardhide = false;
-    // default board is 0
-    $scope.currentDashboard = $scope.dashboards[0];
-    // default layout is grid
-    $scope.layout = 'grid';
-    $scope.user = dashboardApi.getDashboardData().user;
+
+    dashboardApi.getDashboards().then(function(dashboards) {
+      $scope.dashboards = dashboards;
+      //default dashboardToolbar is not hidden
+      $scope.dashboardhide = false;
+      // default board is 0
+      if (dashboards) {
+        $scope.currentDashboard = $scope.dashboards[0];
+      } else {
+        console.log('WARNING: No dashboards found');
+      }
+      // default layout is grid
+      $scope.layout = 'grid';
+      dashboardApi.getDashboardData().then(function(dashboardData) {
+        $scope.user = dashboardData.user;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
+
 
     // register to receive notifications if dashboard layout changes
     dashboardChangeMonitor.run();
@@ -21,21 +35,37 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       $scope.dashboardId = dashboardChange.dashboardId;
 
       //only change local scopes user if the dashboard api user changes
-      if ($scope.user !== dashboardApi.getDashboardData().user){
-        $scope.user = dashboardApi.getDashboardData().user;
-      }
-      $scope.currentDashboard.name =
-        dashboardApi.getDashboardById($scope.dashboardId).name;
+      dashboardApi.getDashboardData().then(function(dashboardData) {
+        if ($scope.user !== dashboardData.user) {
+          $scope.user = dashboardData.user;
+        }
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+
+      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
+        $scope.currentDashboard = dashboard;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+
     });
 
     $scope.$on('UserSettingsChanged', function() {
-      $scope.dashboards = dashboardApi.getDashboards();
-      var dashboard = dashboardApi.getDashboardById($scope.dashboardId);
-      if (dashboard) {
-        $scope.currentDashboard.name = dashboard.name;
-      } else {
-        console.log('WARNING: Dashboard ' + $scope.dashboardId + ' no longer exists');
-      }
+      dashboardApi.getDashboards().then(function(dashboards) {
+        $scope.dashboards = dashboards;
+        dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
+          if (dashboard) {
+            $scope.currentDashboard = dashboard;
+          } else {
+            console.log('WARNING: Dashboard ' + $scope.dashboardId + ' no longer exists');
+          }
+        }).catch(function(error) {
+          console.log('should not have happened: ' + error);
+        });
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
     });
 
     $scope.messages = {

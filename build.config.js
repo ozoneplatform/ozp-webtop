@@ -73,6 +73,7 @@ module.exports = {
       'vendor/angular-ui-utils/modules/route/route.js',
       'vendor/angular-gridster/dist/angular-gridster.min.js',
       'vendor/javascript-detect-element-resize/detect-element-resize.js',
+      'vendor/ozp-iwc-angular/dist/js/ozpIwc-client-angular.js',
       'vendor/ozp-classification/jquery.classification.js',
       'vendor/ozp-classification/ozp-classification.js' // WARNING: things after ozp-classification are not being included!!!!
     ],

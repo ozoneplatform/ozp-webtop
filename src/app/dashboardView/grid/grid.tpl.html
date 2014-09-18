@@ -1,7 +1,9 @@
 <div class="container gridster-container-settings" ng-class="{'grid-toolbar-padding' : !appBarHidden}">
   <div gridster="gridOptions">
     <ul>
-      <li gridster-item="customItemMap" ng-repeat="item in frames" id="{{item.id}}"
+      <li gridster-item row="item.gridLayout.row" col="item.gridLayout.col"
+          size-x="item.gridLayout.sizeX" size-y="item.gridLayout.sizeY"
+          ng-repeat="item in frames" id="{{item.id}}"
           ozp-gridster-item="" frame="item" ng-hide="isDisabled">
       </li>
     </ul>

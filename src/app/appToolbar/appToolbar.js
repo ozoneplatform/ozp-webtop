@@ -36,8 +36,11 @@ angular.module( 'ozpWebtopApp.appToolbar')
     });
 
      $scope.maximizeFrame = function(e) {
-      dashboardApi.toggleFrameKey(e.id, 'isMinimized');
-      $rootScope.$broadcast('dashboard-change');
+      dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function() {
+        $rootScope.$broadcast('dashboard-change');
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
      };
 
     $scope.myApps = marketplaceApi.getAllApps();

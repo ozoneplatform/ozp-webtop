@@ -32,11 +32,10 @@ angular.module('ozpWebtopApp.dashboardView')
     // The applications/widgets on the grid view
     $scope.frames = [];  // to make tests happy
 
-    // Make an array of old frames and new frames
-    $scope.newFrames = [];
-    $scope.oldFrames = [];
-
     $scope.$on('dashboard-change', function() {
+      // Make an array of old frames and new frames
+      $scope.newFrames = [];
+      $scope.oldFrames = [];
       var currentDashboard = dashboardChangeMonitor.dashboardId;
 
       dashboardApi.getDashboards().then(function(dashboards) {

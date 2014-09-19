@@ -491,6 +491,15 @@ function generalDashboardModel(persistStrategy, Utilities) {
         return newId;
       });
     },
+    // Get the user's default dashboard
+    getDefaultDashboard: function() {
+      var that = this;
+      return this.getDashboardData().then(function(dashboardData) {
+        return that.getDashboardById(dashboardData.defaultDashboard);
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    },
     createExampleDashboards: function() {
       // TODO: Originally this object was placed in a separate json file and fetched
       // via http, but that led to all sorts of issues with testing.

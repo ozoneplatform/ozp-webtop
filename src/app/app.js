@@ -12,6 +12,7 @@
  * @requires ozpWebtopApp.general
  * @requires ozpWebtopApp.ozpIwcClient
  * @requires ozpWebtopApp.apis
+ * @requires ozpWebtopApp.appLauncher
  * @requires ozpWebtopApp.components
  * @requires ozpWebtopApp.appToolbar
  * @requires ozpWebtopApp.dashboardToolbar
@@ -30,6 +31,7 @@ angular.module( 'ozpWebtopApp', [
   'ozpWebtopApp.general',
   'ozpWebtopApp.ozpIwcClient',
   'ozpWebtopApp.apis',
+  'ozpWebtopApp.appLauncher',
   'ozpWebtopApp.components',
   'ozpWebtopApp.dashboardToolbar',
   'ozpWebtopApp.appToolbar',
@@ -54,6 +56,10 @@ angular.module( 'ozpWebtopApp', [
       url: '/desktop/{dashboardId}',
       templateUrl: 'dashboardView/desktop/desktop.tpl.html',
       controller: 'DesktopCtrl'
+    })
+    .state('launchApp', {
+      url: '/launch/{appId}',
+      controller: 'AppLauncherCtrl'
     });
 
     // TODO: will need a new default when grid ids are changed to uuids
@@ -127,8 +133,14 @@ angular.module('ozpWebtopApp.userSettings', ['ozpWebtopApp.apis']);
  *
  * @module ozpWebtopApp.components
  */
-
 angular.module('ozpWebtopApp.components', []);
+
+/**
+ * Launches apps from other sources
+ *
+ * @module ozpWebtopApp.appLauncher
+ */
+angular.module('ozpWebtopApp.appLauncher', ['ui.router', 'ozpWebtopApp.apis']);
 
 /**
  * The dashboard toolbar component shown in the Webtop.

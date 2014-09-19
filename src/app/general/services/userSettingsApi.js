@@ -13,7 +13,7 @@ function generalUserSettingsdModel(persistStrategy) {
       });
     },
     updateAllUserSettings: function(userSettings) {
-      return persistStrategy._setUserSettingsData(userSettings).then(function(response) {
+      return persistStrategy.setUserSettingsData(userSettings).then(function(response) {
         return response;
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
@@ -51,9 +51,6 @@ function generalUserSettingsdModel(persistStrategy) {
  *
  * @namespace apis
  * @constructor
- * @param {Object} $http The AngularJS HTTP service
- * @param {Object} LocalStorage the local storage service
- * @param {Object} Utilities the utilites
  */
 apis.service('userSettingsModelLocalStorage', function(localStorageInterface) {
   var model = generalUserSettingsdModel(localStorageInterface);

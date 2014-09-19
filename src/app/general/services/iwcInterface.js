@@ -17,16 +17,23 @@ app.factory('iwcInterface', function($q, ozpIwcClient) {
     getDashboardData: function () {
       return this._getData('data.api', '/dashboard-data');
     },
-    _setDashboardData: function (dashboardData) {
+    setDashboardData: function (dashboardData) {
       return this._setData('data.api', '/dashboard-data',
         {entity: dashboardData, contentType: 'application/dashboard-data+json'});
     },
     getUserSettings: function() {
       return this._getData('data.api', '/user-settings');
     },
-    _setUserSettingsData: function(userSettingsData) {
+    setUserSettingsData: function(userSettingsData) {
       return this._setData('data.api',
         {entity: userSettingsData, contentType: 'application/user-settings+json'});
+    },
+    getApps: function() {
+      return this._getData('data.api', '/marketplace');
+    },
+    setApps: function(apps) {
+      return this._setData('data.api',
+        {entity: apps, contentType: 'application/marketplace+json'});
     },
     _getData: function(dst, resource) {
       return ozpIwcClient.getClient().then(function(client) {

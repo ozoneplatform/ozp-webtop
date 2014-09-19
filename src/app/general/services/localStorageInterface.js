@@ -10,14 +10,20 @@ app.factory('localStorageInterface', function($q, LocalStorage) {
     getDashboardData: function() {
       return this._getData('dashboards');
     },
-    _setDashboardData: function(dashboardData) {
+    setDashboardData: function(dashboardData) {
       return this._setData('dashboards', dashboardData);
     },
     getUserSettings: function() {
       return this._getData('userSettings');
     },
-    _setUserSettingsData: function(userSettingsData) {
+    setUserSettingsData: function(userSettingsData) {
       return this._setData('userSettings', userSettingsData);
+    },
+    getApps: function() {
+      return this._getData('marketplace');
+    },
+    setApps: function(apps) {
+      return this._setData('marketplace', apps);
     },
     _getData: function(key) {
       var deferred = $q.defer();

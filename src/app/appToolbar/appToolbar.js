@@ -74,15 +74,20 @@ angular.module( 'ozpWebtopApp.appToolbar')
     };
 
     $scope.appboardhider = function() {
+      var appboardHideVal = false;
       if ((!$scope.appboardhide) || ($scope.appboardhide = false)) {
-        $scope.appboardhide = true;
-        userSettingsApi.updateUserSettingByKey('isAppboardHidden', true);
+        appboardHideVal = true;
       }
-      else {
-        $scope.appboardhide = false;
-        userSettingsApi.updateUserSettingByKey('isAppboardHidden', false);
-      }
-      $rootScope.$broadcast('userSettings-change');
+      $scope.appboardhide = appboardHideVal;
+      userSettingsApi.updateUserSettingByKey('isAppboardHidden', appboardHideVal).then(function(resp) {
+        if (resp) {
+          $rootScope.$broadcast('userSettings-change');
+        } else {
+          console.log('ERROR failed to update isAppboardHidden in user settings');
+        }
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
     };
 
   });

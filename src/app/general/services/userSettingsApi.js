@@ -1,51 +1,99 @@
 'use strict';
 
-var app = angular.module('ozpWebtopApp.apis');
+var apis = angular.module('ozpWebtopApp.apis');
 
-app.service('localStorageUserSettingsApiImpl', function($http, LocalStorage) {
-  var cache = new LocalStorage(localStorage, JSON);
+function generalUserSettingsdModel(persistStrategy) {
 
-  this.getUserSettings = function() {
-    var userSettings = cache.getItem('userSettings');
-    return userSettings;
-  };
-
-  this.updateAllUserSettings = function(userSettings) {
-    cache.setItem('userSettings', userSettings);
-  };
-
-  this.updateUserSettingByKey = function(key, setting) {
-    var userSettings = this.getUserSettings();
-    for (var a in userSettings) {
-      if (a === key) {
-        delete userSettings[a];
-      }
-      userSettings[key] = setting;
+  return {
+    getUserSettings: function() {
+      return persistStrategy.getUserSettings().then(function(response) {
+        return response;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    },
+    updateAllUserSettings: function(userSettings) {
+      return persistStrategy._setUserSettingsData(userSettings).then(function(response) {
+        return response;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    },
+    updateUserSettingByKey: function(key, value) {
+      var that = this;
+      return this.getUserSettings().then(function(userSettings) {
+        userSettings[key] = value;
+        return that.updateAllUserSettings(userSettings).then(function(response) {
+          return response;
+        }).catch(function(error) {
+          console.log('should not have happened: ' + error);
+        });
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    },
+    createExampleUserSettings: function() {
+      var userSettings = {
+        'theme': 'dark',
+        'autohideToolbars': false
+      };
+      return this.updateAllUserSettings(userSettings).then(function(response) {
+        return response;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
     }
-    cache.setItem('userSettings', userSettings);
   };
+}
 
-  this.createExampleUserSettings = function() {
-    var userSettings = {
-      'theme': 'dark',
-      'autohideToolbars': false
-    };
-    this.updateAllUserSettings(userSettings);
-  };
+/**
+ * Angular service which provides a local storage interface to the userSettings api.
+ *
+ * @namespace apis
+ * @constructor
+ * @param {Object} $http The AngularJS HTTP service
+ * @param {Object} LocalStorage the local storage service
+ * @param {Object} Utilities the utilites
+ */
+apis.service('userSettingsModelLocalStorage', function(localStorageInterface) {
+  var model = generalUserSettingsdModel(localStorageInterface);
+  for (var prop in model) {
+    if (model.hasOwnProperty(prop)) {
+      this[prop] = model[prop];
+    }
+  }
 });
 
-
-app.service('iwcUserSettingsApiImpl', function(/*dependencies*/) {
-  this.getUserSettings = function() {};
-  this.updateAllUserSettings = function() {};
+/**
+ * Angular service which uses the Inter-Widget Communication (IWC) API to store
+ * and retrieve user settings.
+ *
+ * @constructor
+ */
+apis.service('userSettingsModelIwc', function(iwcInterface) {
+  var model = generalUserSettingsdModel(iwcInterface);
+  for (var prop in model) {
+    if (model.hasOwnProperty(prop)) {
+      this[prop] = model[prop];
+    }
+  }
 });
 
+/**
+ * Angular service which provides an abstraction of the implementations used to
+ * store and retrieve user settings information.
+ *
+ * @class userSettingsApi
+ * @constructor
+ */
+apis.factory('userSettingsApi', function($injector, useIwc) {
+  if (useIwc) {
+    return $injector.get('userSettingsModelIwc');
+  } else if (useIwc === false){
+    return $injector.get('userSettingsModelLocalStorage');
 
-app.factory('userSettingsApi', function($window, $injector) {
-  // TODO: what to key off of to determine if IWC impl should be used?
-  if ($window.iwc) {
-    return $injector.get('iwcUserSettingsApiImpl');
-  } else {
-    return $injector.get('localStorageUserSettingsApiImpl');
+  }
+  else {
+    console.log('ERROR: useIwc is undefined!');
   }
 });

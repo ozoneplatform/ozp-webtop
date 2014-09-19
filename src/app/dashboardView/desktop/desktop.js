@@ -19,18 +19,21 @@ angular.module('ozpWebtopApp.dashboardView')
     dashboardChangeMonitor.run();
 
     $scope.$on('userSettings-change', function() {
-      if (userSettingsApi.getUserSettings().isDashboardHidden === true) {
-        $scope.dashBarHidden = true;
-      }
-      else {
-        $scope.dashBarHidden = false;
-      }
-      if (userSettingsApi.getUserSettings().isAppboardHidden === true) {
-        $scope.appBarHidden = true;
-      }
-      else {
-        $scope.appBarHidden = false;
-      }
+      userSettingsApi.getUserSettings().then(function(settings) {
+        if (settings.isDashboardHidden === true) {
+          $scope.dashBarHidden = true;
+        } else {
+          $scope.dashBarHidden = false;
+        }
+
+        if (settings.isAppboardHidden === true) {
+          $scope.appBarHidden = true;
+        } else {
+          $scope.appBarHidden = false;
+        }
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
     });
 
     $scope.$on('dashboard-change', function() {

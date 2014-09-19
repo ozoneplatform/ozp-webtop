@@ -2,7 +2,7 @@
 
 var app = angular.module('ozpWebtopApp.apis');
 
-app.factory('dashboardIwcInterface', function($q, ozpIwcClient) {
+app.factory('iwcInterface', function($q, ozpIwcClient) {
 
   return {
     sayHello: function() {
@@ -15,25 +15,34 @@ app.factory('dashboardIwcInterface', function($q, ozpIwcClient) {
       return deferred.promise;
     },
     getDashboardData: function () {
+      return this._getData('data.api', '/dashboard-data');
+    },
+    _setDashboardData: function (dashboardData) {
+      return this._setData('data.api', '/dashboard-data',
+        {entity: dashboardData, contentType: 'application/dashboard-data+json'});
+    },
+    getUserSettings: function() {
+      return this._getData('data.api', '/user-settings');
+    },
+    _setUserSettingsData: function(userSettingsData) {
+      return this._setData('data.api',
+        {entity: userSettingsData, contentType: 'application/user-settings+json'});
+    },
+    _getData: function(dst, resource) {
       return ozpIwcClient.getClient().then(function(client) {
-        console.log('getting IWC dashboards');
-        client.api('data.api')
-          .get('/dashboard-data')
+        client.api(dst)
+          .get(resource)
           .then(function (reply) {
-            var dashboards = reply.entity;
-            console.log('dashboards from IWC: ' + JSON.stringify(dashboards));
-            return dashboards;
+            return reply.entity;
           });
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
-
     },
-    _setDashboardData: function (dashboardData) {
+    _setData: function(dst, resource, setData) {
       return ozpIwcClient.getClient().then(function(client) {
-        console.log('setting IWC dashboards');
-        client.api('data.api')
-          .set('/dashboard-data', {entity: dashboardData, contentType: 'application/dashboard-data+json'})
+        client.api('dst')
+          .set(resource, setData)
           .then(function (response) {
             if (response) {
               return true;

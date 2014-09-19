@@ -5,26 +5,58 @@ describe('Service: userSettingsApi', function () {
   beforeEach(module('ozpWebtopApp'));
 
   // instantiate service
-  var userSettingsApi;
-  beforeEach(inject(function (_userSettingsApi_) {
+  var userSettingsApi, rootScope;
+  beforeEach(inject(function ($rootScope, _userSettingsApi_) {
     userSettingsApi = _userSettingsApi_;
+    rootScope = $rootScope.$new();
     userSettingsApi.createExampleUserSettings();
   }));
 
-  it('can retrieve all settings', function() {
+  it('can get all settings', function(done) {
+    var settings = {'theme': 'dark', 'autohideToolbars': true, 'data': 'stuff'};
+    userSettingsApi.updateAllUserSettings(settings).then(function(response) {
+      expect(response).toEqual(true);
+      userSettingsApi.getUserSettings().then(function(updatedSettings) {
+        expect(updatedSettings.data).toEqual('stuff');
+        done();
+      }).catch(function(error) {
+        expect(error).toEqual('should not have happened');
+      });
+    }).catch(function(error) {
+      expect(error).toEqual('should not have happened');
+    });
 
-    var settings = userSettingsApi.getUserSettings();
-    expect(settings.theme).toBeDefined();
-    expect(settings.autohideToolbars).toBeDefined();
+    if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
-  it('should have a updateUserSettingByKey method', function() {
-    userSettingsApi.updateUserSettingByKey('isAppboardHidden', true);
-    console.log(userSettingsApi.getUserSettings().isAppboardHidden);
-    expect(userSettingsApi.getUserSettings().isAppboardHidden).toEqual(true);
+  it('can retrieve all settings', function(done) {
 
-    userSettingsApi.updateUserSettingByKey('isDashboardHidden', true);
-    expect(userSettingsApi.getUserSettings().isDashboardHidden).not.toEqual(false);
+    userSettingsApi.getUserSettings().then(function(settings) {
+      expect(settings.theme).toBeDefined();
+      expect(settings.autohideToolbars).toBeDefined();
+      done();
+    }).catch(function(error) {
+      expect(error).toEqual('should not have happened');
+    });
+
+    if(!rootScope.$$phase) { rootScope.$apply(); }
+
+  });
+
+  it('should have a updateUserSettingByKey method', function(done) {
+    userSettingsApi.updateUserSettingByKey('isAppboardHidden', true).then(function(resp) {
+      expect(resp).toEqual(true);
+      userSettingsApi.getUserSettings().then(function(settings) {
+        expect(settings.isAppboardHidden).toEqual(true);
+        done();
+      }).catch(function(error) {
+        expect(error).toEqual('should not have happened');
+      });
+    }).catch(function(error) {
+      expect(error).toEqual('should not have happened');
+    });
+
+    if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
 });

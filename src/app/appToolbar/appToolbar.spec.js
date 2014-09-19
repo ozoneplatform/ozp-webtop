@@ -16,6 +16,7 @@ describe('App Toolbar', function () {
   }));
 
   it('should expose myApps', function() {
+    if(!scope.$$phase) { scope.$apply(); }
     expect(scope.myApps).toBeDefined();
   });
 

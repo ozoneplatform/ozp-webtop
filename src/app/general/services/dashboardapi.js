@@ -41,7 +41,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
       });
     },
     _setDashboardData: function(dashboardData) {
-      return persistStrategy._setDashboardData(dashboardData).then(function(response) {
+      return persistStrategy.setDashboardData(dashboardData).then(function(response) {
         return response;
       });
     },

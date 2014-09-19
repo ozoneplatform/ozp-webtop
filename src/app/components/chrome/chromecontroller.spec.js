@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: ChromeController', function () {
+describe('Controller: ChromeCtrl', function () {
 
   // load the controller's module
   beforeEach(module('ozpWebtopApp'));
@@ -14,7 +14,7 @@ describe('Controller: ChromeController', function () {
     // Set dummy location
     $location.path('/grid/0');
     scope = $rootScope.$new();
-    ctrl = $controller('ChromeController', { $scope: scope });
+    ctrl = $controller('ChromeCtrl', { $scope: scope });
     scope.$apply();
   }));
 

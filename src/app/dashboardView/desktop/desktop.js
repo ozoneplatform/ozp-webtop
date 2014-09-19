@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('ozpWebtopApp.dashboardView')
-  .controller('DesktopController', function ($scope, $rootScope, $location, dashboardApi, marketplaceApi, dashboardChangeMonitor, userSettingsApi) {
+  .controller('DesktopCtrl', function ($scope, $rootScope, $location,
+                                       dashboardApi, marketplaceApi,
+                                       dashboardChangeMonitor, userSettingsApi) {
 
     dashboardApi.getDashboards().then(function(dashboards) {
       if (!dashboards) {

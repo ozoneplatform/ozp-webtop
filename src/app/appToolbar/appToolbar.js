@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module( 'ozpWebtopApp.appToolbar')
-  .controller('appToolbarCtrl', function($scope, $rootScope, $state,
+  .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
                                        marketplaceApi, dashboardApi,
                                        dashboardChangeMonitor, userSettingsApi) {
 

@@ -1,10 +1,11 @@
 'use strict';
 
 /**
- * ChromeController aids the ozpChrome directive in knowing its location (grid or desktop).
+ * ChromeCtrl aids the ozpChrome directive in knowing its location (grid or desktop).
  */
 angular.module('ozpWebtopApp.components')
-.controller('ChromeController', function ($scope, $rootScope, dashboardApi, dashboardChangeMonitor) {
+.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
+                                          dashboardChangeMonitor) {
 
   // register to receive notifications if dashboard changes
   dashboardChangeMonitor.run();

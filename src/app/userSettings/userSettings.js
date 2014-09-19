@@ -6,15 +6,19 @@
 var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
                                   dashboardApi, userSettingsApi) {
 
-  $scope.preferences = userSettingsApi.getUserSettings();
-  dashboardApi.getDashboards().then(function(dashboards) {
-    $scope.dashboards = dashboards;
+  userSettingsApi.getUserSettings().then(function(settings) {
+    $scope.preferences = settings;
+    dashboardApi.getDefaultDashboardName().then(function(name) {
+      $scope.preferences.defaultDashboard = name;
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
   }).catch(function(error) {
     console.log('should not have happened: ' + error);
   });
 
-  dashboardApi.getDefaultDashboardName().then(function(name) {
-    $scope.preferences.defaultDashboard = name;
+  dashboardApi.getDashboards().then(function(dashboards) {
+    $scope.dashboards = dashboards;
   }).catch(function(error) {
     console.log('should not have happened: ' + error);
   });
@@ -89,21 +93,26 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
                 // update complete
                 // Don't need defaultDashboard in preferences
                 delete $scope.preferences.defaultDashboard;
-                userSettingsApi.updateAllUserSettings($scope.preferences);
+                userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
+                  // broadcast message that user's preferences have changed
+                  // Can't seem to DI $rootScope in here without errors, so accessing
+                  // $rootScope using $parent instead
+                  $scope.$parent.$broadcast('UserSettingsChanged', {});
 
-                // broadcast message that user's preferences have changed
-                // Can't seem to DI $rootScope in here without errors, so accessing
-                // $rootScope using $parent instead
-                $scope.$parent.$broadcast('UserSettingsChanged', {});
-
-                $modalInstance.close();
+                  $modalInstance.close();
+                }).catch(function(error) {
+                  console.log('should not have happened: ' + error);
+                });
               }).catch(function(error) {
                 console.log('should not have happened: ' + error);
               });
             } else {
-              userSettingsApi.updateAllUserSettings($scope.preferences);
-              $scope.$parent.$broadcast('UserSettingsChanged', {});
-              $modalInstance.close();
+              userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
+                $scope.$parent.$broadcast('UserSettingsChanged', {});
+                $modalInstance.close();
+              }).catch(function(error) {
+                console.log('should not have happened: ' + error);
+              });
             }
           }).catch(function(error) {
             console.log('should not have happened: ' + error);

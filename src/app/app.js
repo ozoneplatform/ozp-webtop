@@ -72,7 +72,9 @@ angular.module( 'ozpWebtopApp', [
         //console.log('created example dashboards from app.js');
       });
       // create example user settings
-      userSettingsApi.createExampleUserSettings();
+      userSettingsApi.createExampleUserSettings().then(function() {
+        // created example user settings
+      });
     }
 
 });

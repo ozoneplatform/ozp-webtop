@@ -105,15 +105,20 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       });
     };
     $scope.dashboardhider = function() {
+      var hideToolbar = false;
       if ((!$scope.dashboardhide) || ($scope.dashboardhide = false)){
-        $scope.dashboardhide = true;
-        userSettingsApi.updateUserSettingByKey('isDashboardHidden', true);
+        hideToolbar = true;
       }
-      else {
-        $scope.dashboardhide = false;
-        userSettingsApi.updateUserSettingByKey('isDashboardHidden', false);
-      }
-      $rootScope.$broadcast('userSettings-change');
+      $scope.dashboardhide = hideToolbar;
+      userSettingsApi.updateUserSettingByKey('isDashboardHidden', hideToolbar).then(function(resp) {
+        if (resp) {
+          $rootScope.$broadcast('userSettings-change');
+        } else {
+          console.log('ERROR failed to update isDashboardHidden in user settings');
+        }
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
     };
   }
 );

@@ -122,6 +122,20 @@ describe('Service: dashboardApi', function () {
     }
   });
 
+  it('should have a getDefaultDashboard method', function(done) {
+    dashboardApi.getDefaultDashboard().then(function(dashboard) {
+      // TODO: test is dependent on hard-coded test data
+      expect(dashboard.id).toEqual('0');
+      done();
+    }).catch(function(error) {
+      expect(error).toEqual('should not have happened');
+    });
+
+    if (!rootScope.$$phase) {
+      rootScope.$apply();
+    }
+  });
+
   // Get a single frame
   it('should have a getFrameById method', function(done) {
     dashboardApi.getDashboardById(0).then(function(dashboard) {

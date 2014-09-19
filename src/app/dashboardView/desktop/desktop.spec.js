@@ -1,7 +1,7 @@
 'use strict';
 
 
-describe('Controller: DesktopController', function () {
+describe('Controller: DesktopCtrl', function () {
 
     // use IWC for tests?
     beforeEach(function() {
@@ -27,7 +27,7 @@ describe('Controller: DesktopController', function () {
 
     $rootScope.$apply();
 
-    desktopcontrollerCtrl = $controller('DesktopController', {
+    desktopcontrollerCtrl = $controller('DesktopCtrl', {
       $scope: scope,
       dashboardApi: dashboardApi,
       marketplaceApi: marketplaceApi

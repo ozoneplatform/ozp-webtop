@@ -1,7 +1,7 @@
 'use strict';
 
 
-describe('Controller: GridcontrollerCtrl', function () {
+describe('Controller: GridCtrl', function () {
 
   // load the controller's module
   beforeEach(module('ozpWebtopApp'));
@@ -12,7 +12,7 @@ describe('Controller: GridcontrollerCtrl', function () {
   beforeEach(inject(function ($controller, $rootScope, _dashboardApi_, _marketplaceApi_) {
     scope = $rootScope.$new();
 
-    GridcontrollerCtrl = $controller('GridController', {
+    GridcontrollerCtrl = $controller('GridCtrl', {
       $scope: scope,
       dashboardApi: _dashboardApi_,
       marketplaceApi: _marketplaceApi_

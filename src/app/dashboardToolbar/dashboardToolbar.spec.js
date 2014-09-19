@@ -34,7 +34,7 @@ describe('Controller: DashboardToolbar', function () {
     spyOn(rootScope, '$broadcast').and.callThrough();
 
     scope.layout = 'grid';
-      $controller('dashboardToolbarCtrl', {
+      $controller('DashboardToolbarCtrl', {
         $scope: scope,
         dashboardApi: dashboardApi,
         dashboardChangeMonitor: dashboardChangeMonitor

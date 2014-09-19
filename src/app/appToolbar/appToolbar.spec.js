@@ -12,7 +12,7 @@ describe('App Toolbar', function () {
     scope = $rootScope.$new();
     marketplaceApi = _marketplaceApi_;
     marketplaceApi.createExampleMarketplace();
-    $controller('appToolbarCtrl', {$scope: scope});
+    $controller('ApplicationToolbarCtrl', {$scope: scope});
   }));
 
   it('should expose myApps', function() {

@@ -12,7 +12,7 @@ describe('Controller: IframeCtrl', function () {
     scope = $rootScope.$new();
     scope.frame = {};
     scope.frame.url = 'http://localhost:9000/test.html';
-    IframeCtrl = $controller('IframeController', {
+    IframeCtrl = $controller('IframeCtrl', {
       $scope: scope
     });
   }));

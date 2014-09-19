@@ -1,11 +1,11 @@
 'use strict';
 
 /**
- * GridController retrieves the state of a number of tiles and binds it to an
+ * GridCtrl retrieves the state of a number of tiles and binds it to an
  * Angular scope.
  *
  * @namespace dashboardView
- * @class GridController
+ * @class GridCtrl
  * @constructor
  * @param {Object} $scope an Angular scope
  * @param {Object} $rootScope the Angular root scope
@@ -16,7 +16,7 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
 
-.controller('GridController', function ($scope, $rootScope, $location,
+.controller('GridCtrl', function ($scope, $rootScope, $location,
                                         dashboardApi, marketplaceApi,
                                         dashboardChangeMonitor, userSettingsApi) {
 

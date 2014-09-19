@@ -6,6 +6,6 @@ angular.module('ozpWebtopApp.components')
     templateUrl: 'components/chrome/ozpchrome.tpl.html',
     restrict: 'E',
     replace: true,
-    controller: 'ChromeController'
+    controller: 'ChromeCtrl'
   };
 });

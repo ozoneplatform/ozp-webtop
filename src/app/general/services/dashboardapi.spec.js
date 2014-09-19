@@ -460,14 +460,18 @@ describe('Service: dashboardApi', function () {
       var newLeft = 100;
       var newTop = 250;
       var newZIndex = 3;
+      var newWidth = 100;
+      var newHeight = 100;
 
-      dashboardApi.updateDesktopFrame(frame.id, newLeft, newTop,
+      dashboardApi.updateDesktopFrame(frame.id, newLeft, newTop, newWidth, newHeight,
         newZIndex).then(function (update) {
           expect(update).toEqual(true);
           dashboardApi.getFrameById(frame.id).then(function (frame) {
             expect(frame.desktopLayout.left).toEqual(newLeft);
             expect(frame.desktopLayout.top).toEqual(newTop);
             expect(frame.desktopLayout.zIndex).toEqual(newZIndex);
+            expect(frame.desktopLayout.width).toEqual(newWidth);
+            expect(frame.desktopLayout.height).toEqual(newHeight);
             done();
           }).catch(function (error) {
             expect(error).toEqual('should not have happened');

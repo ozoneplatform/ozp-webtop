@@ -16,7 +16,10 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
 .directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document, dashboardApi) {
-  
+  var resizableConfig = {
+    handles: 'ne, se, sw, nw',
+    aspectRatio: false
+  };
   /**
    * Decides which template to use.
    *
@@ -43,7 +46,9 @@ angular.module('ozpWebtopApp.dashboardView')
   return {
     restrict: 'E',
     template: '<div ng-include="getContentUrl()"></div>',
-    link: function (scope, element) {
+    link: function postLink(scope, element) {
+      element.resizable(resizableConfig);
+      element.draggable({ addClasses: false });
       // Logic for dragging is influenced by Angular directive documentation, under the
       // heading "Creating a Directive that Adds Event Listeners".
       // See: https://docs.angularjs.org/guide/directive
@@ -51,7 +56,6 @@ angular.module('ozpWebtopApp.dashboardView')
       // Get starting positions from state
       var startX = scope.frame.desktopLayout.left;
       var startY = scope.frame.desktopLayout.top;
-
 
       // 'Current' positions are changed as the element moves
       var x = startX, y = startY;
@@ -72,13 +76,6 @@ angular.module('ozpWebtopApp.dashboardView')
           element.css({
             zIndex: scope.frame.desktopLayout.zIndex
           });
-          dashboardApi.updateDesktopFrame(scope.frame.id, x, y, scope.max.zIndex).then(function(update) {
-            if (!update) {
-              console.log('Error updating desktop frame');
-            }
-          }).catch(function(error) {
-            console.log('should not have happened: ' + error);
-          });
         }
 
         // Prevent default dragging of selected content
@@ -93,10 +90,6 @@ angular.module('ozpWebtopApp.dashboardView')
       function mousemove(event) {
         y = event.pageY - startY;
         x = event.pageX - startX;
-        element.css({
-          top: y + 'px',
-          left:  x + 'px'
-        });
       }
 
       function mouseup() {
@@ -108,7 +101,8 @@ angular.module('ozpWebtopApp.dashboardView')
         }
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
-        dashboardApi.updateDesktopFrame(scope.frame.id, x, y, scope.max.zIndex);
+        dashboardApi.updateDesktopFrame(scope.frame.id, element[0].offsetLeft, element[0].offsetTop, element[0].offsetWidth, element[0].offsetHeight, scope.max.zIndex);
+
       }
 
       // Is the origin the same as the webtop?

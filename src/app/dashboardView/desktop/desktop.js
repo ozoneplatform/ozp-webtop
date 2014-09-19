@@ -183,5 +183,4 @@ angular.module('ozpWebtopApp.dashboardView')
           ((a.desktopLayout.zIndex > b.desktopLayout.zIndex) ? 1 : 0));
       });
     }
-
   });

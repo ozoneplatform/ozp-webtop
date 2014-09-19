@@ -126,7 +126,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
     },
     // Update the desktop layout of a frame in a dashboard
     // TODO: what about width and height?
-    updateDesktopFrame: function(frameId, x, y, zIndex) {
+    updateDesktopFrame: function(frameId, x, y, width, height, zIndex) {
       var that = this;
       return this.getFrameById(frameId).then(function(frame) {
         if (!frame) {
@@ -134,6 +134,8 @@ function generalDashboardModel(persistStrategy, Utilities) {
         }
         frame.desktopLayout.left = x;
         frame.desktopLayout.top = y;
+        frame.desktopLayout.width = width;
+        frame.desktopLayout.height = height;
         frame.desktopLayout.zIndex = zIndex;
         return that.saveFrame(frame).then(function(response) {
           return response;

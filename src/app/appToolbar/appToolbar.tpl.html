@@ -33,14 +33,18 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <li class="divider-vertical"></li>
-          <li class='hideToolbarButton'>
+          <li class="hideToolbarButton" tooltip="Hide toolbar" tooltip-placement="top">
             <a ng-click="appboardhider();">
-              <i class="fa fa-step-forward fa-lg"></i>
+              <i class="fa fa-toggle-down fa-lg"></i>
             </a>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-<button class="hiddenToggle appHiddenToggle" ng-click="appboardhider();" ng-class="{false: 'hide'}[appboardhide]"><i class="fa fa-step-backward"></i></button>
+<button class="hiddenToggle appHiddenToggle" ng-click="appboardhider();"
+        ng-class="{false: 'hide'}[appboardhide]"
+        tooltip="Show toolbar" tooltip-placement="left">
+  <i class="fa fa-toggle-up"></i>
+</button>
 </div>

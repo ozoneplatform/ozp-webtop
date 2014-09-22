@@ -2,9 +2,9 @@
 
 var app = angular.module('ozpWebtopApp.ozpIwcClient');
 
-app.factory('ozpIwcClient', function($q, ozpIwc, iwcOzoneBus) {
+app.factory('iwcConnectedClient', function($q, ozpIwcClient, iwcOzoneBus) {
 
-  var iwcClient = new ozpIwc.Client({
+  var iwcClient = new ozpIwcClient.Client({
     peerUrl: iwcOzoneBus
   });
 

@@ -2,7 +2,7 @@
 
 var app = angular.module('ozpWebtopApp.apis');
 
-app.factory('iwcInterface', function($q, ozpIwcClient) {
+app.factory('iwcInterface', function($q, iwcConnectedClient) {
 
   return {
     sayHello: function() {
@@ -36,7 +36,7 @@ app.factory('iwcInterface', function($q, ozpIwcClient) {
         {entity: apps, contentType: 'application/marketplace+json'});
     },
     _getData: function(dst, resource) {
-      return ozpIwcClient.getClient().then(function(client) {
+      return iwcConnectedClient.getClient().then(function(client) {
         client.api(dst)
           .get(resource)
           .then(function (reply) {
@@ -47,7 +47,7 @@ app.factory('iwcInterface', function($q, ozpIwcClient) {
       });
     },
     _setData: function(dst, resource, setData) {
-      return ozpIwcClient.getClient().then(function(client) {
+      return iwcConnectedClient.getClient().then(function(client) {
         client.api('dst')
           .set(resource, setData)
           .then(function (response) {

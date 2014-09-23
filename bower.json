@@ -12,8 +12,8 @@
     "angular-gridster": "~0.9.11",
     "jquery-ui": "~1.11.0",
     "components-font-awesome": "~4.2.0",
-    "ubuntu-font": "latest",
     "ozp-iwc-angular": "ozone-development/ozp-iwc-angular",
-    "ozp-classification": "ozone-development/ozp-classification"
+    "ozp-classification": "ozone-development/ozp-classification",
+    "ubuntu-fontface": "~0.1.3"
   }
 }

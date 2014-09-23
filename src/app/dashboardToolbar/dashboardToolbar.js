@@ -2,7 +2,8 @@
 
 var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('DashboardToolbarCtrl',
-  function($scope, $rootScope, dashboardApi, dashboardChangeMonitor, userSettingsApi) {
+  function($scope, $rootScope, $interval, dashboardApi, dashboardChangeMonitor,
+           userSettingsApi) {
 
 
     dashboardApi.getDashboards().then(function(dashboards) {
@@ -83,6 +84,14 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
         }
       ]
     };
+
+    var d = new Date();
+    $scope.zuluTime = d.getUTCHours() + ':' + d.getUTCMinutes();
+
+    $interval(function() {
+      var dd = new Date();
+      $scope.zuluTime = dd.getUTCHours() + ':' + dd.getUTCMinutes();
+    }, 1000);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                        Dashboard dropdown

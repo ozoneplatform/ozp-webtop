@@ -33,7 +33,7 @@ angular.module('ozpWebtopApp.dashboardView')
 
   var draggableConfig = {
     addClasses: false,
-    iframeFix: true,
+    iframeFix: false,
     scrollSensitivity: 100,
     scrollSpeed: 100
   };

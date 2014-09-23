@@ -92,9 +92,32 @@ body {
   color: white;
 }
 
+#main-menu-dropdown {
+  margin-left: -30px;
+}
+
 .dashboard-toolbar {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.notification-text {
+  margin-top: .1em;
+  margin-left: -.6em;
+  font-size: 10px;
+}
+
+.notification-icon {
+  padding-top: 2px;
+}
+
+.no-notifications-icon {
+  color: grey;
+  padding-top: 7px;
+}
+
+.menu-icon {
+  margin-right: 7px;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -136,6 +159,29 @@ body {
   height: 18px;
   width: 18px;
   margin-right: 5px;
+}
+
+.active-app {
+  margin-right: 5px;
+  background-color: #333333;
+  height: @navbar-height;
+}
+
+.inactive-app {
+  margin-right: 5px;
+  background-color: #212425;
+  height: @navbar-height;
+}
+
+.hiddenToggle {
+  width: 30px;
+  height: 30px;
+  right: 0;
+  position: fixed;
+  z-index: 10000;
+  background-color: #212425;
+  border: none;
+  color: white;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -260,15 +306,6 @@ a.ozp-icon:hover, a.ozp-icon:active {
 .fullWidthTopHidden {
   top: @classification-banner !important;
 }
-.active-app {
-  margin-right: 5px;
-  background-color: #333333;
-}
-
-.inactive-app {
-  margin-right: 5px;
-  background-color: #212425;
-}
 
 .navbar-fixed-bottom {
   border: 0;
@@ -276,18 +313,6 @@ a.ozp-icon:hover, a.ozp-icon:active {
 
 .hide {
   display: none;
-}
-
-.hiddenToggle {
-  width: 5px;
-  height: 30px;
-  right: 0;
-  position: fixed;
-  z-index: 10000;
-  background-color: #212425;
-  border: none;
-  font-size: 5px;
-  color: white;
 }
 
 .dashHiddenToggle {

@@ -11,7 +11,7 @@
     "angular-ui-router": "~0.2",
     "angular-gridster": "~0.9.11",
     "jquery-ui": "~1.11.0",
-    "components-font-awesome": "~4.1.0",
+    "components-font-awesome": "~4.2.0",
     "ubuntu-font": "latest",
     "ozp-iwc-angular": "ozone-development/ozp-iwc-angular",
     "ozp-classification": "ozone-development/ozp-classification"

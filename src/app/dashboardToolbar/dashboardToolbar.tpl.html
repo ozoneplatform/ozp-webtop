@@ -25,25 +25,41 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentDashboard.name}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="board in dashboards">
-                <a ng-click="setCurrentDashboard(board)" href="#/{{board.layout}}/{{board.id}}">{{board.name}}</a>
+                <a ng-click="setCurrentDashboard(board)"
+                   href="#/{{board.layout}}/{{board.id}}">{{board.name}}</a>
               </li>
             </ul>
           </li>
           <li class="divider-vertical"></li>
           <li>
-            <a ng-click="useGridLayout()" href="#/grid/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'grid'}">
+            <a ng-click="useGridLayout()" href="#/grid/{{currentDashboard.id}}"
+               ng-class="{navLinkSelected: layout == 'grid'}"
+                tooltip="Grid layout" tooltip-placement="bottom">
               <i ng-class="{iconWhite: layout == 'grid'}" class="fa fa-th fa-lg"></i>
             </a>
           </li>
           <li class="divider-vertical"></li>
           <li>
-            <a ng-click="useDesktopLayout()" href="#/desktop/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'desktop'}">
+            <a ng-click="useDesktopLayout()" href="#/desktop/{{currentDashboard.id}}"
+               ng-class="{navLinkSelected: layout == 'desktop'}" tooltip="Desktop layout"
+                tooltip-placement="bottom">
               <i ng-class="{iconWhite: layout == 'desktop'}" class="fa fa-clipboard fa-lg"></i>
             </a>
           </li>
           <li class="divider-vertical"></li>
           <li>
-            <a href="#"><span class="badge">{{messages.unread}}</span></a>
+            <span ng-show="!messages.unread" class="fa-stack fa-1x no-notifications-icon"
+                  tooltip="No new messages" tooltip-placement="bottom">
+                <i class="fa fa-bell-slash fa-lg"></i>
+              </span>
+            <div class="stacked-icons notification-icon">
+              <span ng-show="messages.unread" class="fa-stack fa-lg">
+                <i class="fa fa-bell fa-lg fa-inverse"></i>
+                <strong class="fa-stack-1x notification-text">{{messages.unread}}</strong>
+              </span>
+            </div>
+            <!--<a href="#"><i class="fa fa-bell-o fa-lg"></i></a>-->
+            <!--<a href="#"><span class="badge">{{messages.unread}}</span></a>-->
           </li>
           <li class="divider-vertical"></li>
           <li>
@@ -52,13 +68,13 @@
               <i class="fa fa-user fa-lg">&nbsp</i>{{user}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <a ng-click="launchSettingsModal()" class="link-pointer"><i class="fa fa-cogs">&nbsp&nbsp</i>Settings</a>
+                  <a ng-click="launchSettingsModal()" class="link-pointer"><i class="fa fa-cogs fa-fw">&nbsp&nbsp</i>Settings</a>
                 </li>
                 <li>
-                  <a href="#"><i class="fa fa-question-circle">&nbsp&nbsp</i>Take a tour</a>
+                  <a ng-click="helpUser()"><i class="fa fa-question-circle fa-fw">&nbsp&nbsp</i>Take a tour</a>
                 </li>
                 <li>
-                  <a href="#"><i class="fa fa-sign-out">&nbsp&nbsp</i>Logout</a>
+                  <a ng-click="logOutUser()"><i class="fa fa-sign-out fa-fw">&nbsp&nbsp</i>Logout</a>
                 </li>
               </ul>
             </li>

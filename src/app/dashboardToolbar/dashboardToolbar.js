@@ -69,7 +69,7 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
     });
 
     $scope.messages = {
-      'unread': 2,
+      'unread': 0,
       'messages': [
         {
           'subject': 'Photo Editing Tools',
@@ -119,6 +119,14 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
+    };
+
+    $scope.helpUser = function() {
+      alert('Help functionality coming soon!');
+    };
+
+    $scope.logOutUser = function() {
+      alert('Logout functionality coming soon!');
     };
   }
 );

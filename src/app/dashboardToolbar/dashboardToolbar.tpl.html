@@ -10,7 +10,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">OZONE</a>
+
       </div>
 
 
@@ -18,7 +18,44 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <!-- stuff on the left side of the nav bar -->
-        </ul>
+          <li class="dropdown">
+              <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown"
+                  id="main-menu-dropdown">
+                <i class="fa fa-list fa-lg"></i>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="main-menu-dropdown">
+                <li>
+                  <a ng-click="gotToAppLibrary()" class="link-pointer">
+                    <i class="fa fa-th">&nbsp&nbsp</i>App Library</a>
+                </li>
+                <li>
+                  <a ng-click="goToAppBuilder()" class="link-pointer">
+                    <i class="fa fa-wrench">&nbsp&nbsp</i>App Builder
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="gotToHud()" class="link-pointer">
+                    <i class="fa fa-home">&nbsp&nbsp</i>HUD
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="submitListing()" class="link-pointer">
+                    <i class="fa fa-envelope-o">&nbsp&nbsp</i>Submit a Listing
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="goToMetrics()" class="link-pointer">
+                    <i class="fa fa-bar-chart">&nbsp&nbsp</i>Metrics
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="goToDeveloperResources()" class="link-pointer">
+                    <i class="fa fa-terminal">&nbsp&nbsp</i>Developer Resources
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
 
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">

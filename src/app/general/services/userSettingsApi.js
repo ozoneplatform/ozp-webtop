@@ -34,8 +34,7 @@ function generalUserSettingsdModel(persistStrategy) {
     },
     createExampleUserSettings: function() {
       var userSettings = {
-        'theme': 'dark',
-        'autohideToolbars': false
+        'theme': 'dark'
       };
       return this.updateAllUserSettings(userSettings).then(function(response) {
         return response;

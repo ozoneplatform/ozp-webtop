@@ -13,7 +13,7 @@ describe('Service: userSettingsApi', function () {
   }));
 
   it('can get all settings', function(done) {
-    var settings = {'theme': 'dark', 'autohideToolbars': true, 'data': 'stuff'};
+    var settings = {'theme': 'dark', 'data': 'stuff'};
     userSettingsApi.updateAllUserSettings(settings).then(function(response) {
       expect(response).toEqual(true);
       userSettingsApi.getUserSettings().then(function(updatedSettings) {
@@ -33,7 +33,6 @@ describe('Service: userSettingsApi', function () {
 
     userSettingsApi.getUserSettings().then(function(settings) {
       expect(settings.theme).toBeDefined();
-      expect(settings.autohideToolbars).toBeDefined();
       done();
     }).catch(function(error) {
       expect(error).toEqual('should not have happened');

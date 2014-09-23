@@ -26,7 +26,7 @@
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="board in dashboards">
                 <a ng-click="setCurrentDashboard(board)"
-                   href="#/{{board.layout}}/{{board.id}}">{{board.name}}</a>
+                   href="#/{{board.layout}}/{{board.id}}"><i class="fa fa-desktop"></i>&nbsp&nbsp {{board.name}}</a>
               </li>
             </ul>
           </li>
@@ -68,19 +68,26 @@
               <i class="fa fa-user fa-lg">&nbsp</i>{{user}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <a ng-click="launchSettingsModal()" class="link-pointer"><i class="fa fa-cogs fa-fw">&nbsp&nbsp</i>Settings</a>
+                  <a ng-click="launchSettingsModal()" class="link-pointer">
+                    <i class="fa fa-cogs fa-fw menu-icon"></i>Settings
+                  </a>
                 </li>
                 <li>
-                  <a ng-click="helpUser()"><i class="fa fa-question-circle fa-fw">&nbsp&nbsp</i>Take a tour</a>
+                  <a ng-click="helpUser()" class="link-pointer">
+                    <i class="fa fa-question-circle fa-fw menu-icon"></i>Take a tour
+                  </a>
                 </li>
                 <li>
-                  <a ng-click="logOutUser()"><i class="fa fa-sign-out fa-fw">&nbsp&nbsp</i>Logout</a>
+                  <a ng-click="logOutUser()" class="link-pointer">
+                    <i class="fa fa-sign-out fa-fw menu-icon"></i>Logout
+                  </a>
                 </li>
               </ul>
             </li>
           </li>
           <li class="divider-vertical"></li>
-          <li class="hideToolbarButton" tooltip="Hide toolbar" tooltip-placement="bottom">
+          <li class="hideToolbarButton" tooltip="Hide toolbar" tooltip-placement="bottom"
+              style="width: 25px; float: right;">
             <a ng-click="dashboardhider();">
               <i class="fa fa-toggle-up fa-lg"></i>
             </a>

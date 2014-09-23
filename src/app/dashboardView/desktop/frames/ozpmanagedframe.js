@@ -17,8 +17,25 @@
 angular.module('ozpWebtopApp.dashboardView')
 .directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document, dashboardApi) {
   var resizableConfig = {
-    handles: 'ne, se, sw, nw',
-    aspectRatio: false
+    // handles: 'all',
+    handles: 'nw, sw, se, ne',
+    aspectRatio: false,
+    start: function(event,ui) {
+      //console.debug(event)
+      (ui.element).children(0).addClass('ui-draggable-iframeFix');
+      },
+    stop: function(event, ui) {
+      //console.debug(event);
+      (ui.element).children(0).removeClass('ui-draggable-iframeFix');
+
+    }
+  };
+
+  var draggableConfig = {
+    addClasses: false,
+    iframeFix: true,
+    scrollSensitivity: 100,
+    scrollSpeed: 100
   };
   /**
    * Decides which template to use.
@@ -48,7 +65,7 @@ angular.module('ozpWebtopApp.dashboardView')
     template: '<div ng-include="getContentUrl()"></div>',
     link: function postLink(scope, element) {
       element.resizable(resizableConfig);
-      element.draggable({ addClasses: false });
+      element.draggable(draggableConfig);
       // Logic for dragging is influenced by Angular directive documentation, under the
       // heading "Creating a Directive that Adds Event Listeners".
       // See: https://docs.angularjs.org/guide/directive
@@ -82,27 +99,36 @@ angular.module('ozpWebtopApp.dashboardView')
         event.preventDefault();
         startX = event.pageX - x;
         startY = event.pageY - y;
-        $document.on('mousemove', mousemove);
+        // $document.on('mousemove', mousemove);
         $document.on('mouseup', mouseup);
         // console.log('Starting x is ' + startX + ', startY is ' + startY);
       });
 
-      function mousemove(event) {
-        y = event.pageY - startY;
-        x = event.pageX - startX;
-      }
+      // function mousemove(event) {
+      //   y = event.pageY - startY;
+      //   x = event.pageX - startX;
+      // }
 
       function mouseup() {
+        y = event.pageY - startY;
+        x = event.pageX - startX;
         // TODO: find a more maintainable way?
         // Ignore click event if we clicked a button
         if (event.target.className.indexOf('glyphicon') > -1) {
           event.preventDefault();
           return;
         }
-        $document.off('mousemove', mousemove);
+        // $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
-        dashboardApi.updateDesktopFrame(scope.frame.id, element[0].offsetLeft, element[0].offsetTop, element[0].offsetWidth, element[0].offsetHeight, scope.max.zIndex);
 
+        dashboardApi.updateDesktopFrame(
+          scope.frame.id, 
+          element[0].offsetLeft, 
+          element[0].offsetTop, 
+          element[0].offsetWidth, 
+          element[0].offsetHeight, 
+          scope.max.zIndex
+        );
       }
 
       // Is the origin the same as the webtop?
@@ -115,13 +141,11 @@ angular.module('ozpWebtopApp.dashboardView')
 
       // Note: in iframe template height and width of the iframe is calculated based on
       // these styles. May need to change it in the future.
+
       scope.styles = {
         'top': scope.frame.desktopLayout.top,
         'left': scope.frame.desktopLayout.left,
-        'height': function(){
-          console.log(scope.frame.desktopLayout.height);
-          return scope.frame.desktopLayout.height;
-        },
+        'height': scope.frame.desktopLayout.height,
         'width': scope.frame.desktopLayout.width,
         'z-index': scope.frame.desktopLayout.zIndex
       };

@@ -136,7 +136,7 @@ angular.module('ozpWebtopApp.dashboardView')
       for (var i=0; i < $scope.dashboards.length; i++) {
         if ($scope.dashboards[i].id.toString() === dashboardId) {
           $scope.currentDashboard = $scope.dashboards[i];
-          $scope.icons = $scope.currentDashboard.desktopIcons;
+          // $scope.icons = $scope.currentDashboard.desktopIcons;
           $scope.currentDashboardId = $scope.currentDashboard.id;
           $scope.frames = $scope.currentDashboard.frames;
 

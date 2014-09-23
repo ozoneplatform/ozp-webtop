@@ -32,7 +32,7 @@ angular.module('ozpWebtopApp.dashboardView')
   };
 
   var draggableConfig = {
-    addClasses: false,
+    addClasses: true,
     iframeFix: false,
     scrollSensitivity: 100,
     scrollSpeed: 100
@@ -79,6 +79,7 @@ angular.module('ozpWebtopApp.dashboardView')
 
       // React to a mousedown and allow the element to move
       element.on('mousedown', function(event) {
+        console.log('mouse down');
         // TODO: find a more maintainable way?
         // Ignore click event if we clicked a button
         if (event.target.className.indexOf('glyphicon') > -1) {
@@ -99,8 +100,8 @@ angular.module('ozpWebtopApp.dashboardView')
         event.preventDefault();
         startX = event.pageX - x;
         startY = event.pageY - y;
-        // $document.on('mousemove', mousemove);
-        $document.on('mouseup', mouseup);
+
+        element.on('mouseup', mouseup);
         // console.log('Starting x is ' + startX + ', startY is ' + startY);
       });
 
@@ -110,6 +111,7 @@ angular.module('ozpWebtopApp.dashboardView')
       // }
 
       function mouseup() {
+        console.log('mouse up');
         y = event.pageY - startY;
         x = event.pageX - startX;
         // TODO: find a more maintainable way?
@@ -119,7 +121,7 @@ angular.module('ozpWebtopApp.dashboardView')
           return;
         }
         // $document.off('mousemove', mousemove);
-        $document.off('mouseup', mouseup);
+        element.off('mouseup', mouseup);
 
         dashboardApi.updateDesktopFrame(
           scope.frame.id, 

@@ -2,9 +2,9 @@
 
 var app = angular.module('ozpWebtopApp.ozpIwcClient');
 
-app.factory('ozpIwcClient', function($q, ozpIwc, iwcOzoneBus) {
+app.factory('iwcConnectedClient', function($q, iwcClient, iwcOzoneBus) {
 
-  var iwcClient = new ozpIwc.Client({
+  var client = new iwcClient.Client({
     peerUrl: iwcOzoneBus
   });
 
@@ -19,7 +19,7 @@ app.factory('ozpIwcClient', function($q, ozpIwc, iwcOzoneBus) {
         deferred.resolve(true);
       }
 
-      iwcClient.on('connected', function () {
+      client.on('connected', function () {
         if (initialConnection) {
           console.log('OZP client is connected');
           initialConnection = false;

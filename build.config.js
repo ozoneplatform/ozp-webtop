@@ -74,6 +74,7 @@ module.exports = {
       'vendor/angular-gridster/dist/angular-gridster.min.js',
       'vendor/javascript-detect-element-resize/detect-element-resize.js',
       'vendor/ozp-iwc-angular/dist/js/ozpIwc-client-angular.js',
+      'vendor/es6-promise/promise.min.js',  // Promises not enabled by default in FF until v29.0
       'vendor/ozp-classification/jquery.classification.js',
       'vendor/ozp-classification/ozp-classification.js' // WARNING: things after ozp-classification are not being included!!!!
     ],
@@ -93,20 +94,7 @@ module.exports = {
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.svg',
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf',
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff',
-      'vendor/ubuntu-font/ubuntu-l.eot',
-      'vendor/ubuntu-font/ubuntu-l.ttf',
-      'vendor/ubuntu-font/ubuntu-li.eot',
-      'vendor/ubuntu-font/ubuntu-li.ttf',
-      'vendor/ubuntu-font/ubuntu-b.eot',
-      'vendor/ubuntu-font/ubuntu-b.ttf',
-      'vendor/ubuntu-font/ubuntu-bi.eot',
-      'vendor/ubuntu-font/ubuntu-bi.ttf',
-      'vendor/ubuntu-font/ubuntu-m.eot',
-      'vendor/ubuntu-font/ubuntu-m.ttf',
-      'vendor/ubuntu-font/ubuntu-mi.eot',
-      'vendor/ubuntu-font/ubuntu-mi.ttf',
-      'vendor/ubuntu-font/ubuntu-r.eot',
-      'vendor/ubuntu-font/ubuntu-r.ttf'
+      'vendor/ubuntu-fontface/**'
     ]
   }
 };

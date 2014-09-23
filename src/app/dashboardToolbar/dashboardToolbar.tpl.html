@@ -10,7 +10,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">OZONE</a>
+
       </div>
 
 
@@ -18,32 +18,86 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <!-- stuff on the left side of the nav bar -->
-        </ul>
+          <li class="dropdown">
+              <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown"
+                  id="main-menu-dropdown">
+                <i class="fa fa-list fa-lg"></i>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="main-menu-dropdown">
+                <li>
+                  <a ng-click="gotToAppLibrary()" class="link-pointer">
+                    <i class="fa fa-th">&nbsp&nbsp</i>App Library</a>
+                </li>
+                <li>
+                  <a ng-click="goToAppBuilder()" class="link-pointer">
+                    <i class="fa fa-wrench">&nbsp&nbsp</i>App Builder
+                  </a>
+                </li>
+                <li>
+                  <a href="http://ozone-development.github.io/hud-ui/index.html"
+                     class="link-pointer">
+                    <i class="fa fa-home">&nbsp&nbsp</i>HUD
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="submitListing()" class="link-pointer">
+                    <i class="fa fa-envelope-o">&nbsp&nbsp</i>Submit a Listing
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="goToMetrics()" class="link-pointer">
+                    <i class="fa fa-bar-chart">&nbsp&nbsp</i>Metrics
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="goToDeveloperResources()" class="link-pointer">
+                    <i class="fa fa-terminal">&nbsp&nbsp</i>Developer Resources
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
 
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentDashboard.name}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="board in dashboards">
-                <a ng-click="setCurrentDashboard(board)" href="#/{{board.layout}}/{{board.id}}">{{board.name}}</a>
+                <a ng-click="setCurrentDashboard(board)"
+                   href="#/{{board.layout}}/{{board.id}}"><i class="fa fa-desktop"></i>&nbsp&nbsp {{board.name}}</a>
               </li>
             </ul>
           </li>
           <li class="divider-vertical"></li>
           <li>
-            <a ng-click="useGridLayout()" href="#/grid/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'grid'}">
+            <a ng-click="useGridLayout()" href="#/grid/{{currentDashboard.id}}"
+               ng-class="{navLinkSelected: layout == 'grid'}"
+                tooltip="Grid layout" tooltip-placement="bottom">
               <i ng-class="{iconWhite: layout == 'grid'}" class="fa fa-th fa-lg"></i>
             </a>
           </li>
           <li class="divider-vertical"></li>
           <li>
-            <a ng-click="useDesktopLayout()" href="#/desktop/{{currentDashboard.id}}" ng-class="{navLinkSelected: layout == 'desktop'}">
+            <a ng-click="useDesktopLayout()" href="#/desktop/{{currentDashboard.id}}"
+               ng-class="{navLinkSelected: layout == 'desktop'}" tooltip="Desktop layout"
+                tooltip-placement="bottom">
               <i ng-class="{iconWhite: layout == 'desktop'}" class="fa fa-clipboard fa-lg"></i>
             </a>
           </li>
           <li class="divider-vertical"></li>
           <li>
-            <a href="#"><span class="badge">{{messages.unread}}</span></a>
+            <span ng-show="!messages.unread" class="fa-stack fa-1x no-notifications-icon"
+                  tooltip="No new messages" tooltip-placement="bottom">
+                <i class="fa fa-bell-slash fa-lg"></i>
+              </span>
+            <div class="stacked-icons notification-icon">
+              <span ng-show="messages.unread" class="fa-stack fa-lg">
+                <i class="fa fa-bell fa-lg fa-inverse"></i>
+                <strong class="fa-stack-1x notification-text">{{messages.unread}}</strong>
+              </span>
+            </div>
+            <!--<a href="#"><i class="fa fa-bell-o fa-lg"></i></a>-->
+            <!--<a href="#"><span class="badge">{{messages.unread}}</span></a>-->
           </li>
           <li class="divider-vertical"></li>
           <li>
@@ -52,26 +106,37 @@
               <i class="fa fa-user fa-lg">&nbsp</i>{{user}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <a ng-click="launchSettingsModal()" class="link-pointer"><i class="fa fa-cogs">&nbsp&nbsp</i>Settings</a>
+                  <a ng-click="launchSettingsModal()" class="link-pointer">
+                    <i class="fa fa-cogs fa-fw menu-icon"></i>Settings
+                  </a>
                 </li>
                 <li>
-                  <a href="#"><i class="fa fa-question-circle">&nbsp&nbsp</i>Take a tour</a>
+                  <a ng-click="helpUser()" class="link-pointer">
+                    <i class="fa fa-question-circle fa-fw menu-icon"></i>Take a tour
+                  </a>
                 </li>
                 <li>
-                  <a href="#"><i class="fa fa-sign-out">&nbsp&nbsp</i>Logout</a>
+                  <a ng-click="logOutUser()" class="link-pointer">
+                    <i class="fa fa-sign-out fa-fw menu-icon"></i>Logout
+                  </a>
                 </li>
               </ul>
             </li>
           </li>
           <li class="divider-vertical"></li>
-          <li class='hideToolbarButton'>
+          <li class="hideToolbarButton" tooltip="Hide toolbar" tooltip-placement="bottom"
+              style="width: 25px; float: right;">
             <a ng-click="dashboardhider();">
-              <i class="fa fa-step-forward fa-lg"></i>
+              <i class="fa fa-toggle-up fa-lg"></i>
             </a>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <button class="hiddenToggle dashToggle" ng-click="dashboardhider();" ng-class="{false: 'hide'}[dashboardhide]"><i class="fa fa-step-backward"></i></button>
+  <button class="hiddenToggle dashToggle" ng-click="dashboardhider();"
+          ng-class="{false: 'hide'}[dashboardhide]"
+          tooltip="Show toolbar" tooltip-placement="left">
+    <i class="fa fa-toggle-down"></i>
+  </button>
 </div>

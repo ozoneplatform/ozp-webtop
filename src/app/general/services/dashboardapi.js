@@ -41,7 +41,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
       });
     },
     _setDashboardData: function(dashboardData) {
-      return persistStrategy._setDashboardData(dashboardData).then(function(response) {
+      return persistStrategy.setDashboardData(dashboardData).then(function(response) {
         return response;
       });
     },
@@ -491,6 +491,15 @@ function generalDashboardModel(persistStrategy, Utilities) {
         }
         newId = Math.max.apply(Math, existingIds) + 1;
         return newId;
+      });
+    },
+    // Get the user's default dashboard
+    getDefaultDashboard: function() {
+      var that = this;
+      return this.getDashboardData().then(function(dashboardData) {
+        return that.getDashboardById(dashboardData.defaultDashboard);
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
       });
     },
     createExampleDashboards: function() {

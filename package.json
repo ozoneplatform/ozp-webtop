@@ -12,7 +12,9 @@
     "type": "git",
     "url": "git@github.com:ozone-development/ozp-webtop.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "es6-promise": "~1.0.0"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.6",

@@ -5,15 +5,15 @@ describe('Service: ozpIwcClient', function () {
   beforeEach(module('ozpWebtopApp'));
 
   // instantiate service
-  var ozpIwcClient, rootScope;
-  beforeEach(inject(function ($rootScope, _ozpIwcClient_) {
+  var iwcConnectedClient, rootScope;
+  beforeEach(inject(function ($rootScope, _iwcConnectedClient_) {
     rootScope = $rootScope.$new();
-    ozpIwcClient = _ozpIwcClient_;
+    iwcConnectedClient = _iwcConnectedClient_;
 
   }));
 
   it('can get a connected client', function() {
-    ozpIwcClient.getClient().then(function(client) {
+    iwcConnectedClient.getClient().then(function(client) {
       expect(client).isDefined();
     }).catch(function(error) {
       expect(error).toEqual('should not have happened');

@@ -9,13 +9,18 @@ angular.module( 'ozpWebtopApp.appToolbar')
 
     $scope.appboardhide = false;
 
+    marketplaceApi.getAllApps().then(function(apps) {
+      $scope.apps = apps;
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
+
     $scope.updateApps = function() {
       dashboardApi.getDashboards().then(function(dashboards) {
         for (var i=0; i < dashboards.length; i++) {
           if (dashboards[i].id === dashboardChangeMonitor.dashboardId) {
             $scope.frames = dashboards[i].frames;
-            var allApps = marketplaceApi.getAllApps();
-            dashboardApi.mergeApplicationData($scope.frames, allApps);
+            dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
             $scope.myPinnedApps = $scope.frames;
             $scope.layout = dashboardChangeMonitor.layout;
           }
@@ -47,7 +52,11 @@ angular.module( 'ozpWebtopApp.appToolbar')
       });
      };
 
-    $scope.myApps = marketplaceApi.getAllApps();
+    marketplaceApi.getAllApps().then(function(apps) {
+      $scope.myApps = apps;
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
 
     $scope.appClicked = function(app) {
       // check if the app is already on the current dashboard

@@ -32,6 +32,12 @@ angular.module('ozpWebtopApp.dashboardView')
     // The applications/widgets on the grid view
     $scope.frames = [];  // to make tests happy
 
+    marketplaceApi.getAllApps().then(function(apps) {
+      $scope.apps = apps;
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
+
     $scope.$on('dashboard-change', function() {
       // Make an array of old frames and new frames
       $scope.newFrames = [];
@@ -83,7 +89,7 @@ angular.module('ozpWebtopApp.dashboardView')
                   // now quickly merge my local scope for frames with the marketplace
                   // api to get important stuff on local scope like url, image, name,
                   // etc
-                  dashboardApi.mergeApplicationData($scope.frames, marketplaceApi.getAllApps());
+                  dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
                 }
               }
             }).catch(function (error) {
@@ -178,11 +184,9 @@ angular.module('ozpWebtopApp.dashboardView')
         // Get frames on this dashboard
         $scope.frames = $scope.dashboard.frames;
 
-        // TODO: There should be a method in Marketplace to get only my apps
-        var allApps = marketplaceApi.getAllApps();
         // Merge application data (app name, icons, descriptions, url, etc)
         // with dashboard app data
-        dashboardApi.mergeApplicationData($scope.frames, allApps);
+        dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
 
         // calculate the size (in px) for each frame and send an update message
         $scope.frames.reduce(function (previous, current) {

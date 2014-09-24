@@ -1,35 +1,47 @@
 /**
+ * All colors used throughout the site are defined here
+ */
+@import 'colors.less';
+
+/**
  * These are the variables used throughout the application. This is where 
  * overwrites that are not specific to components should be maintained.
  */
 
-/**
- * Typography-related.
- */
-
-@sansFontFamily: 'Roboto', sans-serif;
-
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                        Font Awesome Overrides
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // override path for font-awesome files
 @fa-font-path: ".";
 
 // override path for bootstrap font files
 @icon-font-path: "./";
 
-// background color of main dashboard view
-@dashboard-bg-color: #191f25;
-
-// Bootstrap overrides
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                        Bootstrap Overrides
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// navbar
 @navbar-height: 35px;
 @navbar-padding-vertical: 10px;
 @navbar-margin-bottom: 5px;
-@navbar-inverse-bg: #2B3036;
-@dropdown-bg: #3b4246;
-@dropdown-link-color: #ffffff;
+@navbar-inverse-bg: @ozp-dk-gray2;
 
+// dropdown
+@dropdown-bg: @ozp-dk-gray1;
+@dropdown-link-color: @ozp-white;
+
+// font
 @font-family-sans-serif: Ubuntu;
 
-@modal-backdrop-bg: #6E6E6E;
-@modal-content-bg: #191f25;
+// modal
+@modal-backdrop-bg: @ozp-lt-gray1;
+@modal-content-bg: @ozp-black;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                        Custom variables
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// background color of main dashboard view
+@dashboard-bg-color: @ozp-black;
 
 // app toolbar height
 @app-toolbar-height: @navbar-height;

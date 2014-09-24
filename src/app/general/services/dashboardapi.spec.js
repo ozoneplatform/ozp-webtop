@@ -38,7 +38,7 @@ describe('Service: dashboardApi', function () {
     dashboardApi.getDashboardData().then(function(dashboardData) {
       expect(dashboardData.user).toBeDefined();
       expect(dashboardData.name).toBeDefined();
-      expect(dashboardData.defaultDashboard).toBeDefined();
+      expect(dashboardData.currentDashboard).toBeDefined();
       expect(dashboardData.dashboards).toBeDefined();
       done();
     }).catch(function(error) {
@@ -122,8 +122,8 @@ describe('Service: dashboardApi', function () {
     }
   });
 
-  it('should have a getDefaultDashboard method', function(done) {
-    dashboardApi.getDefaultDashboard().then(function(dashboard) {
+  it('should have a getCurrentDashboard method', function(done) {
+    dashboardApi.getCurrentDashboard().then(function(dashboard) {
       // TODO: test is dependent on hard-coded test data
       expect(dashboard.id).toEqual('0');
       done();
@@ -187,12 +187,12 @@ describe('Service: dashboardApi', function () {
     if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
-  // Get the name of the default dashbard
-  it('should have a getDefaultDashboardName method', function(done) {
+  // Get the name of the current dashboard
+  it('should have a getCurrentDashboardName method', function(done) {
     dashboardApi.getDashboardData().then(function(dashboardData) {
-      var defaultDashboardId = dashboardData.defaultDashboard;
-      dashboardApi.getDashboardById(defaultDashboardId).then(function(dashboard) {
-        dashboardApi.getDefaultDashboardName().then(function(name) {
+      var currentDashboardId = dashboardData.currentDashboard;
+      dashboardApi.getDashboardById(currentDashboardId).then(function(dashboard) {
+        dashboardApi.getCurrentDashboardName().then(function(name) {
           expect(name).toEqual(dashboard.name);
           done();
         }).catch(function(error) {
@@ -427,10 +427,10 @@ describe('Service: dashboardApi', function () {
     if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
-  // update the default dashboard
-  it('should have a updateDefaultDashboardName method - return false on invalid dashboard name', function(done) {
+  // update the current dashboard
+  it('should have a updateCurrentDashboardName method - return false on invalid dashboard name', function(done) {
     // test a dashboard that doesn't exist
-    dashboardApi.updateDefaultDashboardName('doesntexist').then(function (update) {
+    dashboardApi.updateCurrentDashboardName('doesntexist').then(function (update) {
       expect(update).toEqual(false);
       done();
     }).catch(function (error) {
@@ -440,16 +440,16 @@ describe('Service: dashboardApi', function () {
     if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
-  it('should have a updateDefaultDashboardName method', function(done) {
-    dashboardApi.getDefaultDashboardName().then(function(currentDefaultDashboard) {
+  it('should have a updateCurrentDashboardName method', function(done) {
+    dashboardApi.getCurrentDashboardName().then(function(currentDashboard) {
       dashboardApi.getDashboardById(1).then(function(dashboard) {
-        var newDefault = dashboard.name;
-        expect(currentDefaultDashboard).not.toEqual(newDefault);
-        expect(newDefault).toBeTruthy();
-        dashboardApi.updateDefaultDashboardName(newDefault).then(function(update) {
+        var newCurrent = dashboard.name;
+        expect(currentDashboard).not.toEqual(newCurrent);
+        expect(newCurrent).toBeTruthy();
+        dashboardApi.updateCurrentDashboardName(newCurrent).then(function(update) {
           expect(update).toEqual(true);
-          dashboardApi.getDefaultDashboardName().then(function(updatedDefaultName) {
-            expect(updatedDefaultName).toEqual(newDefault);
+          dashboardApi.getCurrentDashboardName().then(function(updatedCurrentName) {
+            expect(updatedCurrentName).toEqual(newCurrent);
             done();
           }).catch(function(error) {
             expect(error).toEqual('should not have happened');

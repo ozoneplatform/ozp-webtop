@@ -8,11 +8,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
 
   userSettingsApi.getUserSettings().then(function(settings) {
     $scope.preferences = settings;
-    dashboardApi.getDefaultDashboardName().then(function(name) {
-      $scope.preferences.defaultDashboard = name;
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
   }).catch(function(error) {
     console.log('should not have happened: ' + error);
   });
@@ -45,19 +40,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
         }).catch(function(error) {
           console.log('should not have happened: ' + error);
         });
-
-        // TODO: fix this
-        var currentDashboardName = 'not working yet';
-        if (currentDashboardName === dashboard.name) {
-          // arbitrarily set the default dashboard name to the first one found
-          return dashboardApi.getDashboards().then(function(dashboards) {
-            var newDefaultDashboardName = dashboards[0].name;
-            $scope.preferences.defaultDashboard = newDefaultDashboardName;
-          }).catch(function(error) {
-            console.log('should not have happened: ' + error);
-          });
-        }
-
       } else {
         dashboard.name = scopeDashboard.name;
         return dashboardApi.saveDashboard(dashboard).then(function() {
@@ -84,39 +66,32 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
         });
         }, Promise.resolve()).then(function() {
           // finished updating all frames
-          // Update default dashboard
-          dashboardApi.updateDefaultDashboardName($scope.preferences.defaultDashboard).then(function() {
-            // update complete
-            // Check for new dashboard
-            if ($scope.addingNewBoard) {
-              dashboardApi.createDashboard($scope.newDashboardName.name).then(function() {
-                // update complete
-                // Don't need defaultDashboard in preferences
-                delete $scope.preferences.defaultDashboard;
-                userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
-                  // broadcast message that user's preferences have changed
-                  // Can't seem to DI $rootScope in here without errors, so accessing
-                  // $rootScope using $parent instead
-                  $scope.$parent.$broadcast('UserSettingsChanged', {});
-
-                  $modalInstance.close();
-                }).catch(function(error) {
-                  console.log('should not have happened: ' + error);
-                });
-              }).catch(function(error) {
-                console.log('should not have happened: ' + error);
-              });
-            } else {
+          // update complete
+          // Check for new dashboard
+          if ($scope.addingNewBoard) {
+            dashboardApi.createDashboard($scope.newDashboardName.name).then(function() {
+              // update complete
               userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
+                // broadcast message that user's preferences have changed
+                // Can't seem to DI $rootScope in here without errors, so accessing
+                // $rootScope using $parent instead
                 $scope.$parent.$broadcast('UserSettingsChanged', {});
+
                 $modalInstance.close();
               }).catch(function(error) {
                 console.log('should not have happened: ' + error);
               });
-            }
-          }).catch(function(error) {
-            console.log('should not have happened: ' + error);
-          });
+            }).catch(function(error) {
+              console.log('should not have happened: ' + error);
+            });
+          } else {
+            userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
+              $scope.$parent.$broadcast('UserSettingsChanged', {});
+              $modalInstance.close();
+            }).catch(function(error) {
+              console.log('should not have happened: ' + error);
+            });
+          }
       });
     });
   };

@@ -11,6 +11,7 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       //default dashboardToolbar is not hidden
       $scope.dashboardhide = false;
       // default board is 0
+      // TODO: Load last board that was used
       if (dashboards) {
         $scope.currentDashboard = $scope.dashboards[0];
       } else {

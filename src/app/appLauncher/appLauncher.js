@@ -17,14 +17,14 @@ angular.module( 'ozpWebtopApp.appLauncher')
         return;
       }
 
-      // is this app already on our default dashboard?
-      dashboardApi.getDefaultDashboard().then(function(dashboard) {
+      // is this app already on our current dashboard?
+      dashboardApi.getCurrentDashboard().then(function(dashboard) {
         dashboardApi.isAppOnDashboard(dashboard.id, $scope.appId).then(function(resp) {
           if (resp) {
-            console.log('this app is already on our default board - redirecting');
+            console.log('this app is already on our current board - redirecting');
             $state.go('grid', {'dashboardId': dashboard.id});
           } else {
-            console.log('this app is not on our default board - will add');
+            console.log('this app is not on our current board - will add');
             dashboardApi.createFrame(dashboard.id, $scope.appId, 10).then(function(resp) {
               if (resp) {
                 $state.go('grid', {'dashboardId': dashboard.id});

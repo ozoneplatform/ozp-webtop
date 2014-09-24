@@ -246,14 +246,14 @@ function generalDashboardModel(persistStrategy, Utilities) {
       });
 
     },
-    // Change the user's default dashboard
-    updateDefaultDashboardName: function(dashboardName) {
+    // Change the user's current dashboard
+    updateCurrentDashboardName: function(dashboardName) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
         var dashboardFound = false;
         for (var i=0; i < dashboardData.dashboards.length; i++) {
           if (dashboardData.dashboards[i].name === dashboardName) {
-            dashboardData.defaultDashboard = dashboardData.dashboards[i].id;
+            dashboardData.currentDashboard = dashboardData.dashboards[i].id;
             dashboardFound = true;
           }
         }
@@ -270,12 +270,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Return the name of the user's default dashboard
-    getDefaultDashboardName: function() {
+    // Return the name of the user's current dashboard
+    getCurrentDashboardName: function() {
       return this.getDashboardData().then(function(dashboards) {
-        var defaultDashboardId = dashboards.defaultDashboard;
+        var currentDashboardId = dashboards.currentDashboard;
         for (var i=0; i < dashboards.dashboards.length; i++) {
-          if (dashboards.dashboards[i].id === defaultDashboardId) {
+          if (dashboards.dashboards[i].id === currentDashboardId) {
             return dashboards.dashboards[i].name;
           }
         }
@@ -491,11 +491,11 @@ function generalDashboardModel(persistStrategy, Utilities) {
         return newId;
       });
     },
-    // Get the user's default dashboard
-    getDefaultDashboard: function() {
+    // Get the user's current dashboard
+    getCurrentDashboard: function() {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
-        return that.getDashboardById(dashboardData.defaultDashboard);
+        return that.getDashboardById(dashboardData.currentDashboard);
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
@@ -506,7 +506,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
       var dashboardData = {
         'name': 'dashboards',
         'user': 'J Smith',
-        'defaultDashboard': '0',
+        'currentDashboard': '0',
         'dashboards': [
           {
             'name': 'Stock Trader',

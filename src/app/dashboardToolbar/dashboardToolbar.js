@@ -86,13 +86,25 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       ]
     };
 
-    var d = new Date();
-    $scope.zuluTime = d.getUTCHours() + ':' + d.getUTCMinutes();
+    $scope.getZuluTime = function() {
+      var d = new Date();
+      var hours = d.getUTCHours().toString();
+      if (hours.length === 1) {
+        hours = '0' + hours;
+      }
+      var minutes = d.getUTCMinutes().toString();
+      if (minutes.length === 1) {
+        minutes = '0' + minutes;
+      }
+      return hours + ':' + minutes;
+    };
+
+    $scope.zuluTime = $scope.getZuluTime();
 
     $interval(function() {
-      var dd = new Date();
-      $scope.zuluTime = dd.getUTCHours() + ':' + dd.getUTCMinutes();
+      $scope.zuluTime = $scope.getZuluTime();
     }, 1000);
+
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                        Dashboard dropdown

@@ -52,8 +52,8 @@ body {
 .navbar .divider-vertical {
   height: @navbar-height;
   margin: 0 9px;
-  border-right: 1px solid #ffffff;
-  border-left: 1px solid #f2f2f2;
+  border-right: 1px solid @ozp-white;
+  border-left: 1px solid @ozp-lt-gray1;
 }
 
 .navbar-inverse .divider-vertical {
@@ -89,7 +89,7 @@ body {
 }
 
 .iconWhite {
-  color: white;
+  color: @ozp-white;
 }
 
 #main-menu-dropdown {
@@ -112,7 +112,7 @@ body {
 }
 
 .no-notifications-icon {
-  color: grey;
+  color: @ozp-gray1;
   padding-top: 7px;
 }
 
@@ -169,13 +169,13 @@ body {
 
 .active-app {
   margin-right: 5px;
-  background-color: #333333;
+  background-color: @navbar-inverse-bg;
   height: @navbar-height;
 }
 
 .inactive-app {
   margin-right: 5px;
-  background-color: #212425;
+  background-color: @ozp-black;
   height: @navbar-height;
 }
 
@@ -185,9 +185,9 @@ body {
   right: 0;
   position: fixed;
   z-index: 10000;
-  background-color: #212425;
+  background-color: @ozp-black;
   border: none;
-  color: white;
+  color: @ozp-white;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -238,7 +238,7 @@ a.ozp-icon:hover, a.ozp-icon:active {
 /* Frames must be absolute position */
 .ozp-managed-frame {
     position: absolute;
-    background-color: white;
+    background-color: @ozp-white;
     border: 1px solid #ddd;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -249,8 +249,8 @@ a.ozp-icon:hover, a.ozp-icon:active {
 }
 
 .ozp-chrome {
-    background: #f4f7f8;
-    color: #555;
+    background: @ozp-lt-gray1;
+    color: @ozp-gray2;
     font-size: 10pt;
     height: 25px;
     cursor: default;
@@ -284,20 +284,20 @@ a.ozp-icon:hover, a.ozp-icon:active {
 .ozp-chrome > .chrome-controls > .btn {
     background: transparent;
     padding: 0;
-    color: #ccc;
+    color: @ozp-lt-gray2;
     font-size: 10px;
 }
 
 .ozp-chrome > .chrome-controls > .btn:hover,
 .ozp-chrome > .chrome-controls > .btn:active {
-    color: #222;
+    color: @ozp-dk-gray2;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                        user settings modal
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 .modal-fmt {
-  color:white;
+  color: @ozp-lt-gray2;
 }
 /**
  * Now that all app-wide styles have been applied, we can load the styles for

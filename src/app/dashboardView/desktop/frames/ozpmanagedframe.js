@@ -79,7 +79,6 @@ angular.module('ozpWebtopApp.dashboardView')
 
       // React to a mousedown and allow the element to move
       element.on('mousedown', function(event) {
-        console.log('mouse down');
         // TODO: find a more maintainable way?
         // Ignore click event if we clicked a button
         if (event.target.className.indexOf('glyphicon') > -1) {
@@ -111,7 +110,6 @@ angular.module('ozpWebtopApp.dashboardView')
       // }
 
       function mouseup() {
-        console.log('mouse up');
         y = event.pageY - startY;
         x = event.pageX - startX;
         // TODO: find a more maintainable way?

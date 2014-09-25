@@ -364,7 +364,8 @@ module.exports = function ( grunt ) {
           '$scope': false,
           'alert': false,
           '$state': false,
-          'spyOn': false
+          'spyOn': false,
+          '$': false
         }
       }
     },

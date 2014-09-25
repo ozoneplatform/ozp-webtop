@@ -142,13 +142,14 @@ body {
 //                        app toolbar
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 .app-toolbar {
-  position: absolute;
+  position: fixed;
   margin-top: 0;
   margin-bottom: 0;
   bottom: @classification-banner; // height of the classification banner
   width: 100%;
   /* Set the fixed height of the footer here */
   height: @app-toolbar-height;
+  z-index: 10000;
 }
 
 .app-toolbar-ng-include {
@@ -194,8 +195,17 @@ body {
 //                        security banner
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+.classBanner {
+  z-index: 10000;
+}
+
+body > div.classBanner:first-of-type {
+    position: fixed;
+    top: 0px;
+}
+
 body > div.classBanner:last-of-type {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
 }
 

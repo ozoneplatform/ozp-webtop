@@ -178,9 +178,25 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 );
 
 
-dashboardApp.directive('dashboardToolbar',function(){
-   return {
-       restrict: 'E',
-       templateUrl: 'dashboardToolbar/dashboardToolbar.tpl.html'
-   };
+dashboardApp.directive('dashboardToolbar', function(){
+  return {
+   restrict: 'E',
+   templateUrl: 'dashboardToolbar/dashboardToolbar.tpl.html',
+   replace: false,
+   transclude: false,
+   scope: true,
+   link: function(scope, elem/*, attrs*/) {
+     console.log('elem: ' + elem);
+
+     scope.$watch('dashboardhide', function() {
+       if (scope.dashboardhide) {
+         // TODO: a cleaner way?
+         $('body').css('padding-top', '16px');
+       } else {
+         $('body').css('padding-top', '57px');
+         $('.navbar-fixed-top').css('top', '16px');
+       }
+     });
+   }
+  };
 });

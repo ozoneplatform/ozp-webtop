@@ -34,7 +34,9 @@
   <body ng-app="ozpWebtopApp" ozp-classification="U">
 
     <!-- dashboard panel -->
-    <dashboard-toolbar></dashboard-toolbar>
+    <div ng-controller="DashboardToolbarCtrl">
+      <dashboard-toolbar hide-bar="dashboardhide"></dashboard-toolbar>
+    </div>
 
     <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser.

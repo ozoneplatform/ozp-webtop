@@ -1,6 +1,6 @@
-<div ng-controller="DashboardToolbarCtrl">
+
   <nav class="navbar navbar-default navbar-inverse dashboard-toolbar
-    no-rounded-corners" role="navigation"  ng-class="{true: 'hide', false: ''}[dashboardhide]">
+    no-rounded-corners navbar-fixed-top" role="navigation"  ng-class="{true: 'hide', false: ''}[dashboardhide]">
     <div class="container-fluid" >
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -15,7 +15,8 @@
 
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
+           style="padding-left: 15px;">
         <ul class="nav navbar-nav">
           <!-- stuff on the left side of the nav bar -->
           <li class="dropdown">
@@ -128,8 +129,8 @@
             </li>
           </li>
           <li class="divider-vertical"></li>
-          <li class="hideToolbarButton" tooltip="Hide toolbar" tooltip-placement="bottom"
-              style="width: 25px; float: right;">
+          <li class="hideToolbarButton link-pointer" tooltip="Hide toolbar" tooltip-placement="bottom"
+              style="width: 25px; float: right; margin-right: 15px;">
             <a ng-click="dashboardhider();">
               <i class="fa fa-toggle-up fa-lg"></i>
             </a>
@@ -143,4 +144,3 @@
           tooltip="Show toolbar" tooltip-placement="left">
     <i class="fa fa-toggle-down"></i>
   </button>
-</div>

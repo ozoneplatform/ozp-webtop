@@ -3,8 +3,23 @@
 var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('DashboardToolbarCtrl',
   function($scope, $rootScope, $interval, dashboardApi, dashboardChangeMonitor,
-           userSettingsApi) {
+           userSettingsApi, windowSizeWatcher) {
 
+    windowSizeWatcher.run();
+
+    $scope.$on('window-size-change', function(event, value) {
+      console.log('dashboard got size change, device size: ' + value.deviceSize);
+      if (value.deviceSize === 'sm') {
+        $scope.dashboardNameLength = 9;
+        $scope.usernameLength = 9;
+      } else if (value.deviceSize === 'md') {
+          $scope.dashboardNameLength = 28;
+          $scope.usernameLength = 12;
+      } else if (value.deviceSize === 'lg') {
+          $scope.dashboardNameLength = 48;
+          $scope.usernameLength = 12;
+      }
+    });
 
     dashboardApi.getDashboards().then(function(dashboards) {
       $scope.dashboards = dashboards;

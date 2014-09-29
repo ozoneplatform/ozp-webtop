@@ -3,7 +3,24 @@
 angular.module( 'ozpWebtopApp.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
                                        marketplaceApi, dashboardApi,
-                                       dashboardChangeMonitor, userSettingsApi) {
+                                       dashboardChangeMonitor, userSettingsApi,
+                                        windowSizeWatcher) {
+
+    windowSizeWatcher.run();
+
+    $scope.$on('window-size-change', function(event, value) {
+      // TODO: need further testing to validate these numbers
+      if (value.deviceSize === 'sm') {
+        $scope.maxAppsDisplayed = 3;
+        $scope.setPinnedApps();
+      } else if (value.deviceSize === 'md') {
+        $scope.maxAppsDisplayed = 5;
+        $scope.setPinnedApps();
+      } else if (value.deviceSize === 'lg') {
+        $scope.maxAppsDisplayed = 8;
+        $scope.setPinnedApps();
+      }
+    });
 
     $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
 
@@ -15,13 +32,30 @@ angular.module( 'ozpWebtopApp.appToolbar')
       console.log('should not have happened: ' + error);
     });
 
+    $scope.setPinnedApps = function() {
+      if (!$scope.frames) {
+        return;
+      }
+      var totalFrames = $scope.frames.length;
+      if (totalFrames > $scope.maxAppsDisplayed) {
+        $scope.myPinnedApps = $scope.frames.slice(0, $scope.maxAppsDisplayed);
+        $scope.myPinnedAppsFirstDisplayedIndex = 0;
+        $scope.nextAppsVisible = true;
+        $scope.previousAppsVisible = false;
+      } else {
+        $scope.myPinnedApps = $scope.frames;
+        $scope.nextAppsVisible = false;
+        $scope.previousAppsVisible = false;
+      }
+    };
+
     $scope.updateApps = function() {
       dashboardApi.getDashboards().then(function(dashboards) {
         for (var i=0; i < dashboards.length; i++) {
           if (dashboards[i].id === dashboardChangeMonitor.dashboardId) {
             $scope.frames = dashboards[i].frames;
             dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
-            $scope.myPinnedApps = $scope.frames;
+            $scope.setPinnedApps();
             $scope.layout = dashboardChangeMonitor.layout;
           }
         }
@@ -99,7 +133,34 @@ angular.module( 'ozpWebtopApp.appToolbar')
       });
     };
 
+    $scope.previousApps = function() {
+      var start = $scope.myPinnedAppsFirstDisplayedIndex - $scope.maxAppsDisplayed;
+      var end = start + $scope.maxAppsDisplayed;
+      $scope.myPinnedApps = $scope.frames.slice(start, end);
+      $scope.myPinnedAppsFirstDisplayedIndex = start;
+      if (start > 0) {
+        $scope.previousAppsVisible = true;
+      } else {
+        $scope.previousAppsVisible = false;
+      }
+      $scope.nextAppsVisible = true;
+    };
+
+    $scope.nextApps = function() {
+      var start = $scope.myPinnedAppsFirstDisplayedIndex + $scope.maxAppsDisplayed;
+      var end = start + $scope.maxAppsDisplayed;
+      $scope.myPinnedApps = $scope.frames.slice(start, end);
+      $scope.myPinnedAppsFirstDisplayedIndex = start;
+      if ($scope.frames.length > end) {
+        $scope.nextAppsVisible = true;
+      } else {
+        $scope.nextAppsVisible = false;
+      }
+      $scope.previousAppsVisible = true;
+    };
+
   });
+
 
 angular.module( 'ozpWebtopApp.appToolbar')
     .directive('appToolbar',function(){

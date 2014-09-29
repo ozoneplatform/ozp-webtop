@@ -101,16 +101,21 @@ function generalDashboardModel(persistStrategy, Utilities) {
       });
     },
     // Update the grid layout of a frame in a dashboard
-    updateGridFrame: function(frameId, row, col, sizeX, sizeY) {
+    updateGridFrame: function(frameId, sizeData) {
       var that = this;
       return this.getFrameById(frameId).then(function(frame) {
         if (!frame) {
           return false;
         }
-        frame.gridLayout.row = row;
-        frame.gridLayout.col = col;
-        frame.gridLayout.sizeX = sizeX;
-        frame.gridLayout.sizeY = sizeY;
+        frame.gridLayout.sm.row = sizeData.sm.row;
+        frame.gridLayout.sm.col = sizeData.sm.col;
+        frame.gridLayout.sm.sizeX = sizeData.sm.sizeX;
+        frame.gridLayout.sm.sizeY = sizeData.sm.sizeY;
+
+        frame.gridLayout.md.row = sizeData.md.row;
+        frame.gridLayout.md.col = sizeData.md.col;
+        frame.gridLayout.md.sizeX = sizeData.md.sizeX;
+        frame.gridLayout.md.sizeY = sizeData.md.sizeY;
         return that.saveFrame(frame).then(function(response) {
           if (response) {
             return frameId;
@@ -166,7 +171,8 @@ function generalDashboardModel(persistStrategy, Utilities) {
         // for the desktop layout, just put it on and let user move it
         var usedRows = [];
         for (var i=0; i < dashboard.frames.length; i++) {
-          usedRows.push(dashboard.frames[i].gridLayout.row);
+          // TODO: arbitrarily chose to use small size
+          usedRows.push(dashboard.frames[i].gridLayout.sm.row);
         }
         var maxUsedRow = Math.max.apply(Math, usedRows);
         var row = maxUsedRow + 1;
@@ -196,10 +202,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
           'appId': appId,
           'id': frameId,
           'gridLayout': {
-            'row': row,
-            'col': col,
-            'sizeX': sizeX,
-            'sizeY': sizeY
+            'sm': {
+              'row': row,
+              'col': col,
+              'sizeX': sizeX,
+              'sizeY': sizeY
+            },
+            'md': {
+              'row': row,
+              'col': col,
+              'sizeX': sizeX,
+              'sizeY': sizeY
+            }
           },
           'desktopLayout': {
             'zIndex': zIndex,
@@ -303,11 +317,15 @@ function generalDashboardModel(persistStrategy, Utilities) {
     },
 
     // Updates the dynamically generated fields for grid frame size in px
-    updateFrameSizeOnGrid: function(frameId, width, height) {
+    updateFrameSizeOnGrid: function(frameId, size, width, height) {
+      // TODO: may need to adjust this someday
+      if (size === 'lg') {
+        size = 'md';
+      }
       var that = this;
       return this.getFrameById(frameId).then(function(frame) {
-        frame.gridLayout.width = width;
-        frame.gridLayout.height = height;
+        frame.gridLayout[size].width = width;
+        frame.gridLayout[size].height = height;
         return that.saveFrame(frame).then(function(response) {
           return response;
         }).catch(function(error) {
@@ -322,9 +340,11 @@ function generalDashboardModel(persistStrategy, Utilities) {
     // Note that these values are dynamically generated
     getFrameSizeOnGrid: function(frameId) {
       return this.getFrameById(frameId).then(function(frame) {
-        var widgetSize = {};
-        widgetSize.width = frame.gridLayout.width;
-        widgetSize.height = frame.gridLayout.height;
+        var widgetSize = {'sm': {}, 'md': {}};
+        widgetSize.sm.width = frame.gridLayout.sm.width;
+        widgetSize.sm.height = frame.gridLayout.sm.height;
+        widgetSize.md.width = frame.gridLayout.md.width;
+        widgetSize.md.height = frame.gridLayout.md.height;
         return widgetSize;
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
@@ -517,10 +537,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': 'cd0e3e24-cae8-4886-a0d4-c7e04b5b104e', // Greek analysis
                 'id': '2b585b22-5de9-4389-b536-57bcb602bf3a',
                 'gridLayout': {
-                  'row': 0,
-                  'col': 0,
-                  'sizeX': 6,
-                  'sizeY': 1
+                  'sm': {
+                    'row': 0,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 0,
+                    'col': 0,
+                    'sizeX': 6,
+                    'sizeY': 1
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -534,10 +562,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': 'f38e10db-eb3f-4b90-8ec5-cb0a7dbd9191', // Stock Trader
                 'id': '3886bbea-0421-4a2a-9851-b8e1c6a59f5b',
                 'gridLayout': {
-                  'row': 1,
-                  'col': 0,
-                  'sizeX': 3,
-                  'sizeY': 1
+                  'sm': {
+                    'row': 1,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 1,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 1,
@@ -551,10 +587,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': '00605b24-baff-4270-b0b5-2b6bd6455883', // Chart
                 'id': 'fe9fd6bf-e7be-446a-8ab7-a3fc4ac279a8',
                 'gridLayout': {
-                  'row': 1,
-                  'col': 3,
-                  'sizeX': 3,
-                  'sizeY': 2
+                  'sm': {
+                    'row': 2,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 2
+                  },
+                  'md': {
+                    'row': 1,
+                    'col': 3,
+                    'sizeX': 3,
+                    'sizeY': 2
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -575,10 +619,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': '342f3680-18c9-11e4-8c21-0800200c9a66', // purple circle
                 'id': '45a08744-686b-4b14-820a-ebc8c24fbfb0',
                 'gridLayout': {
-                  'row': 1,
-                  'col': 1,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'row': 0,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 1,
+                    'col': 1,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -592,10 +644,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4', // red square
                 'id': '59891c69-dde5-4926-b4b1-e53dac90b271',
                 'gridLayout': {
-                  'row': 1,
-                  'col': 2,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'row': 1,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 1,
+                    'col': 2,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -609,10 +669,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': 'c3d895d5-f332-4154-b963-c5dd63f8ca49', // some text
                 'id': '23baefc8-872a-4da4-84ed-e8fa62c09819',
                 'gridLayout': {
-                  'row': 2,
-                  'col': 1,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'row': 2,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 2,
+                    'col': 1,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 1,
@@ -626,10 +694,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5', //mbrot
                 'id': '8ca6dba0-b7bb-47e4-a1a1-06e451f9a0f1',
                 'gridLayout': {
-                  'row': 2,
-                  'col': 2,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'row': 3,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 2,
+                    'col': 2,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 1,
@@ -650,10 +726,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': '342f3680-18c9-11e4-8c21-0800200c9a66',
                 'id': '04648023-6ab0-448d-83a1-bb378639237f',
                 'gridLayout': {
-                  'col': 1,
-                  'row': 1,
-                  'sizeX': 3,
-                  'sizeY': 3
+                  'sm': {
+                    'col': 0,
+                    'row': 0,
+                    'sizeX': 3,
+                    'sizeY': 3
+                  },
+                  'md': {
+                    'col': 1,
+                    'row': 1,
+                    'sizeX': 3,
+                    'sizeY': 3
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -674,10 +758,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': '998437ef-9191-4d57-91a7-6ab049361583',
                 'id': '6c84a76c-f149-4c4d-90a8-1df397ed588b',
                 'gridLayout': {
-                  'col': 1,
-                  'row': 1,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'col': 0,
+                    'row': 0,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'col': 0,
+                    'row': 0,
+                    'sizeX': 3,
+                    'sizeY': 2
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -691,10 +783,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': '3af849aa-dad0-4223-b15b-9da3b48d1845',
                 'id': 'c951a160-0917-45cf-8c7f-a3748958ced1',
                 'gridLayout': {
-                  'col': 2,
-                  'row': 1,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'col': 1,
+                    'row': 0,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'col': 3,
+                    'row': 0,
+                    'sizeX': 3,
+                    'sizeY': 2
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -708,10 +808,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': 'e5f52929-3f00-4766-a820-f0452ff74572',
                 'id': 'dad15d4a-0da1-4181-9e99-15c9197a0180',
                 'gridLayout': {
-                  'col': 1,
-                  'row': 1,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'col': 2,
+                    'row': 0,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'col': 0,
+                    'row': 2,
+                    'sizeX': 3,
+                    'sizeY': 2
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
@@ -725,10 +833,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 'appId': '93eb7a1d-618c-4478-a59e-326eccbe86d5',
                 'id': '32769aa5-2c34-45e9-9a63-a155f3d77073',
                 'gridLayout': {
-                  'col': 2,
-                  'row': 1,
-                  'sizeX': 1,
-                  'sizeY': 1
+                  'sm': {
+                    'col': 1,
+                    'row': 1,
+                    'sizeX': 1,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'col': 3,
+                    'row': 2,
+                    'sizeX': 3,
+                    'sizeY': 2
+                  }
                 },
                 'desktopLayout': {
                   'zIndex': 0,

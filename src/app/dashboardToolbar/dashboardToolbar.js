@@ -8,7 +8,6 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
     windowSizeWatcher.run();
 
     $scope.$on('window-size-change', function(event, value) {
-      console.log('dashboard got size change, device size: ' + value.deviceSize);
       if (value.deviceSize === 'sm') {
         $scope.dashboardNameLength = 9;
         $scope.usernameLength = 9;

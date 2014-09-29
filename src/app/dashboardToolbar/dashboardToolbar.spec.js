@@ -2,7 +2,7 @@
 
 describe('Controller: DashboardToolbar', function () {
 
-  var scope, rootScope, dashboardApi, dashboardChangeMonitor/*, windowSizeWatcher*/;
+  var scope, rootScope, dashboardApi, dashboardChangeMonitor;
 
   // use IWC for tests?
   beforeEach(function() {
@@ -13,11 +13,10 @@ describe('Controller: DashboardToolbar', function () {
 
   beforeEach(module('ozpWebtopApp.dashboardToolbar'));
 
-  beforeEach(inject(function(_$rootScope_, $controller, _dashboardApi_, _dashboardChangeMonitor_/*, _windowSizeWatcher_*/) {
+  beforeEach(inject(function(_$rootScope_, $controller, _dashboardApi_, _dashboardChangeMonitor_) {
     rootScope = _$rootScope_;
     dashboardApi = _dashboardApi_;
     dashboardChangeMonitor = _dashboardChangeMonitor_;
-    //windowSizeWatcher = _windowSizeWatcher_;
 
     // Scope setup
     scope = rootScope.$new();
@@ -38,8 +37,7 @@ describe('Controller: DashboardToolbar', function () {
       $controller('DashboardToolbarCtrl', {
         $scope: scope,
         dashboardApi: dashboardApi,
-        dashboardChangeMonitor: dashboardChangeMonitor/*,
-        windowSizeWatcher: windowSizeWatcher*/
+        dashboardChangeMonitor: dashboardChangeMonitor
       });
   }));
 

@@ -41,8 +41,12 @@ angular.module('ozp.common')
               deviceSize: deviceSize,
             });
           }
+          $rootScope.$broadcast('window-px-size-change');
 
          });
+      },
+      getCurrentSize: function() {
+        return deviceSize;
       }
     };
 });

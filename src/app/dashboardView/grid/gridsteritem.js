@@ -78,6 +78,10 @@ angular.module('ozpWebtopApp.dashboardView')
         }
       });
 
+      scope.$on('window-size-change', function(event, value) {
+        scope.deviceSize = value.deviceSize;
+      });
+
       // TODO: get minimum values from somewhere based on the size of the
       //      current grid
       scope.styles = {
@@ -94,10 +98,17 @@ angular.module('ozpWebtopApp.dashboardView')
         scope.frameId = element.context.id;
         dashboardApi.getFrameSizeOnGrid(scope.frameId).then(function(frameSize) {
           // console.log('setting initial style: ' + frameSize.width + ', ' + frameSize.height);
-          scope.styles = {
-            'height': frameSize.height,
-            'width': frameSize.width
+          if (scope.deviceSize === 'sm') {
+            scope.styles = {
+            'height': frameSize.sm.height,
+            'width': frameSize.sm.width
           };
+          } else {
+            scope.styles = {
+            'height': frameSize.md.height,
+            'width': frameSize.md.width
+          };
+          }
         }).catch(function(error) {
           console.log('should not have happened: ' + error);
         });

@@ -1,8 +1,8 @@
 <div class="container gridster-container-settings" ng-class="{'grid-toolbar-padding' : !appBarHidden}">
   <div gridster="gridOptions">
     <ul>
-      <li gridster-item row="item.gridLayout.row" col="item.gridLayout.col"
-          size-x="item.gridLayout.sizeX" size-y="item.gridLayout.sizeY"
+      <li gridster-item row="item.gridLayout[deviceSize].row" col="item.gridLayout[deviceSize].col"
+          size-x="item.gridLayout[deviceSize].sizeX" size-y="item.gridLayout[deviceSize].sizeY"
           ng-repeat="item in frames" id="{{item.id}}"
           ozp-gridster-item="" frame="item" ng-hide="isDisabled">
       </li>

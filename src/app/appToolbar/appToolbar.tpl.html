@@ -1,5 +1,5 @@
 <div ng-controller="ApplicationToolbarCtrl">
-  <nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners navbar-fixed-bottom"
+  <nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners"
        role="navigation" ng-class="{true: 'hide', false: ''}[appboardhide]">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -10,7 +10,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <div class="dropdown">
+        <div class="dropdown dropup">
           <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-list"></i></a>
           <ul class="dropdown-menu">
             <li ng-repeat="app in myApps">
@@ -30,12 +30,19 @@
           <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)"
               ng-class="app.isMinimized && layout === 'desktop'? 'inactive-app' : 'active-app'"
               >
-            <a><img class="chrome-icon app-toolbar-img" ng-src="{{app.icon}}"/>{{app.name}}</i></a>
+            <a><img class="chrome-icon app-toolbar-img" ng-src="{{app.icon}}"/>{{app.name | limitTo : 15}}</i></a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li class="divider-vertical"></li>
-          <li class="hideToolbarButton" tooltip="Hide toolbar" tooltip-placement="top">
+          <li ng-show="previousAppsVisible"><i class="fa fa-arrow-circle-left fa-inverse fa-lg link-pointer"
+                 ng-click="previousApps()" style="margin-top: 12px;"></i></li>
+          <li ng-show="nextAppsVisible"><i class="fa fa-arrow-circle-right fa-inverse fa-lg link-pointer"
+                 ng-click="nextApps()" style="margin-top: 12px;"></i></li>
+
+          <li class="divider-vertical"></li>
+          <li class="hideToolbarButton link-pointer" tooltip="Hide toolbar"
+              tooltip-placement="top"
+              style="width: 25px; float: right; margin-right: 5px;">
             <a ng-click="appboardhider();">
               <i class="fa fa-toggle-down fa-lg"></i>
             </a>

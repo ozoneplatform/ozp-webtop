@@ -1,6 +1,7 @@
-<div ng-controller="DashboardToolbarCtrl">
+
   <nav class="navbar navbar-default navbar-inverse dashboard-toolbar
-    no-rounded-corners" role="navigation"  ng-class="{true: 'hide', false: ''}[dashboardhide]">
+    no-rounded-corners navbar-fixed-top" role="navigation"
+       ng-class="{true: 'hide', false: ''}[dashboardhide]">
     <div class="container-fluid" >
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -15,7 +16,8 @@
 
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
+           style="padding-left: 15px;">
         <ul class="nav navbar-nav">
           <!-- stuff on the left side of the nav bar -->
           <li class="dropdown">
@@ -60,7 +62,7 @@
 
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentDashboard.name}} <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentDashboard.name | limitTo : dashboardNameLength}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="board in dashboards">
                 <a ng-click="setCurrentDashboard(board)"
@@ -106,21 +108,21 @@
           <li class="divider-vertical"></li>
           <li>
             <li class="dropdown">
-            <a href="#" class="dropdown-toggle testt" data-toggle="dropdown">
-              <i class="fa fa-user fa-lg">&nbsp</i>{{user}} <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-user fa-lg">&nbsp</i>{{user | limitTo : usernameLength}} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
                   <a ng-click="launchSettingsModal()" class="link-pointer">
-                    <i class="fa fa-cogs fa-fw menu-icon"></i>Settings
+                    <i class="fa fa-cogs fa-fw menu-icon"></i>Preferences
                   </a>
                 </li>
                 <li>
                   <a ng-click="helpUser()" class="link-pointer">
-                    <i class="fa fa-question-circle fa-fw menu-icon"></i>Take a tour
+                    <i class="fa fa-question-circle fa-fw menu-icon"></i>Help
                   </a>
                 </li>
                 <li>
-                  <a ng-click="logOutUser()" class="link-pointer">
+                  <a href="http://ozone-development.github.io/hud-ui/logout.html" class="link-pointer">
                     <i class="fa fa-sign-out fa-fw menu-icon"></i>Logout
                   </a>
                 </li>
@@ -128,8 +130,10 @@
             </li>
           </li>
           <li class="divider-vertical"></li>
-          <li class="hideToolbarButton" tooltip="Hide toolbar" tooltip-placement="bottom"
-              style="width: 25px; float: right;">
+          <li class="hideToolbarButton link-pointer" tooltip="Hide toolbar"
+              tooltip-placement="bottom"
+              style="width: 15px; float: right; margin-right: 20px;
+              margin-left: 0px; padding-left: 0px;">
             <a ng-click="dashboardhider();">
               <i class="fa fa-toggle-up fa-lg"></i>
             </a>
@@ -143,4 +147,3 @@
           tooltip="Show toolbar" tooltip-placement="left">
     <i class="fa fa-toggle-down"></i>
   </button>
-</div>

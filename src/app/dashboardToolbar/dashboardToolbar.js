@@ -3,8 +3,22 @@
 var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 .controller('DashboardToolbarCtrl',
   function($scope, $rootScope, $interval, dashboardApi, dashboardChangeMonitor,
-           userSettingsApi) {
+           userSettingsApi, windowSizeWatcher) {
 
+    windowSizeWatcher.run();
+
+    $scope.$on('window-size-change', function(event, value) {
+      if (value.deviceSize === 'sm') {
+        $scope.dashboardNameLength = 9;
+        $scope.usernameLength = 9;
+      } else if (value.deviceSize === 'md') {
+          $scope.dashboardNameLength = 28;
+          $scope.usernameLength = 12;
+      } else if (value.deviceSize === 'lg') {
+          $scope.dashboardNameLength = 48;
+          $scope.usernameLength = 12;
+      }
+    });
 
     dashboardApi.getDashboards().then(function(dashboards) {
       $scope.dashboards = dashboards;
@@ -178,9 +192,25 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
 );
 
 
-dashboardApp.directive('dashboardToolbar',function(){
-   return {
-       restrict: 'E',
-       templateUrl: 'dashboardToolbar/dashboardToolbar.tpl.html'
-   };
+dashboardApp.directive('dashboardToolbar', function(){
+  return {
+   restrict: 'E',
+   templateUrl: 'dashboardToolbar/dashboardToolbar.tpl.html',
+   replace: false,
+   transclude: false,
+   scope: true,
+   link: function(scope, elem/*, attrs*/) {
+     console.log('elem: ' + elem);
+
+     scope.$watch('dashboardhide', function() {
+       if (scope.dashboardhide) {
+         // TODO: a cleaner way?
+         $('body').css('padding-top', '16px');
+       } else {
+         $('body').css('padding-top', '57px');
+         $('.navbar-fixed-top').css('top', '16px');
+       }
+     });
+   }
+  };
 });

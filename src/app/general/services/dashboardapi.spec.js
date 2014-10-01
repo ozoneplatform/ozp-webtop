@@ -64,10 +64,15 @@ describe('Service: dashboardApi', function () {
       expect(frame0.id).toBeDefined();
 
       expect(frame0.gridLayout).toBeDefined();
-      expect(frame0.gridLayout.row).toBeDefined();
-      expect(frame0.gridLayout.col).toBeDefined();
-      expect(frame0.gridLayout.sizeX).toBeDefined();
-      expect(frame0.gridLayout.sizeY).toBeDefined();
+      expect(frame0.gridLayout.sm.row).toBeDefined();
+      expect(frame0.gridLayout.sm.col).toBeDefined();
+      expect(frame0.gridLayout.sm.sizeX).toBeDefined();
+      expect(frame0.gridLayout.sm.sizeY).toBeDefined();
+
+      expect(frame0.gridLayout.md.row).toBeDefined();
+      expect(frame0.gridLayout.md.col).toBeDefined();
+      expect(frame0.gridLayout.md.sizeX).toBeDefined();
+      expect(frame0.gridLayout.md.sizeY).toBeDefined();
 
       expect(frame0.desktopLayout).toBeDefined();
       expect(frame0.desktopLayout.zIndex).toBeDefined();
@@ -160,16 +165,22 @@ describe('Service: dashboardApi', function () {
       dashboardApi.getFrameSizeOnGrid(frame.id).then(function(frameSize) {
         // Since these values are dynamically generated, they will be undefined
         // at first
-        expect(frameSize.width).not.toBeDefined();
-        expect(frameSize.height).not.toBeDefined();
+        expect(frameSize.sm.width).not.toBeDefined();
+        expect(frameSize.sm.height).not.toBeDefined();
+        expect(frameSize.md.width).not.toBeDefined();
+        expect(frameSize.md.height).not.toBeDefined();
 
-        frame.gridLayout.width = 120;
-        frame.gridLayout.height = 120;
+        frame.gridLayout.sm.width = 80;
+        frame.gridLayout.sm.height = 80;
+        frame.gridLayout.md.width = 120;
+        frame.gridLayout.md.height = 120;
         dashboardApi.saveFrame(frame).then(function(response) {
           expect(response).toEqual(true);
           dashboardApi.getFrameSizeOnGrid(frame.id).then(function(frameSize) {
-            expect(frameSize.width).toBeDefined();
-            expect(frameSize.height).toBeDefined();
+            expect(frameSize.sm.width).toBeDefined();
+            expect(frameSize.sm.height).toBeDefined();
+            expect(frameSize.md.width).toBeDefined();
+            expect(frameSize.md.height).toBeDefined();
             done();
           }).catch(function(error) {
             expect(error).toEqual('should not have happened');
@@ -228,10 +239,15 @@ describe('Service: dashboardApi', function () {
         expect(frame.appId).toEqual(appId);
         // TODO: test this better - row should be one greater than the currently
         // used row
-        expect(frame.gridLayout.row).toEqual(2);
-        expect(frame.gridLayout.col).toEqual(0);
-        expect(frame.gridLayout.sizeX).toEqual(1);
-        expect(frame.gridLayout.sizeY).toEqual(1);
+        expect(frame.gridLayout.sm.row).toEqual(3);
+        expect(frame.gridLayout.sm.col).toEqual(0);
+        expect(frame.gridLayout.sm.sizeX).toEqual(1);
+        expect(frame.gridLayout.sm.sizeY).toEqual(1);
+
+        expect(frame.gridLayout.md.row).toEqual(3);
+        expect(frame.gridLayout.md.col).toEqual(0);
+        expect(frame.gridLayout.md.sizeX).toEqual(1);
+        expect(frame.gridLayout.md.sizeY).toEqual(1);
 
         // Nothing special about these values, just what they happen to be right now
         expect(frame.desktopLayout.zIndex).toEqual(0);
@@ -352,7 +368,8 @@ describe('Service: dashboardApi', function () {
     dashboardApi.createFrame(dashboardId, appId, gridMaxRows).then(function (newFrame) {
       // modify new frame and save
       newFrame.appId = '98765';
-      newFrame.gridLayout.sizeY = 4;
+      newFrame.gridLayout.sm.sizeY = 4;
+      newFrame.gridLayout.md.sizeY = 2;
       dashboardApi.saveFrame(newFrame).then(function (frameSaved) {
         expect(frameSaved).toEqual(true);
         // verify frame was saved in dashboard
@@ -408,11 +425,12 @@ describe('Service: dashboardApi', function () {
     dashboardApi.getDashboardById(0).then(function(dashboard) {
       var frame = dashboard.frames[0];
       var width = 120, height = 240;
-      dashboardApi.updateFrameSizeOnGrid(frame.id, width, height).then(function(update) {
+      var size = 'md';
+      dashboardApi.updateFrameSizeOnGrid(frame.id, size, width, height).then(function(update) {
         expect(update).toEqual(true);
         dashboardApi.getFrameById(frame.id).then(function(frame) {
-          expect(frame.gridLayout.width).toEqual(width);
-          expect(frame.gridLayout.height).toEqual(height);
+          expect(frame.gridLayout.md.width).toEqual(width);
+          expect(frame.gridLayout.md.height).toEqual(height);
           done();
         }).catch(function(error) {
           expect(error).toEqual('should not have happened');
@@ -533,14 +551,32 @@ describe('Service: dashboardApi', function () {
       var newCol = 3;
       var newSizeX = 2;
       var newSizeY = 1;
-      dashboardApi.updateGridFrame(frame.id, newRow, newCol,
-        newSizeX, newSizeY).then(function (update) {
+      var frameData = {
+        'sm': {
+          'row': 1,
+          'col': 1,
+          'sizeX': 1,
+          'sizeY': 2
+        },
+        'md': {
+          'row': newRow,
+          'col': newCol,
+          'sizeX': newSizeX,
+          'sizeY': newSizeY
+        }
+      };
+      dashboardApi.updateGridFrame(frame.id, frameData).then(function (update) {
           expect(update).toEqual(frame.id);
           dashboardApi.getFrameById(frame.id).then(function (frame) {
-            expect(frame.gridLayout.row).toEqual(newRow);
-            expect(frame.gridLayout.col).toEqual(newCol);
-            expect(frame.gridLayout.sizeX).toEqual(newSizeX);
-            expect(frame.gridLayout.sizeY).toEqual(newSizeY);
+            expect(frame.gridLayout.md.row).toEqual(newRow);
+            expect(frame.gridLayout.md.col).toEqual(newCol);
+            expect(frame.gridLayout.md.sizeX).toEqual(newSizeX);
+            expect(frame.gridLayout.md.sizeY).toEqual(newSizeY);
+
+            expect(frame.gridLayout.sm.row).toEqual(1);
+            expect(frame.gridLayout.sm.col).toEqual(1);
+            expect(frame.gridLayout.sm.sizeX).toEqual(1);
+            expect(frame.gridLayout.sm.sizeY).toEqual(2);
             done();
           }).catch(function (error) {
             expect(error).toEqual('should not have happened');
@@ -561,12 +597,27 @@ describe('Service: dashboardApi', function () {
       var newCol = 3;
       var newSizeX = 5;
       var newSizeY = 5;
-      return dashboardApi.updateGridFrame(frameId, newRow, newCol,
-        newSizeX, newSizeY).then(function (update) {
+      var frameData = {
+        'sm': {
+          'row': 1,
+          'col': 0,
+          'sizeX': 2,
+          'sizeY': 2
+        },
+        'md': {
+          'row': newRow,
+          'col': newCol,
+          'sizeX': newSizeX,
+          'sizeY': newSizeY
+        }
+      };
+      return dashboardApi.updateGridFrame(frameId, frameData).then(function (update) {
           expect(update).toEqual(frameId);
           return dashboardApi.getFrameById(frameId).then(function(frame) {
-            expect(frame.gridLayout.sizeX).toEqual(newSizeX);
-            expect(frame.gridLayout.sizeY).toEqual(newSizeY);
+            expect(frame.gridLayout.md.sizeX).toEqual(newSizeX);
+            expect(frame.gridLayout.md.sizeY).toEqual(newSizeY);
+            expect(frame.gridLayout.sm.sizeX).toEqual(2);
+            expect(frame.gridLayout.sm.sizeY).toEqual(2);
           }).catch(function (error) {
             expect(error).toEqual('should not have happened');
           });

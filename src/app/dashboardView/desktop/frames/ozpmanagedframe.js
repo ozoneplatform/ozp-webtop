@@ -21,24 +21,10 @@ angular.module('ozpWebtopApp.dashboardView')
     handles: 'nw, sw, se, ne',
     aspectRatio: false,
     start: function(event,ui) {
-      // console.debug(event);
-      // (ui.element).parent().children().addClass('ui-draggable-iframeFix');
-      ((ui.element)).each(function (index, element) {
-        console.debug(element);
-        //console.debug(index):
-        var d = ('<div class="iframeCover" style="z-index:99;position:absolute;width:100%;top:0px;left:0px;height:' + (element).height() + 'px"></div>');
-        (element).append(d);
-      });
+      (ui.element).css('pointer-events','none');
       },
     stop: function(event, ui) {
-      if(!event){
-        console.debug(event, ui);
-      }
-
-      ('.iframeCover').remove();
-      //(ui.element).parent().children().removeClass('ui-draggable-iframeFix');
-      // (ui.element).parent().children().removeClass('ui-draggable-iframeFix');
-      // ('body').removeClass('ui-body-iframe-fix');
+      (ui.element).css('pointer-events','auto');
 
     }
   };

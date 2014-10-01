@@ -20,12 +20,12 @@ angular.module('ozpWebtopApp.dashboardView')
     // handles: 'all',
     handles: 'nw, sw, se, ne',
     aspectRatio: false,
+    ghost: true,
     start: function(event,ui) {
-      (ui.element).css('pointer-events','none');
-      },
+      (ui.element).parent().css('pointer-events','none');//will probably need a workaround for ie9
+    },
     stop: function(event, ui) {
-      (ui.element).css('pointer-events','auto');
-
+      (ui.element).parent().css('pointer-events','auto');//will probably need a workaround for ie9
     }
   };
 

@@ -309,7 +309,8 @@ angular.module('ozpWebtopApp.dashboardView')
         start: function(event, uiWidget) {
           // reduce the size of the frame when resizing is started so that
           // gridster behaves itself
-          (uiWidget.element).css('pointer-events','none');
+          console.debug(uiWidget);
+          (uiWidget.element).css('pointer-events','none'); //will probably need a workaround for ie9
           var frameId = uiWidget.element.context.id;
           for (var i=0; i < $scope.frames.length; i++) {
             if ($scope.frames[i].id === frameId) {
@@ -329,7 +330,7 @@ angular.module('ozpWebtopApp.dashboardView')
         resize: function(/*event, uiWidget, $element */) {
         }, // optional callback fired when item is resized,
         stop: function(event, uiWidget){
-          (uiWidget.element).css('pointer-events','auto');
+          (uiWidget.element).css('pointer-events','auto');//will probably need a workaround for ie9
           $scope.updateAllFramesAfterChange();
         } // optional callback fired when item is finished resizing
       },

@@ -22,10 +22,16 @@ angular.module('ozpWebtopApp.dashboardView')
     aspectRatio: false,
     ghost: true,
     start: function(event,ui) {
-      (ui.element).parent().css('pointer-events','none');//will probably need a workaround for ie9
+      if(!event){
+        console.debug(ui.element);
+      }
+      (ui.element).parent().parent().parent().css('pointer-events','none');//this is not smart, but works for the demo... will probably need a workaround for ie9
     },
     stop: function(event, ui) {
-      (ui.element).parent().css('pointer-events','auto');//will probably need a workaround for ie9
+      if(!event){
+        console.debug(ui.element);
+      }
+      (ui.element).parent().parent().parent().css('pointer-events','auto');//this is not smart, but works for the demo... will probably need a workaround for ie9
     }
   };
 
@@ -97,7 +103,7 @@ angular.module('ozpWebtopApp.dashboardView')
         event.preventDefault();
         startX = event.pageX - x;
         startY = event.pageY - y;
-
+        console.log('saving state!');
         element.on('mouseup', mouseup);
         // console.log('Starting x is ' + startX + ', startY is ' + startY);
       });
@@ -112,13 +118,15 @@ angular.module('ozpWebtopApp.dashboardView')
         x = event.pageX - startX;
         // TODO: find a more maintainable way?
         // Ignore click event if we clicked a button
+        console.debug(y);
+        console.debug(x);
         if (event.target.className.indexOf('glyphicon') > -1) {
           event.preventDefault();
           return;
         }
         // $document.off('mousemove', mousemove);
         element.off('mouseup', mouseup);
-
+        console.log('updating state');
         dashboardApi.updateDesktopFrame(
           scope.frame.id, 
           element[0].offsetLeft, 

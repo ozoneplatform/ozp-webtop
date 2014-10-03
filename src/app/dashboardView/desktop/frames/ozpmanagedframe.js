@@ -68,8 +68,8 @@ angular.module('ozpWebtopApp.dashboardView')
     restrict: 'E',
     template: '<div ng-include="getContentUrl()"></div>',
     link: function postLink(scope, element) {
-      element.resizable(resizableConfig);
       element.draggable(draggableConfig);
+      element.resizable(resizableConfig);
       // Logic for dragging is influenced by Angular directive documentation, under the
       // heading "Creating a Directive that Adds Event Listeners".
       // See: https://docs.angularjs.org/guide/directive
@@ -82,9 +82,10 @@ angular.module('ozpWebtopApp.dashboardView')
       var x = startX, y = startY;
 
       // React to a mousedown and allow the element to move
-      element.on('mousedown', function(event) {
+
         // TODO: find a more maintainable way?
         // Ignore click event if we clicked a button
+      function start (event) {
         if (event.target.className.indexOf('glyphicon') > -1) {
           event.preventDefault();
           return;
@@ -103,30 +104,19 @@ angular.module('ozpWebtopApp.dashboardView')
         event.preventDefault();
         startX = event.pageX - x;
         startY = event.pageY - y;
-        console.log('saving state!');
-        element.on('mouseup', mouseup);
-        // console.log('Starting x is ' + startX + ', startY is ' + startY);
-      });
+      }
 
-      // function mousemove(event) {
-      //   y = event.pageY - startY;
-      //   x = event.pageX - startX;
-      // }
 
-      function mouseup() {
+      function stop (event) {
         y = event.pageY - startY;
         x = event.pageX - startX;
         // TODO: find a more maintainable way?
-        // Ignore click event if we clicked a button
-        console.debug(y);
-        console.debug(x);
+
         if (event.target.className.indexOf('glyphicon') > -1) {
           event.preventDefault();
           return;
         }
-        // $document.off('mousemove', mousemove);
-        element.off('mouseup', mouseup);
-        console.log('updating state');
+
         dashboardApi.updateDesktopFrame(
           scope.frame.id, 
           element[0].offsetLeft, 
@@ -136,7 +126,11 @@ angular.module('ozpWebtopApp.dashboardView')
           scope.max.zIndex
         );
       }
-
+      //add listeners
+      element.on('mousedown', start);
+      element.on('resizestart', start);
+      element.on('mouseup', stop);
+      element.on('resizestop', stop);
       // Is the origin the same as the webtop?
       var origin = compareUrl(scope.frame.url);
 

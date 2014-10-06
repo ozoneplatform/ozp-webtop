@@ -39,7 +39,8 @@ angular.module('ozpWebtopApp.dashboardView')
     addClasses: true,
     scrollSensitivity: 100,
     scrollSpeed: 100,
-    iframeFix: true
+    iframeFix: true,
+    containment: 'document'
   };
   /**
    * Decides which template to use.
@@ -86,6 +87,8 @@ angular.module('ozpWebtopApp.dashboardView')
         // TODO: find a more maintainable way?
         // Ignore click event if we clicked a button
       function start (event) {
+        console.debug('event');
+        console.debug(event);
         if (event.target.className.indexOf('glyphicon') > -1) {
           event.preventDefault();
           return;
@@ -127,10 +130,8 @@ angular.module('ozpWebtopApp.dashboardView')
         );
       }
       //add listeners
-      element.on('mousedown', start);
-      element.on('resizestart', start);
-      element.on('mouseup', stop);
-      element.on('resizestop', stop);
+      element.on('mousedown resizestart', start);
+      element.on('mouseup mouseleave resizestop', stop);
       // Is the origin the same as the webtop?
       var origin = compareUrl(scope.frame.url);
 

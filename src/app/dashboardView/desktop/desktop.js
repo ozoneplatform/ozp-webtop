@@ -10,7 +10,9 @@ angular.module('ozpWebtopApp.dashboardView')
         console.log('No dashboards exist');
         return;
       }
+      console.log('re getting dasboards');
       $scope.dashboards = dashboards;
+
       $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
     }).catch(function(error) {
       console.log('should not have happened: ' + error);
@@ -65,7 +67,6 @@ angular.module('ozpWebtopApp.dashboardView')
         }
 
         /* end isminimized */
-
         if ($scope.frames.length !== apiDash.frames.length){
 
           /*Make an array of old frames and new frames*/
@@ -78,6 +79,7 @@ angular.module('ozpWebtopApp.dashboardView')
           for (var j in apiDash.frames){
             newFrames.push(apiDash.frames[j].appId);
           }
+
           /*return just the differences between oldFrames and new Frames*/
           Array.prototype.diff = function(a) {
             return this.filter(function(i) {return a.indexOf(i) < 0;});
@@ -186,5 +188,4 @@ angular.module('ozpWebtopApp.dashboardView')
           ((a.desktopLayout.zIndex > b.desktopLayout.zIndex) ? 1 : 0));
       });
     }
-
   });

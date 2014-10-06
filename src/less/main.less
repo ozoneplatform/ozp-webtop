@@ -153,7 +153,7 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: @app-toolbar-height;
-  z-index: 10000;
+  z-index: 200;
 }
 
 .app-toolbar-ng-include {
@@ -200,17 +200,16 @@ body {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .classBanner {
-  z-index: 10000;
+  position: fixed !important;
+  z-index: 200;
 }
 
 body > div.classBanner:first-of-type {
-    position: fixed;
     top: 0px;
 }
 
 body > div.classBanner:last-of-type {
-    position: fixed;
-    bottom: 0px;
+    bottom: 0;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -326,4 +325,43 @@ body > div.classBanner:last-of-type {
 
 .grid-toolbar-padding {
   padding-bottom: @app-toolbar-height;
+}
+
+.ozp-managed-frame .ng-scope {
+  height: 100%;
+}
+
+.ozp-managed-frame {
+  overflow: hidden;
+}
+
+.managed-iframe, managed-frame {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ui-draggable-iframeFix {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  opacity: 1;
+  zIndex: 1000;
+}
+
+.ui-body-iframe-fix {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: red;
+  z-index: 1111;
+}
+
+.classBanner {
+  bottom: 0 !important;
 }

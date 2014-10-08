@@ -103,6 +103,10 @@ package.json            # metadata about our app, used by NPM and the build
 * HTML style - use 2 space indentation 
 * Try to keep lines to 80 characters whenever possible
 
+### Responsive Design
+Currently, Webtop is semi-responsive, supporting devices >= 768px ('small' devices,
+as defined by Bootstrap). 
+
 ## Production Deployment
 To run the production version of Webtop (files minified, concatenated, etc):
 

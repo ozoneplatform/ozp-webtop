@@ -14,6 +14,7 @@
  * - delta:less also needs to run the concat:build_css task
  * - added grunt-gh-pages
  * - added YUIdoc generation
+ * - added grunt release task for running changelog and bump
  */
 
 
@@ -81,7 +82,8 @@ module.exports = function ( grunt ) {
     changelog: {
       options: {
         dest: 'CHANGELOG.md',
-        template: 'changelog.tpl'
+        template: 'changelog.tpl',
+        version: '<%= changelogVersion %>'
       }
     },
 
@@ -94,13 +96,14 @@ module.exports = function ( grunt ) {
           'package.json',
           'bower.json'
         ],
-        commit: false,
+        commit: true,
         commitMessage: 'chore(release): v%VERSION%',
         commitFiles: [
           'package.json',
-          'client/bower.json'
+          'bower.json',
+          'CHANGELOG.md'
         ],
-        createTag: false,
+        createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
         push: false,
@@ -784,6 +787,35 @@ module.exports = function ( grunt ) {
   ]);
 
   /**
+   * Release a new version
+   *
+   * Runs grunt changelog to generate the changelog (assigning all commits from
+   * the last tag to HEAD to the next version number) then runs grunt bump to
+   * increment the version number, commit the change log and version update,
+   * and create a new tag
+   *
+   * type param must be either patch, minor, or major
+   */
+  grunt.registerTask('release', 'Create a new release', function(type) {
+    if (arguments.length !== 1) {
+      grunt.log.writeln('ERROR, must specify a release type of patch, minor, or major');
+      return;
+    }
+    var validTypes = ['patch', 'minor', 'major'];
+    if (validTypes.indexOf(type) === -1) {
+      grunt.log.writeln('ERROR: Invalid release type ' + type);
+      return;
+    }
+
+    if (!setChangelogVersion(type)) {
+      grunt.log.writeln('ERROR: Failed to set next version number for changelog');
+      return;
+    }
+    grunt.task.run(['changelog']);
+    grunt.task.run(['bump:' + type]);
+  });
+
+  /**
    * A utility function to get all app JavaScript sources.
    */
   function filterForJS ( files ) {
@@ -799,6 +831,43 @@ module.exports = function ( grunt ) {
     return files.filter( function ( file ) {
       return file.match( /\.css$/ );
     });
+  }
+
+  /**
+   * Utility function to set the version to use for the changelog
+   *
+   * releaseType: 'patch', 'minor', or 'major'
+   */
+  function setChangelogVersion(releaseType) {
+    var version = grunt.config( 'pkg.version').split('.');
+    var major = version[0];
+    var minor = version[1];
+    var patch = version[2].split('-')[0];
+    var newVersion = '';
+
+    if (releaseType === 'patch') {
+      var newPatchVersion = (Number(patch) + 1).toString();
+      // existing major and minior versions stay the same, increment patch
+      newVersion = major + '.' + minor + '.' + newPatchVersion;
+      grunt.config( 'changelogVersion',  newVersion);
+      return true;
+    } else if (releaseType === 'minor') {
+      var newMinorVersion = (Number(minor) + 1).toString();
+      // existing major version stays the same, increment minor version, reset
+      // patch version to 0
+      newVersion = major + '.' + newMinorVersion + '.0';
+      grunt.config( 'changelogVersion',  newVersion);
+      return true;
+    } else if (releaseType === 'major') {
+      var newMajorVersion = (Number(major) + 1).toString();
+      // increment major version, reset minor and patch versions to 0
+      newVersion = newMajorVersion + '.0.0';
+      grunt.config( 'changelogVersion',  newVersion);
+      return true;
+    } else {
+      console.log('ERROR: invalid releaseType: ' + releaseType);
+      return false;
+    }
   }
 
   /** 

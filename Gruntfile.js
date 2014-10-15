@@ -147,6 +147,19 @@ module.exports = function ( grunt ) {
           }
         ]
       },
+      // jquery-ui doesn't support LESS so there's no way to easily override
+      // the image path references in the css, hence this manual copy
+      build_jquery_ui_images: {
+        files: [
+          {
+            src: ['vendor/jquery-ui/themes/ui-darkness/images/*'],
+            dest: '<%= build_dir %>/assets/images/',
+            cwd: '.',
+            expand: true,
+            flatten: true
+          }
+        ]
+      },
       build_appjs: {
         files: [
           {
@@ -753,8 +766,8 @@ module.exports = function ( grunt ) {
   grunt.registerTask( 'build', [
     'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build', 'yuidoc',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
-    'copy:build_appjs', 'copy:build_vendorjs', 'copy:docs', 'index:build', 'karmaconfig',
-    'karma:continuous' 
+    'copy:build_jquery_ui_images', 'copy:build_appjs', 'copy:build_vendorjs',
+    'copy:docs', 'index:build', 'karmaconfig', 'karma:continuous'
   ]);
 
   /**

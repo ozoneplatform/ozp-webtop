@@ -20,143 +20,504 @@ function generalMarketplacedModel(persistStrategy) {
         'apps': [
           {
             'name': 'Purple Circle',
-            'icon': 'assets/mock/img/maps.png',
-            'shortDescription': 'The best circle in town',
+            'id': '342f3680-18c9-11e4-8c21-0800200c9a66',
             'description': 'The purple circle application allows users to...',
-            'version': '1.0.1',
-            'keywords': ['purple', 'circle'],
-            'url': 'http://ozone-development.github.io/ozp-demo/circle/circle.html',
-            'id': '342f3680-18c9-11e4-8c21-0800200c9a66'
+            'shortDescription': 'The best circle in town',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'purple',
+              'circle'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/maps.png',
+              'large': 'assets/mock/img/maps.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/circle/circle.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Red Square',
-            'icon': 'assets/mock/img/UserFolder.png',
-            'shortDescription': 'A red polygon with four equal sides',
+            'id': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4',
             'description': 'The Red Square is a marvel of modern engineering...',
-            'version': '1.4.1',
-            'keywords': ['red', 'square'],
-            'url': 'http://ozone-development.github.io/ozp-demo/square/square.html',
-            'id': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4'
+            'shortDescription': 'A red polygon with four equal sides',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'red',
+              'square'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/UserFolder.png',
+              'large': 'assets/mock/img/UserFolder.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/square/square.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Some Text',
-            'icon': 'assets/mock/img/Network-icon.png',
-            'shortDescription': 'A brilliant string of text',
+            'id': 'c3d895d5-f332-4154-b963-c5dd63f8ca49',
             'description': 'The text shown in this application is one of the best...',
-            'version': '0.9.8',
-            'keywords': ['some', 'text'],
-            'url': 'http://ozone-development.github.io/ozp-demo/text/text.html',
-            'id': 'c3d895d5-f332-4154-b963-c5dd63f8ca49'
+            'shortDescription': 'A brilliant string of text',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'text'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/Network-icon.png',
+              'large': 'assets/mock/img/Network-icon.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/text/text.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Mandelbrot',
-            'icon': 'assets/mock/img/MusicFolder.png',
-            'shortDescription': 'A beautiful set of complex numbers',
+            'id': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5',
             'description': 'Benoit Mandelbrot would be so proud of this...',
-            'version': '5.5.2',
-            'keywords': ['benoit', 'mandelbrot'],
-            'url': 'http://ozone-development.github.io/ozp-demo/mbrot/mbrot.html',
-            'id': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5'
+            'shortDescription': 'A beautiful set of complex numbers',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'mandelbrot'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/MusicFolder.png',
+              'large': 'assets/mock/img/MusicFolder.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/mbrot/mbrot.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Clock',
-            'icon': 'assets/mock/img/MusicFolder.png',
-            'shortDescription': 'A clock that tells time',
+            'id': '19179c15-4cbb-45af-9fde-c6b35a343424',
             'description': 'Provides the date and time in any country...',
-            'version': '2.2.5',
-            'keywords': ['clock', 'date', 'time'],
-            'url': 'http://somewhere.clock/clock',
-            'id': '19179c15-4cbb-45af-9fde-c6b35a343424'
+            'shortDescription': 'A clock that tells time',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'clock'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/MusicFolder.png',
+              'large': 'assets/mock/img/MusicFolder.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://somewhere.clock/clock',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'People Counter',
-            'icon': 'assets/mock/img/MusicFolder.png',
-            'shortDescription': 'Population counter',
+            'id': 'bc6b3ac9-4f68-4d92-966d-f50170914997',
             'description': 'Provides the population in any given country...',
-            'version': '3.5.4',
-            'keywords': ['population', 'counter', 'people'],
-            'url': 'http://somewhere.popcounter/popcounter',
-            'id': 'bc6b3ac9-4f68-4d92-966d-f50170914997'
+            'shortDescription': 'Population counter',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'population',
+              'counter',
+              'people'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/MusicFolder.png',
+              'large': 'assets/mock/img/MusicFolder.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://somewhere.popcounter/popcounter',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Green Bouncing Ball',
-            'icon': 'assets/mock/img/green_ball.png',
-            'shortDescription': 'Bouncing Ball IWC demo - Green',
+            'id': '998437ef-9191-4d57-91a7-6ab049361583',
             'description': 'Balls that bounce and talk to each other',
-            'version': '1.0.0',
-            'keywords': ['bouncing', 'ball', 'demo'],
-            'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=green',
-            'id': '998437ef-9191-4d57-91a7-6ab049361583'
+            'shortDescription': 'Bouncing Ball IWC demo - Green',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'bouncing',
+              'ball',
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/green_ball.png',
+              'large': 'assets/mock/img/green_ball.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=green',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Blue Bouncing Ball',
-            'icon': 'assets/mock/img/blue_ball.png',
-            'shortDescription': 'Bouncing Ball IWC demo - Blue',
+            'id': '3af849aa-dad0-4223-b15b-9da3b48d1845',
             'description': 'Balls that bounce and talk to each other',
-            'version': '1.0.0',
-            'keywords': ['bouncing', 'ball', 'demo'],
-            'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=blue',
-            'id': '3af849aa-dad0-4223-b15b-9da3b48d1845'
+            'shortDescription': 'Bouncing Ball IWC demo - Blue',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'bouncing',
+              'ball',
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/blue_ball.png',
+              'large': 'assets/mock/img/blue_ball.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=blue',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Red Bouncing Ball',
-            'icon': 'assets/mock/img/red_ball.png',
-            'shortDescription': 'Bouncing Ball IWC demo - Red',
+            'id': 'e5f52929-3f00-4766-a820-f0452ff74572',
             'description': 'Balls that bounce and talk to each other',
-            'version': '1.0.0',
-            'keywords': ['bouncing', 'ball', 'demo'],
-            'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=red',
-            'id': 'e5f52929-3f00-4766-a820-f0452ff74572'
+            'shortDescription': 'Bouncing Ball IWC demo - Red',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'bouncing',
+              'ball',
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/red_ball.png',
+              'large': 'assets/mock/img/red_ball.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=red',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Black Bouncing Ball',
-            'icon': 'assets/mock/img/black_ball.png',
-            'shortDescription': 'Bouncing Ball IWC demo - Black',
+            'id': '93eb7a1d-618c-4478-a59e-326eccbe86d5',
             'description': 'Balls that bounce and talk to each other',
-            'version': '1.0.0',
-            'keywords': ['bouncing', 'ball', 'demo'],
-            'url': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=black',
-            'id': '93eb7a1d-618c-4478-a59e-326eccbe86d5'
+            'shortDescription': 'Bouncing Ball IWC demo - Black',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'bouncing',
+              'ball',
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/black_ball.png',
+              'large': 'assets/mock/img/black_ball.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=black',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Incident List',
-            'icon': 'assets/mock/img/alert-icon.png',
-            'shortDescription': 'Aggregates network incidents from monitoring, virus detection, and intrusion detection systems on the corporate network',
+            'id': '7702a592-3235-4ce7-af2a-ed806756b92c',
             'description': 'Aggregates network incidents from monitoring, virus detection, and intrusion detection systems on the corporate network',
-            'version': '1.0.0',
-            'keywords': ['incident'],
-            'url': 'http://ozone-development.github.io/ozp-demo/incidentList/index.html',
-            'id': '7702a592-3235-4ce7-af2a-ed806756b92c'
+            'shortDescription': 'Aggregates network incidents from monitoring, virus detection, and intrusion detection systems on the corporate network',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 400,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'incident'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/alert-icon.png',
+              'large': 'assets/mock/img/alert-icon.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/incidentList/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Greek Analysis',
-            'icon': 'assets/mock/img/math-icon.png',
-            'shortDescription': 'This is the Greek Analysis app',
+            'id': 'cd0e3e24-cae8-4886-a0d4-c7e04b5b104e',
             'description': 'This is the Greek Analysis app',
-            'version': '1.0.0',
-            'keywords': ['greek analysis', 'stock'],
-            'url': 'http://ozone-development.github.io/ozp-demo/greekAnalysis/index.html',
-            'id': 'cd0e3e24-cae8-4886-a0d4-c7e04b5b104e'
+            'shortDescription': 'This is the Greek Analysis app',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 400,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'greek',
+              'stock'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/math-icon.png',
+              'large': 'assets/mock/img/math-icon.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/greekAnalysis/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Stock Trader',
-            'icon': 'assets/mock/img/bull-icon.png',
-            'shortDescription': 'This is the Stock Trader app',
+            'id': 'f38e10db-eb3f-4b90-8ec5-cb0a7dbd9191',
             'description': 'This is the Stock Trader app',
-            'version': '1.0.0',
-            'keywords': ['trader', 'stock'],
-            'url': 'http://ozone-development.github.io/ozp-demo/stockTrader/index.html',
-            'id': 'f38e10db-eb3f-4b90-8ec5-cb0a7dbd9191'
+            'shortDescription': 'This is the Stock Trader app',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'trader',
+              'stock'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/bull-icon.png',
+              'large': 'assets/mock/img/bull-icon.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/stockTrader/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           },
           {
             'name': 'Chart',
-            'icon': 'assets/mock/img/stock-chart-icon.png',
-            'shortDescription': 'This is the Chart app',
+            'id': '00605b24-baff-4270-b0b5-2b6bd6455883',
             'description': 'This is the Chart app',
-            'version': '1.0.0',
-            'keywords': ['chart', 'stock'],
-            'url': 'http://ozone-development.github.io/ozp-demo/chart/index.html',
-            'id': '00605b24-baff-4270-b0b5-2b6bd6455883'
+            'shortDescription': 'This is the Chart app',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': true
+            },
+            'tags': [
+              'demo',
+              'chart',
+              'stock'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'assets/mock/img/stock-chart-icon.png',
+              'large': 'assets/mock/img/stock-chart-icon.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/chart/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
           }
         ]
       };

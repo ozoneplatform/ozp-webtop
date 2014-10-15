@@ -309,8 +309,8 @@ function generalDashboardModel(persistStrategy, Utilities) {
         for (var j=0; j < frames.length; j++) {
           if (frames[j].appId === marketplaceApps[i].id) {
             // if it is, then get all relevant info
-            frames[j].icon = marketplaceApps[i].icon;
-            frames[j].url = marketplaceApps[i].url;
+            frames[j].icon = marketplaceApps[i].icons.small;
+            frames[j].url = marketplaceApps[i].launchUrls.default;
             frames[j].name = marketplaceApps[i].name;
             frames[j].shortDescription = marketplaceApps[i].shortDescription;
           }

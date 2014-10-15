@@ -16,7 +16,7 @@
             <li ng-repeat="app in myApps">
               <a ng-click="appClicked(app)" class="link-pointer"
                   tooltip-placement="right" tooltip="{{app.shortDescription}}">
-                <img ng-src="{{app.icon}}" height="20" width="20" />
+                <img ng-src="{{app.icons.small}}" height="20" width="20" />
                 {{app.name}}</a>
             </li>
           </ul>

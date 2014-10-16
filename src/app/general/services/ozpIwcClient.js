@@ -2,6 +2,16 @@
 
 var app = angular.module('ozpWebtopApp.ozpIwcClient');
 
+/**
+ * Interface for working with an IWC client
+ *
+ * @class iwcConnectedClient
+ * @constructor
+ * @param $q ng $q service
+ * @param iwcClient iwcClient service
+ * @param iwcOzoneBus OZONE bus to connect to
+ * @namespace ozpIwcClient
+ */
 app.factory('iwcConnectedClient', function($q, iwcClient, iwcOzoneBus) {
 
   var client = new iwcClient.Client({
@@ -13,6 +23,12 @@ app.factory('iwcConnectedClient', function($q, iwcClient, iwcOzoneBus) {
   var initialConnection = true;
 
   return {
+    /**
+     * Get a connected OZP client
+     *
+     * @method getClient
+     * @returns {Promise} fulfilled value is a connected OZP client
+     */
     getClient: function() {
       var deferred = $q.defer();
       if (isConnected) {

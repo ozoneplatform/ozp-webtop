@@ -13,7 +13,7 @@
         <div class="dropdown dropup">
           <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-list"></i></a>
           <ul class="dropdown-menu">
-            <li ng-repeat="app in myApps">
+            <li ng-repeat="app in apps">
               <a ng-click="appClicked(app)" class="link-pointer"
                   tooltip-placement="right" tooltip="{{app.shortDescription}}">
                 <img ng-src="{{app.icons.small}}" height="20" width="20" />

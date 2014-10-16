@@ -3,6 +3,8 @@
 /**
  * ozpButton Renders button with an icon to the left and text to the right.
  *
+ * ngtype: directive
+ *
  * @namespace components
  * @class ozpButton
  * @constructor

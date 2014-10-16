@@ -14,9 +14,9 @@ describe('App Toolbar', function () {
     $controller('ApplicationToolbarCtrl', {$scope: scope});
   }));
 
-  it('should expose myApps', function() {
+  it('should expose $scope.apps', function() {
     if(!scope.$$phase) { scope.$apply(); }
-    expect(scope.myApps).toBeDefined();
+    expect(scope.apps).toBeDefined();
   });
 
   //WebTop is built off config file, since there are no api's currently that we would be able to get myApps, this makes sure the hard coded objects have values

@@ -1,16 +1,25 @@
 'use strict';
 
 /**
- * compareUrl compares the current location of the webtop to a specified frame URL
+ * compareUrl
  *
- * @namespace ozpWebtopApp.general
- * @method compareUrl
+ * ngtype: factory
+ *
+ * @namespace general
+ * @class compareUrl
  * @static
- * @param {String} frameUrl the url of a frame
- * @return {Boolean} true if the url represents the same origin as the webtop, false otherwise
  */
 angular.module('ozpWebtopApp.general')
 .factory('compareUrl', function () {
+  /**
+  * Determine if the given URL represents the same origin as the application
+  *
+  * @method compareUrl
+  * @static
+  * @param {String} frameUrl The url of a frame
+  * @return {Boolean} True if the url represents the same origin as the webtop,
+  * false otherwise
+  */
   var compareUrl = function(url) {
     var loc = window.location,
     a = document.createElement('a');

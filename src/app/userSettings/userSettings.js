@@ -2,9 +2,75 @@
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used below.
-
+/**
+ * Controller for User Settings modal dialog
+ *
+ * ngtype: controller
+ *
+ * @namespace userSettings
+ * @class ModalInstanceCtrl
+ * @constructor
+ * @param $scope Scope used by controller
+ * @param $modalInstance Service from ui.bootstrap
+ * @param currentDashboardId Id of dashboard to use
+ * @param dashboardApi Dashboard API
+ * @param userSettingsApi User Settings API
+ */
 var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
                                   dashboardApi, userSettingsApi) {
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //                            $scope properties
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /**
+   * @property preferences The user's preferences
+   * @type {{}}
+   */
+  $scope.preferences = {};
+  /**
+   * @property dashboards The user's dashboards
+   * @type {Array}
+   */
+  $scope.dashboards = [];
+
+  /**
+   * @property themes Available themes for the application (e.g light,
+   * dark)
+   * @type {Array}
+   */
+  $scope.themes = ['light', 'dark'];
+
+  /**
+   * @property validNamePattern Regex for valid dashboard names
+   * @type {RegExp}
+   */
+  $scope.validNamePattern = /^[a-z_]+[a-z0-9_ ]*\w$/i;
+
+  /**
+   * @property currentDashboardId User's current dashboard id
+   * @type {String}
+   */
+  $scope.currentDashboardId = currentDashboardId;
+
+  /**
+   * @property newDashboardName Name of new dashboard to create. An
+   * object to support ng data binding
+   * @type {{name: string}}
+   */
+  $scope.newDashboardName = {
+    'name': ''
+  };
+
+  /**
+   * @property addingNewBoard Flag indicating if a new dashboard is being
+   * added
+   * @type {boolean}
+   */
+  $scope.addingNewBoard = false;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //                           initialization
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   userSettingsApi.getUserSettings().then(function(settings) {
     $scope.preferences = settings;
@@ -18,14 +84,21 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
     console.log('should not have happened: ' + error);
   });
 
-  $scope.themes = ['light', 'dark'];
-  $scope.validNamePattern = /^[a-z_]+[a-z0-9_ ]*\w$/i;
-  $scope.currentDashboardId = currentDashboardId;
-  $scope.newDashboardName = {
-    'name': ''
-  };
-  $scope.addingNewBoard = false;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //                          methods
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  /**
+   * Makes changes to an existing dashboard
+   *
+   * Invoked after user 'submits' the modal. Checks to see if this dashboard
+   * was flagged for deletion or renamed. If so, the corresponding changes
+   * are made
+   *
+   * @method updateExistingDashboard
+   * @param {String} dashboardId Id of dashboard to update
+   * @returns {*}
+   */
   $scope.updateExistingDashboard = function(dashboardId) {
     return dashboardApi.getDashboardById(dashboardId).then(function(dashboard) {
       var scopeDashboard = '';
@@ -54,52 +127,72 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
 
   };
 
+  /**
+   * Handler invoked when dialog is closed via OK button
+   *
+   * - Makes changes to any existing dashboards (deletions or renames)
+   * - Adds a new dashboard (if indicated by user)
+   * - Updates user preferences
+   * - Broadcasts UserSettingsChanged event
+   *
+   * @method ok
+   */
   $scope.ok = function () {
-    // Save all dashboards
-    dashboardApi.getDashboardById($scope.currentDashboardId).then(function(/*currentDashboard*/) {
-      // var currentDashboardName = currentDashboard.name;
-
-      $scope.dashboards.reduce(function(previous, current) {
-        return previous.then(function() {
-          var promise = $scope.updateExistingDashboard(current.id);
-          return promise;
-        });
-        }, Promise.resolve()).then(function() {
-          // finished updating all frames
-          // update complete
-          // Check for new dashboard
-          if ($scope.addingNewBoard) {
-            dashboardApi.createDashboard($scope.newDashboardName.name).then(function() {
-              // update complete
-              userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
-                // broadcast message that user's preferences have changed
-                // Can't seem to DI $rootScope in here without errors, so accessing
-                // $rootScope using $parent instead
-                $scope.$parent.$broadcast('UserSettingsChanged', {});
-
-                $modalInstance.close();
-              }).catch(function(error) {
-                console.log('should not have happened: ' + error);
-              });
-            }).catch(function(error) {
-              console.log('should not have happened: ' + error);
-            });
-          } else {
+    // First, update any existing dashboard that may have changed
+    $scope.dashboards.reduce(function(previous, current) {
+      return previous.then(function() {
+        var promise = $scope.updateExistingDashboard(current.id);
+        return promise;
+      });
+      }, Promise.resolve()).then(function() {
+        // finished updating all dashboards
+        // update complete
+        // Check for new dashboard
+        if ($scope.addingNewBoard) {
+          dashboardApi.createDashboard($scope.newDashboardName.name).then(function() {
+            // update complete
             userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
+              // broadcast message that user's preferences have changed
+              // Can't seem to DI $rootScope in here without errors, so accessing
+              // $rootScope using $parent instead
               $scope.$parent.$broadcast('UserSettingsChanged', {});
+
               $modalInstance.close();
             }).catch(function(error) {
               console.log('should not have happened: ' + error);
             });
-          }
-      });
+          }).catch(function(error) {
+            console.log('should not have happened: ' + error);
+          });
+        } else {
+          userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
+            $scope.$parent.$broadcast('UserSettingsChanged', {});
+            $modalInstance.close();
+          }).catch(function(error) {
+            console.log('should not have happened: ' + error);
+          });
+        }
     });
   };
 
+  /**
+   * Handler invoked when modal is dismissed via the cancel button
+   *
+   * @method cancel
+   */
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
 
+  /**
+   * Handler invoked when the delete button is clicked for a given dashboard
+   *
+   * Ensures user is not going to delete their last dashboard, then flags
+   * the given dashboard for deletion
+   *
+   * @method deleteClicked
+   * @param dashboard
+   */
   $scope.deleteClicked = function(dashboard) {
     // Don't let user delete all of their dashboards
     var totalBoards = $scope.dashboards.length;
@@ -121,6 +214,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
     }
   };
 
+  /**
+   * Handler invoked when the undo delete button is clicked for a given
+   * dashboard
+   *
+   * Resets the deletion flag for the dashboard
+   *
+   * @method undoDeleteClicked
+   * @param {Object} dashboard The dashboard to unflag for deletion
+   */
   $scope.undoDeleteClicked = function(dashboard) {
     for (var i=0; i < $scope.dashboards.length; i++) {
       if ($scope.dashboards[i].id === dashboard.id) {
@@ -129,10 +231,20 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
     }
   };
 
+  /**
+   * Handler invoked when the add dashboard button is clicked
+   *
+   * @method addDashboardClicked
+   */
   $scope.addDashboardClicked = function() {
     $scope.addingNewBoard = true;
   };
 
+  /**
+   * Handler invoked when the undo add dashboard button is clicked
+   *
+   * @method undoAddDashboardClicked
+   */
   $scope.undoAddDashboardClicked = function() {
     $scope.addingNewBoard = false;
     $scope.newDashboardName.name = '';
@@ -143,10 +255,19 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
 ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'currentDashboardId',
   'dashboardApi', 'userSettingsApi'];
 
-/*
- *  It seems like we haven't been using angular directives so I included that here
+/**
+ * ng Directive for User Settings modal dialog
+ *
+ * Usage:
+ *
+ *     <user-settings></user-settings>
+ *
+ * ngtype: directive
+ *
+ * @class userSettings
+ * @static
+ * @namespace userSettings
  */
-
 angular.module( 'ozpWebtopApp.userSettings').directive('userSettings', function(){
     return {
         restrict: 'E',

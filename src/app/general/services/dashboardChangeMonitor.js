@@ -4,9 +4,17 @@
  * Broadcast messages down $rootScope when the current dashboard or dashboard
  * layout changes
  *
+ * Event name: **dashboardChange**
+ *
+ * Event data:
+ *
+ *     {"layout": "grid | desktop", "dashboardId": "someDashboardId"}
+ *
+ * ngtype: factory
+ *
  * @namespace general
  * @class dashboardChangeMonitor
- * @constructor
+ * @static
  */
 angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',
   function($rootScope, $location) {
@@ -15,7 +23,12 @@ angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',
     service.layout = '';
     service.dashboardId = '';
 
-    service.run =  function() {
+    /**
+     * Activate the dashboardChangeMonitor
+     *
+     * @method run
+     */
+    service.run = function() {
       $rootScope.$watch(function() {
         return $location.path();
       }, function() {

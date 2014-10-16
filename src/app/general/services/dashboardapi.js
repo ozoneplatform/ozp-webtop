@@ -13,6 +13,11 @@ Array.prototype.remove = function(from, to) {
 function generalDashboardModel(persistStrategy, Utilities) {
 
   return {
+    /**
+     * Test method - delete this later
+     * @method sayHello
+     * @returns {Promise}
+     */
     sayHello: function() {
       if (typeof persistStrategy.sayHello !== 'function') {
         console.log('persistStrategy: ' + JSON.stringify(persistStrategy));
@@ -22,11 +27,21 @@ function generalDashboardModel(persistStrategy, Utilities) {
         return response;
       });
     },
+    /**
+     * Get all dashboard data
+     * @method getDashboardData
+     * @returns {Promise}
+     */
     getDashboardData: function() {
       return persistStrategy.getDashboardData().then(function(response) {
         return response;
       });
     },
+    /**
+     * Get all dashboards
+     * @method getDashboards
+     * @returns {Promise}
+     */
     getDashboards: function() {
       return this.getDashboardData().then(function(response) {
         var dashboardData = response;
@@ -40,11 +55,24 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
+    /**
+     * Set all dashboard data
+     * @method _setDashboardData
+     * @param dashboardData
+     * @returns {Promise}
+     * @private
+     */
     _setDashboardData: function(dashboardData) {
       return persistStrategy.setDashboardData(dashboardData).then(function(response) {
         return response;
       });
     },
+    /**
+     * Set all dashboards
+     * @method setAllDashboards
+     * @param dashboards
+     * @returns {Promise}
+     */
     setAllDashboards: function(dashboards) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData){
@@ -58,8 +86,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Update dashboard layout
-    // @param layout should be 'grid' or 'desktop'
+    /**
+     * Update dashboard layout
+     * @method updateLayoutType
+     * @param dashboardId
+     * @param layout 'grid' or 'desktop'
+     * @returns {Promise}
+     */
     updateLayoutType: function(dashboardId, layout) {
       var that = this;
       return this.getDashboardById(dashboardId).then(function(dashboard){
@@ -73,7 +106,14 @@ function generalDashboardModel(persistStrategy, Utilities) {
         });
       });
     },
-    // toggle the value of a key in a frame
+    /**
+     * Toggle the value of a key in a frame
+     *
+     * @method toggleFrameKey
+     * @param frameId
+     * @param key
+     * @returns {Promise}
+     */
     toggleFrameKey: function(frameId, key) {
       var that = this;
       return this.getFrameById(frameId).then(function(frame) {
@@ -100,7 +140,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Update the grid layout of a frame in a dashboard
+    /**
+     * Update the grid layout of a frame in a dashboard
+     * @method updateGridFrame
+     * @param frameId
+     * @param sizeData
+     * @returns {Promise}
+     */
     updateGridFrame: function(frameId, sizeData) {
       var that = this;
       return this.getFrameById(frameId).then(function(frame) {
@@ -129,8 +175,18 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Update the desktop layout of a frame in a dashboard
-    // TODO: what about width and height?
+    /**
+     * Update the desktop layout of a frame in a dashboard
+     * TODO: what about width and height?
+     * @method updateDesktopFrame
+     * @param frameId
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param zIndex
+     * @returns {Promise}
+     */
     updateDesktopFrame: function(frameId, x, y, width, height, zIndex) {
       var that = this;
       return this.getFrameById(frameId).then(function(frame) {
@@ -151,7 +207,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Check to see if an application is already on a given dashboard
+    /**
+     * Check to see if an application is already on a given dashboard
+     * @method isAppOnDashboard
+     * @param dashboardId
+     * @param applicationId
+     * @returns {Promise}
+     */
     isAppOnDashboard: function(dashboardId, applicationId) {
       return this.getDashboardById(dashboardId).then(function(dashboard){
         for (var i=0; i < dashboard.frames.length; i++) {
@@ -162,8 +224,15 @@ function generalDashboardModel(persistStrategy, Utilities) {
         return false;
       });
     },
-    // Create a new frame in a dashboard for a given application
-    // Creates a frame with with both grid and desktop layout data
+    /**
+     * Create a new frame in a dashboard for a given application
+     * Creates a frame with with both grid and desktop layout data
+     * @method createFrame
+     * @param dashboardId
+     * @param appId
+     * @param gridMaxRows
+     * @returns {Promise}
+     */
     createFrame: function(dashboardId, appId, gridMaxRows) {
       var that = this;
       return this.getDashboardById(dashboardId).then(function(dashboard) {
@@ -236,7 +305,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Remove a frame from a dashboard
+    /**
+     * Remove a frame from a dashboard
+     * @method removeFrame
+     * @param frameId
+     * @returns {Promise}
+     */
     removeFrame: function(frameId) {
       var that = this;
       return this.getDashboards().then(function(dashboards) {
@@ -262,7 +336,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
       });
 
     },
-    // Change the user's current dashboard
+    /**
+     * Change the user's current dashboard
+     *
+     * @method updateCurrentDashboardName
+     * @param dashboardName
+     * @returns {Promise}
+     */
     updateCurrentDashboardName: function(dashboardName) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
@@ -286,7 +366,11 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Return the name of the user's current dashboard
+    /**
+     * Return the name of the user's current dashboard
+     * @method getCurrentDashboardName
+     * @returns {Promise}
+     */
     getCurrentDashboardName: function() {
       return this.getDashboardData().then(function(dashboards) {
         var currentDashboardId = dashboards.currentDashboard;
@@ -300,9 +384,14 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-    // Augment the dashboard.frames data with application-specific data
-    // Note: data is not persisted, but rather the 'frames' object
-    //  is modified by reference
+    /**
+     * Augment the dashboard.frames data with application-specific data
+     * Note: data is not persisted, but rather the 'frames' object is modified
+     * by reference
+     * @method mergeApplicationData
+     * @param frames
+     * @param marketplaceApps
+     */
     mergeApplicationData: function(frames, marketplaceApps) {
       for (var i=0; i < marketplaceApps.length; i++) {
         // check if this app is on our dashboard
@@ -317,8 +406,15 @@ function generalDashboardModel(persistStrategy, Utilities) {
         }
       }
     },
-
-    // Updates the dynamically generated fields for grid frame size in px
+    /**
+     * Updates the dynamically generated fields for grid frame size in px
+     * @method updateFrameSizeOnGrid
+     * @param frameId
+     * @param size
+     * @param width
+     * @param height
+     * @returns {Promise}
+     */
     updateFrameSizeOnGrid: function(frameId, size, width, height) {
       // TODO: may need to adjust this someday
       if (size === 'lg') {
@@ -337,9 +433,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-
-    // Return the frame size (in px) for a given frame in the grid layout
-    // Note that these values are dynamically generated
+    /**
+     * Return the frame size (in px) for a given frame in the grid layout
+     * Note that these values are dynamically generated
+     * @method getFrameSizeOnGrid
+     * @param frameId
+     * @returns {Promise}
+     */
     getFrameSizeOnGrid: function(frameId) {
       return this.getFrameById(frameId).then(function(frame) {
         var widgetSize = {'sm': {}, 'md': {}};
@@ -352,11 +452,15 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-
-    // Save a dashboard
-    // TODO: make sure input is a valid dashboard:
-    //  dashboard.id should be unique
-    //  all frame.id's should be unique
+    /**
+     * Save a dashboard
+     * TODO: make sure input is a valid dashboard:
+     * - dashboard.id should be unique
+     * - all frame.id's should be
+     * @method saveDashboard
+     * @param dashboard
+     * @returns {Promise}
+     */
     saveDashboard: function(dashboard) {
       var foundDashboard = false;
       var that = this;
@@ -380,9 +484,14 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-
-    // Save a frame in a dashboard
-    // TODO: make sure input is a valid frame
+    /**
+     * Save a frame in a dashboard
+     * TODO: make sure input is a valid frame
+     *
+     * @method saveFrame
+     * @param frame
+     * @returns {Promise}
+     */
     saveFrame: function(frame) {
       var that = this;
       return this.getDashboards().then(function(dashboards) {
@@ -409,8 +518,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-
-    // Retrieve a frame by id
+    /**
+     * Retrieve a frame by id
+     * @method getFrameById
+     * @param frameId
+     * @returns {Promise}
+     */
     getFrameById: function(frameId) {
       return this.getDashboards().then(function(dashboards) {
         for (var i=0; i < dashboards.length; i++) {
@@ -426,8 +539,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
       });
 
     },
-
-    // Retrieve a dashboard by id
+    /**
+     * Retrieve a dashboard by id
+     * @method getDashboardById
+     * @param dashboardId
+     * @returns {Promise}
+     */
     getDashboardById: function(dashboardId) {
       return this.getDashboards().then(function(dashboards) {
         if (!dashboards) {
@@ -441,8 +558,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
         return null;
       });
     },
-
-    // Delete a dashboard
+    /**
+     * Delete a dashboard
+     * @method removeDashboard
+     * @param dashboardId
+     * @returns {Promise}
+     */
     removeDashboard: function(dashboardId) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
@@ -467,8 +588,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-
-    // Create a new dashboard
+    /**
+     * Create a new dashboard
+     * @method createDashboard
+     * @param name
+     * @returns {Promise}
+     */
     createDashboard: function(name) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
@@ -499,9 +624,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
-
-    // Get the next available id for a new dashboard
-    // TODO: this assumes ids are integers and not uuids
+    /**
+     * Get the next available id for a new dashboard
+     * TODO: this assumes ids are integers and not uuids
+     * @method getNewDashboardId
+     * @returns {Promise}
+     */
     getNewDashboardId: function() {
       return this.getDashboards().then(function(dashboards) {
         var existingIds = [];
@@ -513,7 +641,11 @@ function generalDashboardModel(persistStrategy, Utilities) {
         return newId;
       });
     },
-    // Get the user's current dashboard
+    /**
+     * Get the user's current dashboard
+     * @method getCurrentDashboard
+     * @returns {Promise}
+     */
     getCurrentDashboard: function() {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
@@ -522,8 +654,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
+    /**
+     * Create example dashboards (test purposes only)
+     * @method createExampleDashboards
+     * @returns {Promise}
+     */
     createExampleDashboards: function() {
-      // TODO: Originally this object was placed in a separate json file and fetched
+      // TODO: Originally this was placed in a separate json file and fetched
       // via http, but that led to all sorts of issues with testing.
       var dashboardData = {
         'name': 'dashboards',
@@ -869,16 +1006,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
 }
 
 /**
- * Angular service which provides a local storage interface to the dashboard api.
+ * Angular service which provides a local storage interface to the dashboard api
  *
- * @namespace apis
- * @class localStorageDashboardApiImpl
- * @constructor
- * @param {Object} $http The AngularJS HTTP service
- * @param {Object} LocalStorage the local storage service
- * @param {Object} Utilities the utilites
+ * ngtype: service
+ *
  */
-apis.service('dashboardModelLocalStorage', function(localStorageInterface, Utilities) {
+apis.service('dashboardModelLocalStorage', function(localStorageInterface,
+                                                    Utilities) {
   var model = generalDashboardModel(localStorageInterface, Utilities);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -888,11 +1022,11 @@ apis.service('dashboardModelLocalStorage', function(localStorageInterface, Utili
 });
 
 /**
- * Angular service which uses the Inter-Widget Communication (IWC) API to store and retrieve
- * dashboards.
+ * Angular service which uses the Inter-Widget Communication (IWC) API to store
+ * and retrieve dashboards.
  *
- * @class iwcDashboardApiImpl
- * @constructor
+ * ngtype: service
+ *
  */
 apis.service('dashboardModelIwc', function(iwcInterface, Utilities) {
   var model = generalDashboardModel(iwcInterface, Utilities);
@@ -904,11 +1038,14 @@ apis.service('dashboardModelIwc', function(iwcInterface, Utilities) {
 });
 
 /**
- * Angular service which provides an abstraction of the implementations used to store and retrieve
- * dashboard information.
+ * Angular service which provides an abstraction of the implementations used to
+ * store and retrieve dashboard information.
+ *
+ * ngtype: factory
  *
  * @class dashboardApi
- * @constructor
+ * @static
+ * @namespace apis
  */
 apis.factory('dashboardApi', function($injector, useIwc) {
   if (useIwc) {

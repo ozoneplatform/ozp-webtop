@@ -1,25 +1,145 @@
 'use strict';
 
 var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
+/**
+ * Controller for dashboard toolbar located at the top of Webtop
+ *
+ * Includes:
+ * - menu with links to other OZP resources
+ * - dashboard selector
+ * - buttons to switch between grid and desktop layouts
+ * - notifications (TODO)
+ * - zulu clock
+ * - username button with dropdown to access user preferences, help, and logout
+ *
+ * The toolbar can also be hidden by clicking on a button
+ *
+ * ngtype: controller
+ *
+ * @class DashboardToolbarCtrl
+ * @constructor
+ * @param $scope ng $scope
+ * @param $rootScope ng $rootScope
+ * @param $interval ng $interval
+ * @param dashboardApi dashboard data
+ * @param dashboardChangeMonitor notify when dashboard changes
+ * @param userSettingsApi user preferences data
+ * @param windowSizeWatcher notify when window size changes
+ * @namespace dashboardToolbar
+ *
+ */
 .controller('DashboardToolbarCtrl',
   function($scope, $rootScope, $interval, dashboardApi, dashboardChangeMonitor,
            userSettingsApi, windowSizeWatcher) {
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //                            $scope properties
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    /**
+     * @property dashboardNameLength Max length of dashboard name, based on
+     * current screen size
+     * @type {String}
+     */
+    $scope.dashboardNameLength = 0;
+    /**
+     * @property usernameLength Max length of username, based on
+     * current screen size
+     * @type {Number}
+     */
+    $scope.usernameLength = 0;
+
+    /**
+     * @property dashboards Dashboards for current user
+     * @type {Array}
+     */
+    $scope.dashboards = [];
+
+    /**
+     * @property dashbaordhide Flag indicating if dashboard toolbar is hidden
+     * @type {boolean}
+     */
+    $scope.dashboardhide = false;
+
+    /**
+     * @property currentDashboard Current active dashboard
+     * @type {string}
+     */
+    $scope.currentDashboard = '';
+
+    /**
+     * @property Dashboard layout (grid or desktop)
+     * @type {string}
+     */
+    $scope.layout = 'grid';
+
+    /**
+     * @property user Current user's username
+     * @type {string}
+     */
+    $scope.user = '';
+
+    /**
+     * @property dashboardId Current dashboard id
+     * @type {string}
+     */
+    $scope.dashboardId = '';
+
+    /**
+     * @property messages Messages for current user TBD
+     * @type {Array}
+     */
+    $scope.messages = {
+      'unread': 0,
+      'messages': [
+        {
+          'subject': 'Photo Editing Tools',
+          'message': 'Daryl just shared a dashboard with you! ' +
+          'Click to add it to your webtop.'
+        },
+        {
+          'subject': 'Math Tools',
+          'message': 'Kay just shared a dashboard with you! It has some great' +
+            ' things!'
+        }
+      ]
+    };
+
+    /**
+     * @property zuluTime Current time (zulu)
+     * @type {string}
+     */
+    $scope.zuluTime = '';
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //                           initialization
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    // invoked in initialization so the method must be declared first
+    /**
+     * Update the zulu clock
+     * @method getZuluTime
+     * @returns {string} Zulu time formatted as 03:08
+     */
+    $scope.getZuluTime = function() {
+      var d = new Date();
+      var hours = d.getUTCHours().toString();
+      if (hours.length === 1) {
+        hours = '0' + hours;
+      }
+      var minutes = d.getUTCMinutes().toString();
+      if (minutes.length === 1) {
+        minutes = '0' + minutes;
+      }
+      return hours + ':' + minutes;
+    };
+
+    // register for notifications when window size changes
     windowSizeWatcher.run();
 
-    $scope.$on('window-size-change', function(event, value) {
-      if (value.deviceSize === 'sm') {
-        $scope.dashboardNameLength = 9;
-        $scope.usernameLength = 9;
-      } else if (value.deviceSize === 'md') {
-          $scope.dashboardNameLength = 28;
-          $scope.usernameLength = 12;
-      } else if (value.deviceSize === 'lg') {
-          $scope.dashboardNameLength = 48;
-          $scope.usernameLength = 12;
-      }
-    });
+    // register to receive notifications if dashboard layout changes
+    dashboardChangeMonitor.run();
 
+    // get dashboards for current user
     dashboardApi.getDashboards().then(function(dashboards) {
       $scope.dashboards = dashboards;
       //default dashboardToolbar is not hidden
@@ -42,11 +162,57 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       console.log('should not have happened: ' + error);
     });
 
+    // initialize zulu time
+    $scope.zuluTime = $scope.getZuluTime();
 
-    // register to receive notifications if dashboard layout changes
-    dashboardChangeMonitor.run();
+    // update the clock every minute
+    $interval(function() {
+      $scope.zuluTime = $scope.getZuluTime();
+    }, 1000);
+
+    $scope.$on('window-size-change', function(event, value) {
+      handleDeviceSizeChange(value);
+    });
 
     $scope.$on('dashboardChange', function(event, dashboardChange) {
+      handleDashboardChange(dashboardChange);
+    });
+
+    $scope.$on('UserSettingsChanged', function() {
+      handleUserSettingsChange();
+    });
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //                          methods
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * Handler invoked when window size changes across device size boundaries
+     * as defined by Bootstrap
+     *
+     * @method handleDeviceSizeChange
+     * @param value value.deviceSize is one of 'xs', 'sm', 'md', or 'lg'
+     */
+    function handleDeviceSizeChange(value) {
+      if (value.deviceSize === 'sm') {
+        $scope.dashboardNameLength = 9;
+        $scope.usernameLength = 9;
+      } else if (value.deviceSize === 'md') {
+          $scope.dashboardNameLength = 28;
+          $scope.usernameLength = 12;
+      } else if (value.deviceSize === 'lg') {
+          $scope.dashboardNameLength = 48;
+          $scope.usernameLength = 12;
+      }
+    }
+
+    /**
+     * Handler invoked when dashboard change event occurs
+     *
+     * @method handleDashboardChange
+     * @param dashboardChange contains dashboardId and layout of dashboard
+     */
+    function handleDashboardChange(dashboardChange) {
       $scope.layout = dashboardChange.layout;
       $scope.dashboardId = dashboardChange.dashboardId;
 
@@ -64,10 +230,14 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
+    }
 
-    });
-
-    $scope.$on('UserSettingsChanged', function() {
+    /**
+     * Handler invoked when user settings event is fired
+     *
+     * @method handleUserSettingsChange
+     */
+    function handleUserSettingsChange() {
       dashboardApi.getDashboards().then(function(dashboards) {
         $scope.dashboards = dashboards;
         dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
@@ -82,64 +252,51 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
-    });
+    }
 
-    $scope.messages = {
-      'unread': 0,
-      'messages': [
-        {
-          'subject': 'Photo Editing Tools',
-          'message': 'Daryl just shared a dashboard with you! ' +
-          'Click to add it to your webtop.'
-        },
-        {
-          'subject': 'Math Tools',
-          'message': 'Kay just shared a dashboard with you! It has some great' +
-            ' things!'
-        }
-      ]
-    };
-
-    $scope.getZuluTime = function() {
-      var d = new Date();
-      var hours = d.getUTCHours().toString();
-      if (hours.length === 1) {
-        hours = '0' + hours;
-      }
-      var minutes = d.getUTCMinutes().toString();
-      if (minutes.length === 1) {
-        minutes = '0' + minutes;
-      }
-      return hours + ':' + minutes;
-    };
-
-    $scope.zuluTime = $scope.getZuluTime();
-
-    $interval(function() {
-      $scope.zuluTime = $scope.getZuluTime();
-    }, 1000);
-
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //                        Dashboard dropdown
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    /**
+     * Set the current dashboard
+     * @method setCurrentDashboard
+     * @param board Current dashboard
+     */
     $scope.setCurrentDashboard = function(board) {
       $scope.currentDashboard = board;
     };
 
+    /**
+     * Use a grid layout
+     * @method useGridLayout
+     */
     $scope.useGridLayout = function() {
       $scope.layout = 'grid';
     };
 
+    /**
+     * Use a desktop layout
+     * @method useDesktopLayout
+     */
     $scope.useDesktopLayout = function() {
       $scope.layout = 'desktop';
     };
 
+    /**
+     * Launch the user preferences modal dialog
+     *
+     * Sends launchSettingsModal event
+     *
+     * @method launchSettingsModal
+     */
     $scope.launchSettingsModal = function() {
       $rootScope.$broadcast('launchSettingsModal', {
         launch: 'true'
       });
     };
+
+    /**
+     * Toggle the state of the toolbar (shown vs hidden)
+     *
+     * @method dashboardhider
+     */
     $scope.dashboardhider = function() {
       var hideToolbar = false;
       if ((!$scope.dashboardhide) || ($scope.dashboardhide = false)){
@@ -156,6 +313,8 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
         console.log('should not have happened: ' + error);
       });
     };
+
+    // TODO: these might go away
 
     $scope.helpUser = function() {
       alert('Help functionality coming soon!');
@@ -191,7 +350,15 @@ var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
   }
 );
 
-
+/**
+ * Directive for the dashboard toolbar
+ *
+ * ngtype: directive
+ *
+ * @class dashboardToolbar
+ * @static
+ * @namespace dashboardToolbar
+ */
 dashboardApp.directive('dashboardToolbar', function(){
   return {
    restrict: 'E',

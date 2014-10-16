@@ -88,7 +88,7 @@ angular.module( 'ozpWebtopApp', [
 });
 
 /**
- * Common services
+ * Common services that are not specific to Webtop
  *
  * @module ozp.common
  */
@@ -125,6 +125,8 @@ angular.module('ozpWebtopApp.general', ['ozpWebtopApp.constants']);
  *
  * @module ozpWebtopApp.apis
  * @requires ozpWebtopApp.general
+ * @requires ozpWebtopApp.ozpIwcClient
+ * @requires ozpIwcClient
  */
 angular.module('ozpWebtopApp.apis', ['ozpIwcClient',
   'ozpWebtopApp.ozpIwcClient', 'ozpWebtopApp.general']);
@@ -148,6 +150,8 @@ angular.module('ozpWebtopApp.components', []);
  * Launches apps from other sources
  *
  * @module ozpWebtopApp.appLauncher
+ * @requires ui.router
+ * @requires ozpWebtopApp.apis
  */
 angular.module('ozpWebtopApp.appLauncher', ['ui.router', 'ozpWebtopApp.apis']);
 
@@ -165,6 +169,8 @@ angular.module('ozpWebtopApp.dashboardToolbar', ['ozp.common', 'ozpWebtopApp.api
  *
  * @module ozpWebtopApp.appToolbar
  * @requires ui.router
+ * @requires ui.bootstrap
+ * @requires ozp.common
  * @requires ozpWebtopApp.apis
  */
 angular.module('ozpWebtopApp.appToolbar', ['ui.router', 'ui.bootstrap', 'ozp.common', 'ozpWebtopApp.apis']);
@@ -173,6 +179,8 @@ angular.module('ozpWebtopApp.appToolbar', ['ui.router', 'ui.bootstrap', 'ozp.com
  * The dashboard view in the Webtop. Contains the area where a user uses their applications/widgets.
  *
  * @module ozpWebtopApp.dashboardView
+ * @requires ozp.common
+ * @requires ozpIwcClient
  * @requires ozpWebtopApp.apis
  */
 angular.module('ozpWebtopApp.dashboardView', ['ozp.common', 'ozpIwcClient', 'ozpWebtopApp.apis']);

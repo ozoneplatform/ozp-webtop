@@ -1,10 +1,12 @@
 'use strict';
 
 /**
- * Utility functions
+ * Various utility functions
+ *
+ * ngtype: factory
  *
  * @namespace general
- * @class Utiliites
+ * @class Utilities
  * @constructor
  */
 angular.module('ozpWebtopApp.general').factory('Utilities', function() {
@@ -13,9 +15,13 @@ angular.module('ozpWebtopApp.general').factory('Utilities', function() {
   var utilities = function() {
 
     return {
-      // Generate uuid
+      /**
+       * Generate a uuid as per http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+       *
+       * @method generateUuid
+       * @returns {String} A randomly generated UUID in form 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+       */
       generateUuid: function () {
-        // borrowed from http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
         var d = new Date().getTime();
         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
           var r = (d + Math.random()*16)%16 | 0;  // jshint ignore:line
@@ -24,7 +30,13 @@ angular.module('ozpWebtopApp.general').factory('Utilities', function() {
         });
         return uuid;
       },
-      // Eliminate duplicate values from an array
+      /**
+       * Eliminate duplicate values from an array
+       *
+       * @method eliminateDuplicates
+       * @param {Array} arr An array
+       * @returns {Array} Input array with duplicates removed
+       */
       eliminateDuplicates: function (arr) {
         var i,
         len=arr.length,

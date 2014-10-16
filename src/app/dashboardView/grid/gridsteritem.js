@@ -1,7 +1,9 @@
 'use strict';
 
 /**
- * ozpGridsterItem is a Angular directive and a wrapper around a tile in the grid
+ * ozpGridsterItem is a wrapper around a tile in the grid
+ *
+ * ngtype: directive
  *
  * @namespace dashboardView
  * @class ozpGridsterItem

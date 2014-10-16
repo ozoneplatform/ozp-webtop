@@ -3,7 +3,9 @@
 /**
  * Used to include an html document in the webtop. If the html in question is from a different 
  * origin than the webtop, then an iframe will be used. If the html is from the same origin as
- * the webtop, a "frame" (div) will be used. 
+ * the webtop, a "frame" (div) will be used.
+ *
+ * ngtype: directive
  *
  * @namespace dashboardView
  * @class ozpManagedFrame

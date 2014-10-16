@@ -5,6 +5,12 @@ var apis = angular.module('ozpWebtopApp.apis');
 function generalMarketplacedModel(persistStrategy) {
 
   return {
+    /**
+     * Get all application listings
+     *
+     * @method getAllApps
+     * @returns {*}
+     */
     getAllApps: function() {
       return persistStrategy.getApps().then(function(response) {
         return response.apps;
@@ -12,6 +18,11 @@ function generalMarketplacedModel(persistStrategy) {
         console.log('should not have happened: ' + error);
       });
     },
+    /**
+     * Create example marketplace listings (test purposes only)
+     *
+     * @method createExampleMarketplace
+     */
     createExampleMarketplace: function() {
       // TODO: Originally this object was placed in a separate json file and fetched
       // via http, but that led to all sorts of issues with testing.
@@ -534,7 +545,7 @@ function generalMarketplacedModel(persistStrategy) {
  * Angular service which provides a local storage interface to the marketplace
  * api
  *
- * @namespace apis
+ * @private
  * @constructor
  */
 apis.service('marketplaceModelLocalStorage', function(localStorageInterface) {
@@ -550,6 +561,7 @@ apis.service('marketplaceModelLocalStorage', function(localStorageInterface) {
  * Angular service which uses the Inter-Widget Communication (IWC) API to store
  * and retrieve marketplace data
  *
+ * @private
  * @constructor
  */
 apis.service('marketplaceModelIwc', function(iwcInterface) {
@@ -562,11 +574,16 @@ apis.service('marketplaceModelIwc', function(iwcInterface) {
 });
 
 /**
- * Angular service which provides an abstraction of the implementations used to
- * store and retrieve marketplace data
+ * Service used to store and retrieve marketplace data (app listings)
+ *
+ * May be configured with different persistence mechanisms including IWC
+ * and Local Storage
+ *
+ * ngtype: factory
  *
  * @class marketplaceApi
- * @constructor
+ * @static
+ * @namespace apis
  */
 apis.factory('marketplaceApi', function($injector, useIwc) {
   if (useIwc) {

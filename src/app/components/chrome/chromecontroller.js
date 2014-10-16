@@ -1,48 +1,85 @@
 'use strict';
 
-/**
- * ChromeCtrl aids the ozpChrome directive in knowing its location (grid or desktop).
- */
 angular.module('ozpWebtopApp.components')
+/**
+ * ChromeCtrl aids the ozpChrome directive in knowing its location
+ * (grid or desktop).
+ *
+ * ngtype: controller
+ *
+ * @class ChromeCtrl
+ * @constructor
+ * @param $scope ng $scope
+ * @param $rootScope ng $rootScope
+ * @param dashboardApi dashboard data
+ * @param dashboardChangeMonitor notify when active dashboard changes
+ * @namespace components
+ */
 .controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
-                                          dashboardChangeMonitor) {
+                                    dashboardChangeMonitor) {
 
-  // register to receive notifications if dashboard changes
-  dashboardChangeMonitor.run();
 
-  $scope.$on('dashboardChange', function(event, dashboardChange) {
-    // Determine if chrome is being used in the grid view
-    if (dashboardChange.layout === 'grid') {
-      $scope.isGrid = true;
-    } else {
-      $scope.isGrid = false;
+    // register to receive notifications if dashboard changes
+    dashboardChangeMonitor.run();
+
+    $scope.$on('dashboardChange', function(event, dashboardChange) {
+      handleDashboardChange(dashboardChange);
+    });
+
+    /**
+     * Handler invoked when active dashboard changes
+     * @method handleDashboardChange
+     * @param dashboardChange contains layout and dashboardId info
+     */
+    function handleDashboardChange(dashboardChange) {
+      // Determine if chrome is being used in the grid view
+      if (dashboardChange.layout === 'grid') {
+        $scope.isGrid = true;
+      } else {
+        $scope.isGrid = false;
+      }
     }
-  });
 
-  $scope.isDisabled = function(e){
-    dashboardApi.removeFrame(e.id).then(function() {
-      $rootScope.$broadcast('dashboard-change');
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
+    /**
+     * Remove a frame from the current dashboard and send dashboard-change
+     * event
+     * @method isDisabled
+     * @param e the frame (?) clicked containing e.id
+     */
+    $scope.isDisabled = function(e){
+      dashboardApi.removeFrame(e.id).then(function() {
+        $rootScope.$broadcast('dashboard-change');
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
 
-  };
+    };
 
-  $scope.minimizeFrame = function(e){
-    dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function() {
-      $rootScope.$broadcast('dashboard-change');
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
+    /**
+     * Hide a frame on the dashboard
+     * @method minimizeFrame
+     * @param e The frame (?) clicked containing e.id
+     */
+    $scope.minimizeFrame = function(e){
+      dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function() {
+        $rootScope.$broadcast('dashboard-change');
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
 
-  };
+    };
 
-  $scope.maximizeFrame = function(e){
-    dashboardApi.toggleFrameKey(e.id, 'isMaximized').then(function() {
-      $rootScope.$broadcast('dashboard-change');
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
-  };
+    /**
+     * Show a frame on the dashboard
+     * @method maximizeFrame
+     * @param e The frame (?) clicked containing e.id
+     */
+    $scope.maximizeFrame = function(e){
+      dashboardApi.toggleFrameKey(e.id, 'isMaximized').then(function() {
+        $rootScope.$broadcast('dashboard-change');
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    };
 
 });

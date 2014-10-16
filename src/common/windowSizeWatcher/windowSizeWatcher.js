@@ -1,16 +1,18 @@
 'use strict';
 
 /**
- * windowSizeWatcher sends a message when the window size changes device sizes
+ * Send a message when the window size changes device sizes
  * as defined by Bootstrap:
  *
- * < 768px  = extra-small (xs)
- * >= 768px = small (sm)
- * >= 992 = medium (md)
- * >= 1200 = large (lg)
+ * * lt 768px  = extra-small (xs)
+ * * gte 768px = small (sm)
+ * * gte 992 = medium (md)
+ * * gte 1200 = large (lg)
  *
- * @namespace ozp.common
- * @method windowSizeWatcher
+ * ngtype: factory
+ *
+ * @namespace common
+ * @class windowSizeWatcher
  * @static
  */
 angular.module('ozp.common')
@@ -18,6 +20,10 @@ angular.module('ozp.common')
     var previousDeviceSize = '';
     var deviceSize = '';
     return {
+      /**
+       * Activate the windowSizeWatcher
+       * @method run
+       */
       run: function() {
         $rootScope.$watch(function(){
         return $window.innerWidth;
@@ -45,6 +51,12 @@ angular.module('ozp.common')
 
          });
       },
+      /**
+       * Get the current device size
+       *
+       * @method getCurrentSize
+       * @returns {string} device size, one of xs, sm, md, or lg
+       */
       getCurrentSize: function() {
         return deviceSize;
       }

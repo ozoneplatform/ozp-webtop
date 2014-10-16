@@ -3,6 +3,8 @@
 /**
  * IframeCtrl ensures that a widget can be properly displayed in an iframe.
  *
+ * ngtype: controller
+ *
  * @namespace dashboardView
  * @class IframeCtrl
  * @constructor
@@ -11,5 +13,9 @@
  */
 angular.module('ozpWebtopApp.dashboardView')
   .controller('IframeCtrl', function ($scope, $sce) {
+    /**
+     * @property frame.trustedUrl URL
+     * @type {String}
+     */
     $scope.frame.trustedUrl = $sce.trustAsResourceUrl($scope.frame.url);
   });

@@ -169,11 +169,11 @@ angular.module('ozpWebtopApp.dashboardView')
         }
         for (var z in apiDash.frames){
           for (var y in $scope.frames){
-            if ((apiDash.frames[z].appId === $scope.frames[y].appId) && (apiDash.frames[z].isMinimized !== $scope.frames[y].isMinimized)) {
+            if ((apiDash.frames[z].id === $scope.frames[y].id) && (apiDash.frames[z].isMinimized !== $scope.frames[y].isMinimized)) {
               $scope.frames[y].isMinimized = apiDash.frames[z].isMinimized;
               //
             }
-            if((apiDash.frames[z].appId === $scope.frames[y].appId) && (apiDash.frames[z].isMaximized !== $scope.frames[y].isMaximized)) {
+            if((apiDash.frames[z].id === $scope.frames[y].id) && (apiDash.frames[z].isMaximized !== $scope.frames[y].isMaximized)) {
               $scope.frames[y].isMaximized = apiDash.frames[z].isMaximized;
               //
             }
@@ -187,11 +187,11 @@ angular.module('ozpWebtopApp.dashboardView')
           var oldFrames = [],
               newFrames = [];
           for(var i in $scope.frames){
-            oldFrames.push($scope.frames[i].appId);
+            oldFrames.push($scope.frames[i].id);
           }
 
           for (var j in apiDash.frames){
-            newFrames.push(apiDash.frames[j].appId);
+            newFrames.push(apiDash.frames[j].id);
           }
 
           /* return just the differences between oldFrames and new Frames */
@@ -205,7 +205,7 @@ angular.module('ozpWebtopApp.dashboardView')
             for (var a = 0; a < $scope.frames.length; a++){
               // if the removed frame is present, splice it out of the local
               // scope
-              if ($scope.frames[a].appId === oldFrames.diff(newFrames)[0]){
+              if ($scope.frames[a].id === oldFrames.diff(newFrames)[0]){
                 $scope.frames.splice(a, 1);
               }
             }
@@ -219,7 +219,7 @@ angular.module('ozpWebtopApp.dashboardView')
 
               // if the item from the dashboard api matches the new frame we
               // found in this view
-              if (apiDash.frames[b].appId === newFrames.diff(oldFrames)[0]){
+              if (apiDash.frames[b].id === newFrames.diff(oldFrames)[0]){
 
                 // push that frame to the local scope. since the changes are
                 // automatically binded with the view, no refresh

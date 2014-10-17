@@ -325,11 +325,11 @@ angular.module('ozpWebtopApp.dashboardView')
         $scope.dashboards = dashboards;
         if ($scope.frames !== $scope.dashboards[currentDashboard].frames) {
           for (var i=0; i < $scope.frames.length; i++) {
-            oldFrames.push($scope.frames[i].appId);
+            oldFrames.push($scope.frames[i].id);
           }
           for (var j=0; j < $scope.dashboards[currentDashboard].frames.length;
                j++) {
-            newFrames.push($scope.dashboards[currentDashboard].frames[j].appId);
+            newFrames.push($scope.dashboards[currentDashboard].frames[j].id);
           }
 
           // return just the differences between oldFrames and new Frames
@@ -345,7 +345,7 @@ angular.module('ozpWebtopApp.dashboardView')
             for (var a=0; a < $scope.frames.length; a++) {
               // if the removed frame is present, splice it out of the local
               // scope
-              if ($scope.frames[a].appId === oldFrames.diff(newFrames)[0]) {
+              if ($scope.frames[a].id === oldFrames.diff(newFrames)[0]) {
                 $scope.frames.splice(a, 1);
               }
             }
@@ -358,7 +358,7 @@ angular.module('ozpWebtopApp.dashboardView')
             dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).then(function(dashboard) {
               // TODO: for loop with async call inside, not good
               for (var c=0; c < dashboard.frames.length; c++) {
-                if (dashboard.frames[c].appId === newFrames.diff(oldFrames)[0]) {
+                if (dashboard.frames[c].id === newFrames.diff(oldFrames)[0]) {
                   // push that frame to the local scope. since the changes are
                   // automatically bound with the view, no refresh required
                   $scope.frames.push(dashboard.frames[c]);

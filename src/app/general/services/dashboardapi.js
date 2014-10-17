@@ -402,6 +402,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
             frames[j].url = marketplaceApps[i].launchUrls.default;
             frames[j].name = marketplaceApps[i].name;
             frames[j].shortDescription = marketplaceApps[i].shortDescription;
+            frames[j].singleton = marketplaceApps[i].uiHints.singleton;
           }
         }
       }

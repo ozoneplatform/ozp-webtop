@@ -5,11 +5,11 @@
  *
  * ngtype: factory
  *
- * @namespace general
+ * @namespace ozp.common
  * @class Utilities
  * @constructor
  */
-angular.module('ozpWebtopApp.general').factory('Utilities', function() {
+angular.module('ozp.common').factory('Utilities', function() {
 
   // TODO: make self-executing?
   var utilities = function() {

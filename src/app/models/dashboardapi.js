@@ -1,6 +1,6 @@
 'use strict';
 
-var apis = angular.module('ozpWebtopApp.apis');
+var models = angular.module('ozpWebtopApp.models');
 
 // TODO: put this somewhere better
 // Array Remove - By John Resig (MIT Licensed)
@@ -1012,7 +1012,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
  * ngtype: service
  *
  */
-apis.service('dashboardModelLocalStorage', function(localStorageInterface,
+models.service('dashboardModelLocalStorage', function(localStorageInterface,
                                                     Utilities) {
   var model = generalDashboardModel(localStorageInterface, Utilities);
   for (var prop in model) {
@@ -1029,7 +1029,7 @@ apis.service('dashboardModelLocalStorage', function(localStorageInterface,
  * ngtype: service
  *
  */
-apis.service('dashboardModelIwc', function(iwcInterface, Utilities) {
+models.service('dashboardModelIwc', function(iwcInterface, Utilities) {
   var model = generalDashboardModel(iwcInterface, Utilities);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -1046,9 +1046,9 @@ apis.service('dashboardModelIwc', function(iwcInterface, Utilities) {
  *
  * @class dashboardApi
  * @static
- * @namespace apis
+ * @namespace models
  */
-apis.factory('dashboardApi', function($injector, useIwc) {
+models.factory('dashboardApi', function($injector, useIwc) {
   if (useIwc) {
     return $injector.get('dashboardModelIwc');
   } else if (useIwc === false){

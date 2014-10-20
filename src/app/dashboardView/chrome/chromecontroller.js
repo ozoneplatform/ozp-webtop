@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ozpWebtopApp.components')
+angular.module('ozpWebtopApp.dashboardView')
 /**
  * ChromeCtrl aids the ozpChrome directive in knowing its location
  * (grid or desktop).
@@ -15,7 +15,7 @@ angular.module('ozpWebtopApp.components')
  * @param dashboardChangeMonitor notify when active dashboard changes
  * @param dashboardStateChangedEvent event name
  * @param dashboardSwitchedEvent event name
- * @namespace components
+ * @namespace dashboardView
  */
 .controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
                                     dashboardChangeMonitor,

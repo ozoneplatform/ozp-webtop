@@ -1,6 +1,6 @@
 'use strict';
 
-var apis = angular.module('ozpWebtopApp.apis');
+var models = angular.module('ozpWebtopApp.models');
 
 function generalMarketplacedModel(persistStrategy) {
 
@@ -548,7 +548,7 @@ function generalMarketplacedModel(persistStrategy) {
  * @private
  * @constructor
  */
-apis.service('marketplaceModelLocalStorage', function(localStorageInterface) {
+models.service('marketplaceModelLocalStorage', function(localStorageInterface) {
   var model = generalMarketplacedModel(localStorageInterface);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -564,7 +564,7 @@ apis.service('marketplaceModelLocalStorage', function(localStorageInterface) {
  * @private
  * @constructor
  */
-apis.service('marketplaceModelIwc', function(iwcInterface) {
+models.service('marketplaceModelIwc', function(iwcInterface) {
   var model = generalMarketplacedModel(iwcInterface);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -583,9 +583,9 @@ apis.service('marketplaceModelIwc', function(iwcInterface) {
  *
  * @class marketplaceApi
  * @static
- * @namespace apis
+ * @namespace models
  */
-apis.factory('marketplaceApi', function($injector, useIwc) {
+models.factory('marketplaceApi', function($injector, useIwc) {
   if (useIwc) {
     return $injector.get('marketplaceModelIwc');
   } else if (useIwc === false){

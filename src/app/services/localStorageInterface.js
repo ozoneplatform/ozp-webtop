@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ozpWebtopApp.apis');
+var app = angular.module('ozpWebtopApp.general');
 
 /**
  * Interface for working with Local Storage
@@ -11,7 +11,7 @@ var app = angular.module('ozpWebtopApp.apis');
  * @constructor
  * @param $q ng $q service
  * @param LocalStorage LocalStorage service
- * @namespace apis
+ * @namespace general
  */
 app.factory('localStorageInterface', function($q, LocalStorage) {
 

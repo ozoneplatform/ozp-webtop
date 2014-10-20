@@ -273,7 +273,7 @@ ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'currentDashboardId',
 angular.module( 'ozpWebtopApp.userSettings').directive('userSettings', function(){
     return {
         restrict: 'E',
-        templateUrl: 'userSettings/settingsModal.tpl.html',
+        templateUrl: 'userPreferencesModal/settingsModal.tpl.html',
         controller: function($scope, $rootScope, $modal, $log,
                              $state, dashboardApi, dashboardSwitchedEvent,
                              launchUserPreferencesModalEvent) {
@@ -289,7 +289,7 @@ angular.module( 'ozpWebtopApp.userSettings').directive('userSettings', function(
             $scope.open = function () {
 
                 var modalInstance = $modal.open({
-                    templateUrl: 'userSettings/settingsModal.tpl.html',
+                    templateUrl: 'userPreferencesModal/settingsModal.tpl.html',
                     controller: ModalInstanceCtrl,
                     windowClass: 'app-modal-window',
                     scope: $rootScope,

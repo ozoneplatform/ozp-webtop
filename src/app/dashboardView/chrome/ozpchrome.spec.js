@@ -4,7 +4,7 @@ describe('Directive: ozpChrome', function () {
   // load the directive's module
   beforeEach(module('ozpWebtopApp'));
 
-  beforeEach(module('components/chrome/ozpchrome.tpl.html'));
+  beforeEach(module('dashboardView/chrome/ozpchrome.tpl.html'));
 
   var element,
       scope;

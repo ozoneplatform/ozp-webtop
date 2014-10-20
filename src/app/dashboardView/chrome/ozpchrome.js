@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ozpWebtopApp.components')
+angular.module('ozpWebtopApp.dashboardView')
 /**
  * Directive for chrome (bar appearing across the top of each widget)
  *
@@ -8,11 +8,11 @@ angular.module('ozpWebtopApp.components')
  *
  * @class ozpChrome
  * @static
- * @namespace components
+ * @namespace dashboardView
  */
 .directive('ozpChrome', function () {
   return {
-    templateUrl: 'components/chrome/ozpchrome.tpl.html',
+    templateUrl: 'dashboardView/chrome/ozpchrome.tpl.html',
     restrict: 'E',
     replace: true,
     controller: 'ChromeCtrl'

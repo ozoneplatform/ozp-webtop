@@ -1,6 +1,6 @@
 'use strict';
 
-var apis = angular.module('ozpWebtopApp.apis');
+var models = angular.module('ozpWebtopApp.models');
 
 function generalUserSettingsdModel(persistStrategy) {
 
@@ -78,7 +78,7 @@ function generalUserSettingsdModel(persistStrategy) {
  * @private
  * @constructor
  */
-apis.service('userSettingsModelLocalStorage', function(localStorageInterface) {
+models.service('userSettingsModelLocalStorage', function(localStorageInterface) {
   var model = generalUserSettingsdModel(localStorageInterface);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -96,7 +96,7 @@ apis.service('userSettingsModelLocalStorage', function(localStorageInterface) {
  * @private
  * @constructor
  */
-apis.service('userSettingsModelIwc', function(iwcInterface) {
+models.service('userSettingsModelIwc', function(iwcInterface) {
   var model = generalUserSettingsdModel(iwcInterface);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
@@ -115,9 +115,9 @@ apis.service('userSettingsModelIwc', function(iwcInterface) {
  *
  * @class userSettingsApi
  * @static
- * @namespace apis
+ * @namespace models
  */
-apis.factory('userSettingsApi', function($injector, useIwc) {
+models.factory('userSettingsApi', function($injector, useIwc) {
   if (useIwc) {
     return $injector.get('userSettingsModelIwc');
   } else if (useIwc === false){

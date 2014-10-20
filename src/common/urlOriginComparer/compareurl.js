@@ -5,11 +5,11 @@
  *
  * ngtype: factory
  *
- * @namespace general
+ * @namespace ozp.common
  * @class compareUrl
  * @static
  */
-angular.module('ozpWebtopApp.general')
+angular.module('ozp.common')
 .factory('compareUrl', function () {
   /**
   * Determine if the given URL represents the same origin as the application

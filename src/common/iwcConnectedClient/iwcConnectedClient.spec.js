@@ -1,8 +1,8 @@
 'use strict';
 
-describe('Service: ozpIwcClient', function () {
+describe('Service: iwcConnectedClient', function () {
   // load the service's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozp.common'));
 
   // instantiate service
   var iwcConnectedClient, rootScope;

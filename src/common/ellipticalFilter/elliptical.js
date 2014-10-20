@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ozpWebtopApp.general')
+angular.module('ozp.common')
 /**
  * elliptical filter
  *
@@ -8,7 +8,7 @@ angular.module('ozpWebtopApp.general')
  *
  * @class elliptical
  * @static
- * @namespace general
+ * @namespace ozp.common
  */
 .filter('elliptical', function () {
   // Specifying a maxLength is optional

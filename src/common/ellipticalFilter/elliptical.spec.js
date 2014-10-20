@@ -3,7 +3,7 @@
 describe('Filter: elliptical', function () {
 
   // load the filter's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozp.common'));
 
   // initialize a new instance of the filter before each test
   var elliptical;

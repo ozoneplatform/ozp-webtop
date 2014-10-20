@@ -1,16 +1,16 @@
 'use strict';
 
-var app = angular.module('ozpWebtopApp.ozpIwcClient');
+var app = angular.module('ozp.common');
 
 /**
- * Interface for working with an IWC client
+ * Provides an OZP IWC client using a Promises to indicate valid connection
  *
  * @class iwcConnectedClient
  * @constructor
  * @param $q ng $q service
  * @param iwcClient iwcClient service
  * @param iwcOzoneBus OZONE bus to connect to
- * @namespace ozpIwcClient
+ * @namespace ozp.common
  */
 app.factory('iwcConnectedClient', function($q, iwcClient, iwcOzoneBus) {
 

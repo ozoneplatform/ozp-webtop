@@ -13,11 +13,11 @@
  *
  * ngtype: factory
  *
- * @namespace general
+ * @namespace ozp.common
  * @class LocalStorage
  * @constructor
  */
-angular.module('ozpWebtopApp.general').factory('LocalStorage', function() {
+angular.module('ozp.common').factory('LocalStorage', function() {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //            Simple interface to browser's localStorage

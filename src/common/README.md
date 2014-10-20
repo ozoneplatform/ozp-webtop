@@ -22,3 +22,8 @@ src/
 Every component contained here should be drag-and-drop reusable in any other 
 project; they should depend on no other components that aren't similarly 
 drag-and-drop reusable.
+
+NOTE: The only exception to the above rule of drag-and-drop re-usability is that
+    components in this directory may depend on constants defined in an 
+    application-specific file, since these are trivially replaced when using
+    the component in a different project

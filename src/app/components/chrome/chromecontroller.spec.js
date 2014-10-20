@@ -5,14 +5,16 @@ describe('Controller: ChromeCtrl', function () {
   // load the controller's module
   beforeEach(module('ozpWebtopApp'));
 
-  var scope, ctrl, $location;
+  var scope, ctrl, $location, dashboardSwitchedEvent;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function($controller, $rootScope, _$location_) {
+  beforeEach(inject(function($controller, $rootScope, _$location_,
+                             _dashboardSwitchedEvent_) {
     $location = _$location_;
 
     // Set dummy location
     $location.path('/grid/0');
+    dashboardSwitchedEvent = _dashboardSwitchedEvent_;
     scope = $rootScope.$new();
     ctrl = $controller('ChromeCtrl', { $scope: scope });
     scope.$apply();
@@ -28,9 +30,9 @@ describe('Controller: ChromeCtrl', function () {
     expect(scope.isGrid).toBeFalsy();
   });
 
-  it('should respond to a "dashboardChange" event', function () {
+  it('should respond to a dashboardSwitchedEvent event', function () {
     var dashboardChange = { layout: 'foo' };
-    scope.$broadcast('dashboardChange', dashboardChange);
+    scope.$broadcast(dashboardSwitchedEvent, dashboardChange);
     scope.$apply();
     expect(scope.isGrid).toBeFalsy();
   });

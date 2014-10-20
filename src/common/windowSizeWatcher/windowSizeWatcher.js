@@ -13,10 +13,16 @@
  *
  * @namespace common
  * @class windowSizeWatcher
- * @static
+ * @constructor
+ * @param $rootScope ng $rootScope
+ * @param $window ng $window
+ * @param deviceSizeChangedEvent event name
+ * @param windowSizeChangedEvent event name
  */
 angular.module('ozp.common')
-.factory('windowSizeWatcher', function ($rootScope, $window) {
+.factory('windowSizeWatcher', function ($rootScope, $window,
+                                        deviceSizeChangedEvent,
+                                        windowSizeChangedEvent) {
     var previousDeviceSize = '';
     var deviceSize = '';
     return {
@@ -43,11 +49,11 @@ angular.module('ozp.common')
 
           if (previousDeviceSize !== deviceSize) {
             previousDeviceSize = deviceSize;
-            $rootScope.$broadcast('window-size-change', {
-              deviceSize: deviceSize,
+            $rootScope.$broadcast(deviceSizeChangedEvent, {
+              deviceSize: deviceSize
             });
           }
-          $rootScope.$broadcast('window-px-size-change');
+          $rootScope.$broadcast(windowSizeChangedEvent);
 
          });
       },

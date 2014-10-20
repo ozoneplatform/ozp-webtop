@@ -15,9 +15,11 @@
  * @param currentDashboardId Id of dashboard to use
  * @param dashboardApi Dashboard API
  * @param userSettingsApi User Settings API
+ * @param userPreferencesUpdatedEvent event name
  */
 var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
-                                  dashboardApi, userSettingsApi) {
+                                  dashboardApi, userSettingsApi,
+                                  userPreferencesUpdatedEvent) {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                            $scope properties
@@ -133,7 +135,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
    * - Makes changes to any existing dashboards (deletions or renames)
    * - Adds a new dashboard (if indicated by user)
    * - Updates user preferences
-   * - Broadcasts UserSettingsChanged event
+   * - Broadcasts userPreferencesUpdatedEvent event
    *
    * @method ok
    */
@@ -155,7 +157,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
               // broadcast message that user's preferences have changed
               // Can't seem to DI $rootScope in here without errors, so accessing
               // $rootScope using $parent instead
-              $scope.$parent.$broadcast('UserSettingsChanged', {});
+              $scope.$parent.$broadcast(userPreferencesUpdatedEvent, {});
 
               $modalInstance.close();
             }).catch(function(error) {
@@ -166,7 +168,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
           });
         } else {
           userSettingsApi.updateAllUserSettings($scope.preferences).then(function() {
-            $scope.$parent.$broadcast('UserSettingsChanged', {});
+            $scope.$parent.$broadcast(userPreferencesUpdatedEvent, {});
             $modalInstance.close();
           }).catch(function(error) {
             console.log('should not have happened: ' + error);
@@ -273,13 +275,14 @@ angular.module( 'ozpWebtopApp.userSettings').directive('userSettings', function(
         restrict: 'E',
         templateUrl: 'userSettings/settingsModal.tpl.html',
         controller: function($scope, $rootScope, $modal, $log,
-                             $state, dashboardApi) {
+                             $state, dashboardApi, dashboardSwitchedEvent,
+                             launchUserPreferencesModalEvent) {
             $scope.validNamePattern = /^[a-z_]+[a-z0-9_ ]*\w$/i;
-            $scope.$on('launchSettingsModal', function(/*event, data*/) {
+            $scope.$on(launchUserPreferencesModalEvent, function() {
                 $scope.open();
             });
 
-            $scope.$on('dashboardChange', function(event, data) {
+            $scope.$on(dashboardSwitchedEvent, function(event, data) {
                 $scope.currentDashboardId = data.dashboardId;
             });
 

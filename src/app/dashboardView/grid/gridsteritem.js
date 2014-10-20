@@ -13,11 +13,15 @@
  * @param {Object} $templateCache the Angular template cache
  * @param {Object} $timeout the Angular timeout service
  * @param {Function} compareUrl the compareUrl service {{#crossLink "compareUrl"}}{{/crossLink}} 
- * @param {Object} dashboardApi the dashboard API service {{#crossLink "dashboardApi"}}{{/crossLink}} 
+ * @param {Object} dashboardApi the dashboard API service {{#crossLink "dashboardApi"}}{{/crossLink}}
+ * @param {String} deviceSizeChangedEvent event name
+ * @param {String} gridFrameSizeChangeEvent event name
  */
 angular.module('ozpWebtopApp.dashboardView')
 .directive('ozpGridsterItem', function ($compile, $http, $templateCache,
-                                        $timeout, compareUrl, dashboardApi) {
+                                        $timeout, compareUrl, dashboardApi,
+                                        deviceSizeChangedEvent,
+                                        gridFrameSizeChangeEvent) {
 
     // TODO: review this before removing
 //  var getTemplate = function (sameOrigin) {
@@ -72,7 +76,7 @@ angular.module('ozpWebtopApp.dashboardView')
         // element.addClass('ozp-managed-frame');
     //});
 
-      scope.$on('gridSizeChanged', function(event, data) {
+      scope.$on(gridFrameSizeChangeEvent, function(event, data) {
         if (data.frameId === scope.frameId) {
           scope.styles.height = data.height;
           scope.styles.width = data.width;
@@ -80,7 +84,7 @@ angular.module('ozpWebtopApp.dashboardView')
         }
       });
 
-      scope.$on('window-size-change', function(event, value) {
+      scope.$on(deviceSizeChangedEvent, function(event, value) {
         scope.deviceSize = value.deviceSize;
       });
 

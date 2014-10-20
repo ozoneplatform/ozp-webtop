@@ -13,16 +13,20 @@ angular.module('ozpWebtopApp.components')
  * @param $rootScope ng $rootScope
  * @param dashboardApi dashboard data
  * @param dashboardChangeMonitor notify when active dashboard changes
+ * @param dashboardStateChangedEvent event name
+ * @param dashboardSwitchedEvent event name
  * @namespace components
  */
 .controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
-                                    dashboardChangeMonitor) {
+                                    dashboardChangeMonitor,
+                                    dashboardStateChangedEvent,
+                                    dashboardSwitchedEvent) {
 
 
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
 
-    $scope.$on('dashboardChange', function(event, dashboardChange) {
+    $scope.$on(dashboardSwitchedEvent, function(event, dashboardChange) {
       handleDashboardChange(dashboardChange);
     });
 
@@ -41,14 +45,15 @@ angular.module('ozpWebtopApp.components')
     }
 
     /**
-     * Remove a frame from the current dashboard and send dashboard-change
-     * event
+     * Remove a frame from the current dashboard and send
+     * dashboardStateChangedEvent
+     *
      * @method isDisabled
      * @param e the frame (?) clicked containing e.id
      */
     $scope.isDisabled = function(e){
       dashboardApi.removeFrame(e.id).then(function() {
-        $rootScope.$broadcast('dashboard-change');
+        $rootScope.$broadcast(dashboardStateChangedEvent);
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
@@ -62,7 +67,7 @@ angular.module('ozpWebtopApp.components')
      */
     $scope.minimizeFrame = function(e){
       dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function() {
-        $rootScope.$broadcast('dashboard-change');
+        $rootScope.$broadcast(dashboardStateChangedEvent);
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
@@ -76,7 +81,7 @@ angular.module('ozpWebtopApp.components')
      */
     $scope.maximizeFrame = function(e){
       dashboardApi.toggleFrameKey(e.id, 'isMaximized').then(function() {
-        $rootScope.$broadcast('dashboard-change');
+        $rootScope.$broadcast(dashboardStateChangedEvent);
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });

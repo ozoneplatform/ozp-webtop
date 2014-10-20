@@ -2,7 +2,8 @@
 
 describe('Controller: DashboardToolbar', function () {
 
-  var scope, rootScope, dashboardApi, dashboardChangeMonitor;
+  var scope, rootScope, dashboardApi, dashboardChangeMonitor,
+    launchUserPreferencesModalEvent;
 
   // use IWC for tests?
   beforeEach(function() {
@@ -13,10 +14,13 @@ describe('Controller: DashboardToolbar', function () {
 
   beforeEach(module('ozpWebtopApp.dashboardToolbar'));
 
-  beforeEach(inject(function(_$rootScope_, $controller, _dashboardApi_, _dashboardChangeMonitor_) {
+  beforeEach(inject(function(_$rootScope_, $controller, _dashboardApi_,
+                             _dashboardChangeMonitor_,
+                             _launchUserPreferencesModalEvent_) {
     rootScope = _$rootScope_;
     dashboardApi = _dashboardApi_;
     dashboardChangeMonitor = _dashboardChangeMonitor_;
+    launchUserPreferencesModalEvent = _launchUserPreferencesModalEvent_;
 
     // Scope setup
     scope = rootScope.$new();
@@ -79,10 +83,11 @@ describe('Controller: DashboardToolbar', function () {
     expect(scope.layout).toBe('desktop');
   });
 
-  it('should fire a launchSettingsModal event', function() {
+  it('should fire a launchUserPreferencesModalEvent event', function() {
     var settingsLaunchObj = { launch: 'true' };
     scope.launchSettingsModal();
-    expect(rootScope.$broadcast).toHaveBeenCalledWith('launchSettingsModal', settingsLaunchObj);
+    expect(rootScope.$broadcast).toHaveBeenCalledWith(
+      launchUserPreferencesModalEvent, settingsLaunchObj);
   });
 
   it('should expose zuluTime', function() {

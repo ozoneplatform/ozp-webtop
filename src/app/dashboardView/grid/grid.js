@@ -20,13 +20,22 @@
  * @param {Object} userSettingsApi the API for user settings
  * @param {Object} windowSizeWatcher service that notifies on window size
  * changes
+ * @param {String} deviceSizeChangedEvent event name
+ * @param {String} windowSizeChangedEvent event name
+ * @param {String} dashboardStateChangedEvent event name
+ * @param {String} toolbarVisibilityChangedEvent event name
+ * @param {String} gridFrameSizeChangeEvent event name
  */
 angular.module('ozpWebtopApp.dashboardView')
 
 .controller('GridCtrl', function ($scope, $rootScope, $location,
                                   $interval, dashboardApi, marketplaceApi,
                                   dashboardChangeMonitor, userSettingsApi,
-                                  windowSizeWatcher) {
+                                  windowSizeWatcher, deviceSizeChangedEvent,
+                                  windowSizeChangedEvent,
+                                  dashboardStateChangedEvent,
+                                  toolbarVisibilityChangedEvent,
+                                  gridFrameSizeChangeEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -190,24 +199,24 @@ angular.module('ozpWebtopApp.dashboardView')
 
     // notified each time the window is resized, but only want to redraw when
     // user has finished resizing (or at least as few times as possible)
-    $scope.$on('window-px-size-change', function() {
+    $scope.$on(windowSizeChangedEvent, function() {
       handleWindowPxSizeChange();
     });
 
     // notified whenever the screen size changes past device size boundaries
     // as defined by Bootstrap (xs, sm, md, lg)
-    $scope.$on('window-size-change', function(event, value) {
+    $scope.$on(deviceSizeChangedEvent, function(event, value) {
       handleDeviceSizeChange(value);
     });
 
     // current dashboard changed
-    $scope.$on('dashboard-change', function() {
+    $scope.$on(dashboardStateChangedEvent, function() {
       handleDashboardChange();
     });
 
     // user settings have changed
-    $scope.$on('userSettings-change', function() {
-      handleUserSettingsChange();
+    $scope.$on(toolbarVisibilityChangedEvent, function() {
+      handleToolbarVisibilityChange();
     });
 
     // TODO: Originally tried sending broadcast events from
@@ -251,7 +260,7 @@ angular.module('ozpWebtopApp.dashboardView')
           $scope.frames[i].gridLayout.width = 100;
           $scope.frames[i].gridLayout.height = 100;
 
-          $rootScope.$broadcast('gridSizeChanged', {
+          $rootScope.$broadcast(gridFrameSizeChangeEvent, {
             'frameId': frameId,
             'height': 100,
             'width': 100
@@ -273,7 +282,7 @@ angular.module('ozpWebtopApp.dashboardView')
     }
 
     /**
-     * Handler for window-px-size-change event (each time the window size
+     * Handler for windowSizeChangedEvent (each time the window size
      * changes, even by a single pixel)
      *
      * Cancels the existing $interval promise and creates a new one to update
@@ -287,7 +296,7 @@ angular.module('ozpWebtopApp.dashboardView')
     }
 
     /**
-     * Handles the window-size-change event, which occurs whenever the
+     * Handles the deviceSizeChangedEvent, which occurs whenever the
      * screen size changes device sizes (as defined by Bootstrap)
      *
      * @method handleDeviceSizeChange
@@ -311,7 +320,7 @@ angular.module('ozpWebtopApp.dashboardView')
     }
 
     /**
-     * Handle the dashboard-change event
+     * Handle the dashboardStateChangedEvent
      *
      * @method handleDashboardChange
      */
@@ -383,11 +392,11 @@ angular.module('ozpWebtopApp.dashboardView')
     }
 
     /**
-     * Handle the userSettings-change event
+     * Handle the toolbarVisibilityChangedEvent
      *
-     * @method handleUserSettingsChange
+     * @method handleToolbarVisibilityChange
      */
-    function handleUserSettingsChange() {
+    function handleToolbarVisibilityChange() {
       userSettingsApi.getUserSettings().then(function(settings) {
         if (settings.isAppboardHidden === true) {
           $scope.appBarHidden = true;
@@ -401,8 +410,8 @@ angular.module('ozpWebtopApp.dashboardView')
 
     /**
      *
-     * Calculates the size of a frame, saves it, and sends a gridSizeChanged
-     * message
+     * Calculates the size of a frame, saves it, and sends a
+     * gridFrameSizeChangeEvent event
      *
      * @method updateDashboardFramePx
      * @param {String} frameId Id of the frame to update
@@ -426,7 +435,7 @@ angular.module('ozpWebtopApp.dashboardView')
             console.log('Error updating framesize on grid');
           }
 
-          $rootScope.$broadcast('gridSizeChanged', {
+          $rootScope.$broadcast(gridFrameSizeChangeEvent, {
             'frameId': widgetSize.id,
             'height': widgetSize.height,
             'width': widgetSize.width

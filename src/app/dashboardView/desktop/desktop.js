@@ -15,12 +15,16 @@ angular.module('ozpWebtopApp.dashboardView')
  * @param marketplaceApi marketplace listings data
  * @param dashboardChangeMonitor notify when dashboard changes
  * @param userSettingsApi user preferences data
+ * @param dashboardStateChangedEvent event name
+ * @param toolbarVisibilityChangedEvent event name
  * @namespace dashboardView
  */
   .controller('DesktopCtrl', function ($scope, $rootScope, $location,
                                        dashboardApi, marketplaceApi,
                                        dashboardChangeMonitor,
-                                       userSettingsApi) {
+                                       userSettingsApi,
+                                       dashboardStateChangedEvent,
+                                       toolbarVisibilityChangedEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -105,11 +109,11 @@ angular.module('ozpWebtopApp.dashboardView')
       console.log('should not have happened: ' + error);
     });
 
-    $scope.$on('userSettings-change', function() {
-      handleUserSettingsChange();
+    $scope.$on(toolbarVisibilityChangedEvent, function() {
+      handleToolbarVisibilityChange();
     });
 
-    $scope.$on('dashboard-change', function() {
+    $scope.$on(dashboardStateChangedEvent, function() {
       dashboardChangeHandler();
     });
 
@@ -131,11 +135,11 @@ angular.module('ozpWebtopApp.dashboardView')
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
-     * Handler invoked when a userSettings-change event is received
+     * Handler invoked when a toolbarVisibilityChangedEvent is received
      *
-     * @method handleUserSettingsChange
+     * @method handleToolbarVisibilityChange
      */
-    function handleUserSettingsChange() {
+    function handleToolbarVisibilityChange() {
       userSettingsApi.getUserSettings().then(function(settings) {
         if (settings.isDashboardHidden === true) {
           $scope.dashBarHidden = true;
@@ -154,7 +158,7 @@ angular.module('ozpWebtopApp.dashboardView')
     }
 
     /**
-     * Handler invoked when a dashboard-change event is received
+     * Handler invoked when a dashboardStateChangedEvent is received
      *
      * @method dashboardChangeHandler
      */
@@ -243,7 +247,7 @@ angular.module('ozpWebtopApp.dashboardView')
     }
 
     /**
-     * Update the active dashboard and broadcast dashboard-change on
+     * Update the active dashboard and broadcast dashboardStateChangedEvent on
      * completion
      *
      * @method updateDashboard
@@ -276,7 +280,7 @@ angular.module('ozpWebtopApp.dashboardView')
       }
 
       // $scope.activeFrames = $scope.currentDashboard.frames;
-      $rootScope.$broadcast('dashboard-change');
+      $rootScope.$broadcast(dashboardStateChangedEvent);
     }
 
     /**

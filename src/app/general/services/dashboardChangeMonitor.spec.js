@@ -5,11 +5,14 @@ describe('Service: dashboardChangeMonitor', function () {
   beforeEach(module('ozpWebtopApp'));
 
   // instantiate service
-  var $rootScope, $location, dashboardChangeMonitor;
-  beforeEach(inject(function (_$rootScope_, _$location_, _dashboardChangeMonitor_) {
+  var $rootScope, $location, dashboardChangeMonitor, dashboardSwitchedEvent;
+  beforeEach(inject(function (_$rootScope_, _$location_,
+                              _dashboardChangeMonitor_,
+                              _dashboardSwitchedEvent_) {
     $rootScope = _$rootScope_;
     $location = _$location_;
     dashboardChangeMonitor = _dashboardChangeMonitor_;
+    dashboardSwitchedEvent = _dashboardSwitchedEvent_;
     spyOn($rootScope, '$broadcast').and.callThrough();
   }));
 
@@ -45,7 +48,7 @@ describe('Service: dashboardChangeMonitor', function () {
     $location.path('/grid/0');
     $rootScope.$apply();
     var obj = {'layout': 'grid', 'dashboardId': '0'};
-    expect($rootScope.$broadcast).toHaveBeenCalledWith('dashboardChange', obj);
+    expect($rootScope.$broadcast).toHaveBeenCalledWith(dashboardSwitchedEvent, obj);
   });
 
   it('supports double-digit dashboard indexes', function() {
@@ -53,7 +56,7 @@ describe('Service: dashboardChangeMonitor', function () {
     $location.path('/desktop/12');
     $rootScope.$apply();
     var obj = {'layout': 'desktop', 'dashboardId': '12'};
-    expect($rootScope.$broadcast).toHaveBeenCalledWith('dashboardChange', obj);
+    expect($rootScope.$broadcast).toHaveBeenCalledWith(dashboardSwitchedEvent, obj);
   });
 
 });

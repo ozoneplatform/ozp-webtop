@@ -13,7 +13,8 @@
     "url": "git@github.com:ozone-development/ozp-webtop.git"
   },
   "dependencies": {
-    "es6-promise": "~1.0.0"
+    "es6-promise": "~1.0.0",
+    "yuidoc-bootstrap-theme": "~1.0.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -584,8 +584,8 @@ module.exports = function ( grunt ) {
         options: {
           //paths: [ '<%= app_files.js %>' ],
           paths: './src',
-          // TODO: we probably want a theme at some point, use this to specify it.
-          // themedir: 'path/to/custom/theme/',
+          themedir: 'node_modules/yuidoc-bootstrap-theme',
+          helpers: ['node_modules/yuidoc-bootstrap-theme/helpers/helpers.js'],
           outdir: '<%= docs_dir %>'
         }
       }

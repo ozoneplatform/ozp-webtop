@@ -3,12 +3,12 @@
 var app = angular.module('ozp.common');
 
 /**
- * Provides an OZP IWC client using a Promises to indicate valid connection
+ * Provides a single connected IWC client
  *
  * @class iwcConnectedClient
  * @constructor
  * @param $q ng $q service
- * @param iwcClient iwcClient service
+ * @param iwcClient iwcClient service from ozp-iwc-angular library
  * @param iwcOzoneBus OZONE bus to connect to
  * @namespace ozp.common
  */
@@ -32,7 +32,7 @@ app.factory('iwcConnectedClient', function($q, iwcClient, iwcOzoneBus) {
     getClient: function() {
       var deferred = $q.defer();
       if (isConnected) {
-        deferred.resolve(true);
+        deferred.resolve(client);
       }
 
       client.on('connected', function () {
@@ -41,7 +41,7 @@ app.factory('iwcConnectedClient', function($q, iwcClient, iwcOzoneBus) {
           initialConnection = false;
         }
         isConnected = true;
-        deferred.resolve(iwcClient);
+        deferred.resolve(client);
       });
 
       return deferred.promise;

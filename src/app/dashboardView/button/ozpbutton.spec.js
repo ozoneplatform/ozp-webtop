@@ -31,7 +31,7 @@ describe('Directive: ozpButton', function () {
   }));
 
   it('should attach text', inject(function () {
-    expect(element.find('span').html()).toBe(scope.button.text);
+    expect(element.find('span').html()).toBe(scope.button.text.slice(0,8));
   }));
 });
 

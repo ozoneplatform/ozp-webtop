@@ -135,7 +135,10 @@ angular.module('ozpWebtopApp.dashboardView')
       element.on('mousedown resizestart', start);
       element.on('mouseup mouseleave resizestop', stop);
       // Is the origin the same as the webtop?
-      var origin = compareUrl(scope.frame.url);
+      // TODO: put this back
+      // var origin = compareUrl(scope.frame.url);
+      // For now, assume different origins
+      var origin = false;
 
       // configure dynamic template without using $http for ease of testing
       scope.getContentUrl = function() {

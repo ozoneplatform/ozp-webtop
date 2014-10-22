@@ -13,7 +13,6 @@ describe('Service: Compareurl', function () {
 
   it('should compare origins', function() {
     var location = window.location;
-    console.log('location: ' + location);
     expect(compareUrl(location)).toBe(true);
   });
 

@@ -25,6 +25,27 @@ angular.module('ozp.common')
                                         windowSizeChangedEvent) {
     var previousDeviceSize = '';
     var deviceSize = '';
+
+    function processWindowSizeChange(newWidth) {
+      if (newWidth < 768) {
+        deviceSize = 'xs';
+      } else if (newWidth < 992) {
+        deviceSize = 'sm';
+      } else if (newWidth < 1200) {
+        deviceSize = 'md';
+      } else {
+        deviceSize = 'lg';
+      }
+
+      if (previousDeviceSize !== deviceSize) {
+        previousDeviceSize = deviceSize;
+        $rootScope.$broadcast(deviceSizeChangedEvent, {
+          deviceSize: deviceSize
+        });
+      }
+      $rootScope.$broadcast(windowSizeChangedEvent);
+    }
+
     return {
       /**
        * Activate the windowSizeWatcher
@@ -36,25 +57,7 @@ angular.module('ozp.common')
       }, function(value) {
           // invoked each time the window size is changed (as the user drags,
           // no just on mouseup)
-          // console.log('window size changed to: ' + value);
-          if (value < 768) {
-            deviceSize = 'xs';
-          } else if (value < 992) {
-            deviceSize = 'sm';
-          } else if (value < 1200) {
-            deviceSize = 'md';
-          } else {
-            deviceSize = 'lg';
-          }
-
-          if (previousDeviceSize !== deviceSize) {
-            previousDeviceSize = deviceSize;
-            $rootScope.$broadcast(deviceSizeChangedEvent, {
-              deviceSize: deviceSize
-            });
-          }
-          $rootScope.$broadcast(windowSizeChangedEvent);
-
+          processWindowSizeChange(value);
          });
       },
       /**

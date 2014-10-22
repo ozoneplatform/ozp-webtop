@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ozpWebtopApp.general');
+var app = angular.module('ozpWebtopApp.services');
 
 /**
  * Interface for working with Local Storage

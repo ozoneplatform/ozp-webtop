@@ -10,7 +10,7 @@
  * @module ozpWebtopApp
  * @requires ozp.common
  * @requires ozpWebtopApp.constants
- * @requires ozpWebtopApp.general
+ * @requires ozpWebtopApp.services
  * @requires ozpWebtopApp.models
  * @requires ozpWebtopApp.appLauncher
  * @requires ozpWebtopApp.appToolbar
@@ -27,7 +27,7 @@ angular.module( 'ozpWebtopApp', [
   'templates-app',
   'templates-common',
   'ozpWebtopApp.constants',
-  'ozpWebtopApp.general',
+  'ozpWebtopApp.services',
   'ozpWebtopApp.models',
   'ozpWebtopApp.appLauncher',
   'ozpWebtopApp.dashboardToolbar',
@@ -100,20 +100,20 @@ angular.module('ozp.common', ['ozpWebtopApp.constants', 'ozpIwcClient']);
  * General utilities for use in Webtop. Includes some services and other fairly
  * generic capabilities.
  *
- * @module ozpWebtopApp.general
+ * @module ozpWebtopApp.services
  * @requires ozpWebtopApp.constants
  * @requires ozp.common
  */
-angular.module('ozpWebtopApp.general', ['ozpWebtopApp.constants',
+angular.module('ozpWebtopApp.services', ['ozpWebtopApp.constants',
   'ozp.common']);
 
 /**
  * Models and APIs to retrieve and send data to places external to the Webtop.
  *
  * @module ozpWebtopApp.models
- * @requires ozpWebtopApp.general
+ * @requires ozpWebtopApp.services
  */
-angular.module('ozpWebtopApp.models', ['ozpWebtopApp.general']);
+angular.module('ozpWebtopApp.models', ['ozpWebtopApp.services']);
 
 /**
  * The modal encompassing user settings functionality.

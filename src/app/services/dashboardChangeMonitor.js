@@ -16,7 +16,7 @@
  * @class dashboardChangeMonitor
  * @static
  */
-angular.module('ozpWebtopApp.general').factory('dashboardChangeMonitor',
+angular.module('ozpWebtopApp.services').factory('dashboardChangeMonitor',
   function($rootScope, $location, dashboardSwitchedEvent) {
     // detect a change in dashboard layout
     var service = {};

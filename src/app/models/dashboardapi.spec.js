@@ -848,18 +848,45 @@ describe('Service: dashboardApi', function () {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // combine dashboard data with application data
-  it('should have a mergeApplicationData method', function() {
+  it('should have a mergeApplicationData method', function(done) {
     // build marketplace apps
     dashboardApi.getDashboardById(0).then(function(dashboard) {
       var frames = dashboard.frames;
       var marketplaceApps = [];
       for (var i=0; i < frames.length; i++) {
         var app = {
-          'id': frames[i].appId,
-          'icon': '/icon/' + i,
           'name': 'appName' + i,
+          'id': frames[i].appId,
+          'description': 'This app does stuff' + i,
           'shortDescription': 'This app does stuff' + i,
-          'url': 'http://url/of/app/' + i
+          'type': 'application',
+          'state': 'active',
+          'uiHints': {
+            'width': 200,
+            'height': 200,
+            'singleton': true
+          },
+          'tags': [
+            'demo',
+          ],
+          'intents': [
+
+          ],
+          'icons': {
+            'small': '/icon/small/' + i,
+            'large': '/icon/large/' + i
+          },
+          'screenShots': [
+
+          ],
+          'launchUrls': {
+            'default': 'http://url/of/app/' + i,
+            'test': ''
+
+          },
+          '_links': {
+
+          }
         };
         marketplaceApps.push(app);
       }
@@ -867,14 +894,19 @@ describe('Service: dashboardApi', function () {
       dashboardApi.mergeApplicationData(frames, marketplaceApps);
 
       for (var j=0; j < frames.length; j++) {
-        expect(frames[j].icon).toEqual('/icon/' + j);
         expect(frames[j].name).toEqual('appName' + j);
+        expect(frames[j].icon).toEqual('/icon/small/' + j);
+
         expect(frames[j].shortDescription).toEqual('This app does stuff' + j);
         expect(frames[j].url).toEqual('http://url/of/app/' + j);
+        expect(frames[j].singleton).toEqual(true);
       }
+      done();
     }).catch(function(error) {
       expect(error).toEqual('should not have happened');
     });
+
+    if(!rootScope.$$phase) { rootScope.$apply(); }
 
   });
 

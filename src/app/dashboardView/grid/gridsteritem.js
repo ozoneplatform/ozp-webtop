@@ -55,7 +55,10 @@ angular.module('ozpWebtopApp.dashboardView')
     link: function (scope, element) {
 
       // Is the origin the same as the webtop?
-      var origin = compareUrl(scope.frame.url);
+      // TODO: put this back
+      // var origin = compareUrl(scope.frame.url);
+      // For now, assume different origins
+      var origin = false;
       var template;
 
       // Instead of templateUrl, use $http to load one of two templates

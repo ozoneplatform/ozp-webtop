@@ -3,7 +3,7 @@
 describe('ozp.common: windowSizeWatcher', function () {
 
   // load the module
-  beforeEach(module('ozp.common'));
+  beforeEach(module('ozp.common.windowSizeWatcher'));
 
   // initialize a new instance of the service before each test
   var $rootScope, windowSizeWatcher, $window, windowSizeChangedEvent,

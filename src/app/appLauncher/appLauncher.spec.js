@@ -5,7 +5,7 @@ describe('App Launcher', function () {
   var scope, stateParams, marketplaceApi;
 
   // load the filter's module
-  beforeEach(module('ozpWebtopApp.appLauncher'));
+  beforeEach(module('ozpWebtop.appLauncher'));
 
   beforeEach(inject(function ($rootScope, $controller, _marketplaceApi_) {
     scope = $rootScope.$new();

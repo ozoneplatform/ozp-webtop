@@ -3,13 +3,13 @@
 describe('Service: dashboardApi', function () {
 
   beforeEach(function() {
-    angular.mock.module('ozpWebtopApp.constants', function($provide) {
+    angular.mock.module('ozpWebtop.constants', function($provide) {
       $provide.constant('useIwc', false);
     });
   });
 
   // load the service's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.models.dashboard'));
 
   // Dashboards service
   var dashboardApi, rootScope;

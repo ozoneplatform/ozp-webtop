@@ -1,6 +1,17 @@
 'use strict';
 
 /**
+ * Launches apps from other sources
+ *
+ * @module ozpWebtop.appLauncher
+ * @requires ui.router
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models.marketplace
+ */
+angular.module('ozpWebtop.appLauncher', ['ui.router',
+  'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace']);
+
+/**
  * Launch applications in Webtop via URL
  *
  * This is really for demo purposes and will likely be removed
@@ -17,7 +28,7 @@
  * @param dashboardApi dashboard data
  * @namespace appLauncher
  */
-angular.module( 'ozpWebtopApp.appLauncher')
+angular.module( 'ozpWebtop.appLauncher')
   .controller('AppLauncherCtrl', function($scope, $rootScope, $state,
                                           $stateParams, marketplaceApi,
                                           dashboardApi) {

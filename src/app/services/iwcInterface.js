@@ -1,6 +1,15 @@
 'use strict';
 
-var app = angular.module('ozpWebtopApp.services');
+/**
+ * Interface for working with IWC
+ *
+ * @module ozpWebtop.services.iwcInterface
+ * @requires ozp.common.iwc.client
+ */
+angular.module('ozpWebtop.services.iwcInterface', [
+  'ozp.common.iwc.client']);
+
+var app = angular.module('ozpWebtop.services.iwcInterface');
 
 /**
  * Interface for working with IWC
@@ -11,7 +20,7 @@ var app = angular.module('ozpWebtopApp.services');
  * @constructor
  * @param $q ng $q service
  * @param iwcConnectedClient IWC client service
- * @namespace general
+ * @namespace services
  */
 app.factory('iwcInterface', function($q, iwcConnectedClient) {
 

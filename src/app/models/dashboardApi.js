@@ -1,6 +1,20 @@
 'use strict';
 
-var models = angular.module('ozpWebtopApp.models');
+/**
+ * Dashboard model
+ *
+ * @module ozpWebtop.models.dashboard
+ * @requires ozp.common.utilities
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.services.iwcInterface
+ * @requires ozpWebtop.services.localStorageInterface
+ */
+angular.module('ozpWebtop.models.dashboard', [
+  'ozp.common.utilities', 'ozpWebtop.constants',
+  'ozpWebtop.services.iwcInterface',
+  'ozpWebtop.services.localStorageInterface']);
+
+var models = angular.module('ozpWebtop.models.dashboard');
 
 // TODO: put this somewhere better
 // Array Remove - By John Resig (MIT Licensed)

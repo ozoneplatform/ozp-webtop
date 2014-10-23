@@ -3,7 +3,7 @@
 describe('Controller: ChromeCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.dashboardView.chrome'));
 
   var scope, ctrl, $location, dashboardSwitchedEvent;
 

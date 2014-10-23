@@ -7,12 +7,12 @@ describe('Controller: DashboardToolbar', function () {
 
   // use IWC for tests?
   beforeEach(function() {
-    angular.mock.module('ozpWebtopApp.constants', function($provide) {
+    angular.mock.module('ozpWebtop.constants', function($provide) {
       $provide.constant('useIwc', false);
     });
   });
 
-  beforeEach(module('ozpWebtopApp.dashboardToolbar'));
+  beforeEach(module('ozpWebtop.dashboardToolbar'));
 
   beforeEach(inject(function(_$rootScope_, $controller, _dashboardApi_,
                              _dashboardChangeMonitor_,

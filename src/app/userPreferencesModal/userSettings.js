@@ -1,5 +1,15 @@
 'use strict';
 
+/**
+ * The modal encompassing user settings functionality.
+ *
+ * @module ozpWebtop.userSettings
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models.userSettings
+ */
+angular.module('ozpWebtop.userSettings', ['ozpWebtop.models.dashboard',
+  'ozpWebtop.models.userSettings']);
+
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used below.
 /**
@@ -270,7 +280,7 @@ ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'currentDashboardId',
  * @static
  * @namespace userSettings
  */
-angular.module( 'ozpWebtopApp.userSettings').directive('userSettings', function(){
+angular.module( 'ozpWebtop.userSettings').directive('userSettings', function(){
     return {
         restrict: 'E',
         templateUrl: 'userPreferencesModal/settingsModal.tpl.html',

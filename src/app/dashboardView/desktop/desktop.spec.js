@@ -5,13 +5,13 @@ describe('Controller: DesktopCtrl', function () {
 
     // use IWC for tests?
     beforeEach(function() {
-      angular.mock.module('ozpWebtopApp.constants', function($provide) {
+      angular.mock.module('ozpWebtop.constants', function($provide) {
         $provide.constant('useIwc', true);
       });
     });
 
   // load the controller's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.dashboardView.desktop'));
 
   var desktopcontrollerCtrl, scope, dashboardApi, marketplaceApi;
 

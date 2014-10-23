@@ -2,7 +2,7 @@
 
 describe('Directive: ozp-gridster-item', function () {
   // load the directive's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.dashboardView.grid.gridsterFrame'));
 
   var element,
     scope,

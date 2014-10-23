@@ -3,13 +3,20 @@
 /**
  * compareUrl
  *
+ * @module ozp.common.urlOriginComparer
+ */
+angular.module('ozp.common.urlOriginComparer', []);
+
+/**
+ * compareUrl
+ *
  * ngtype: factory
  *
  * @namespace ozp.common
  * @class compareUrl
  * @static
  */
-angular.module('ozp.common')
+angular.module('ozp.common.urlOriginComparer')
 .factory('compareUrl', function () {
   /**
   * Determine if the given URL represents the same origin as the application

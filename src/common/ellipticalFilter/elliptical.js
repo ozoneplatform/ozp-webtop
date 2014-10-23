@@ -1,6 +1,13 @@
 'use strict';
 
-angular.module('ozp.common')
+/**
+ * elliptical filter
+ *
+ * @module ozp.common.ellipticalFilter
+ */
+angular.module('ozp.common.ellipticalFilter', []);
+
+angular.module('ozp.common.ellipticalFilter')
 /**
  * elliptical filter
  *

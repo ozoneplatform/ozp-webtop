@@ -1,6 +1,20 @@
 'use strict';
 
-var dashboardApp = angular.module( 'ozpWebtopApp.dashboardToolbar')
+/**
+ * The dashboard toolbar component shown in the Webtop.
+ *
+ * @module ozpWebtop.dashboardToolbar
+ * @requires ozp.common.windowSizeWatcher
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models.userSettings
+ * @requires ozpWebtop.services.dashboardChangeMonitor
+ */
+angular.module('ozpWebtop.dashboardToolbar', [ 'ozp.common.windowSizeWatcher',
+  'ozpWebtop.models.dashboard',
+  'ozpWebtop.models.userSettings',
+  'ozpWebtop.services.dashboardChangeMonitor']);
+
+var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
 /**
  * Controller for dashboard toolbar located at the top of Webtop
  *

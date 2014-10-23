@@ -1,6 +1,21 @@
 'use strict';
 
-angular.module('ozpWebtopApp.dashboardView')
+/**
+ * Desktop layout main controller
+ *
+ * @module ozpWebtop.dashboardView.desktop
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.services.dashboardChangeMonitor
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models.marketplace
+ * @requires ozpWebtop.models.userSettings
+ */
+angular.module('ozpWebtop.dashboardView.desktop', [
+  'ozpWebtop.constants', 'ozpWebtop.services.dashboardChangeMonitor',
+  'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
+  'ozpWebtop.models.userSettings']);
+
+angular.module('ozpWebtop.dashboardView.desktop')
 /**
  * Controller for managing apps/widgets in desktop layout on a dashboard
  *

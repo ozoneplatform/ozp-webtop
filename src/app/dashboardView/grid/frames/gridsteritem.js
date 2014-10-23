@@ -1,6 +1,17 @@
 'use strict';
 
 /**
+ * Gridster frames
+ *
+ * @module ozpWebtop.dashboardView.grid.gridsterFrame
+ * @requires ozp.common.urlOriginComparer
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.models.dashboard
+ */
+angular.module('ozpWebtop.dashboardView.grid.gridsterFrame', [
+  'ozp.common.urlOriginComparer', 'ozpWebtop.constants',
+  'ozpWebtop.models.dashboard']);
+/**
  * ozpGridsterItem is a wrapper around a tile in the grid
  *
  * ngtype: directive
@@ -17,7 +28,7 @@
  * @param {String} deviceSizeChangedEvent event name
  * @param {String} gridFrameSizeChangeEvent event name
  */
-angular.module('ozpWebtopApp.dashboardView')
+angular.module('ozpWebtop.dashboardView.grid.gridsterFrame')
 .directive('ozpGridsterItem', function ($compile, $http, $templateCache,
                                         $timeout, compareUrl, dashboardApi,
                                         deviceSizeChangedEvent,

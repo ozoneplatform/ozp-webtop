@@ -3,12 +3,19 @@
 /**
  * Constants used throughout the application
  *
+ * @module ozpWebtop.constants
+ */
+angular.module('ozpWebtop.constants', []);
+
+/**
+ * Constants used throughout the application
+ *
  * ngtype: constant
  *
  * @class constants
  * @static
  */
-angular.module('ozpWebtopApp.constants')
+angular.module('ozpWebtop.constants')
 /**
  * URL of OZONE bus used by the application
  *

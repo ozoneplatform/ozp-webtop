@@ -2,7 +2,7 @@
 
 describe('constants', function () {
   // load the service's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop'));
 
   var useIwc, iwcOzoneBus, deviceSizeChangedEvent, windowSizeChangedEvent,
     dashboardStateChangedEvent, dashboardSwitchedEvent,

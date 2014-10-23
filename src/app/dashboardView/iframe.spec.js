@@ -3,7 +3,7 @@
 describe('Controller: IframeCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.dashboardView.iframe'));
 
   var IframeCtrl, scope;
 

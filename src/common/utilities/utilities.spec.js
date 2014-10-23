@@ -2,7 +2,7 @@
 
 describe('Service: Utilities', function () {
   // load the service's module
-  beforeEach(module('ozp.common'));
+  beforeEach(module('ozp.common.utilities'));
 
   // instantiate service
   var Utilities;

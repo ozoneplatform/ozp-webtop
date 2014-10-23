@@ -2,7 +2,7 @@
 
 describe('Service: dashboardChangeMonitor', function () {
   // load the service's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.services.dashboardChangeMonitor'));
 
   // instantiate service
   var $rootScope, $location, dashboardChangeMonitor, dashboardSwitchedEvent;

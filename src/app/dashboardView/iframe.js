@@ -1,6 +1,13 @@
 'use strict';
 
 /**
+ * iframe module for dashboard layouts
+ *
+ * @module ozpWebtop.dashboardView.iframe
+ */
+angular.module('ozpWebtop.dashboardView.iframe', []);
+
+/**
  * IframeCtrl ensures that a widget can be properly displayed in an iframe.
  *
  * ngtype: controller
@@ -11,7 +18,7 @@
  * @param $scope An Angular scope
  * @param $sce The Angular service for Strict Contextual Escaping - [API Docs](https://docs.angularjs.org/api/ng/service/$sce)
  */
-angular.module('ozpWebtopApp.dashboardView')
+angular.module('ozpWebtop.dashboardView.iframe')
   .controller('IframeCtrl', function ($scope, $sce) {
     /**
      * @property frame.trustedUrl URL

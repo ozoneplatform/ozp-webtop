@@ -4,7 +4,7 @@
 describe('Controller: GridCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.dashboardView.grid'));
 
   var GridcontrollerCtrl, scope;
 

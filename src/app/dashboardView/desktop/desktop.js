@@ -178,84 +178,54 @@ angular.module('ozpWebtop.dashboardView.desktop')
      * @method dashboardChangeHandler
      */
     function dashboardChangeHandler() {
-      /* isminimized */
-      dashboardApi.getDashboards().then(function(dashboards) {
-        var apiDash = {};
-        for (var ii=0; ii < dashboards.length; ii++) {
-          if (dashboards[ii].id === dashboardChangeMonitor.dashboardId) {
-            apiDash = dashboards[ii];
-          }
-        }
-        for (var z in apiDash.frames){
-          for (var y in $scope.frames){
-            if ((apiDash.frames[z].id === $scope.frames[y].id) && (apiDash.frames[z].isMinimized !== $scope.frames[y].isMinimized)) {
-              $scope.frames[y].isMinimized = apiDash.frames[z].isMinimized;
-              //
-            }
-            if((apiDash.frames[z].id === $scope.frames[y].id) && (apiDash.frames[z].isMaximized !== $scope.frames[y].isMaximized)) {
-              $scope.frames[y].isMaximized = apiDash.frames[z].isMaximized;
-              //
+
+      dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).then(function(updatedDashboard) {
+
+        // update the isMinimized and isMaximized state
+        for (var ii=0; ii < updatedDashboard.frames.length; ii++) {
+          for (var jj=0; jj < $scope.frames.length; jj++) {
+            if (updatedDashboard.frames[ii].id === $scope.frames[jj].id) {
+              $scope.frames[jj].isMinimized = updatedDashboard.frames[ii].isMinimized;
+              $scope.frames[jj].isMaximized = updatedDashboard.frames[ii].isMaximized;
             }
           }
         }
 
-        /* end isminimized */
-        if ($scope.frames.length !== apiDash.frames.length){
+        if ($scope.frames.length === updatedDashboard.frames.length) {
+          return;
+        }
 
-          /* Make an array of old frames and new frames */
-          var oldFrames = [],
-              newFrames = [];
-          for(var i in $scope.frames){
-            oldFrames.push($scope.frames[i].id);
-          }
+        // save the original frames for use later on
+        var originalFrames = $scope.frames.slice();
 
-          for (var j in apiDash.frames){
-            newFrames.push(apiDash.frames[j].id);
-          }
-
-          /* return just the differences between oldFrames and new Frames */
-          Array.prototype.diff = function(a) {
-            return this.filter(function(i) {return a.indexOf(i) < 0;});
-          };
-          // add or remove new frames without reloading the entire scope
-          // if there are items in the currentScope that are not in the updated
-          // scope from the service, remove theme here
-          if (oldFrames.diff(newFrames).length > 0){
-            for (var a = 0; a < $scope.frames.length; a++){
-              // if the removed frame is present, splice it out of the local
-              // scope
-              if ($scope.frames[a].id === oldFrames.diff(newFrames)[0]){
-                $scope.frames.splice(a, 1);
-              }
+        // remove old frames from the view
+        var originalFramesCopy = originalFrames.slice();
+        for (var i=0; i < originalFramesCopy.length; i++) {
+          var removeFrame = true;
+          for (var j=0; j < updatedDashboard.frames.length; j++) {
+            if (originalFramesCopy[i].id === updatedDashboard.frames[j].id) {
+              removeFrame = false;
             }
           }
-          // if there are new frames for this dashboard on the services that are
-          // not in the local scope
-          if (newFrames.diff(oldFrames).length > 0){
-
-            // for item in the dashboardApi on the current Dashboard
-            for (var b = 0; b < apiDash.frames.length; b++){
-
-              // if the item from the dashboard api matches the new frame we
-              // found in this view
-              if (apiDash.frames[b].id === newFrames.diff(oldFrames)[0]){
-
-                // push that frame to the local scope. since the changes are
-                // automatically binded with the view, no refresh
-                $scope.frames.push(
-                  apiDash.frames[b]
-                );
-                // update the frame size so it fits inside its little widget
-                // boundary
-                // $scope.updateGridFrameSize(apiDash.frames[b].id);
-                // now quickly merge my local scope for frames with the
-                // marketplace api to get important stuff on local scope like
-                // url, image, name, etc
-                dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
-              }
-            }
+          if (removeFrame) {
+            $scope.frames.splice(i,1);
           }
         }
+
+        // Add new frames to the view
+        for (var k=0; k < updatedDashboard.frames.length; k++) {
+          var addFrame = true;
+          for (var l=0; l < originalFrames.length; l++) {
+            if (updatedDashboard.frames[k].id === originalFrames[l].id) {
+              addFrame = false;
+            }
+          }
+          if (addFrame) {
+            $scope.frames.push(updatedDashboard.frames[k]);
+          }
+        }
+        dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
+
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });

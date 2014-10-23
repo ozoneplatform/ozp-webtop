@@ -32,6 +32,7 @@
  * @requires ozpWebtop.dashboardView.grid
  * @requires ozpWebtop.dashboardView.grid.gridsterFrame
  * @requires ozpWebtop.userSettings
+ * @requires ozpWebtop.addApplicationsModal
  * @requires ui.router
  * @requires ui.bootstrap
  * @requires gridster
@@ -65,6 +66,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView.grid',
   'ozpWebtop.dashboardView.grid.gridsterFrame',
   'ozpWebtop.userSettings',
+  'ozpWebtop.addApplicationsModal',
   'ui.router',
   'ui.bootstrap',
   'gridster',

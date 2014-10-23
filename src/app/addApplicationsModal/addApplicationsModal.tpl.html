@@ -1,0 +1,35 @@
+<div class="add-apps-style">
+  <div class="modal-header add-apps-header">
+    <button type="button" class="close" ng-click="cancel()">
+      <span aria-hidden="true"><i class="fa fa-close close-icon"></i> </span>
+      <span class="sr-only">Close</span>
+    </button>
+    <h3 class="modal-title">Open bookmarked apps</h3>
+    <p> These are apps you have already bookmarked from the Center. To edit your
+      bookmarks, visit the HUD
+    </p>
+  </div>
+  <div class="modal-body add-apps-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 add-apps-list">
+          <ul id="triple">
+            <li ng-repeat="app in applications">
+              <span ng-click="appSelected(app)" class="link-pointer"
+                  ng-class="{addappselected: isAppSelected(app)}"
+                  tooltip-placement="right" tooltip="{{app.shortDescription}}">
+                <img ng-src="{{app.icons.small}}" height="20" width="20" />
+                {{app.name}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer add-apps-footer">
+    <button class="btn add-apps-dark-text" ng-click="openAppsInNewDashboard()">
+      Open apps in new dashboard
+    </button>
+    <button class="btn btn-primary" ng-click="openApps()">Open</button>
+  </div>
+</div>

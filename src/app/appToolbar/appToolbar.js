@@ -10,12 +10,14 @@
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.models.marketplace
  * @requires ozpWebtop.models.userSettings
+ * @requires ozpWebtop.addApplicationsModal
  * @requires ozpWebtop.services.dashboardChangeMonitor
  * @requires ozp.common.windowSizeWatcher
  */
 angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
   'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
   'ozpWebtop.models.userSettings',
+  'ozpWebtop.addApplicationsModal',
   'ozpWebtop.services.dashboardChangeMonitor',
   'ozp.common.windowSizeWatcher']);
 
@@ -34,6 +36,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param $scope $scope service
  * @param $rootScope $rootScope service
  * @param $state $state service
+ * @param $modal $modal service from ui.bootstrap
  * @param marketplaceApi Application data model
  * @param dashbaordApi Dashboard data model
  * @param dashboardChangeMonitor Notify when dashboard changes
@@ -46,6 +49,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  */
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
+                                                 $modal,
                                                  marketplaceApi, dashboardApi,
                                                  dashboardChangeMonitor,
                                                  userSettingsApi,
@@ -255,37 +259,6 @@ angular.module( 'ozpWebtop.appToolbar')
      };
 
     /**
-     * Attempt to add an application to the dashboard
-     *
-     * If successful, broadcasts a dashboardStateChangedEvent
-     * @method appClicked
-     * @param {Object} app The application to add
-     */
-    $scope.appClicked = function(app) {
-      // check if the app is already on the current dashboard
-      dashboardApi.isAppOnDashboard($scope.currentDashboardId, app.id).then(function(isOnDashboard) {
-        if (isOnDashboard && app.uiHints.singleton) {
-          alert('Only one instance of this application may be on your ' +
-            'dashboard');
-        } else {
-          // add this app to the dashboard
-          // TODO: use message broadcast to get grid max rows and grid max cols
-          dashboardApi.createFrame($scope.currentDashboardId, app.id, 10).then(function(response) {
-            // reload this dashboard
-            if (response) {
-              // $state.go($state.$current, null, { reload: true });
-              $rootScope.$broadcast(dashboardStateChangedEvent);
-            }
-          }).catch(function(error) {
-            console.log('should not have happened: ' + error);
-          });
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    };
-
-    /**
      * Show or hide the application toolbar
      *
      * If successful, broadcasts a toolbarVisibilityChangedEvent
@@ -349,6 +322,58 @@ angular.module( 'ozpWebtop.appToolbar')
         $scope.nextAppsVisible = false;
       }
       $scope.previousAppsVisible = true;
+    };
+
+    $scope.openApplicationsModal = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'addApplicationsModal/addApplicationsModal.tpl.html',
+        controller: 'AddApplicationsModalInstanceCtrl',
+        windowClass: 'app-modal-window',
+        scope: $rootScope,
+        resolve: {
+          apps: function() {
+            return $scope.apps;
+          }
+        }
+      });
+
+      function addAppToExistingDashboard(app) {
+        // check if the app is already on the current dashboard
+        return dashboardApi.isAppOnDashboard($scope.currentDashboardId, app.id).then(function (isOnDashboard) {
+          if (isOnDashboard && app.uiHints.singleton) {
+            console.log('WARNING: Only one instance of ' + app.name + ' may be on your dashboard');
+          } else {
+            // TODO: use message broadcast to get grid max rows and grid max cols
+            return dashboardApi.createFrame($scope.currentDashboardId, app.id, 10).then(function (response) {
+              return response;
+            }).catch(function (error) {
+              console.log('should not have happened: ' + error);
+            });
+          }
+        }).catch(function (error) {
+          console.log('should not have happened: ' + error);
+        });
+      }
+
+      modalInstance.result.then(function (response) {
+        if (response.useNewDashboard) {
+          alert('Adding apps to a new dashboard is not yet supported');
+          return;
+        }
+
+        response.appsToOpen.reduce(function (previous, current) {
+          return previous.then(function () {
+            var promise = addAppToExistingDashboard(current);
+            return promise;
+          }).catch(function (error) {
+            console.log('should not have happened: ' + error);
+          });
+        }, Promise.resolve()).then(function () {
+            // all apps added to dashboard
+          $rootScope.$broadcast(dashboardStateChangedEvent);
+        });
+
+      });
     };
 
   });

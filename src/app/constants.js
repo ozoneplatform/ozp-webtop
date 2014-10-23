@@ -102,6 +102,3 @@ angular.module('ozpWebtop.constants')
  * @type String
  */
 .constant('launchUserPreferencesModalEvent', 'launchUserPreferencesModal');
-
-
-

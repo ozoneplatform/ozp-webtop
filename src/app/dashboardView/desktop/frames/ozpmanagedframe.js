@@ -1,6 +1,18 @@
 'use strict';
 
 /**
+ * Desktop managed frame
+ *
+ * @module ozpWebtop.dashboardView.desktop.managedFrame
+ * @requires ozp.common.urlOriginComparer
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.dashboardView.iframe
+ */
+angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
+  'ozp.common.urlOriginComparer', 'ozpWebtop.models.dashboard',
+  'ozpWebtop.dashboardView.iframe']);
+
+/**
  * Used to include an html document in the webtop. If the html in question is from a different 
  * origin than the webtop, then an iframe will be used. If the html is from the same origin as
  * the webtop, a "frame" (div) will be used.
@@ -16,7 +28,7 @@
  * @param {Object} $document the Angular document service
  * @param {Object} dashboardApi the API for dashboard information {{#crossLink "dashboardApi"}}{{/crossLink}}
  */
-angular.module('ozpWebtopApp.dashboardView')
+angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
 .directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document, dashboardApi) {
   var resizableConfig = {
     // handles: 'all',

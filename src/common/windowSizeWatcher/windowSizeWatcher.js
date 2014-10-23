@@ -1,6 +1,14 @@
 'use strict';
 
 /**
+ * Window size watcher
+ *
+ * @module ozp.common.windowSizeWatcher
+ * @requires ozpWebtop.constants
+ */
+angular.module('ozp.common.windowSizeWatcher', ['ozpWebtop.constants']);
+
+/**
  * Send a message when the window size changes device sizes
  * as defined by Bootstrap:
  *
@@ -11,7 +19,7 @@
  *
  * ngtype: factory
  *
- * @namespace common
+ * @namespace ozp.common
  * @class windowSizeWatcher
  * @constructor
  * @param $rootScope ng $rootScope
@@ -19,7 +27,7 @@
  * @param deviceSizeChangedEvent event name
  * @param windowSizeChangedEvent event name
  */
-angular.module('ozp.common')
+angular.module('ozp.common.windowSizeWatcher')
 .factory('windowSizeWatcher', function ($rootScope, $window,
                                         deviceSizeChangedEvent,
                                         windowSizeChangedEvent) {

@@ -3,13 +3,20 @@
 /**
  * Various utility functions
  *
+ * @module ozp.common.utilities
+ */
+angular.module('ozp.common.utilities', []);
+
+/**
+ * Various utility functions
+ *
  * ngtype: factory
  *
  * @namespace ozp.common
  * @class Utilities
  * @constructor
  */
-angular.module('ozp.common').factory('Utilities', function() {
+angular.module('ozp.common.utilities').factory('Utilities', function() {
 
   // TODO: make self-executing?
   var utilities = function() {

@@ -1,6 +1,15 @@
 'use strict';
 
 /**
+ * Dashboard change monitor
+ *
+ * @module ozpWebtop.services.dashboardChangeMonitor
+ * @requires ozpWebtop.constants
+ */
+angular.module('ozpWebtop.services.dashboardChangeMonitor', [
+  'ozpWebtop.constants']);
+
+/**
  * Broadcast messages down $rootScope when the current dashboard or dashboard
  * layout changes
  *
@@ -16,8 +25,9 @@
  * @class dashboardChangeMonitor
  * @static
  */
-angular.module('ozpWebtopApp.services').factory('dashboardChangeMonitor',
-  function($rootScope, $location, dashboardSwitchedEvent) {
+angular.module('ozpWebtop.services.dashboardChangeMonitor').factory(
+  'dashboardChangeMonitor', function($rootScope, $location,
+                                     dashboardSwitchedEvent) {
     // detect a change in dashboard layout
     var service = {};
     service.layout = '';

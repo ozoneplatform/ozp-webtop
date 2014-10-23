@@ -5,7 +5,7 @@ describe('App Toolbar', function () {
   var scope, marketplaceApi;
 
   // load the filter's module
-  beforeEach(module('ozpWebtopApp.appToolbar'));
+  beforeEach(module('ozpWebtop.appToolbar'));
 
   beforeEach(inject(function($rootScope, $controller, _marketplaceApi_) {
     scope = $rootScope.$new();

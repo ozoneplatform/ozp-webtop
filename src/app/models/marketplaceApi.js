@@ -1,6 +1,19 @@
 'use strict';
 
-var models = angular.module('ozpWebtopApp.models');
+/**
+ * Marketplace model
+ *
+ * @module ozpWebtop.models.marketplace
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.services.iwcInterface
+ * @requires ozpWebtop.services.localStorageInterface
+ */
+angular.module('ozpWebtop.models.marketplace', [
+  'ozpWebtop.constants',
+  'ozpWebtop.services.iwcInterface',
+  'ozpWebtop.services.localStorageInterface']);
+
+var models = angular.module('ozpWebtop.models.marketplace');
 
 function generalMarketplacedModel(persistStrategy) {
 

@@ -1,6 +1,19 @@
 'use strict';
 
-var models = angular.module('ozpWebtopApp.models');
+/**
+ * User Settings model
+ *
+ * @module ozpWebtop.models.userSettings
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.services.iwcInterface
+ * @requires ozpWebtop.services.localStorageInterface
+ */
+angular.module('ozpWebtop.models.userSettings', [
+  'ozpWebtop.constants',
+  'ozpWebtop.services.iwcInterface',
+  'ozpWebtop.services.localStorageInterface']);
+
+var models = angular.module('ozpWebtop.models.userSettings');
 
 function generalUserSettingsdModel(persistStrategy) {
 

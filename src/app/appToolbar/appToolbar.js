@@ -1,6 +1,25 @@
 'use strict';
 
 /**
+ * The application toolbar in the Webtop.
+ *
+ * @module ozpWebtop.appToolbar
+ * @requires ui.router
+ * @requires ui.bootstrap
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozp.common.windowSizeWatcher
+ * @requires ozpWebtop.models.marketplace
+ * @requires ozpWebtop.models.userSettings
+ * @requires ozpWebtop.services.dashboardChangeMonitor
+ * @requires ozp.common.windowSizeWatcher
+ */
+angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
+  'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
+  'ozpWebtop.models.userSettings',
+  'ozpWebtop.services.dashboardChangeMonitor',
+  'ozp.common.windowSizeWatcher']);
+
+/**
  * Application toolbar on the bottom of Webtop. Contains a menu for adding
  * favorited apps to the dashboard and shows names/icons for all apps
  * currently on the dashboard. Clicking on the app name/icon buttons in the
@@ -25,7 +44,7 @@
  * @param dashboardSwitchedEvent event name
  * @param toolbarVisibilityChangedEvent event name
  */
-angular.module( 'ozpWebtopApp.appToolbar')
+angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
                                                  marketplaceApi, dashboardApi,
                                                  dashboardChangeMonitor,
@@ -342,7 +361,7 @@ angular.module( 'ozpWebtopApp.appToolbar')
  * @class appToolbar
  * @static
  */
-angular.module( 'ozpWebtopApp.appToolbar')
+angular.module( 'ozpWebtop.appToolbar')
     .directive('appToolbar',function(){
     return {
         restrict: 'E',

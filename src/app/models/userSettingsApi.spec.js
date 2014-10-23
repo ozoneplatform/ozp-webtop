@@ -2,7 +2,7 @@
 
 describe('Service: userSettingsApi', function () {
   // load the service's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.models.userSettings'));
 
   // instantiate service
   var userSettingsApi, rootScope;

@@ -2,7 +2,7 @@
 
 describe('Service: marketplaceApi', function () {
   // load the service's module
-  beforeEach(module('ozpWebtopApp'));
+  beforeEach(module('ozpWebtop.models.marketplace'));
 
   // instantiate service
   var marketplaceApi, rootScope;

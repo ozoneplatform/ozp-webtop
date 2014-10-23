@@ -1,6 +1,14 @@
 'use strict';
 
 /**
+ * ozpButton module
+ *
+ * @module ozpWebtop.dashboardView.button
+ */
+angular.module('ozpWebtop.dashboardView.button', [
+  'ozp.common.ellipticalFilter']);
+
+/**
  * ozpButton Renders button with an icon to the left and text to the right.
  *
  * ngtype: directive
@@ -9,7 +17,7 @@
  * @class ozpButton
  * @constructor
  */
-angular.module('ozpWebtopApp.dashboardView')
+angular.module('ozpWebtop.dashboardView.button')
 .directive('ozpButton', function () {
   return {
     replace: true,

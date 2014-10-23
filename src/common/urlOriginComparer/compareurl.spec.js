@@ -2,7 +2,7 @@
 
 describe('Service: Compareurl', function () {
   // load the service's module
-  beforeEach(module('ozp.common'));
+  beforeEach(module('ozp.common.urlOriginComparer'));
 
   // instantiate service
   var compareUrl;

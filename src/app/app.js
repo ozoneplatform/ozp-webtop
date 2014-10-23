@@ -5,35 +5,66 @@
  * the Webtop.
  *
  * @example 
- *     <body ng-app="ozpWebtopApp"> ... </body>
+ *     <body ng-app="ozpWebtop"> ... </body>
  *
- * @module ozpWebtopApp
- * @requires ozp.common
- * @requires ozpWebtopApp.constants
- * @requires ozpWebtopApp.services
- * @requires ozpWebtopApp.models
- * @requires ozpWebtopApp.appLauncher
- * @requires ozpWebtopApp.appToolbar
- * @requires ozpWebtopApp.dashboardToolbar
- * @requires ozpWebtopApp.dashboardView
- * @requires ozpWebtopApp.userSettings
+ * @module ozpWebtop
+ * @requires ozp.common.ellipticalFilter
+ * @requires ozp.common.iwc.client
+ * @requires ozp.common.localStorage
+ * @requires ozp.common.urlOriginComparer
+ * @requires ozp.common.utilities
+ * @requires ozp.common.windowSizeWatcher
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.services.dashboardChangeMonitor
+ * @requires ozpWebtop.services.iwcInterface
+ * @requires ozpWebtop.services.localStorageInterface
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models.marketplace
+ * @requires ozpWebtop.models.userSettings
+ * @requires ozpWebtop.appLauncher
+ * @requires ozpWebtop.appToolbar
+ * @requires ozpWebtop.dashboardToolbar
+ * @requires ozpWebtop.dashboardView.button
+ * @requires ozpWebtop.dashboardView.chrome
+ * @requires ozpWebtop.dashboardView.desktop
+ * @requires ozpWebtop.dashboardView.desktop.managedFrame
+ * @requires ozpWebtop.dashboardView.iframe
+ * @requires ozpWebtop.dashboardView.grid
+ * @requires ozpWebtop.dashboardView.grid.gridsterFrame
+ * @requires ozpWebtop.userSettings
  * @requires ui.router
  * @requires ui.bootstrap
  * @requires gridster
+ * @requires ozpIwcClient
  * @requires ozpClassification
  */
-angular.module( 'ozpWebtopApp', [
-  'ozp.common',
+angular.module( 'ozpWebtop', [
+  'ozp.common.ellipticalFilter',
+  'ozp.common.iwc.client',
+  'ozp.common.localStorage',
+  'ozp.common.urlOriginComparer',
+  'ozp.common.utilities',
+  'ozp.common.windowSizeWatcher',
   'templates-app',
   'templates-common',
-  'ozpWebtopApp.constants',
-  'ozpWebtopApp.services',
-  'ozpWebtopApp.models',
-  'ozpWebtopApp.appLauncher',
-  'ozpWebtopApp.dashboardToolbar',
-  'ozpWebtopApp.appToolbar',
-  'ozpWebtopApp.dashboardView',
-  'ozpWebtopApp.userSettings',
+  'ozpWebtop.constants',
+  'ozpWebtop.services.dashboardChangeMonitor',
+  'ozpWebtop.services.iwcInterface',
+  'ozpWebtop.services.localStorageInterface',
+  'ozpWebtop.models.dashboard',
+  'ozpWebtop.models.marketplace',
+  'ozpWebtop.models.userSettings',
+  'ozpWebtop.appLauncher',
+  'ozpWebtop.appToolbar',
+  'ozpWebtop.dashboardToolbar',
+  'ozpWebtop.dashboardView.button',
+  'ozpWebtop.dashboardView.chrome',
+  'ozpWebtop.dashboardView.desktop',
+  'ozpWebtop.dashboardView.desktop.managedFrame',
+  'ozpWebtop.dashboardView.iframe',
+  'ozpWebtop.dashboardView.grid',
+  'ozpWebtop.dashboardView.grid.gridsterFrame',
+  'ozpWebtop.userSettings',
   'ui.router',
   'ui.bootstrap',
   'gridster',
@@ -81,84 +112,3 @@ angular.module( 'ozpWebtopApp', [
     }
 
 });
-
-/**
- * Constants used throughout the application
- *
- * @module ozpWebtopApp.constants
- */
-angular.module('ozpWebtopApp.constants', []);
-
-/**
- * Common services that are not specific to Webtop
- *
- * @module ozp.common
- */
-angular.module('ozp.common', ['ozpWebtopApp.constants', 'ozpIwcClient']);
-
-/**
- * General utilities for use in Webtop. Includes some services and other fairly
- * generic capabilities.
- *
- * @module ozpWebtopApp.services
- * @requires ozpWebtopApp.constants
- * @requires ozp.common
- */
-angular.module('ozpWebtopApp.services', ['ozpWebtopApp.constants',
-  'ozp.common']);
-
-/**
- * Models and APIs to retrieve and send data to places external to the Webtop.
- *
- * @module ozpWebtopApp.models
- * @requires ozpWebtopApp.services
- */
-angular.module('ozpWebtopApp.models', ['ozpWebtopApp.services']);
-
-/**
- * The modal encompassing user settings functionality.
- *
- * @module ozpWebtopApp.userSettings
- * @requires ozpWebtopApp.models
- */
-angular.module('ozpWebtopApp.userSettings', ['ozpWebtopApp.models']);
-
-/**
- * Launches apps from other sources
- *
- * @module ozpWebtopApp.appLauncher
- * @requires ui.router
- * @requires ozpWebtopApp.models
- */
-angular.module('ozpWebtopApp.appLauncher', ['ui.router', 'ozpWebtopApp.models']);
-
-/**
- * The dashboard toolbar component shown in the Webtop.
- *
- * @module ozpWebtopApp.dashboardToolbar
- * @requires ozp.common
- * @requires ozpWebtopApp.models
- */
-angular.module('ozpWebtopApp.dashboardToolbar', ['ozpWebtopApp.models']);
-
-/**
- * The application toolbar in the Webtop.
- *
- * @module ozpWebtopApp.appToolbar
- * @requires ui.router
- * @requires ui.bootstrap
- * @requires ozp.common
- * @requires ozpWebtopApp.models
- */
-angular.module('ozpWebtopApp.appToolbar', ['ui.router', 'ui.bootstrap',
-  'ozpWebtopApp.models']);
-
-/**
- * The dashboard view in the Webtop. Contains the area where a user uses their
- * applications/widgets.
- *
- * @module ozpWebtopApp.dashboardView
- * @requires ozp.common
- * @requires ozpWebtopApp.models
- */
-angular.module('ozpWebtopApp.dashboardView', ['ozpWebtopApp.models']);

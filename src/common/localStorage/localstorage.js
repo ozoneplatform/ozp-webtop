@@ -1,6 +1,13 @@
 'use strict';
 
 /**
+ * LocalStorage interface
+ *
+ * @module ozp.common.localStorage
+ */
+angular.module('ozp.common.localStorage', []);
+
+/**
  * Provides a simpler interface to the browser's Local Storage
  *
  * Taken from http://www.bennadel.com/blog/2105-exploring-html5-s-localstorage-persistent-client-side-key-value-pairs.htm
@@ -17,7 +24,7 @@
  * @class LocalStorage
  * @constructor
  */
-angular.module('ozp.common').factory('LocalStorage', function() {
+angular.module('ozp.common.localStorage').factory('LocalStorage', function() {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //            Simple interface to browser's localStorage

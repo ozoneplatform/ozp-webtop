@@ -2,7 +2,7 @@
 
 describe('Service: Dashboards', function () {
   // load the service's module
-  beforeEach(module('ozp.common'));
+  beforeEach(module('ozp.common.localStorage'));
 
   // instantiate service
   var LocalStorage;

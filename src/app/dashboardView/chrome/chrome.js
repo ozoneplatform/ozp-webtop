@@ -1,6 +1,19 @@
 'use strict';
 
-angular.module('ozpWebtopApp.dashboardView')
+/**
+ * ozp Chrome module
+ *
+ * @module ozpWebtop.dashboardView.chrome
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.services.dashboardChangeMonitor
+ * @requires ozpWebtop.models.dashboard
+ */
+angular.module('ozpWebtop.dashboardView.chrome', [
+  'ozpWebtop.constants', 'ozpWebtop.services.dashboardChangeMonitor',
+  'ozpWebtop.models.dashboard']);
+
+var chrome = angular.module('ozpWebtop.dashboardView.chrome');
+
 /**
  * ChromeCtrl aids the ozpChrome directive in knowing its location
  * (grid or desktop).
@@ -17,7 +30,7 @@ angular.module('ozpWebtopApp.dashboardView')
  * @param dashboardSwitchedEvent event name
  * @namespace dashboardView
  */
-.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
+chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
                                     dashboardChangeMonitor,
                                     dashboardStateChangedEvent,
                                     dashboardSwitchedEvent) {
@@ -87,4 +100,22 @@ angular.module('ozpWebtopApp.dashboardView')
       });
     };
 
+});
+
+/**
+ * Directive for chrome (bar appearing across the top of each widget)
+ *
+ * ngtype: directive
+ *
+ * @class ozpChrome
+ * @static
+ * @namespace dashboardView
+ */
+chrome.directive('ozpChrome', function () {
+  return {
+    templateUrl: 'dashboardView/chrome/ozpchrome.tpl.html',
+    restrict: 'E',
+    replace: true,
+    controller: 'ChromeCtrl'
+  };
 });

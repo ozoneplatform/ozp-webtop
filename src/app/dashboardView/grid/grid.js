@@ -1,6 +1,24 @@
 'use strict';
 
 /**
+ * Grid layout main controller
+ *
+ * @module ozpWebtop.dashboardView.grid
+ * @requires ozp.common.windowSizeWatcher
+ * @requires ozpWebtop.constants
+ * @requires ozpWebtop.services.dashboardChangeMonitor
+ * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models.marketplace
+ * @requires ozpWebtop.models.userSettings
+ *
+ */
+angular.module('ozpWebtop.dashboardView.grid', [
+  'ozp.common.windowSizeWatcher', 'ozpWebtop.constants',
+  'ozpWebtop.services.dashboardChangeMonitor',
+  'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
+  'ozpWebtop.models.userSettings']);
+
+/**
  * Controller managing the frames in the grid layout
  *
  * ngtype: controller
@@ -26,7 +44,7 @@
  * @param {String} toolbarVisibilityChangedEvent event name
  * @param {String} gridFrameSizeChangeEvent event name
  */
-angular.module('ozpWebtopApp.dashboardView')
+angular.module('ozpWebtop.dashboardView.grid')
 
 .controller('GridCtrl', function ($scope, $rootScope, $location,
                                   $interval, dashboardApi, marketplaceApi,

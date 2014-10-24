@@ -66,12 +66,6 @@ angular.module('ozpWebtop.dashboardView.grid')
     $scope.deviceSize = '';
 
     /**
-     * @property dashboards User's dashboards
-     * @type {Array}
-     */
-    $scope.dashboards = [];
-
-    /**
      * @property frames Frames (widgets/apps) on the current dashboard
      * @type {Array}
      */
@@ -192,15 +186,6 @@ angular.module('ozpWebtop.dashboardView.grid')
     if ($scope.deviceSize === 'lg') {
       $scope.deviceSize = 'md';
       console.log('size changed from lg to md');
-    }
-
-    // retrieve the user's dashboards
-    if(!$scope.dashboards){
-      dashboardApi.getDashboards().then(function(dashboards) {
-        $scope.dashboards = dashboards;
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
     }
 
     // get application data
@@ -343,66 +328,70 @@ angular.module('ozpWebtop.dashboardView.grid')
      * @method handleDashboardChange
      */
     function handleDashboardChange() {
-      // Make an array of old frames and new frames
-      var newFrames = [];
-      var oldFrames = [];
-      var currentDashboard = dashboardChangeMonitor.dashboardId;
+      var currentDashboardId = dashboardChangeMonitor.dashboardId;
+      dashboardApi.getDashboardById(currentDashboardId).then(function(dashboard) {
+        if ($scope.frames === dashboard.frames) {
+          return;
+        }
 
-      dashboardApi.getDashboards().then(function(dashboards) {
-        $scope.dashboards = dashboards;
-        if ($scope.frames !== $scope.dashboards[currentDashboard].frames) {
-          for (var i=0; i < $scope.frames.length; i++) {
-            oldFrames.push($scope.frames[i].id);
-          }
-          for (var j=0; j < $scope.dashboards[currentDashboard].frames.length;
-               j++) {
-            newFrames.push($scope.dashboards[currentDashboard].frames[j].id);
-          }
+        // save the original frames for use later on
+        var originalFrames = $scope.frames.slice();
 
-          // return just the differences between oldFrames and new Frames
-          Array.prototype.diff = function(a) {
-            // this
-            return this.filter(function(i) {return a.indexOf(i) < 0;});
-          };
-
-          // add or remove new frames without reloading the entire scope
-          // if there are items in the currentScope that are not in the updated
-          // scope from the service, remove theme here
-          if (oldFrames.diff(newFrames).length > 0) {
-            for (var a=0; a < $scope.frames.length; a++) {
-              // if the removed frame is present, splice it out of the local
-              // scope
-              if ($scope.frames[a].id === oldFrames.diff(newFrames)[0]) {
-                $scope.frames.splice(a, 1);
-              }
+        // remove old frames from the view
+        var originalFramesCopy = originalFrames.slice();
+        for (var i=0; i < originalFramesCopy.length; i++) {
+          var removeFrame = true;
+          for (var j=0; j < dashboard.frames.length; j++) {
+            if (originalFramesCopy[i].id === dashboard.frames[j].id) {
+              removeFrame = false;
             }
           }
-          //if there are new frames for this dashboard on the services that are
-          // not in the local scope
-          if (newFrames.diff(oldFrames).length > 0) {
-            // if the item from the dashboard api matches the new frame we found
-            // in this view
-            dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).then(function(dashboard) {
-              // TODO: for loop with async call inside, not good
-              for (var c=0; c < dashboard.frames.length; c++) {
-                if (dashboard.frames[c].id === newFrames.diff(oldFrames)[0]) {
-                  // push that frame to the local scope. since the changes are
-                  // automatically bound with the view, no refresh required
-                  $scope.frames.push(dashboard.frames[c]);
-                  // update the frame size so it fits inside its little widget
-                  // boundary
-                  // TODO: this might not behave as expected
-                  $scope.updateDashboardFramePx(dashboard.frames[c].id);
-                  // now quickly merge my local scope for frames with the
-                  // marketplace api to get important stuff on local scope
-                  // like url, image, name, etc
-                  dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
-                }
-              }
+          if (removeFrame) {
+            $scope.frames.splice(i,1);
+          }
+        }
+
+        // Make a list of frames to add to the view
+        var framesToAdd = [];
+        for (var k=0; k < dashboard.frames.length; k++) {
+          var addFrame = true;
+          for (var l=0; l < originalFrames.length; l++) {
+            if (dashboard.frames[k].id === originalFrames[l].id) {
+              addFrame = false;
+            }
+          }
+          if (addFrame) {
+            framesToAdd.push(dashboard.frames[k]);
+          }
+        }
+
+        if (framesToAdd.length > 0) {
+          var updateNewFrames = function (frame) {
+            // push that frame to the local scope. since the changes are
+            // automatically bound with the view, no refresh required
+            $scope.frames.push(frame);
+            // update the frame size so it fits inside its little widget
+            // boundary
+            return $scope.updateDashboardFramePx(frame.id).then(function(resp) {
+              // now merge my local scope for frames with the
+              // marketplace api to get important stuff on local scope
+              // like url, image, name, etc
+              dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
+              return resp;
+            });
+          };
+
+          // add the frames
+          framesToAdd.reduce(function (previous, current) {
+            return previous.then(function () {
+              var promise = updateNewFrames(current);
+              return promise;
             }).catch(function (error) {
               console.log('should not have happened: ' + error);
             });
-          }
+          }, Promise.resolve()).then(function () {
+              // reloadDashboard completed
+          });
         }
       }).catch(function(error) {
         console.log('should not have happened: ' + error);

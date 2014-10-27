@@ -27,9 +27,24 @@
     </div>
   </div>
   <div class="modal-footer wt-modal-footer">
-    <button class="btn add-apps-dark-text" ng-click="openAppsInNewDashboard()">
-      Open apps in new dashboard
-    </button>
-    <button class="btn btn-primary" ng-click="openApps()">Open</button>
+    <div ng-switch on="areAnyAppsSelected()">
+      <div ng-switch-when="true">
+        <button class="btn add-apps-dark-text"
+                ng-click="openAppsInNewDashboard()">
+        Open apps in new dashboard
+        </button>
+        <button class="btn btn-primary" ng-click="openApps()">Open</button>
+      </div>
+      <div ng-switch-default>
+        <button class="btn add-apps-dark-text" disabled="disabled"
+                ng-click="openAppsInNewDashboard()">
+        Open apps in new dashboard
+        </button>
+        <button class="btn btn-primary"
+                ng-click="openApps()" disabled="disabled">Open
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>

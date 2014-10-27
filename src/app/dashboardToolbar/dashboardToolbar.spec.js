@@ -89,8 +89,4 @@ describe('Controller: DashboardToolbar', function () {
     expect(rootScope.$broadcast).toHaveBeenCalledWith(
       launchUserPreferencesModalEvent, settingsLaunchObj);
   });
-
-  it('should expose zuluTime', function() {
-    expect(scope.zuluTime).toBeDefined();
-  });
 });

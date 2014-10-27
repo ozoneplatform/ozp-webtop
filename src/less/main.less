@@ -78,11 +78,24 @@ body {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                        user settings modal
+//                        generic modal styles
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.app-modal-window .modal-dialog {
-  width: 900px;
+.wt-modal {
+  background-color: @ozp-dk-gray1;
+  color: @ozp-lt-gray2;
+}
+
+.wt-modal-header {
+  background-color: @ozp-gray2;
+}
+
+.wt-modal-body {
+  background-color: @ozp-dk-gray1;
+}
+
+.wt-modal-footer {
+  background-color: @ozp-gray1;
 }
 
 .close-icon {
@@ -90,24 +103,18 @@ body {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                        add applications modal
+//                        user settings modal
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.add-apps-style {
-  background-color: @ozp-dk-gray1;
-  color: @ozp-lg-gray3;
-}
-.add-apps-header {
-  background-color: @ozp-gray2;
+.app-modal-window .modal-dialog {
+  width: 900px;
 }
 
-.add-apps-body {
-  background-color: @ozp-dk-gray1;
-}
 
-.add-apps-footer {
-  background-color: @ozp-gray1;
-}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                        add applications modal
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .add-apps-style ul {
     list-style: none;
@@ -331,9 +338,6 @@ body > div.classBanner:last-of-type {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                        user settings modal
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-.modal-fmt {
-  color: @ozp-lt-gray2;
-}
 /**
  * Now that all app-wide styles have been applied, we can load the styles for
  * all the submodules and components we are using.

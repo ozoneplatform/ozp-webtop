@@ -43,6 +43,148 @@ function generalMarketplacedModel(persistStrategy) {
         'name': 'marketplace',
         'apps': [
           {
+            'name': 'AirMail',
+            'id': 'f2355f7c-bd8f-440c-b6f4-fe6bea787ecb',
+            'description': 'This app delivers your mail super fast!',
+            'shortDescription': 'Air mail delivery service',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'air mail'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail16.png',
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail.png'
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/airMail/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
+          },
+          {
+            'name': 'Bread Basket',
+            'id': '484423df-8ee6-4880-8111-88eea14b97b2',
+            'description': 'All the fresh bread you could possible want, delivered to you in a basket',
+            'shortDescription': 'A basket full of fresh bread',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'bread'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket16.png',
+              'large': ''
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/breadBasket/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
+          },
+          {
+            'name': 'ChartCourse',
+            'id': 'c3ae4b4f-0d60-42f6-9005-c87d852e4812',
+            'description': 'Never get lost again with this utility to chart your course',
+            'shortDescription': 'An easy to use course charting application',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'chart',
+              'course'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse16.png',
+              'large': ''
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/chartCourse/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
+          },
+          {
+            'name': 'Chatterbox',
+            'id': '34643c12-c600-4188-ab44-993681751f6c',
+            'description': 'Keep in touch with all of your friends using this chatting application',
+            'shortDescription': 'Chat application',
+            'type': 'application',
+            'state': 'active',
+            'uiHints': {
+              'width': 200,
+              'height': 200,
+              'singleton': false
+            },
+            'tags': [
+              'demo',
+              'chart',
+              'course'
+            ],
+            'intents': [
+
+            ],
+            'icons': {
+              'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox16.png',
+              'large': ''
+            },
+            'screenShots': [
+
+            ],
+            'launchUrls': {
+              'default': 'http://ozone-development.github.io/ozp-demo/chatterBox/index.html',
+              'test': ''
+
+            },
+            '_links': {
+
+            }
+          },
+          {
             'name': 'Purple Circle',
             'id': '342f3680-18c9-11e4-8c21-0800200c9a66',
             'description': 'The purple circle application allows users to...',

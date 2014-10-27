@@ -53,6 +53,16 @@ angular.module('ozpWebtop.addApplicationsModal').controller(
     };
 
     /**
+     * Returns true if one or more apps are selected
+     *
+     * @method areAnyAppsSelected
+     * @returns {boolean}
+     */
+    $scope.areAnyAppsSelected = function() {
+      return $scope.selectedApps.length !== 0;
+    };
+
+    /**
      * Adds or removes an application from the list of apps to open
      *
      * If the application was in the list previoulsy, it is removed. Otherwise,

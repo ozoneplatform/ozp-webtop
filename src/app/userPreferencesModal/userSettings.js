@@ -265,7 +265,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
 
 // Required to make minification-safe
 ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'currentDashboardId',
-  'dashboardApi', 'userSettingsApi'];
+  'dashboardApi', 'userSettingsApi', 'userPreferencesUpdatedEvent'];
 
 /**
  * ng Directive for User Settings modal dialog

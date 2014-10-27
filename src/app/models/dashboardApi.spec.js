@@ -306,7 +306,7 @@ describe('Service: dashboardApi', function () {
         }
         expect(newBoard.name).toEqual(name);
         // TODO arbitrary based on test data
-        expect(newBoard.id).toEqual(4);
+        expect(newBoard.id).toEqual('4');
         // current default is grid layout
         expect(newBoard.layout).toEqual('grid');
         expect(newBoard.frames).toEqual([]);
@@ -947,7 +947,7 @@ describe('Service: dashboardApi', function () {
 
     dashboardApi.getNewDashboardId().then(function(response) {
       newDashboardId = response;
-      expect(newDashboardId).toEqual(4);
+      expect(newDashboardId).toEqual('4');
       done();
     }).catch(function(error) {
       expect(error).toEqual('should not have happened');

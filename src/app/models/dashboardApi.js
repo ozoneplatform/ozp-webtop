@@ -653,7 +653,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
           existingIds.push(Number(dashboards[i].id));
         }
         newId = Math.max.apply(Math, existingIds) + 1;
-        return newId;
+        return newId.toString();
       });
     },
     /**

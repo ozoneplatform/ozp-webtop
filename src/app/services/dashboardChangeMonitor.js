@@ -39,6 +39,8 @@ angular.module('ozpWebtop.services.dashboardChangeMonitor').factory(
      * @method run
      */
     service.run = function() {
+      var newLayout = '';
+      var newDashboardId = '';
       $rootScope.$watch(function() {
         return $location.path();
       }, function() {
@@ -49,7 +51,7 @@ angular.module('ozpWebtop.services.dashboardChangeMonitor').factory(
         var pattern = new RegExp('/(?:grid|desktop)/([0-9]+)');
         var res = pattern.exec(urlPath);
         if (res) {
-          service.dashboardId = res[1];
+          newDashboardId = res[1];
         } else {
           // if the url regex doesn't match, this page must be something else
           return;
@@ -58,15 +60,19 @@ angular.module('ozpWebtop.services.dashboardChangeMonitor').factory(
         // get the dashboard layout
         var n = $location.path().indexOf('grid');
         if (n !== -1) {
-          service.layout = 'grid';
+          newLayout = 'grid';
         } else {
-          service.layout = 'desktop';
+          newLayout = 'desktop';
         }
 
-        dashboardChange.layout = service.layout;
-        dashboardChange.dashboardId = service.dashboardId;
-        // console.log('broadcasting dashboard change msg: ' + JSON.stringify(dashboardChange));
-        $rootScope.$broadcast(dashboardSwitchedEvent, dashboardChange);
+        if (newLayout !== service.layout || newDashboardId !== service.dashboardId) {
+          service.layout = newLayout;
+          service.dashboardId = newDashboardId;
+          dashboardChange.layout = service.layout;
+          dashboardChange.dashboardId = service.dashboardId;
+          // console.log('broadcasting dashboard change msg: ' + JSON.stringify(dashboardChange));
+          $rootScope.$broadcast(dashboardSwitchedEvent, dashboardChange);
+        }
       });
     };
 

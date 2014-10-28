@@ -5,9 +5,13 @@
  *
  * @module ozpWebtop.addApplicationsModal
  *
+ * @requires ui.bootstrap
+ * @requires ozpWebtop.models.marketplace
+ *
  */
 
-angular.module('ozpWebtop.addApplicationsModal', []);
+angular.module('ozpWebtop.addApplicationsModal', ['ui.bootstrap',
+  'ozpWebtop.models.marketplace']);
 
 /**
  * Controller for Add Applications modal
@@ -23,11 +27,31 @@ angular.module('ozpWebtop.addApplicationsModal').controller(
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
-     * @property applications The user's applications
+     * Return a list of apps sorted in alphabetical order
+     *
+     * @method sortApps
+     * @param apps Array of applications to sort
+     * @returns {[]}
+     */
+    function sortApps(apps) {
+      return apps.sort(function(a, b) {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+
+    /**
+     * @property applications The user's applications, sorted alphabetically
      * @type {[]}
      */
-    $scope.applications = apps;
+    $scope.applications = sortApps(apps);
 
     /**
      * @property selectedApps The applications selected to add

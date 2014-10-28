@@ -699,7 +699,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
         'currentDashboard': '0',
         'dashboards': [
           {
-            'name': 'Alpha Mission',
+            'name': 'Sample Apps',
             'id': '0',
             'layout': 'grid',
             'frames': [

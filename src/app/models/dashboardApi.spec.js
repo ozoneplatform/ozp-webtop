@@ -225,7 +225,7 @@ describe('Service: dashboardApi', function () {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   it('should have a createFrame method', function(done) {
-    var dashboardId = 0;
+    var dashboardId = 1;
     var appId = '12345678';
     var gridMaxRows = 25;
     dashboardApi.createFrame(dashboardId, appId, gridMaxRows).then(function (frame) {

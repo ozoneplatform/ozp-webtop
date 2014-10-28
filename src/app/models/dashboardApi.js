@@ -765,12 +765,12 @@ function generalDashboardModel(persistStrategy, Utilities) {
             ] // end frames in dashboard
           },
           {
-            'name': 'Simple Apps',
+            'name': 'Alpha Mission',
             'id': '1',
             'layout': 'grid',
             'frames': [
               {
-                'appId': '342f3680-18c9-11e4-8c21-0800200c9a66', // purple circle
+                'appId': 'f2355f7c-bd8f-440c-b6f4-fe6bea787ecb', // AirMail
                 'id': '45a08744-686b-4b14-820a-ebc8c24fbfb0',
                 'gridLayout': {
                   'sm': {
@@ -780,51 +780,101 @@ function generalDashboardModel(persistStrategy, Utilities) {
                     'sizeY': 1
                   },
                   'md': {
-                    'row': 1,
-                    'col': 1,
-                    'sizeX': 1,
-                    'sizeY': 1
+                    'row': 0,
+                    'col': 0,
+                    'sizeX': 2,
+                    'sizeY': 2
                   }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
-                  'top': 200,
-                  'left': 100,
-                  'width': 200,
-                  'height': 200
+                  'top': 79,
+                  'left': 32,
+                  'width': 300,
+                  'height': 240
                 }
               },
               {
-                'appId': 'd9d3b477-7c21-4cab-bd9f-771ee9379be4', // red square
+                'appId': '484423df-8ee6-4880-8111-88eea14b97b2', // Bread Basket
                 'id': '59891c69-dde5-4926-b4b1-e53dac90b271',
                 'gridLayout': {
                   'sm': {
-                    'row': 1,
+                    'row': 2,
                     'col': 0,
                     'sizeX': 3,
                     'sizeY': 1
                   },
                   'md': {
-                    'row': 1,
-                    'col': 2,
+                    'row': 2,
+                    'col': 0,
                     'sizeX': 1,
-                    'sizeY': 1
+                    'sizeY': 2
                   }
                 },
                 'desktopLayout': {
                   'zIndex': 0,
-                  'top': 125,
-                  'left': 400,
-                  'width': 200,
-                  'height': 200
+                  'top': 350,
+                  'left': 25,
+                  'width': 250,
+                  'height': 340
                 }
               },
               {
-                'appId': 'c3d895d5-f332-4154-b963-c5dd63f8ca49', // some text
+                'appId': 'c3ae4b4f-0d60-42f6-9005-c87d852e4812', // ChartCourse
+                'id': '87078824-fac8-4c04-84d5-f6a424f955fb',
+                'gridLayout': {
+                  'sm': {
+                    'row': 4,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 0,
+                    'col': 2,
+                    'sizeX': 2,
+                    'sizeY': 2
+                  }
+                },
+                'desktopLayout': {
+                  'zIndex': 0,
+                  'top': 75,
+                  'left': 360,
+                  'width': 450,
+                  'height': 340
+                }
+              },
+              {
+                'appId': '8c9716db-00f1-4086-a413-03a2891fcf27', // Plot Possum
                 'id': '23baefc8-872a-4da4-84ed-e8fa62c09819',
                 'gridLayout': {
                   'sm': {
-                    'row': 2,
+                    'row': 6,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 0,
+                    'col': 4,
+                    'sizeX': 2,
+                    'sizeY': 2
+                  }
+                },
+                'desktopLayout': {
+                  'zIndex': 0,
+                  'top': 75,
+                  'left': 830,
+                  'width': 400,
+                  'height': 300
+                }
+              },
+              {
+                'appId': '34643c12-c600-4188-ab44-993681751f6c', //ChatterBox
+                'id': '8ca6dba0-b7bb-47e4-a1a1-06e451f9a0f1',
+                'gridLayout': {
+                  'sm': {
+                    'row': 8,
                     'col': 0,
                     'sizeX': 3,
                     'sizeY': 1
@@ -832,52 +882,52 @@ function generalDashboardModel(persistStrategy, Utilities) {
                   'md': {
                     'row': 2,
                     'col': 1,
-                    'sizeX': 1,
-                    'sizeY': 1
+                    'sizeX': 4,
+                    'sizeY': 2
                   }
                 },
                 'desktopLayout': {
-                  'zIndex': 1,
-                  'top': 300,
-                  'left': 200,
-                  'width': 200,
-                  'height': 200
+                  'zIndex': 0,
+                  'top': 420,
+                  'left': 320,
+                  'width': 550,
+                  'height': 275
                 }
               },
               {
-                'appId': '34bc3505-5dcc-4609-bcd6-c014d9f27ce5', //mbrot
-                'id': '8ca6dba0-b7bb-47e4-a1a1-06e451f9a0f1',
+                'appId': '4bfd3e29-af51-4f0a-ae5f-2609d52f1e58', // Clipboard
+                'id': '99fb827c-4828-4855-8d39-e163fb76a5e0',
                 'gridLayout': {
                   'sm': {
-                    'row': 3,
+                    'row': 9,
                     'col': 0,
                     'sizeX': 3,
                     'sizeY': 1
                   },
                   'md': {
                     'row': 2,
-                    'col': 2,
+                    'col': 5,
                     'sizeX': 1,
-                    'sizeY': 1
+                    'sizeY': 2
                   }
                 },
                 'desktopLayout': {
-                  'zIndex': 1,
-                  'top': 250,
-                  'left': 500,
-                  'width': 200,
-                  'height': 200
+                  'zIndex': 0,
+                  'top': 390,
+                  'left': 900,
+                  'width': 340,
+                  'height': 310
                 }
               }
             ] // end frames in dashboard
           },
           {
-            'name': 'Just One Thing',
+            'name': 'Beta Mission',
             'id': '2',
             'layout': 'desktop',
             'frames': [
               {
-                'appId': '342f3680-18c9-11e4-8c21-0800200c9a66',
+                'appId': '4bfd3e29-af51-4f0a-ae5f-2609d52f1e58',  // Clipboard
                 'id': '04648023-6ab0-448d-83a1-bb378639237f',
                 'gridLayout': {
                   'sm': {

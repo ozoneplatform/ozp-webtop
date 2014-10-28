@@ -254,22 +254,38 @@ function generalDashboardModel(persistStrategy, Utilities) {
 
         // for the grid layout, place new app in first col of first empty row
         // for the desktop layout, just put it on and let user move it
-        var usedRows = [];
+
+
+        var newRowSmall = 0;
+        var newRowMedium = 0;
         for (var i=0; i < dashboard.frames.length; i++) {
-          // TODO: arbitrarily chose to use small size
-          usedRows.push(dashboard.frames[i].gridLayout.sm.row);
+          var thisNewRowSmall = dashboard.frames[i].gridLayout.sm.row + dashboard.frames[i].gridLayout.sm.sizeY + 1;
+          var thisNewRowMd = dashboard.frames[i].gridLayout.md.row + dashboard.frames[i].gridLayout.md.sizeY + 1;
+          if ((thisNewRowSmall + 2) > newRowSmall) {
+            newRowSmall = thisNewRowSmall;
+          }
+          if ((thisNewRowMd + 2) > newRowMedium) {
+            newRowMedium = thisNewRowMd;
+          }
         }
-        var maxUsedRow = Math.max.apply(Math, usedRows);
-        var row = maxUsedRow + 1;
-        if (row > gridMaxRows) {
+
+        if (newRowSmall > gridMaxRows) {
           // TODO: handle error
+          console.log('ERROR: cannot add frame to small row ' + newRowSmall +
+            ', max rows: ' + gridMaxRows);
+          return null;
+        }
+        if (newRowMedium > gridMaxRows) {
+          // TODO: handle error
+          console.log('ERROR: cannot add frame to medium row ' + newRowMedium +
+            ', max rows: ' + gridMaxRows);
           return null;
         }
 
         // by default, new frames will have minimal size
         var col = 0;
-        var sizeX = 1;
-        var sizeY = 1;
+        var sizeX = 2;
+        var sizeY = 2;
 
         // for the desktop layout, just put it on and let the user move it
         var zIndex = 0;
@@ -288,13 +304,13 @@ function generalDashboardModel(persistStrategy, Utilities) {
           'id': frameId,
           'gridLayout': {
             'sm': {
-              'row': row,
+              'row': newRowSmall,
               'col': col,
-              'sizeX': sizeX,
-              'sizeY': sizeY
+              'sizeX': 3,
+              'sizeY': 1
             },
             'md': {
-              'row': row,
+              'row': newRowMedium,
               'col': col,
               'sizeX': sizeX,
               'sizeY': sizeY
@@ -917,6 +933,106 @@ function generalDashboardModel(persistStrategy, Utilities) {
                   'left': 900,
                   'width': 340,
                   'height': 310
+                }
+              },
+              {
+                'appId': '65a026aa-fe21-4aa4-b455-e7c8e3c1160d', // Hatch Latch
+                'id': '0c20bc75-1eca-4b89-8a8d-2c699f401039',
+                'gridLayout': {
+                  'sm': {
+                    'row': 11,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 4,
+                    'col': 0,
+                    'sizeX': 6,
+                    'sizeY': 1
+                  }
+                },
+                'desktopLayout': {
+                  'zIndex': 0,
+                  'top': 720,
+                  'left': 25,
+                  'width': 1100,
+                  'height': 310
+                }
+              },
+              {
+                'appId': '21c6715e-a204-4ae8-a041-625a644e65b1', // JotSpot
+                'id': '44527090-b8f0-46a1-acc7-df736c655ae2',
+                'gridLayout': {
+                  'sm': {
+                    'row': 13,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 6,
+                    'col': 0,
+                    'sizeX': 2,
+                    'sizeY': 2
+                  }
+                },
+                'desktopLayout': {
+                  'zIndex': 0,
+                  'top': 1100,
+                  'left': 25,
+                  'width': 300,
+                  'height': 150
+                }
+              },
+              {
+                'appId': '904a99cf-9da5-4b07-aecd-e1cbff534bb7', // Lunar Lantern
+                'id': '1b27150b-3e3a-42fa-868d-18114318a9e7',
+                'gridLayout': {
+                  'sm': {
+                    'row': 15,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 6,
+                    'col': 2,
+                    'sizeX': 2,
+                    'sizeY': 2
+                  }
+                },
+                'desktopLayout': {
+                  'zIndex': 0,
+                  'top': 1100,
+                  'left': 350,
+                  'width': 300,
+                  'height': 300
+                }
+              },
+              {
+                'appId': '3ddeb636-dd93-4875-88d6-ff0da56c98ee', // Journal Forge
+                'id': 'd1681ade-fb6e-4d6a-9f11-3e8e1e803b0d',
+                'gridLayout': {
+                  'sm': {
+                    'row': 17,
+                    'col': 0,
+                    'sizeX': 3,
+                    'sizeY': 1
+                  },
+                  'md': {
+                    'row': 6,
+                    'col': 4,
+                    'sizeX': 2,
+                    'sizeY': 2
+                  }
+                },
+                'desktopLayout': {
+                  'zIndex': 0,
+                  'top': 1100,
+                  'left': 900,
+                  'width': 300,
+                  'height': 300
                 }
               }
             ] // end frames in dashboard

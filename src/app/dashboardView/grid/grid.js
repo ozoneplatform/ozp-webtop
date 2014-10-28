@@ -142,7 +142,7 @@ angular.module('ozpWebtop.dashboardView.grid')
       minColumns: 1,
       // the minimum height of the grid, in rows
       minRows: 1,
-      maxRows: 10,
+      maxRows: 25,
       resizable: {
         enabled: true,
         handles: 'n, e, s, w, ne, se, sw, nw',

@@ -227,7 +227,7 @@ describe('Service: dashboardApi', function () {
   it('should have a createFrame method', function(done) {
     var dashboardId = 0;
     var appId = '12345678';
-    var gridMaxRows = 10;
+    var gridMaxRows = 25;
     dashboardApi.createFrame(dashboardId, appId, gridMaxRows).then(function (frame) {
       // Check that the frame returned has also been saved in the dashboard
       dashboardApi.getFrameById(frame.id).then(function (frameFromBoard) {
@@ -239,15 +239,15 @@ describe('Service: dashboardApi', function () {
         expect(frame.appId).toEqual(appId);
         // TODO: test this better - row should be one greater than the currently
         // used row
-        expect(frame.gridLayout.sm.row).toEqual(3);
+        expect(frame.gridLayout.sm.row).toEqual(5);
         expect(frame.gridLayout.sm.col).toEqual(0);
-        expect(frame.gridLayout.sm.sizeX).toEqual(1);
+        expect(frame.gridLayout.sm.sizeX).toEqual(3);
         expect(frame.gridLayout.sm.sizeY).toEqual(1);
 
-        expect(frame.gridLayout.md.row).toEqual(3);
+        expect(frame.gridLayout.md.row).toEqual(4);
         expect(frame.gridLayout.md.col).toEqual(0);
-        expect(frame.gridLayout.md.sizeX).toEqual(1);
-        expect(frame.gridLayout.md.sizeY).toEqual(1);
+        expect(frame.gridLayout.md.sizeX).toEqual(2);
+        expect(frame.gridLayout.md.sizeY).toEqual(2);
 
         // Nothing special about these values, just what they happen to be right now
         expect(frame.desktopLayout.zIndex).toEqual(0);
@@ -364,7 +364,7 @@ describe('Service: dashboardApi', function () {
     // create a new frame and save to dashboard
     var dashboardId = 0;
     var appId = '12345678';
-    var gridMaxRows = 10;
+    var gridMaxRows = 25;
     dashboardApi.createFrame(dashboardId, appId, gridMaxRows).then(function (newFrame) {
       // modify new frame and save
       newFrame.appId = '98765';
@@ -395,7 +395,7 @@ describe('Service: dashboardApi', function () {
     // modify new frame and save
     var dashboardId = 0;
     var appId = '12345678';
-    var gridMaxRows = 10;
+    var gridMaxRows = 25;
     dashboardApi.createFrame(dashboardId, appId, gridMaxRows).then(function (newFrame) {
       dashboardApi.getDashboards().then(function (dashboardsBefore) {
         newFrame.id = '3848583992';

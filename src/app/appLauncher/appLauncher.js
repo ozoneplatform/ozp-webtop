@@ -65,7 +65,7 @@ angular.module( 'ozpWebtop.appLauncher')
             $state.go('grid', {'dashboardId': dashboard.id});
           } else {
             console.log('this app is not on our current board - will add');
-            dashboardApi.createFrame(dashboard.id, $scope.appId, 10).then(function(resp) {
+            dashboardApi.createFrame(dashboard.id, $scope.appId, 25).then(function(resp) {
               if (resp) {
                 $state.go('grid', {'dashboardId': dashboard.id});
               } else {

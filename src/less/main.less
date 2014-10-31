@@ -4,24 +4,11 @@
  * the Grunt configuration that is automatically processed.
  */
 
-
 /**
- * First, we include the Twitter Bootstrap LESS files. Only the ones used in the
- * project should be imported as the rest are just wasting space.
+ * Import ozp-style, which also includes Bootstrap, Font-Awesome, and Ubuntu
+ * fonts
  */
-
-@import '../../vendor/bootstrap/less/bootstrap.less';
-
-/**
- * Include font-awesome and override the font path (in variables.less)
- */
-@import '../../vendor/components-font-awesome/less/font-awesome.less';
-
-/*
- * Original CSS (provided by designer(s)) - may want to bring this back
- * eventually
- */
-// @import 'originalcss.less';
+@import '../../vendor/ozp-style/src/less/ozp-style.less';
 
 /**
  * This is our main variables file. We must include it last so we can overwrite
@@ -29,12 +16,6 @@
  */
 
 @import 'variables.less';
-
-/**
- * Typography
- *
- */
-@import 'fonts.less';
 
 
 html {

@@ -30,6 +30,7 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @param {Object} $rootScope the Angular root scope
  * @param {Object} $location the Angular location service
  * @param {Object} $interval the Angular interval service
+ * @param {Object} $q the Angular q service
  * @param {Object} dashboardApi the API for dashboard information
  * @param {Object} marketplaceApi the API for marketplace application
  * information
@@ -47,7 +48,7 @@ angular.module('ozpWebtop.dashboardView.grid', [
 angular.module('ozpWebtop.dashboardView.grid')
 
 .controller('GridCtrl', function ($scope, $rootScope, $location,
-                                  $interval, dashboardApi, marketplaceApi,
+                                  $interval, $q, dashboardApi, marketplaceApi,
                                   dashboardChangeMonitor, userSettingsApi,
                                   windowSizeWatcher, deviceSizeChangedEvent,
                                   windowSizeChangedEvent,
@@ -73,7 +74,6 @@ angular.module('ozpWebtop.dashboardView.grid')
 
     /**
      * @property apps Applications in the marketplace
-     * TODO: only need the apps the user has favorited
      * @type {Array}
      */
     $scope.apps = [];
@@ -327,6 +327,12 @@ angular.module('ozpWebtop.dashboardView.grid')
      * @method handleDashboardChange
      */
     function handleDashboardChange() {
+      // app information is retrieved asynchronously from IWC. If the
+      // information isn't available yet, try again later
+      if ($scope.apps.length === 0) {
+        $interval(handleDashboardChange, 500, 1);
+        return;
+      }
       var currentDashboardId = dashboardChangeMonitor.dashboardId;
       dashboardApi.getDashboardById(currentDashboardId).then(function(dashboard) {
         if ($scope.frames === dashboard.frames) {
@@ -446,6 +452,15 @@ angular.module('ozpWebtop.dashboardView.grid')
      *                    found
      */
     $scope.reloadDashboard = function() {
+      // app information is retrieved asynchronously from IWC. If the
+      // information isn't available yet, try again later
+      if ($scope.apps.length === 0) {
+        $interval($scope.reloadDashboard, 500, 1);
+        var deferred = $q.defer();
+        deferred.reject(false);
+        return deferred.promise;
+      }
+      console.log('invoking $scope.reloadDashboard');
       // Get the dashboard
       $scope.dashboardId = dashboardChangeMonitor.dashboardId;
       return dashboardApi.getDashboardById($scope.dashboardId).then(function (dashboard) {

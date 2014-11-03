@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+  <script src="../../vendor/angular/angular.js"></script>
+  <script src="../../vendor/ozp-iwc-angular/dist/js/ozpIwc-client-angular.js"></script>
+  <script src="app.js"></script>
+
+</head>
+<body ng-app="OzpDataUtility" ng-controller="MainController">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>OZP Data Utility for Webtop</h1>
+
+        <p>
+          Utility to make sure the marketplace, backend data, and IWC are
+          behaving appropriately for use with Webtop
+        </p>
+        <p>
+          Connected to IWC (<code>{{ozpBusInfo.url}}</code>):
+          <span ng-show="ozpBusInfo.connected" class="label label-success">True</span>
+          <span ng-show="!ozpBusInfo.connected" class="label label-danger">False</span>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary" ng-click="refresh()">Refresh All</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Dashboards
+          <span class="label label-default" ng-show="loadingDashboards">Loading ...</span>
+          <span class="label label-danger" ng-show="invalidDashboards">Invalid Dashboard Data</span>
+        </h2>
+        <p>Dashboards: <strong>{{dashboardData.dashboards.length}}</strong></p>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px;">
+      <div class="col-xs-6 col-sm-4 col-md-3">
+        <button type="button" class="btn btn-primary"
+                ng-click="syncDashboardData()">Sync Application Ids</button>
+      </div>
+      <div class="col-xs-6 col-sm-4 col-md-3">
+        <button type="button" class="btn btn-warning" ng-click="reloadDashboardData()">Reload Dashboard Data</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Apps</th>
+              <th>Valid Apps</th>
+              <th>Invalid Apps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="board in dashboardData.dashboards">
+              <td>{{board.name}}</td>
+              <td>{{board.frames.length}}</td>
+              <td>{{board.validApps}}</td>
+              <td>{{board.invalidApps}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2> Marketplace <span class="label label-default" ng-show="loadingMarketplace">Loading ...</span> </h2>
+        <p>Applications: <strong>{{appListings.length}}</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Large Icon</th>
+              <th>Small Icon</th>
+              <th>Name</th>
+              <th>Short Description</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="app in appListings">
+            <td>
+              <img width="32" height="32" src="{{app.icons.large}}"/>
+            </td>
+            <td>
+              <img width="16" height="16" src="{{app.icons.small}}"/>
+            </td>
+            <td>{{app.name}}</td>
+            <td>{{app.descriptionShort}}</td>
+            <td><a href="{{app.launchUrls.default}}">Link</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -24,8 +24,7 @@ Development tasks are run with Grunt:
 
  - `grunt` - run all tests, build, and create production version
  - `grunt serve` 
-     * Brings up a live preview of the webtop on http://localhost:9000
-     * Navigate to http://localhost:9100 to see an index of docs and other resources
+     * Launch Webtop locally (see Important Links section below)
  - `grunt build` - build and execute unit tests
  - `grunt gh-pages` - run after a `grunt build` to publish the build files to 
  [gh-pages](http://ozone-development.github.io/ozp-webtop/)
@@ -34,6 +33,16 @@ Development tasks are run with Grunt:
  - `grunt run` - serve the production version of the application
  
 Run `grunt -h` for a full list of Grunt tasks
+
+## Important Links
+* [local](http://localhost:9100)
+* [gh-pages](http://ozone-development.github.io/ozp-webtop/tools/index.html)
+
+## Use of IWC
+By default, IWC is used to to retrieve the application information 
+(`system.api`) and to store the dashboard data (`data.api`). To check on the 
+ status of IWC, marketplace, and the backend, as well as to reset the 
+ data, use the [OZP Data Utility](http://ozone-development.github.io/ozp-webtop/tools/ozpDataUtility/index.html)
 
 ## Use of ng-boilerplate
 This app was created from the 

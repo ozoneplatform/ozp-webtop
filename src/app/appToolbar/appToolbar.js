@@ -53,7 +53,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  */
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
-                                                 $modal,
+                                                 $modal, $interval,
                                                  marketplaceApi, dashboardApi,
                                                  dashboardChangeMonitor,
                                                  userSettingsApi,
@@ -119,7 +119,6 @@ angular.module( 'ozpWebtop.appToolbar')
     $scope.fullScreenMode = false;
     /**
      * @property $scope.apps All applications available in the marketplace
-     *  TODO: shouldn't need all of the apps, only the ones for current user
      * @type {Array}
      */
     $scope.apps = [];
@@ -180,7 +179,6 @@ angular.module( 'ozpWebtop.appToolbar')
     $scope.fullScreenMode = false;
 
     // get all apps in the marketplace
-    // TODO: just need the apps current user has favorited
     marketplaceApi.getAllApps().then(function(apps) {
       $scope.apps = apps;
     }).catch(function(error) {
@@ -366,6 +364,12 @@ angular.module( 'ozpWebtop.appToolbar')
      * @method updateApps
      */
     $scope.updateApps = function() {
+      // app information is retrieved asynchronously from IWC. If the
+      // information isn't available yet, try again later
+      if ($scope.apps.length === 0) {
+        $interval($scope.updateApps, 500, 1);
+        return;
+      }
       dashboardApi.getDashboards().then(function(dashboards) {
         for (var i=0; i < dashboards.length; i++) {
           if (dashboards[i].id === dashboardChangeMonitor.dashboardId) {

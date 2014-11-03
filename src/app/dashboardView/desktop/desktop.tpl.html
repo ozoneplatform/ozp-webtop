@@ -1,2 +1,5 @@
 <!-- Frames are positioned by absolute positioning based on state -->
-<ozp-managed-frame ng-repeat="frame in frames" class="ozp-managed-frame" ng-hide="isFrameMinimized(frame)" ng-style="styles" ng-class="{'fullWidth' : frame.isMaximized}"></ozp-managed-frame>
+<ozp-managed-frame ng-repeat="frame in frames" class="ozp-managed-frame"
+                   ng-hide="isFrameMinimized(frame)" ng-style="styles"
+                   ng-class="{'fullWidth' : frame.isMaximized}">
+</ozp-managed-frame>

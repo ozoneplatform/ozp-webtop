@@ -7,6 +7,13 @@ describe('Add Applications', function () {
   // load the filter's module
   beforeEach(module('ozpWebtop.addApplicationsModal'));
 
+  // use IWC for tests?
+  beforeEach(function() {
+    angular.mock.module('ozpWebtop.constants', function($provide) {
+      $provide.constant('useIwc', false);
+    });
+  });
+
   beforeEach(inject(function($rootScope, $controller, _marketplaceApi_) {
     scope = $rootScope.$new();
     modalInstance = {                    // Create a mock object using spies

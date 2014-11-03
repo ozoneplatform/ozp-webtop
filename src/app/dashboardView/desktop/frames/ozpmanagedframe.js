@@ -6,11 +6,11 @@
  * @module ozpWebtop.dashboardView.desktop.managedFrame
  * @requires ozp.common.urlOriginComparer
  * @requires ozpWebtop.models.dashboard
- * @requires ozpWebtop.dashboardView.iframe
+ * @requires ozpWebtop.dashboardView.desktop.iframe
  */
 angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
   'ozp.common.urlOriginComparer', 'ozpWebtop.models.dashboard',
-  'ozpWebtop.dashboardView.iframe']);
+  'ozpWebtop.dashboardView.desktop.iframe']);
 
 /**
  * Used to include an html document in the webtop. If the html in question is from a different 
@@ -69,11 +69,11 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
 
     // If different origin, use an iframe template
     if (!sameOrigin) {
-      template = 'dashboardView/templates/managediframe.tpl.html';
+      template = 'dashboardView/desktop/genericFrames/managediframe.tpl.html';
     }
     // otherwise, use a 'frame' (div) template
     else {
-      template = 'dashboardView/templates/managedframe.tpl.html';
+      template = 'dashboardView/desktop/genericFrames/managedframe.tpl.html';
     }
     return template;
   };

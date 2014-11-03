@@ -28,9 +28,8 @@
  * @requires ozpWebtop.dashboardView.chrome
  * @requires ozpWebtop.dashboardView.desktop
  * @requires ozpWebtop.dashboardView.desktop.managedFrame
- * @requires ozpWebtop.dashboardView.iframe
+ * @requires ozpWebtop.dashboardView.desktop.iframe
  * @requires ozpWebtop.dashboardView.grid
- * @requires ozpWebtop.dashboardView.grid.gridsterFrame
  * @requires ozpWebtop.userSettings
  * @requires ozpWebtop.addApplicationsModal
  * @requires ui.router
@@ -62,9 +61,8 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView.chrome',
   'ozpWebtop.dashboardView.desktop',
   'ozpWebtop.dashboardView.desktop.managedFrame',
-  'ozpWebtop.dashboardView.iframe',
+  'ozpWebtop.dashboardView.desktop.iframe',
   'ozpWebtop.dashboardView.grid',
-  'ozpWebtop.dashboardView.grid.gridsterFrame',
   'ozpWebtop.userSettings',
   'ozpWebtop.addApplicationsModal',
   'ui.router',

@@ -4,6 +4,13 @@ describe('App Toolbar', function () {
 
   var scope, marketplaceApi, dashboardApi, launchUserPreferencesModalEvent;
 
+  // use IWC for tests?
+  beforeEach(function() {
+    angular.mock.module('ozpWebtop.constants', function($provide) {
+      $provide.constant('useIwc', false);
+    });
+  });
+
   // load the filter's module
   beforeEach(module('ozpWebtop.appToolbar'));
 

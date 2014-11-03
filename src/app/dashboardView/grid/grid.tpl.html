@@ -1,10 +1,15 @@
 <div class="container gridster-container-settings" ng-class="{'grid-toolbar-padding' : !fullScreenMode}">
   <div gridster="gridOptions">
     <ul>
-      <li gridster-item row="item.gridLayout[deviceSize].row" col="item.gridLayout[deviceSize].col"
-          size-x="item.gridLayout[deviceSize].sizeX" size-y="item.gridLayout[deviceSize].sizeY"
-          ng-repeat="item in frames" id="{{item.id}}"
-          ozp-gridster-item="" frame="item" ng-hide="isDisabled">
+      <li gridster-item row="frame.gridLayout[deviceSize].row" col="frame.gridLayout[deviceSize].col"
+          size-x="frame.gridLayout[deviceSize].sizeX" size-y="frame.gridLayout[deviceSize].sizeY"
+          ng-repeat="frame in frames" id="{{frame.id}}"
+          class="ozp-managed-frame">
+        <ozp-chrome ></ozp-chrome>
+        <iframe class="managed-iframe"
+                ng-src="{{frame.trustedUrl}}" frameBorder="0"
+                height="frame.gridLayout.height" width="frame.gridLayout.width">
+        </iframe>
       </li>
     </ul>
   </div>

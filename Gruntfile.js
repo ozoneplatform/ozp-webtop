@@ -474,20 +474,6 @@ module.exports = function ( grunt ) {
           base: ['<%= compile_dir %>', '<%= compile_dir %>/assets/mock']
         }
       },
-      // Demo Apps server
-      demoApps: {
-        options: {
-          port: 9005,
-          base: './demoApps/bouncingBalls'
-        }
-      },
-      // Examples server
-      examples: {
-        options: {
-          port: 9006,
-          base: './demoApps/simpleApps'
-        }
-      },
       // Documentation server
       docs: {
         options: {
@@ -502,12 +488,10 @@ module.exports = function ( grunt ) {
           base: '<%= cov_dir %>'
         }
       },
-      // Example OZONE bus
-      ozoneBus: {
+      devIndex: {
         options: {
-          port: 9044,
-          hostname: 'localhost',
-          base: './demoApps/ozoneBus'
+          port: 9100,
+          base: './tools'
         }
       }
     },
@@ -798,13 +782,12 @@ module.exports = function ( grunt ) {
   ]);
 
   grunt.registerTask('serve', [
-    'build', 'connect:livereload', 'connect:ozoneBus', 'connect:demoApps',
-    'connect:examples', 'connect:docs', 'connect:cov', 'watch'
+    'build', 'connect:livereload', 'connect:docs', 'connect:cov', 'connect:devIndex', 'watch'
   ]);
 
-  // Run production version of the application (and demo apps)
+  // Run production version of the application 
   grunt.registerTask('run', [
-    'connect:demoApps', 'connect:examples', 'connect:production'
+    'connect:production'
   ]);
 
   /**

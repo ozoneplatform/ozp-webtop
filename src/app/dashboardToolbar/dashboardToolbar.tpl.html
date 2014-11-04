@@ -1,7 +1,7 @@
 
   <nav class="navbar navbar-default navbar-inverse dashboard-toolbar
     no-rounded-corners navbar-fixed-top" role="navigation"
-       ng-class="{true: 'hide', false: ''}[dashboardhide]">
+       ng-class="{true: 'hide', false: ''}[fullScreenMode]">
     <div class="container-fluid" >
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -125,21 +125,7 @@
               </ul>
             </li>
           </li>
-          <li class="divider-vertical"></li>
-          <li class="hideToolbarButton link-pointer" tooltip="Hide toolbar"
-              tooltip-placement="bottom"
-              style="width: 15px; float: right; margin-right: 20px;
-              margin-left: 0px; padding-left: 0px;">
-            <a ng-click="dashboardhider();">
-              <i class="fa fa-toggle-up fa-lg"></i>
-            </a>
-          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <button class="hiddenToggle dashToggle" ng-click="dashboardhider();"
-          ng-class="{false: 'hide'}[dashboardhide]"
-          tooltip="Show toolbar" tooltip-placement="left">
-    <i class="fa fa-toggle-down"></i>
-  </button>

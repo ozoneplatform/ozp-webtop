@@ -6,17 +6,18 @@ describe('constants', function () {
 
   var useIwc, iwcOzoneBus, deviceSizeChangedEvent, windowSizeChangedEvent,
     dashboardStateChangedEvent, dashboardSwitchedEvent,
-    toolbarVisibilityChangedEvent, userPreferencesUpdatedEvent,
-    gridFrameSizeChangeEvent, launchUserPreferencesModalEvent;
+    userPreferencesUpdatedEvent,
+    gridFrameSizeChangeEvent, launchUserPreferencesModalEvent,
+    fullScreenModeToggleEvent;
 
   beforeEach(inject(function (_useIwc_, _iwcOzoneBus_, _deviceSizeChangedEvent_,
                               _windowSizeChangedEvent_,
                               _dashboardStateChangedEvent_,
                               _dashboardSwitchedEvent_,
-                              _toolbarVisibilityChangedEvent_,
                               _userPreferencesUpdatedEvent_,
                               _gridFrameSizeChangeEvent_,
-                              _launchUserPreferencesModalEvent_
+                              _launchUserPreferencesModalEvent_,
+                              _fullScreenModeToggleEvent_
     ) {
     useIwc = _useIwc_;
     iwcOzoneBus = _iwcOzoneBus_;
@@ -24,10 +25,10 @@ describe('constants', function () {
     windowSizeChangedEvent = _windowSizeChangedEvent_;
     dashboardStateChangedEvent = _dashboardStateChangedEvent_;
     dashboardSwitchedEvent = _dashboardSwitchedEvent_;
-    toolbarVisibilityChangedEvent = _toolbarVisibilityChangedEvent_;
     userPreferencesUpdatedEvent = _userPreferencesUpdatedEvent_;
     gridFrameSizeChangeEvent = _gridFrameSizeChangeEvent_;
     launchUserPreferencesModalEvent = _launchUserPreferencesModalEvent_;
+    fullScreenModeToggleEvent = _fullScreenModeToggleEvent_;
 
   }));
 
@@ -55,10 +56,6 @@ describe('constants', function () {
     expect(dashboardSwitchedEvent).toBe('dashboardSwitched');
   });
 
-  it('should define toolbarVisibilityChangedEvent', function() {
-    expect(toolbarVisibilityChangedEvent).toBe('toolbarVisibilityChanged');
-  });
-
   it('should define userPreferencesUpdatedEvent', function() {
     expect(userPreferencesUpdatedEvent).toBe('userPreferencesUpdated');
   });
@@ -69,5 +66,8 @@ describe('constants', function () {
 
   it('should define launchUserPreferencesModalEvent', function() {
     expect(launchUserPreferencesModalEvent).toBe('launchUserPreferencesModal');
+  });
+  it('should define fullScreenModeToggleEvent', function() {
+    expect(fullScreenModeToggleEvent).toBe('fullScreenModeToggle');
   });
 });

@@ -24,8 +24,8 @@ Development tasks are run with Grunt:
 
  - `grunt` - run all tests, build, and create production version
  - `grunt serve` 
-     * brings up a live preview of the webtop on http://localhost:9000
-     * live preview of the docs on http://localhost:9010
+     * Brings up a live preview of the webtop on http://localhost:9000
+     * Navigate to http://localhost:9100 to see an index of docs and other resources
  - `grunt build` - build and execute unit tests
  - `grunt gh-pages` - run after a `grunt build` to publish the build files to 
  [gh-pages](http://ozone-development.github.io/ozp-webtop/)

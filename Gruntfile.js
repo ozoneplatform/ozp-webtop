@@ -117,7 +117,8 @@ module.exports = function ( grunt ) {
     clean: [
       '<%= build_dir %>',
       '<%= compile_dir %>',
-      '<%= docs_dir %>'
+      '<%= docs_dir %>',
+      '<%= cov_dir %>'
     ],
 
     /**
@@ -494,6 +495,13 @@ module.exports = function ( grunt ) {
           base: '<%= docs_dir %>'
         }
       },
+      // Coverage report server
+      cov: {
+        options: {
+          port: 9009,
+          base: '<%= cov_dir %>'
+        }
+      },
       // Example OZONE bus
       ozoneBus: {
         options: {
@@ -791,7 +799,7 @@ module.exports = function ( grunt ) {
 
   grunt.registerTask('serve', [
     'build', 'connect:livereload', 'connect:ozoneBus', 'connect:demoApps',
-    'connect:examples', 'connect:docs', 'watch'
+    'connect:examples', 'connect:docs', 'connect:cov', 'watch'
   ]);
 
   // Run production version of the application (and demo apps)

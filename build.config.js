@@ -7,10 +7,13 @@ module.exports = {
    * development and the `compile_dir` folder is where our app resides once it's
    * completely built. 
    * The `docs_dir` specifies where the YUIdoc documentation should be placed.
+   * The `cov_dir` specifies where the Instanbul code coverage report is placed 
+   * (unchanged from Instanbul's default).
    */
   build_dir: 'build',
   compile_dir: 'bin',
   docs_dir: 'docs',
+  cov_dir: 'coverage',
 
   /**
    * This is a collection of file patterns that refer to our app code (the

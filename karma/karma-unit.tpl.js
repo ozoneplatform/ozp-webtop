@@ -26,15 +26,26 @@ module.exports = function ( karma ) {
       'src/assets/**/*.js'
     ],
     frameworks: [ 'jasmine' ],
-    plugins: [ 'karma-jasmine', 'karma-coffee-preprocessor', 'karma-phantomjs-launcher' ],
+    plugins: [ 'karma-jasmine', 'karma-coffee-preprocessor', 'karma-phantomjs-launcher', 'karma-coverage' ],
     preprocessors: {
       '**/*.coffee': 'coffee',
+      // Do not include specs when running coverage report.
+      // See: https://github.com/ngbp/ngbp/issues/122
+      'src/app/**/!(*spec).js': ['coverage']
     },
 
     /**
      * How to report, by default.
      */
-    reporters: 'dots',
+    reporters: ['progress', 'coverage'],
+
+    // Code coverage reporting
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/',
+      // Do not use "browser" subdir (PhantomJS in our case)
+      subdir : '.'
+    },
 
     /**
      * On which port should the browser connect, on which port is the test runner
@@ -67,4 +78,3 @@ module.exports = function ( karma ) {
     ]
   });
 };
-

@@ -41,7 +41,7 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @param {String} deviceSizeChangedEvent event name
  * @param {String} windowSizeChangedEvent event name
  * @param {String} dashboardStateChangedEvent event name
- * @param {String} toolbarVisibilityChangedEvent event name
+ * @param {String} fullScreenModeToggleEvent event name
  * @param {String} gridFrameSizeChangeEvent event name
  */
 angular.module('ozpWebtop.dashboardView.grid')
@@ -52,7 +52,7 @@ angular.module('ozpWebtop.dashboardView.grid')
                                   windowSizeWatcher, deviceSizeChangedEvent,
                                   windowSizeChangedEvent,
                                   dashboardStateChangedEvent,
-                                  toolbarVisibilityChangedEvent,
+                                  fullScreenModeToggleEvent,
                                   gridFrameSizeChangeEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,11 +79,10 @@ angular.module('ozpWebtop.dashboardView.grid')
     $scope.apps = [];
 
     /**
-     * @property appBarHidden Flag indicating whether the application toolbar
-     * is hidden
+     * @property fullScreenMode Flag for full screen mode
      * @type {boolean}
      */
-    $scope.appBarHidden = false;
+    $scope.fullScreenMode = false;
 
     /**
      * @property activeFrames TODO clean this up
@@ -218,8 +217,8 @@ angular.module('ozpWebtop.dashboardView.grid')
     });
 
     // user settings have changed
-    $scope.$on(toolbarVisibilityChangedEvent, function() {
-      handleToolbarVisibilityChange();
+    $scope.$on(fullScreenModeToggleEvent, function(event, data) {
+      $scope.fullScreenMode = data.fullScreenMode;
     });
 
     // TODO: Originally tried sending broadcast events from
@@ -392,23 +391,6 @@ angular.module('ozpWebtop.dashboardView.grid')
           }, Promise.resolve()).then(function () {
               // reloadDashboard completed
           });
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    }
-
-    /**
-     * Handle the toolbarVisibilityChangedEvent
-     *
-     * @method handleToolbarVisibilityChange
-     */
-    function handleToolbarVisibilityChange() {
-      userSettingsApi.getUserSettings().then(function(settings) {
-        if (settings.isAppboardHidden === true) {
-          $scope.appBarHidden = true;
-        } else {
-          $scope.appBarHidden = false;
         }
       }).catch(function(error) {
         console.log('should not have happened: ' + error);

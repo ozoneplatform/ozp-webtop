@@ -43,10 +43,10 @@ describe('Service: userSettingsApi', function () {
   });
 
   it('should have a updateUserSettingByKey method', function(done) {
-    userSettingsApi.updateUserSettingByKey('isAppboardHidden', true).then(function(resp) {
+    userSettingsApi.updateUserSettingByKey('fullScreenMode', true).then(function(resp) {
       expect(resp).toEqual(true);
       userSettingsApi.getUserSettings().then(function(settings) {
-        expect(settings.isAppboardHidden).toEqual(true);
+        expect(settings.fullScreenMode).toEqual(true);
         done();
       }).catch(function(error) {
         expect(error).toEqual('should not have happened');

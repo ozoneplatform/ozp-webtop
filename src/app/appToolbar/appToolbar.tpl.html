@@ -1,6 +1,6 @@
 <div ng-controller="ApplicationToolbarCtrl">
   <nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners"
-       role="navigation" ng-class="{true: 'hide', false: ''}[appboardhide]">
+       role="navigation" ng-class="{true: 'hide', false: ''}[fullScreenMode]">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -37,20 +37,20 @@
                  ng-click="nextApps()" style="margin-top: 12px;"></i></li>
 
           <li class="divider-vertical"></li>
-          <li class="hideToolbarButton link-pointer" tooltip="Hide toolbar"
+          <li class="hideToolbarButton link-pointer" tooltip="Enter Full Screen"
               tooltip-placement="top"
               style="width: 25px; float: right; margin-right: 5px;">
-            <a ng-click="appboardhider();">
-              <i class="fa fa-toggle-down fa-lg"></i>
+            <a ng-click="toggleFullScreenMode();">
+              <i class="fa fa-expand fa-lg"></i>
             </a>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-<button class="hiddenToggle appHiddenToggle" ng-click="appboardhider();"
-        ng-class="{false: 'hide'}[appboardhide]"
-        tooltip="Show toolbar" tooltip-placement="left">
-  <i class="fa fa-toggle-up"></i>
+<button class="hiddenToggle appHiddenToggle" ng-click="toggleFullScreenMode();"
+        ng-class="{false: 'hide'}[fullScreenMode]"
+        tooltip="Exit Full Screen" tooltip-placement="left">
+  <i class="fa fa-compress fa-lg"></i>
 </button>
 </div>

@@ -31,7 +31,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
  * @param dashboardChangeMonitor notify when dashboard changes
  * @param userSettingsApi user preferences data
  * @param dashboardStateChangedEvent event name
- * @param toolbarVisibilityChangedEvent event name
+ * @param fullScreenModeToggleEvent event name
  * @namespace dashboardView
  */
   .controller('DesktopCtrl', function ($scope, $rootScope, $location,
@@ -39,7 +39,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
                                        dashboardChangeMonitor,
                                        userSettingsApi,
                                        dashboardStateChangedEvent,
-                                       toolbarVisibilityChangedEvent) {
+                                       fullScreenModeToggleEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -58,18 +58,10 @@ angular.module('ozpWebtop.dashboardView.desktop')
     $scope.frames = [];
 
     /**
-     * @property dashBarHidden Flag indicating whether the dashboard toolbar
-     * is hidden
+     * @property fullScreenMode Flag indicating whether the toolbars are hidden
      * @type {boolean}
      */
-    $scope.dashBarHidden = false;
-
-    /**
-     * @property appBarHidden Flag indicating whether the application toolbar
-     * is hidden
-     * @type {boolean}
-     */
-    $scope.appBarHidden = false;
+    $scope.fullScreenMode = false;
 
     /**
      * @property apps Applications in the marketplace
@@ -124,8 +116,8 @@ angular.module('ozpWebtop.dashboardView.desktop')
       console.log('should not have happened: ' + error);
     });
 
-    $scope.$on(toolbarVisibilityChangedEvent, function() {
-      handleToolbarVisibilityChange();
+    $scope.$on(fullScreenModeToggleEvent, function(event, data) {
+      $scope.fullScreenMode = data.fullScreenMode;
     });
 
     $scope.$on(dashboardStateChangedEvent, function() {
@@ -148,29 +140,6 @@ angular.module('ozpWebtop.dashboardView.desktop')
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    /**
-     * Handler invoked when a toolbarVisibilityChangedEvent is received
-     *
-     * @method handleToolbarVisibilityChange
-     */
-    function handleToolbarVisibilityChange() {
-      userSettingsApi.getUserSettings().then(function(settings) {
-        if (settings.isDashboardHidden === true) {
-          $scope.dashBarHidden = true;
-        } else {
-          $scope.dashBarHidden = false;
-        }
-
-        if (settings.isAppboardHidden === true) {
-          $scope.appBarHidden = true;
-        } else {
-          $scope.appBarHidden = false;
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    }
 
     /**
      * Handler invoked when a dashboardStateChangedEvent is received

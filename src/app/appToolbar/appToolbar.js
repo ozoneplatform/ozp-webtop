@@ -45,7 +45,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param deviceSizeChangedEvent event name
  * @param dashboardStateChangedEvent event name
  * @param dashboardSwitchedEvent event name
- * @param toolbarVisibilityChangedEvent event name
+ * @param fullScreenModeToggleEvent event name
  */
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
@@ -57,7 +57,7 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  deviceSizeChangedEvent,
                                                  dashboardStateChangedEvent,
                                                  dashboardSwitchedEvent,
-                                                 toolbarVisibilityChangedEvent,
+                                                 fullScreenModeToggleEvent,
                                                  userPreferencesUpdatedEvent) {
 
 
@@ -76,11 +76,11 @@ angular.module( 'ozpWebtop.appToolbar')
      */
     $scope.currentDashboardId = '';
     /**
-     * @property $scope.appboardhide Flag indicating if the toolbar is hidden or
+     * @property $scope.fullScreenMode Flag indicating if the toolbar is hidden or
      *  not
      * @type {boolean}
      */
-    $scope.appboardhide = false;
+    $scope.fullScreenMode = false;
     /**
      * @property $scope.apps All applications available in the marketplace
      *  TODO: shouldn't need all of the apps, only the ones for current user
@@ -141,7 +141,7 @@ angular.module( 'ozpWebtop.appToolbar')
 
     // toolbar is not hidden by default
     // TODO: read saved state to get this value
-    $scope.appboardhide = false;
+    $scope.fullScreenMode = false;
 
     // get all apps in the marketplace
     // TODO: just need the apps current user has favorited
@@ -262,21 +262,22 @@ angular.module( 'ozpWebtop.appToolbar')
     /**
      * Show or hide the application toolbar
      *
-     * If successful, broadcasts a toolbarVisibilityChangedEvent
+     * If successful, broadcasts a fullScreenModeToggleEvent
      *
-     * @method appboardhider
+     * @method toggleFullScreenMode
      */
-    $scope.appboardhider = function() {
-      var appboardHideVal = false;
-      if ((!$scope.appboardhide) || ($scope.appboardhide = false)) {
-        appboardHideVal = true;
+    $scope.toggleFullScreenMode = function() {
+      var fullScreenVal = false;
+      // TODO: bug??
+      if ((!$scope.fullScreenMode) || ($scope.fullScreenMode = false)) {
+        fullScreenVal = true;
       }
-      $scope.appboardhide = appboardHideVal;
-      userSettingsApi.updateUserSettingByKey('isAppboardHidden', appboardHideVal).then(function(resp) {
+      $scope.fullScreenMode = fullScreenVal;
+      userSettingsApi.updateUserSettingByKey('fullScreenMode', fullScreenVal).then(function(resp) {
         if (resp) {
-          $rootScope.$broadcast(toolbarVisibilityChangedEvent);
+          $rootScope.$broadcast(fullScreenModeToggleEvent, {'fullScreenMode': fullScreenVal});
         } else {
-          console.log('ERROR failed to update isAppboardHidden in user ' +
+          console.log('ERROR failed to update fullScreenMode in user ' +
             'settings');
         }
       }).catch(function(error) {

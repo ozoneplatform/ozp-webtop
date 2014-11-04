@@ -70,14 +70,6 @@ angular.module('ozpWebtop.constants')
 .constant('dashboardSwitchedEvent', 'dashboardSwitched')
 
 /**
- * Event fired when one of the toolbars' visibility state is changed
- *
- * @property toolbarVisibilityChangedEvent
- * @type String
- */
-.constant('toolbarVisibilityChangedEvent', 'toolbarVisibilityChanged')
-
-/**
  * Event fired when the user updates their preferences (add/remove/rename
  * dashboards, change theme, etc)
  *
@@ -101,4 +93,11 @@ angular.module('ozpWebtop.constants')
  * @property launchUserPreferencesModalEvent
  * @type String
  */
-.constant('launchUserPreferencesModalEvent', 'launchUserPreferencesModal');
+.constant('launchUserPreferencesModalEvent', 'launchUserPreferencesModal')
+
+/**
+ * Event fired when full-screen mode is changed
+ * @property fullScreenChangeEvent
+ * @type String
+ */
+.constant('fullScreenModeToggleEvent', 'fullScreenModeToggle');

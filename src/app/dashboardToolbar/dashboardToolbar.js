@@ -39,7 +39,7 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
  * @param windowSizeWatcher notify when window size changes
  * @param deviceSizeChangedEvent event name
  * @param dashboardSwitchedEvent event name
- * @param toolbarVisibilityChangedEvent event name
+ * @param fullScreenModeToggleEvent event name
  * @param userPreferencesUpdatedEvent event name
  * @param launchUserPreferencesModalEvent event name
  * @namespace dashboardToolbar
@@ -48,7 +48,7 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
 .controller('DashboardToolbarCtrl',
   function($scope, $rootScope, dashboardApi, dashboardChangeMonitor,
            userSettingsApi, windowSizeWatcher, deviceSizeChangedEvent,
-           dashboardSwitchedEvent, toolbarVisibilityChangedEvent,
+           dashboardSwitchedEvent, fullScreenModeToggleEvent,
            userPreferencesUpdatedEvent, launchUserPreferencesModalEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,10 +74,10 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
     $scope.dashboards = [];
 
     /**
-     * @property dashbaordhide Flag indicating if dashboard toolbar is hidden
+     * @property fullScreenMode Flag indicating if toolbar should be hidden
      * @type {boolean}
      */
-    $scope.dashboardhide = false;
+    $scope.fullScreenMode = false;
 
     /**
      * @property currentDashboard Current active dashboard
@@ -137,7 +137,7 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
     dashboardApi.getDashboards().then(function(dashboards) {
       $scope.dashboards = dashboards;
       //default dashboardToolbar is not hidden
-      $scope.dashboardhide = false;
+      $scope.fullScreenMode = false;
       // default board is 0
       // TODO: Load last board that was used
       if (dashboards) {
@@ -166,6 +166,10 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
 
     $scope.$on(userPreferencesUpdatedEvent, function() {
       handleUserSettingsChange();
+    });
+
+    $scope.$on(fullScreenModeToggleEvent, function(event, data) {
+      $scope.fullScreenMode = data.fullScreenMode;
     });
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -278,28 +282,6 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
       });
     };
 
-    /**
-     * Toggle the state of the toolbar (shown vs hidden)
-     *
-     * @method dashboardhider
-     */
-    $scope.dashboardhider = function() {
-      var hideToolbar = false;
-      if ((!$scope.dashboardhide) || ($scope.dashboardhide = false)){
-        hideToolbar = true;
-      }
-      $scope.dashboardhide = hideToolbar;
-      userSettingsApi.updateUserSettingByKey('isDashboardHidden', hideToolbar).then(function(resp) {
-        if (resp) {
-          $rootScope.$broadcast(toolbarVisibilityChangedEvent);
-        } else {
-          console.log('ERROR failed to update isDashboardHidden in user settings');
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    };
-
     // TODO: these might go away
 
     $scope.helpUser = function() {
@@ -355,8 +337,8 @@ dashboardApp.directive('dashboardToolbar', function(){
    link: function(scope, elem/*, attrs*/) {
      console.log('elem: ' + elem);
 
-     scope.$watch('dashboardhide', function() {
-       if (scope.dashboardhide) {
+     scope.$watch('fullScreenMode', function() {
+       if (scope.fullScreenMode) {
          // TODO: a cleaner way?
          $('body').css('padding-top', '16px');
        } else {

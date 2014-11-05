@@ -28,6 +28,9 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * toolbar results in the application being shown or hidden from the dashboard
  * view (in desktop layout)
  *
+ * dashboard selector
+ * buttons to switch between grid and desktop layouts
+ *
  * ngtype: controller
  *
  * @namespace appToolbar
@@ -64,6 +67,37 @@ angular.module( 'ozpWebtop.appToolbar')
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    /**
+     * @property dashboardNameLength Max length of dashboard name, based on
+     * current screen size
+     * @type {String}
+     */
+    $scope.dashboardNameLength = 0;
+
+    /**
+     * @property dashboards Dashboards for current user
+     * @type {Array}
+     */
+    $scope.dashboards = [];
+
+    /**
+     * @property Dashboard layout (grid or desktop)
+     * @type {string}
+     */
+    $scope.layout = 'grid';
+
+    /**
+     * @property currentDashboard Current active dashboard
+     * @type {string}
+     */
+    $scope.currentDashboard = '';
+
+    /**
+     * @property dashboardId Current dashboard id
+     * @type {string}
+     */
+    $scope.dashboardId = '';
+
     /**
      * @property $scope.maxAppsDisplayed The maximum number of apps that can be
      * displayed on the toolbar (based on screen width)
@@ -151,6 +185,22 @@ angular.module( 'ozpWebtop.appToolbar')
       console.log('should not have happened: ' + error);
     });
 
+    // get dashboards for current user
+    dashboardApi.getDashboards().then(function(dashboards) {
+      $scope.dashboards = dashboards;
+      // default board is 0
+      // TODO: Load last board that was used
+      if (dashboards) {
+        $scope.currentDashboard = $scope.dashboards[0];
+      } else {
+        console.log('WARNING: No dashboards found');
+      }
+      // default layout is grid
+      $scope.layout = 'grid';
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
+
     $scope.$on(deviceSizeChangedEvent, function(event, value) {
       $scope.handleWindowSizeChange(value);
     });
@@ -163,9 +213,35 @@ angular.module( 'ozpWebtop.appToolbar')
       $scope.handleDashboardChange(dashboardChange);
     });
 
+    $scope.$on(userPreferencesUpdatedEvent, function() {
+      handleUserSettingsChange();
+    });
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * Handler invoked when user settings event is fired
+     *
+     * @method handleUserSettingsChange
+     */
+    function handleUserSettingsChange() {
+      dashboardApi.getDashboards().then(function(dashboards) {
+        $scope.dashboards = dashboards;
+        dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
+          if (dashboard) {
+            $scope.currentDashboard = dashboard;
+          } else {
+            console.log('WARNING: Dashboard ' + $scope.dashboardId + ' no longer exists');
+          }
+        }).catch(function(error) {
+          console.log('should not have happened: ' + error);
+        });
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    }
 
     /**
      * Handle the deviceSizeChangedEvent
@@ -175,17 +251,23 @@ angular.module( 'ozpWebtop.appToolbar')
      * @param value Data from deviceSizeChangedEvent
      */
     $scope.handleWindowSizeChange = function(value) {
-      // TODO: these will change when the dashboard dropdown and layout icons
-      //  move down into this toolbar
       if (value.deviceSize === 'sm') {
-        $scope.maxAppsDisplayed = 10;
+        $scope.maxAppsDisplayed = 6;
         $scope.setPinnedApps();
       } else if (value.deviceSize === 'md') {
-        $scope.maxAppsDisplayed = 15;
+        $scope.maxAppsDisplayed = 10;
         $scope.setPinnedApps();
       } else if (value.deviceSize === 'lg') {
-        $scope.maxAppsDisplayed = 20;
+        $scope.maxAppsDisplayed = 15;
         $scope.setPinnedApps();
+      }
+
+      if (value.deviceSize === 'sm') {
+        $scope.dashboardNameLength = 9;
+      } else if (value.deviceSize === 'md') {
+          $scope.dashboardNameLength = 28;
+      } else if (value.deviceSize === 'lg') {
+          $scope.dashboardNameLength = 48;
       }
     };
 
@@ -193,6 +275,8 @@ angular.module( 'ozpWebtop.appToolbar')
      * Handle the dashboardSwitchedEvent
      *
      * Set $scope.currentDashboardId and invoke updateApps()
+     * Update current dashboard and layout
+     *
      * @method handleDashboardChange
      * @param dashboardChange
      */
@@ -200,7 +284,41 @@ angular.module( 'ozpWebtop.appToolbar')
       if($scope.currentDashboardId !== dashboardChange.dashboardId){
         $scope.currentDashboardId = dashboardChange.dashboardId;
       }
+      $scope.layout = dashboardChange.layout;
+      $scope.dashboardId = dashboardChange.dashboardId;
+
+      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
+        $scope.currentDashboard = dashboard;
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+
       $scope.updateApps();
+    };
+
+    /**
+     * Set the current dashboard
+     * @method setCurrentDashboard
+     * @param board Current dashboard
+     */
+    $scope.setCurrentDashboard = function(board) {
+      $scope.currentDashboard = board;
+    };
+
+    /**
+     * Use a grid layout
+     * @method useGridLayout
+     */
+    $scope.useGridLayout = function() {
+      $scope.layout = 'grid';
+    };
+
+    /**
+     * Use a desktop layout
+     * @method useDesktopLayout
+     */
+    $scope.useDesktopLayout = function() {
+      $scope.layout = 'desktop';
     };
 
     /**

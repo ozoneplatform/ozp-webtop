@@ -49,6 +49,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param dashboardStateChangedEvent event name
  * @param dashboardSwitchedEvent event name
  * @param fullScreenModeToggleEvent event name
+ * @param launchUserPreferencesModalEvent event name
  */
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
@@ -61,7 +62,8 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  dashboardStateChangedEvent,
                                                  dashboardSwitchedEvent,
                                                  fullScreenModeToggleEvent,
-                                                 userPreferencesUpdatedEvent) {
+                                                 userPreferencesUpdatedEvent,
+                                                 launchUserPreferencesModalEvent) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -220,6 +222,19 @@ angular.module( 'ozpWebtop.appToolbar')
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * Launch the user preferences modal dialog
+     *
+     * Sends launchUserPreferencesModalEvent
+     *
+     * @method launchSettingsModal
+     */
+    $scope.launchSettingsModal = function() {
+      $rootScope.$broadcast(launchUserPreferencesModalEvent, {
+        launch: 'true'
+      });
+    };
 
     /**
      * Handler invoked when user settings event is fired

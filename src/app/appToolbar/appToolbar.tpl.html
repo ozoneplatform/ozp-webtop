@@ -65,10 +65,15 @@
           <li ng-show="nextAppsVisible"><i class="fa fa-angle-double-right fa-inverse fa-lg link-pointer"
                  ng-click="nextApps()" style="margin-top: 15px;"></i></li>
 
-          <li class="divider-vertical"></li>
+          <li class="divider-vertical" style="margin-right: 0px; padding-right: 0px"></li>
+          <li style="margin-right: 0px; padding-right: 0px; margin-left: 0px; padding-left: 0px;">
+            <a ng-click="launchSettingsModal()">
+              <i class="fa fa-cog fa-lg link-pointer"></i>
+            </a>
+          </li>
           <li class="hideToolbarButton link-pointer" tooltip="Enter Full Screen"
               tooltip-placement="top"
-              style="width: 25px; float: right; margin-right: 5px; margin-top: 2px;">
+              style="width: 25px; float: right; margin-right: 5px; margin-left: 10px; padding-left: 0px; ">
             <a ng-click="toggleFullScreenMode();">
               <i class="fa fa-expand fa-lg"></i>
             </a>

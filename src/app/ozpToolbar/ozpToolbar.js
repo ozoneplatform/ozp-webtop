@@ -29,15 +29,13 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
  * @param windowSizeWatcher notify when window size changes
  * @param deviceSizeChangedEvent event name
  * @param fullScreenModeToggleEvent event name
- * @param launchUserPreferencesModalEvent event name
  * @namespace ozpToolbar
  *
  */
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope,
            userSettingsApi, windowSizeWatcher, deviceSizeChangedEvent,
-           fullScreenModeToggleEvent,
-           launchUserPreferencesModalEvent) {
+           fullScreenModeToggleEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -120,20 +118,11 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       }
     }
 
-    /**
-     * Launch the user preferences modal dialog
-     *
-     * Sends launchUserPreferencesModalEvent
-     *
-     * @method launchSettingsModal
-     */
-    $scope.launchSettingsModal = function() {
-      $rootScope.$broadcast(launchUserPreferencesModalEvent, {
-        launch: 'true'
-      });
-    };
-
     // TODO: these might go away
+
+    $scope.launchPreferences = function() {
+      alert('Launch Preferences functionality coming soon!');
+    };
 
     $scope.helpUser = function() {
       alert('Help functionality coming soon!');

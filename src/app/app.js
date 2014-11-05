@@ -23,7 +23,7 @@
  * @requires ozpWebtop.models.userSettings
  * @requires ozpWebtop.appLauncher
  * @requires ozpWebtop.appToolbar
- * @requires ozpWebtop.dashboardToolbar
+ * @requires ozpWebtop.ozpToolbar
  * @requires ozpWebtop.dashboardView.button
  * @requires ozpWebtop.dashboardView.chrome
  * @requires ozpWebtop.dashboardView.desktop
@@ -57,7 +57,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.models.userSettings',
   'ozpWebtop.appLauncher',
   'ozpWebtop.appToolbar',
-  'ozpWebtop.dashboardToolbar',
+  'ozpWebtop.ozpToolbar',
   'ozpWebtop.dashboardView.button',
   'ozpWebtop.dashboardView.chrome',
   'ozpWebtop.dashboardView.desktop',

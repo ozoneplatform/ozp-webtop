@@ -1,18 +1,18 @@
 'use strict';
 
 /**
- * The dashboard toolbar component shown in the Webtop.
+ * The ozp toolbar component shown in the Webtop.
  *
- * @module ozpWebtop.dashboardToolbar
+ * @module ozpWebtop.ozpToolbar
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.models.userSettings
  */
-angular.module('ozpWebtop.dashboardToolbar', [ 'ozp.common.windowSizeWatcher',
+angular.module('ozpWebtop.ozpToolbar', [ 'ozp.common.windowSizeWatcher',
   'ozpWebtop.models.userSettings']);
 
-var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
+var app = angular.module( 'ozpWebtop.ozpToolbar')
 /**
- * Controller for dashboard toolbar located at the top of Webtop
+ * Controller for ozp toolbar located at the top of Webtop
  *
  * Includes:
  * - menu with links to other OZP resources
@@ -21,7 +21,7 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
  *
  * ngtype: controller
  *
- * @class DashboardToolbarCtrl
+ * @class OzpToolbarCtrl
  * @constructor
  * @param $scope ng $scope
  * @param $rootScope ng $rootScope
@@ -30,10 +30,10 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
  * @param deviceSizeChangedEvent event name
  * @param fullScreenModeToggleEvent event name
  * @param launchUserPreferencesModalEvent event name
- * @namespace dashboardToolbar
+ * @namespace ozpToolbar
  *
  */
-.controller('DashboardToolbarCtrl',
+.controller('OzpToolbarCtrl',
   function($scope, $rootScope,
            userSettingsApi, windowSizeWatcher, deviceSizeChangedEvent,
            fullScreenModeToggleEvent,
@@ -170,18 +170,18 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
 );
 
 /**
- * Directive for the dashboard toolbar
+ * Directive for the ozp toolbar
  *
  * ngtype: directive
  *
- * @class dashboardToolbar
+ * @class ozpToolbar
  * @static
- * @namespace dashboardToolbar
+ * @namespace ozpToolbar
  */
-dashboardApp.directive('dashboardToolbar', function(){
+app.directive('ozpToolbar', function(){
   return {
    restrict: 'E',
-   templateUrl: 'dashboardToolbar/dashboardToolbar.tpl.html',
+   templateUrl: 'ozpToolbar/ozpToolbar.tpl.html',
    replace: false,
    transclude: false,
    scope: true,

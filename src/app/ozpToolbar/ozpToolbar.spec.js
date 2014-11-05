@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: DashboardToolbar', function () {
+describe('Controller: OzpToolbar', function () {
 
   var scope, rootScope, launchUserPreferencesModalEvent;
 
@@ -11,7 +11,7 @@ describe('Controller: DashboardToolbar', function () {
     });
   });
 
-  beforeEach(module('ozpWebtop.dashboardToolbar'));
+  beforeEach(module('ozpWebtop.ozpToolbar'));
 
   beforeEach(inject(function(_$rootScope_, $controller,
                              _launchUserPreferencesModalEvent_) {
@@ -24,7 +24,7 @@ describe('Controller: DashboardToolbar', function () {
     // For testing $rootScope events
     spyOn(rootScope, '$broadcast').and.callThrough();
 
-    $controller('DashboardToolbarCtrl', {
+    $controller('OzpToolbarCtrl', {
         $scope: scope
       });
 

@@ -5,14 +5,10 @@
  *
  * @module ozpWebtop.dashboardToolbar
  * @requires ozp.common.windowSizeWatcher
- * @requires ozpWebtop.models.dashboard
  * @requires ozpWebtop.models.userSettings
- * @requires ozpWebtop.services.dashboardChangeMonitor
  */
 angular.module('ozpWebtop.dashboardToolbar', [ 'ozp.common.windowSizeWatcher',
-  'ozpWebtop.models.dashboard',
-  'ozpWebtop.models.userSettings',
-  'ozpWebtop.services.dashboardChangeMonitor']);
+  'ozpWebtop.models.userSettings']);
 
 var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
 /**
@@ -20,12 +16,8 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
  *
  * Includes:
  * - menu with links to other OZP resources
- * - dashboard selector
- * - buttons to switch between grid and desktop layouts
  * - notifications (TODO)
  * - username button with dropdown to access user preferences, help, and logout
- *
- * The toolbar can also be hidden by clicking on a button
  *
  * ngtype: controller
  *
@@ -33,33 +25,24 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
  * @constructor
  * @param $scope ng $scope
  * @param $rootScope ng $rootScope
- * @param dashboardApi dashboard data
- * @param dashboardChangeMonitor notify when dashboard changes
  * @param userSettingsApi user preferences data
  * @param windowSizeWatcher notify when window size changes
  * @param deviceSizeChangedEvent event name
- * @param dashboardSwitchedEvent event name
  * @param fullScreenModeToggleEvent event name
- * @param userPreferencesUpdatedEvent event name
  * @param launchUserPreferencesModalEvent event name
  * @namespace dashboardToolbar
  *
  */
 .controller('DashboardToolbarCtrl',
-  function($scope, $rootScope, dashboardApi, dashboardChangeMonitor,
+  function($scope, $rootScope,
            userSettingsApi, windowSizeWatcher, deviceSizeChangedEvent,
-           dashboardSwitchedEvent, fullScreenModeToggleEvent,
-           userPreferencesUpdatedEvent, launchUserPreferencesModalEvent) {
+           fullScreenModeToggleEvent,
+           launchUserPreferencesModalEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    /**
-     * @property dashboardNameLength Max length of dashboard name, based on
-     * current screen size
-     * @type {String}
-     */
-    $scope.dashboardNameLength = 0;
+
     /**
      * @property usernameLength Max length of username, based on
      * current screen size
@@ -68,40 +51,16 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
     $scope.usernameLength = 0;
 
     /**
-     * @property dashboards Dashboards for current user
-     * @type {Array}
-     */
-    $scope.dashboards = [];
-
-    /**
      * @property fullScreenMode Flag indicating if toolbar should be hidden
      * @type {boolean}
      */
     $scope.fullScreenMode = false;
 
     /**
-     * @property currentDashboard Current active dashboard
-     * @type {string}
-     */
-    $scope.currentDashboard = '';
-
-    /**
-     * @property Dashboard layout (grid or desktop)
-     * @type {string}
-     */
-    $scope.layout = 'grid';
-
-    /**
      * @property user Current user's username
      * @type {string}
      */
-    $scope.user = '';
-
-    /**
-     * @property dashboardId Current dashboard id
-     * @type {string}
-     */
-    $scope.dashboardId = '';
+    $scope.user = 'J Smith';
 
     /**
      * @property messages Messages for current user TBD
@@ -130,42 +89,10 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
     // register for notifications when window size changes
     windowSizeWatcher.run();
 
-    // register to receive notifications if dashboard layout changes
-    dashboardChangeMonitor.run();
-
-    // get dashboards for current user
-    dashboardApi.getDashboards().then(function(dashboards) {
-      $scope.dashboards = dashboards;
-      //default dashboardToolbar is not hidden
-      $scope.fullScreenMode = false;
-      // default board is 0
-      // TODO: Load last board that was used
-      if (dashboards) {
-        $scope.currentDashboard = $scope.dashboards[0];
-      } else {
-        console.log('WARNING: No dashboards found');
-      }
-      // default layout is grid
-      $scope.layout = 'grid';
-      dashboardApi.getDashboardData().then(function(dashboardData) {
-        $scope.user = dashboardData.user;
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
+    // TODO: $scope.user was coming from dashboard api
 
     $scope.$on(deviceSizeChangedEvent, function(event, value) {
       handleDeviceSizeChange(value);
-    });
-
-    $scope.$on(dashboardSwitchedEvent, function(event, dashboardChange) {
-      handleDashboardChange(dashboardChange);
-    });
-
-    $scope.$on(userPreferencesUpdatedEvent, function() {
-      handleUserSettingsChange();
     });
 
     $scope.$on(fullScreenModeToggleEvent, function(event, data) {
@@ -185,89 +112,13 @@ var dashboardApp = angular.module( 'ozpWebtop.dashboardToolbar')
      */
     function handleDeviceSizeChange(value) {
       if (value.deviceSize === 'sm') {
-        $scope.dashboardNameLength = 9;
         $scope.usernameLength = 9;
       } else if (value.deviceSize === 'md') {
-          $scope.dashboardNameLength = 28;
           $scope.usernameLength = 12;
       } else if (value.deviceSize === 'lg') {
-          $scope.dashboardNameLength = 48;
           $scope.usernameLength = 12;
       }
     }
-
-    /**
-     * Handler invoked when dashboard change event occurs
-     *
-     * @method handleDashboardChange
-     * @param dashboardChange contains dashboardId and layout of dashboard
-     */
-    function handleDashboardChange(dashboardChange) {
-      $scope.layout = dashboardChange.layout;
-      $scope.dashboardId = dashboardChange.dashboardId;
-
-      //only change local scopes user if the dashboard api user changes
-      dashboardApi.getDashboardData().then(function(dashboardData) {
-        if ($scope.user !== dashboardData.user) {
-          $scope.user = dashboardData.user;
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-
-      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
-        $scope.currentDashboard = dashboard;
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    }
-
-    /**
-     * Handler invoked when user settings event is fired
-     *
-     * @method handleUserSettingsChange
-     */
-    function handleUserSettingsChange() {
-      dashboardApi.getDashboards().then(function(dashboards) {
-        $scope.dashboards = dashboards;
-        dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
-          if (dashboard) {
-            $scope.currentDashboard = dashboard;
-          } else {
-            console.log('WARNING: Dashboard ' + $scope.dashboardId + ' no longer exists');
-          }
-        }).catch(function(error) {
-          console.log('should not have happened: ' + error);
-        });
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    }
-
-    /**
-     * Set the current dashboard
-     * @method setCurrentDashboard
-     * @param board Current dashboard
-     */
-    $scope.setCurrentDashboard = function(board) {
-      $scope.currentDashboard = board;
-    };
-
-    /**
-     * Use a grid layout
-     * @method useGridLayout
-     */
-    $scope.useGridLayout = function() {
-      $scope.layout = 'grid';
-    };
-
-    /**
-     * Use a desktop layout
-     * @method useDesktopLayout
-     */
-    $scope.useDesktopLayout = function() {
-      $scope.layout = 'desktop';
-    };
 
     /**
      * Launch the user preferences modal dialog

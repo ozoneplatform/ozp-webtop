@@ -209,21 +209,10 @@ body {
 }
 
 .app-toolbar-img {
-  height: 18px;
-  width: 18px;
-  margin-right: 5px;
-}
-
-.active-app {
-  margin-right: 5px;
-  background-color: @navbar-inverse-bg;
-  height: @navbar-height;
-}
-
-.inactive-app {
-  margin-right: 5px;
-  background-color: @ozp-black;
-  height: @navbar-height;
+  position: relative;
+  top: -5px;
+  height: 32px;
+  width: 32px;
 }
 
 .hiddenToggle {
@@ -235,6 +224,19 @@ body {
   background-color: @ozp-dk-gray1;
   border: none;
   color: @ozp-white;
+}
+
+.app-toolbar-active-app {
+  position: relative;
+  top: -2px;
+  width: 32px;
+  height: 2px;
+  background-color: @ozp-blue2;
+}
+
+.app-toolbar-inactive-app {
+  .app-toolbar-active-app;
+  background-color: @ozp-black;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

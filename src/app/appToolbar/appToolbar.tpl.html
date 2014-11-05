@@ -14,7 +14,7 @@
           <!-- stuff on the left side of the nav bar -->
           <li>
             <a class="navbar-brand" href="" ng-click="openApplicationsModal()">
-              <i class="fa fa-plus"></i>
+              <i class="fa fa-plus" style="margin-top: 4px;"></i>
             </a>
           </li>
           </ul>
@@ -25,21 +25,24 @@
         <ul class="nav navbar-nav">
           <!-- stuff on the left side of the nav bar -->
           <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)"
-              ng-class="app.isMinimized && layout === 'desktop'? 'inactive-app' : 'active-app'"
               >
-            <a><img class="chrome-icon app-toolbar-img" ng-src="{{app.icon}}"/>{{app.name | limitTo : 15}}</i></a>
+            <a tooltip="{{app.name | limitTo : 15}}" style="padding-right: 0px; padding-left: 15px; padding-bottom: 0px;">
+              <img class="chrome-icon app-toolbar-img"
+                   ng-src="{{app.icon.large}}"/>
+              <div ng-class="app.isMinimized && layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div>
+            </a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li ng-show="previousAppsVisible"><i class="fa fa-arrow-circle-left fa-inverse fa-lg link-pointer"
-                 ng-click="previousApps()" style="margin-top: 12px;"></i></li>
-          <li ng-show="nextAppsVisible"><i class="fa fa-arrow-circle-right fa-inverse fa-lg link-pointer"
-                 ng-click="nextApps()" style="margin-top: 12px;"></i></li>
+          <li ng-show="previousAppsVisible"><i class="fa fa-angle-double-left fa-inverse fa-lg link-pointer"
+                 ng-click="previousApps()" style="margin-top: 15px;"></i></li>
+          <li ng-show="nextAppsVisible"><i class="fa fa-angle-double-right fa-inverse fa-lg link-pointer"
+                 ng-click="nextApps()" style="margin-top: 15px;"></i></li>
 
           <li class="divider-vertical"></li>
           <li class="hideToolbarButton link-pointer" tooltip="Enter Full Screen"
               tooltip-placement="top"
-              style="width: 25px; float: right; margin-right: 5px;">
+              style="width: 25px; float: right; margin-right: 5px; margin-top: 2px;">
             <a ng-click="toggleFullScreenMode();">
               <i class="fa fa-expand fa-lg"></i>
             </a>

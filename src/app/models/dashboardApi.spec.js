@@ -895,7 +895,8 @@ describe('Service: dashboardApi', function () {
 
       for (var j=0; j < frames.length; j++) {
         expect(frames[j].name).toEqual('appName' + j);
-        expect(frames[j].icon).toEqual('/icon/small/' + j);
+        expect(frames[j].icon.small).toEqual('/icon/small/' + j);
+        expect(frames[j].icon.large).toEqual('/icon/large/' + j);
 
         expect(frames[j].shortDescription).toEqual('This app does stuff' + j);
         expect(frames[j].url).toEqual('http://url/of/app/' + j);

@@ -63,8 +63,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail.png'
             },
             'screenShots': [
 
@@ -99,8 +99,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket.png'
             },
             'screenShots': [
 
@@ -136,8 +136,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse.png'
             },
             'screenShots': [
 
@@ -173,8 +173,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox.png'
             },
             'screenShots': [
 
@@ -209,8 +209,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard.png'
             },
             'screenShots': [
 
@@ -245,8 +245,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch.png'
             },
             'screenShots': [
 
@@ -281,8 +281,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot.png'
             },
             'screenShots': [
 
@@ -317,8 +317,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge.png'
             },
             'screenShots': [
 
@@ -354,8 +354,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern.png'
             },
             'screenShots': [
 
@@ -390,8 +390,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP.png'
             },
             'screenShots': [
 
@@ -426,8 +426,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla.png'
             },
             'screenShots': [
 
@@ -462,8 +462,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox.png'
             },
             'screenShots': [
 
@@ -498,8 +498,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc.png'
             },
             'screenShots': [
 
@@ -534,8 +534,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic.png'
             },
             'screenShots': [
 
@@ -570,8 +570,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback.png'
             },
             'screenShots': [
 
@@ -607,8 +607,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum.png'
             },
             'screenShots': [
 
@@ -644,8 +644,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight.png'
             },
             'screenShots': [
 
@@ -681,8 +681,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell.png'
             },
             'screenShots': [
 
@@ -718,8 +718,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox.png'
             },
             'screenShots': [
 
@@ -755,8 +755,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote.png'
             },
             'screenShots': [
 
@@ -792,8 +792,8 @@ function generalMarketplacedModel(persistStrategy) {
             ],
             'icons': {
               'small': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs16.png',
-              'medium': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs32.png',
-              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs.png'
+              'large': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs32.png',
+              'banner': 'https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs.png'
             },
             'screenShots': [
 

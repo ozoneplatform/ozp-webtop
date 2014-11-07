@@ -26,6 +26,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
  * @param $scope ng $scope
  * @param $rootScope ng $rootScope
  * @param $location ng $location
+ * @param $interval ng $interval
  * @param dashboardApi dashboard data
  * @param marketplaceApi marketplace listings data
  * @param dashboardChangeMonitor notify when dashboard changes
@@ -35,6 +36,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
  * @namespace dashboardView
  */
   .controller('DesktopCtrl', function ($scope, $rootScope, $location,
+                                       $interval,
                                        dashboardApi, marketplaceApi,
                                        dashboardChangeMonitor,
                                        userSettingsApi,
@@ -65,7 +67,6 @@ angular.module('ozpWebtop.dashboardView.desktop')
 
     /**
      * @property apps Applications in the marketplace
-     * TODO: only need the data for apps user has favorited
      * @type {Array}
      */
     $scope.apps = [];
@@ -147,6 +148,12 @@ angular.module('ozpWebtop.dashboardView.desktop')
      * @method dashboardChangeHandler
      */
     function dashboardChangeHandler() {
+      // app information is retrieved asynchronously from IWC. If the
+      // information isn't available yet, try again later
+      if ($scope.apps.length === 0) {
+        $interval(dashboardChangeHandler, 500, 1);
+        return;
+      }
 
       dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).then(function(updatedDashboard) {
 
@@ -207,6 +214,12 @@ angular.module('ozpWebtop.dashboardView.desktop')
      * @method updateDashboard
      */
     function updateDashboard() {
+      // app information is retrieved asynchronously from IWC. If the
+      // information isn't available yet, try again later
+      if ($scope.apps.length === 0) {
+        $interval(updateDashboard, 500, 1);
+        return;
+      }
       if (!$scope.dashboards) {
         console.log('Dashboard changed, but no dashboards exist');
         return;

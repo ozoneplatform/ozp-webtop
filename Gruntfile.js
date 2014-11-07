@@ -201,6 +201,17 @@ module.exports = function ( grunt ) {
           }
         ]
       },
+      // so that they're deployed on gh-pages
+      tools: {
+        files: [
+          {
+            src: ['**'],
+            dest: '<%= build_dir %>/tools',
+            cwd: 'tools',
+            expand: true
+          }
+        ]
+      },
       // Creates an OZONE bus for testing purposes in demoApps/
       demo_ozone_bus: {
         files: [
@@ -493,6 +504,15 @@ module.exports = function ( grunt ) {
           port: 9100,
           base: './tools'
         }
+      },
+      // ozp test utility
+      ozpDataUtility: {
+        options: {
+          port: 9600,
+          hostame: 'localhost',
+          base: ['tools/ozpDataUtility', '.'],
+          keepalive: true
+        }
       }
     },
 
@@ -759,7 +779,7 @@ module.exports = function ( grunt ) {
     'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build', 'yuidoc',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
     'copy:build_jquery_ui_images', 'copy:build_appjs', 'copy:build_vendorjs',
-    'copy:docs', 'index:build', 'karmaconfig', 'karma:continuous'
+    'copy:docs', 'copy:tools', 'index:build', 'karmaconfig', 'karma:continuous'
   ]);
 
   /**

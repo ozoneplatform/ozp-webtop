@@ -858,7 +858,7 @@ describe('Service: dashboardApi', function () {
           'name': 'appName' + i,
           'id': frames[i].appId,
           'description': 'This app does stuff' + i,
-          'shortDescription': 'This app does stuff' + i,
+          'descriptionShort': 'This app does stuff' + i,
           'type': 'application',
           'state': 'active',
           'uiHints': {
@@ -898,8 +898,9 @@ describe('Service: dashboardApi', function () {
         expect(frames[j].icon.small).toEqual('/icon/small/' + j);
         expect(frames[j].icon.large).toEqual('/icon/large/' + j);
 
-        expect(frames[j].shortDescription).toEqual('This app does stuff' + j);
+        expect(frames[j].descriptionShort).toEqual('This app does stuff' + j);
         expect(frames[j].url).toEqual('http://url/of/app/' + j);
+        expect(frames[j].trustedUrl).toBeDefined();
         expect(frames[j].singleton).toEqual(true);
       }
       done();

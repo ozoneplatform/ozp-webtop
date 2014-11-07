@@ -4,6 +4,13 @@ describe('Service: marketplaceApi', function () {
   // load the service's module
   beforeEach(module('ozpWebtop.models.marketplace'));
 
+  // use IWC for tests?
+  beforeEach(function() {
+    angular.mock.module('ozpWebtop.constants', function($provide) {
+      $provide.constant('useIwc', false);
+    });
+  });
+
   // instantiate service
   var marketplaceApi, rootScope;
   beforeEach(inject(function ($rootScope, _marketplaceApi_) {
@@ -24,10 +31,11 @@ describe('Service: marketplaceApi', function () {
       var idx = appNames.indexOf('Purple Circle');
       var purpleCircleApp = apps[idx];
       expect(purpleCircleApp.name).toBe('Purple Circle');
-      expect(purpleCircleApp.shortDescription).toBeDefined();
+      expect(purpleCircleApp.descriptionShort).toBeDefined();
       expect(purpleCircleApp.description).toBeDefined();
       expect(purpleCircleApp.launchUrls.default).toBeDefined();
       expect(purpleCircleApp.icons.small).toBeDefined();
+      expect(purpleCircleApp.icons.large).toBeDefined();
       expect(purpleCircleApp.id).toBeDefined();
       expect(purpleCircleApp.tags).toBeDefined();
       done();

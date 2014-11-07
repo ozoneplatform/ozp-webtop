@@ -24,7 +24,7 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
-function generalDashboardModel(persistStrategy, Utilities) {
+function generalDashboardModel($sce, persistStrategy, Utilities) {
 
   return {
     /**
@@ -432,8 +432,9 @@ function generalDashboardModel(persistStrategy, Utilities) {
             frames[j].icon.small = marketplaceApps[i].icons.small;
             frames[j].icon.large = marketplaceApps[i].icons.large;
             frames[j].url = marketplaceApps[i].launchUrls.default;
+            frames[j].trustedUrl = $sce.trustAsResourceUrl(frames[j].url);
             frames[j].name = marketplaceApps[i].name;
-            frames[j].shortDescription = marketplaceApps[i].shortDescription;
+            frames[j].descriptionShort = marketplaceApps[i].descriptionShort;
             frames[j].singleton = marketplaceApps[i].uiHints.singleton;
           }
         }
@@ -545,6 +546,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
             console.log('should not have happened: ' + error);
           });
         } else {
+          console.log('frame ' + frame.id + ' not found');
           return false;
         }
       }).catch(function(error) {
@@ -706,7 +708,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
             'layout': 'grid',
             'frames': [
               {
-                'appId': 'f2355f7c-bd8f-440c-b6f4-fe6bea787ecb', // AirMail
+                'appId': 'b0700c81-65cd-45f5-b599-07d9b3764511', // AirMail
                 'id': '45a08744-686b-4b14-820a-ebc8c24fbfb0',
                 'gridLayout': {
                   'sm': {
@@ -731,7 +733,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 }
               },
               {
-                'appId': '484423df-8ee6-4880-8111-88eea14b97b2', // Bread Basket
+                'appId': 'e9db1f3e-2615-40c1-9972-8a3a7c8733b6', // Bread Basket
                 'id': '59891c69-dde5-4926-b4b1-e53dac90b271',
                 'gridLayout': {
                   'sm': {
@@ -756,7 +758,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 }
               },
               {
-                'appId': 'c3ae4b4f-0d60-42f6-9005-c87d852e4812', // ChartCourse
+                'appId': 'fe79bd04-aa78-4c55-89bc-cedb88eeae38', // ChartCourse
                 'id': '87078824-fac8-4c04-84d5-f6a424f955fb',
                 'gridLayout': {
                   'sm': {
@@ -806,7 +808,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 }
               },
               {
-                'appId': '34643c12-c600-4188-ab44-993681751f6c', //ChatterBox
+                'appId': '773c2bf4-069d-4b9d-9f7d-e767613388b0', //ChatterBox
                 'id': '8ca6dba0-b7bb-47e4-a1a1-06e451f9a0f1',
                 'gridLayout': {
                   'sm': {
@@ -831,7 +833,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
                 }
               },
               {
-                'appId': '4bfd3e29-af51-4f0a-ae5f-2609d52f1e58', // Clipboard
+                'appId': '26e289fa-fb36-4825-9448-e8760db9e362', // Clipboard
                 'id': '99fb827c-4828-4855-8d39-e163fb76a5e0',
                 'gridLayout': {
                   'sm': {
@@ -1045,7 +1047,7 @@ function generalDashboardModel(persistStrategy, Utilities) {
             'layout': 'desktop',
             'frames': [
               {
-                'appId': '4bfd3e29-af51-4f0a-ae5f-2609d52f1e58',  // Clipboard
+                'appId': '26e289fa-fb36-4825-9448-e8760db9e362',  // Clipboard
                 'id': '04648023-6ab0-448d-83a1-bb378639237f',
                 'gridLayout': {
                   'sm': {
@@ -1194,9 +1196,9 @@ function generalDashboardModel(persistStrategy, Utilities) {
  * ngtype: service
  *
  */
-models.service('dashboardModelLocalStorage', function(localStorageInterface,
+models.service('dashboardModelLocalStorage', function($sce, localStorageInterface,
                                                     Utilities) {
-  var model = generalDashboardModel(localStorageInterface, Utilities);
+  var model = generalDashboardModel($sce, localStorageInterface, Utilities);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
       this[prop] = model[prop];
@@ -1211,8 +1213,8 @@ models.service('dashboardModelLocalStorage', function(localStorageInterface,
  * ngtype: service
  *
  */
-models.service('dashboardModelIwc', function(iwcInterface, Utilities) {
-  var model = generalDashboardModel(iwcInterface, Utilities);
+models.service('dashboardModelIwc', function($sce, iwcInterface, Utilities) {
+  var model = generalDashboardModel($sce, iwcInterface, Utilities);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
       this[prop] = model[prop];

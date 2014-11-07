@@ -54,8 +54,11 @@ app.factory('iwcInterface', function($q, iwcConnectedClient) {
      * @returns {*}
      */
     setDashboardData: function (dashboardData) {
+      // persist data
+      dashboardData.persist = true;
       return this._setData('data.api', '/dashboard-data',
-        {entity: dashboardData, contentType: 'application/dashboard-data+json'});
+        {entity: dashboardData,
+          contentType: 'application/dashboard-data+json'});
     },
     /**
      * Get all user settings
@@ -72,16 +75,39 @@ app.factory('iwcInterface', function($q, iwcConnectedClient) {
      * @returns {*}
      */
     setUserSettingsData: function(userSettingsData) {
+      // persist data
+      userSettingsData.persist = true;
       return this._setData('data.api',
         {entity: userSettingsData, contentType: 'application/user-settings+json'});
     },
+    _appendApplicationData: function(appResource, appListings) {
+      return this._getData('system.api', appResource).then(function(appData) {
+        appListings.push(appData);
+      });
+    },
+
     /**
      * Get all apps (listings) in marketplace
      * @method getApps
      * @returns {*}
      */
     getApps: function() {
-      return this._getData('data.api', '/marketplace');
+      var that = this;
+      var appListings = [];
+      return this._getData('system.api', '/application').then(function(myApps) {
+        return myApps.reduce(function (previous, current) {
+          return previous.then(function () {
+            var promise = that._appendApplicationData(current, appListings);
+            return promise;
+          }).catch(function (error) {
+            console.log('should not have happened: ' + error);
+          });
+        }, Promise.resolve()).then(function () {
+          // all application data obtained
+          // console.log('app listings: ' + appListings);
+          return {'apps': appListings};
+        });
+      });
     },
     /**
      * Set all apps (listings) in marketplace (test use only)
@@ -102,7 +128,7 @@ app.factory('iwcInterface', function($q, iwcConnectedClient) {
      */
     _getData: function(dst, resource) {
       return iwcConnectedClient.getClient().then(function(client) {
-        client.api(dst)
+        return client.api(dst)
           .get(resource)
           .then(function (reply) {
             return reply.entity;
@@ -121,12 +147,14 @@ app.factory('iwcInterface', function($q, iwcConnectedClient) {
      */
     _setData: function(dst, resource, setData) {
       return iwcConnectedClient.getClient().then(function(client) {
-        client.api('dst')
+        return client.api(dst)
           .set(resource, setData)
           .then(function (response) {
-            if (response) {
+            if (response.response === 'ok') {
               return true;
             } else {
+              console.log('ERROR: setting data for ' + resource + ' in ' + dst);
+              console.log(response);
               return false;
             }
           });

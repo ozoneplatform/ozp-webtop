@@ -4,6 +4,13 @@ describe('Service: userSettingsApi', function () {
   // load the service's module
   beforeEach(module('ozpWebtop.models.userSettings'));
 
+  // use IWC for tests?
+  beforeEach(function() {
+    angular.mock.module('ozpWebtop.constants', function($provide) {
+      $provide.constant('useIwc', false);
+    });
+  });
+
   // instantiate service
   var userSettingsApi, rootScope;
   beforeEach(inject(function ($rootScope, _userSettingsApi_) {

@@ -21,16 +21,45 @@
           Utility to make sure the marketplace, backend data, and IWC are
           behaving appropriately for use with Webtop
         </p>
-        <p>
-          Connected to IWC (<code>{{ozpBusInfo.url}}</code>):
-          <span ng-show="ozpBusInfo.connected" class="label label-success">True</span>
-          <span ng-show="!ozpBusInfo.connected" class="label label-danger">False</span>
-        </p>
+        <p>OZP Bus: </p>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-sm-12">
+        <form class="form-horizontal" role="form">
+          <div class="form-group has-feedback">
+            <!--<label for="busUrl" class="col-sm-2 control-label">OZP Bus</label>-->
+            <div class="col-sm-7">
+              <input type="text" class="form-control" id="busUrl"
+                     placeholder="OZP Bus URL" ng-model="ozpBusInfo.url">
+              <span ng-show="!ozpBusInfo.connected"
+                    class="glyphicon glyphicon-remove form-control-feedback"
+                    style="color: red;">
+              </span>
+              <span ng-show="ozpBusInfo.connected"
+                    class="glyphicon glyphicon-ok form-control-feedback"
+                    style="color: green;">
+              </span>
+            </div>
+            <div class="col-sm-3">
+              <button ng-show="!ozpBusInfo.connected" type="button"
+                      class="btn btn-success" ng-click="connectToBus()">
+                Connect
+              </button>
+              <button ng-show="ozpBusInfo.connected" type="button"
+                      class="btn btn-danger" ng-click="disconnectFromBus()">
+                Disconnect
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
         <button type="button" class="btn btn-primary" ng-click="refresh()">Refresh All</button>
+        <span>Reconnect to the OZP Bus and reload marketplace data from <code>system.api</code> and
+        dashboard data from the <code>data.api</code></span>
       </div>
     </div>
     <div class="row">
@@ -39,20 +68,28 @@
           <span class="label label-default" ng-show="loadingDashboards">Loading ...</span>
           <span class="label label-danger" ng-show="invalidDashboards">Invalid Dashboard Data</span>
         </h2>
-        <p>Dashboards: <strong>{{dashboardData.dashboards.length}}</strong></p>
       </div>
     </div>
     <div class="row" style="margin-bottom: 20px;">
-      <div class="col-xs-6 col-sm-4 col-md-3">
+      <div class="col-xs-12">
         <button type="button" class="btn btn-primary"
-                ng-click="syncDashboardData()">Sync Application Ids</button>
+                ng-click="syncDashboardData()">Sync Application Ids
+        </button>
+        <span> If you see invalid apps for any of the dashboards, it means an application found
+        in the dashboard data has a name the matches up with an application retrieved from the marketplace,
+        but the application id doesn't match. This happens because the application ids change each time the
+        sample marketplace data is reloaded in the backend. Hit this button to synchronize the ids in the
+        dashboard data (<code>data.api</code>) with those in the marketplace (<code>system.api</code>).</span>
+
       </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
+      <div class="col-xs-12" style="margin-top: 15px;">
         <button type="button" class="btn btn-warning" ng-click="reloadDashboardData()">Reload Dashboard Data</button>
+        <span> Reload the <code>data.api</code> with demo dashboard data located <a href="dashboard-data.json">here</a></span>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
+        <p>Dashboards: <strong>{{dashboardData.dashboards.length}}</strong></p>
         <table class="table">
           <thead>
             <tr>

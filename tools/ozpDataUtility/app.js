@@ -12,7 +12,7 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
 
   var dashboardDataResource = '/dashboard-data';
 
-  function connectToBus() {
+  $scope.connectToBus = function() {
     $scope.ozpBusInfo.connected = false;
     $scope.iwcClient = new iwcClient.Client({
       peerUrl: $scope.ozpBusInfo.url
@@ -25,7 +25,7 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
     });
   };
 
-  function disconnectFromBus() {
+  $scope.disconnectFromBus = function() {
    console.log('disconnecting from ozp bus...');
    $scope.iwcClient.disconnect();
    $scope.ozpBusInfo.connected = false;
@@ -33,9 +33,9 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
 
   $scope.refresh = function() {
     if ($scope.ozpBusInfo.connected) {
-      disconnectFromBus();
+      $scope.disconnectFromBus();
     }
-    connectToBus();
+    $scope.connectToBus();
     $scope.appListings = [];
     $scope.dashboardData = [];
     getApplications().then(function() {

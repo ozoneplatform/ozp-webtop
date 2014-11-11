@@ -62,6 +62,19 @@ body {
 //                        generic modal styles
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+// Fixes modal sizing issue with UI Bootstrap
+@media(min-width: @screen-sm-min){
+  .app-modal-window .modal-dialog {
+    width: @modal-md;
+  }
+}
+
+@media(min-width: @screen-md-min){
+    .app-modal-window .modal-dialog {
+    width: @modal-lg;
+  }
+}
+
 .wt-modal {
   background-color: @ozp-dk-gray1;
   color: @ozp-lt-gray2;

@@ -40,6 +40,7 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
     $scope.dashboardData = [];
     getApplications().then(function() {
       getDashboards().then(function() {
+        if(!$scope.$$phase) { $scope.$apply(); }
       });
     });
   };
@@ -137,6 +138,8 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
       });
   }
 
+  // assumes $scope.dashboardData has already been modified (happens during
+  // initial load and refresh)
   $scope.syncDashboardData = function() {
     return setData('data.api', dashboardDataResource, $scope.dashboardData);
   };
@@ -145,13 +148,9 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
     $http.get('dashboard-data.json').success(function(data) {
       console.log(data);
       setData('data.api', dashboardDataResource, data).then(function() {
-         $scope.syncDashboardData().then(function() {
-           $scope.refresh();
-         })
+        $scope.refresh();
       });
     });
-
-
   };
 
   // initialization

@@ -27,34 +27,20 @@ var chrome = angular.module('ozpWebtop.dashboardView.chrome');
  * @param dashboardApi dashboard data
  * @param dashboardChangeMonitor notify when active dashboard changes
  * @param dashboardStateChangedEvent event name
- * @param dashboardSwitchedEvent event name
  * @namespace dashboardView
  */
 chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
                                     dashboardChangeMonitor,
-                                    dashboardStateChangedEvent,
-                                    dashboardSwitchedEvent) {
+                                    dashboardStateChangedEvent) {
 
 
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
 
-    $scope.$on(dashboardSwitchedEvent, function(event, dashboardChange) {
-      handleDashboardChange(dashboardChange);
-    });
-
-    /**
-     * Handler invoked when active dashboard changes
-     * @method handleDashboardChange
-     * @param dashboardChange contains layout and dashboardId info
-     */
-    function handleDashboardChange(dashboardChange) {
-      // Determine if chrome is being used in the grid view
-      if (dashboardChange.layout === 'grid') {
-        $scope.isGrid = true;
-      } else {
-        $scope.isGrid = false;
-      }
+    if (dashboardChangeMonitor.layout === 'grid') {
+      $scope.isGrid = true;
+    } else {
+      $scope.isGrid = false;
     }
 
     /**

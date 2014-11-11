@@ -141,7 +141,9 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
   // assumes $scope.dashboardData has already been modified (happens during
   // initial load and refresh)
   $scope.syncDashboardData = function() {
-    return setData('data.api', dashboardDataResource, $scope.dashboardData);
+    return setData('data.api', dashboardDataResource, $scope.dashboardData).then(function() {
+      $scope.refresh();
+    });
   };
 
   $scope.reloadDashboardData = function() {

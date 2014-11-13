@@ -46,13 +46,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
   $scope.dashboards = [];
 
   /**
-   * @property themes Available themes for the application (e.g light,
-   * dark)
-   * @type {Array}
-   */
-  $scope.themes = ['light', 'dark'];
-
-  /**
    * @property validNamePattern Regex for valid dashboard names
    * @type {RegExp}
    */

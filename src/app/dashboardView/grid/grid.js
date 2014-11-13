@@ -31,6 +31,7 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @param {Object} $location the Angular location service
  * @param {Object} $interval the Angular interval service
  * @param {Object} $q the Angular q service
+ * @param {Object} $timeout the Angular timeout service
  * @param {Object} dashboardApi the API for dashboard information
  * @param {Object} marketplaceApi the API for marketplace application
  * information
@@ -44,17 +45,19 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @param {String} dashboardStateChangedEvent event name
  * @param {String} fullScreenModeToggleEvent event name
  * @param {String} gridFrameSizeChangeEvent event name
+ * @param {String} highlightFrameOnGridLayoutEvent event name
  */
 angular.module('ozpWebtop.dashboardView.grid')
 
 .controller('GridCtrl', function ($scope, $rootScope, $location,
-                                  $interval, $q, dashboardApi, marketplaceApi,
+                                  $interval, $q, $timeout, dashboardApi, marketplaceApi,
                                   dashboardChangeMonitor, userSettingsApi,
                                   windowSizeWatcher, deviceSizeChangedEvent,
                                   windowSizeChangedEvent,
                                   dashboardStateChangedEvent,
                                   fullScreenModeToggleEvent,
-                                  gridFrameSizeChangeEvent) {
+                                  gridFrameSizeChangeEvent,
+                                  highlightFrameOnGridLayoutEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -220,6 +223,31 @@ angular.module('ozpWebtop.dashboardView.grid')
     $scope.$on(fullScreenModeToggleEvent, function(event, data) {
       $scope.fullScreenMode = data.fullScreenMode;
     });
+
+    // an app's icon was clicked in the app toolbar. highlight (toggle
+    // highlighting for this frame and scroll page so it's visible
+    $scope.$on(highlightFrameOnGridLayoutEvent, function(event, data) {
+      for (var i=0; i < $scope.frames.length; i++) {
+        if ($scope.frames[i].id === data.frameId) {
+          if (!$scope.frames[i].highlighted) {
+            $scope.frames[i].highlighted = true;
+            // TODO: use of global variable instead of $window service (which
+            // didn't work on the scrollTop method), and modification of the
+            // DOM from a controller is naughty
+            var top = angular.element('#' + data.frameId).offset().top;
+            $(window).scrollTop(top - 70);
+            $timeout(removeFrameHighlight, 500);
+            $scope.frameIndexToUnhighlight = i;
+          } else {
+            $scope.frames[i].highlighted = false;
+          }
+        }
+      }
+    });
+
+   function removeFrameHighlight () {
+      $scope.frames[$scope.frameIndexToUnhighlight].highlighted = false;
+    }
 
     // TODO: Originally tried sending broadcast events from
     // dashboardChangeMonitor, but that did not work out - led to lots of

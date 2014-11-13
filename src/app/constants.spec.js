@@ -8,7 +8,7 @@ describe('constants', function () {
     dashboardStateChangedEvent, dashboardSwitchedEvent,
     userPreferencesUpdatedEvent,
     gridFrameSizeChangeEvent, launchUserPreferencesModalEvent,
-    fullScreenModeToggleEvent;
+    fullScreenModeToggleEvent, highlightFrameOnGridLayoutEvent;
 
   beforeEach(inject(function (_useIwc_, _iwcOzoneBus_, _deviceSizeChangedEvent_,
                               _windowSizeChangedEvent_,
@@ -17,7 +17,8 @@ describe('constants', function () {
                               _userPreferencesUpdatedEvent_,
                               _gridFrameSizeChangeEvent_,
                               _launchUserPreferencesModalEvent_,
-                              _fullScreenModeToggleEvent_
+                              _fullScreenModeToggleEvent_,
+                              _highlightFrameOnGridLayoutEvent_
     ) {
     useIwc = _useIwc_;
     iwcOzoneBus = _iwcOzoneBus_;
@@ -29,6 +30,7 @@ describe('constants', function () {
     gridFrameSizeChangeEvent = _gridFrameSizeChangeEvent_;
     launchUserPreferencesModalEvent = _launchUserPreferencesModalEvent_;
     fullScreenModeToggleEvent = _fullScreenModeToggleEvent_;
+    highlightFrameOnGridLayoutEvent = _highlightFrameOnGridLayoutEvent_;
 
   }));
 
@@ -67,7 +69,12 @@ describe('constants', function () {
   it('should define launchUserPreferencesModalEvent', function() {
     expect(launchUserPreferencesModalEvent).toBe('launchUserPreferencesModal');
   });
+
   it('should define fullScreenModeToggleEvent', function() {
     expect(fullScreenModeToggleEvent).toBe('fullScreenModeToggle');
+  });
+
+  it('should define highlightFrameOnGridLayoutEvent', function() {
+    expect(highlightFrameOnGridLayoutEvent).toBe('highlightFrameOnGridLayout');
   });
 });

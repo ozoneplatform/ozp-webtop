@@ -100,4 +100,12 @@ angular.module('ozpWebtop.constants')
  * @property fullScreenChangeEvent
  * @type String
  */
-.constant('fullScreenModeToggleEvent', 'fullScreenModeToggle');
+.constant('fullScreenModeToggleEvent', 'fullScreenModeToggle')
+
+
+/**
+ * Event fired when app icon is clicked in the app toolbar in grid layout
+ * @property highlightFrameOnGridLayoutEvent
+ * @type String
+ */
+.constant('highlightFrameOnGridLayoutEvent', 'highlightFrameOnGridLayout');

@@ -1,105 +1,67 @@
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-left">
+      <ul class="nav navbar-nav">
+        <li><a class="lrg" href="http://ozone-development.github.io/hud-ui"><i class="icon-home"></i></a></li>
+        <li><a class="lrg" href="http://ozone-development.github.io/center-ui"><i class="icon-shopping"></i></a></li>
+        <li class="active"><a class="lrg" href="http://ozone-development.github.io/ozp-webtop/#/grid"><i class="icon-layout"></i></a></li>
+      </ul>
+    </div>
 
-  <nav class="navbar navbar-default navbar-inverse ozp-toolbar
-    no-rounded-corners navbar-fixed-top" role="navigation"
-       ng-class="{true: 'hide', false: ''}[fullScreenMode]">
-    <div class="container-fluid" >
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-
-      </div>
-
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
-           style="padding-left: 15px;">
-        <ul class="nav navbar-nav">
-          <!-- stuff on the left side of the nav bar -->
-          <li class="dropdown">
-              <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown"
-                  id="main-menu-dropdown">
-                <i class="fa fa-list fa-lg"></i>
+    <div class="navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-bell-filled"></i></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">
+                <button type="button" class="close pull-right"><span aria-hidden="true">�</span></button>
+                <img class="img-thumbnail pull-left" src="https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot32.png" />
+                <span>Writing down for maintenance</span><br /><i class="small">12/12/12 00:00</i>
               </a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="main-menu-dropdown">
-                <li>
-                  <a ng-click="gotToAppLibrary()" class="link-pointer">
-                    <i class="fa fa-th">&nbsp&nbsp</i>App Library</a>
-                </li>
-                <li>
-                  <a ng-click="goToAppBuilder()" class="link-pointer">
-                    <i class="fa fa-wrench">&nbsp&nbsp</i>App Builder
-                  </a>
-                </li>
-                <li>
-                  <a href="http://ozone-development.github.io/hud-ui/index.html"
-                     class="link-pointer">
-                    <i class="fa fa-home">&nbsp&nbsp</i>HUD
-                  </a>
-                </li>
-                <li>
-                  <a ng-click="submitListing()" class="link-pointer">
-                    <i class="fa fa-envelope-o">&nbsp&nbsp</i>Submit a Listing
-                  </a>
-                </li>
-                <li>
-                  <a ng-click="goToMetrics()" class="link-pointer">
-                    <i class="fa fa-bar-chart">&nbsp&nbsp</i>Metrics
-                  </a>
-                </li>
-                <li>
-                  <a ng-click="goToDeveloperResources()" class="link-pointer">
-                    <i class="fa fa-terminal">&nbsp&nbsp</i>Developer Resources
-                  </a>
-                </li>
-              </ul>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="#">
+                <button type="button" class="close"><span aria-hidden="true">�</span></button>
+                <img class="img-thumbnail pull-left" src="https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail32.png" />
+                <span>Airplanes down for maintenance</span><br /><i class="small">12/12/12 00:00</i>
+              </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="#">
+                <button type="button" class="close"><span aria-hidden="true">�</span></button>
+                <img class="img-thumbnail pull-left" src="https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox32.png" />
+                <span>Chat down for maintenance</span><br /><i class="small">12/12/12 00:00</i>
+              </a>
             </li>
           </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <span ng-show="!messages.unread" class="fa-stack fa-1x no-notifications-icon"
-                  tooltip="No new messages" tooltip-placement="bottom">
-                <i class="fa fa-bell-slash fa-lg"></i>
-              </span>
-            <div class="stacked-icons notification-icon">
-              <span ng-show="messages.unread" class="fa-stack fa-lg">
-                <i class="fa fa-bell fa-lg fa-inverse"></i>
-                <strong class="fa-stack-1x notification-text">{{messages.unread}}</strong>
-              </span>
-            </div>
-            <!--<a href="#"><i class="fa fa-bell-o fa-lg"></i></a>-->
-            <!--<a href="#"><span class="badge">{{messages.unread}}</span></a>-->
-          </li>
-          <li class="divider-vertical"></li>
-          <li>
-            <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-user fa-lg">&nbsp</i>{{user | limitTo : usernameLength}} <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li>
-                  <a ng-click="launchPreferences()" class="link-pointer">
-                    <i class="fa fa-cogs fa-fw menu-icon"></i>Preferences
-                  </a>
-                </li>
-                <li>
-                  <a ng-click="helpUser()" class="link-pointer">
-                    <i class="fa fa-question-circle fa-fw menu-icon"></i>Help
-                  </a>
-                </li>
-                <li>
-                  <a href="http://ozone-development.github.io/hud-ui/logout.html" class="link-pointer">
-                    <i class="fa fa-sign-out fa-fw menu-icon"></i>Logout
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
+        </li>
+        <li>
+          <a ng-click="helpUser()" data-toggle="modal" data-target="#modal_help"><i class="icon-question"></i></a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="lrg dropdown-toggle" data-toggle="dropdown"><i class="icon-menu"></i></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">Personalize</li>
+            <li><a href="#"><i class="icon-ribbon"></i>Bookmarks</a></li>
+            <li><a href="#"><i class="icon-head"></i>Profile</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#modal_settings"><i class="icon-cog"></i>Settings</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Create</li>
+            <li><a href="#"><i class="icon-wrench"></i>Build a Dashboard</a></li>
+            <li><a href="#"><i class="icon-square-plus"></i>Submit a Listing</a></li>
+            <li><a href="#"><i class="icon-cloud"></i>Developer Resources</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Manage</li>
+            <li><a href="#"><i class="icon-layers"></i>Listing Management</a></li>
+            <li><a href="#"><i class="icon-shopping-settings"></i>Marketplace Settings</a></li>
+            <li><a href="#"><i class="icon-bar-graph-2"></i>Metrics</a></li>
+            <li><a class="caboose" href="#"><i class="icon-arrow-right"></i>Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

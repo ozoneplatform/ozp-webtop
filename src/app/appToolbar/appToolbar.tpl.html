@@ -37,7 +37,8 @@
             <a ng-click="useGridLayout()" href="#/grid/{{currentDashboard.id}}"
                ng-class="{navLinkSelected: layout == 'grid'}"
                 tooltip="Grid layout" tooltip-placement="top">
-              <i ng-class="{iconWhite: layout == 'grid'}" class="fa fa-th fa-lg"></i>
+              <i class="fa fa-th fa-lg"></i>
+              <div ng-class="layout === 'desktop'? 'layout-icon-inactive' : 'layout-icon-active'">&nbsp</div>
             </a>
           </li>
           <li class="divider-vertical"></li>
@@ -45,14 +46,15 @@
             <a ng-click="useDesktopLayout()" href="#/desktop/{{currentDashboard.id}}"
                ng-class="{navLinkSelected: layout == 'desktop'}" tooltip="Desktop layout"
                 tooltip-placement="top">
-              <i ng-class="{iconWhite: layout == 'desktop'}" class="fa fa-clipboard fa-lg"></i>
+              <i class="fa fa-clipboard fa-lg"></i>
+              <div ng-class="layout === 'grid'? 'layout-icon-inactive' : 'layout-icon-active'">&nbsp</div>
             </a>
           </li>
           <li class="divider-vertical"></li>
           <!-- stuff on the left side of the nav bar -->
           <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)"
               >
-            <a tooltip="{{app.name | limitTo : 15}}" style="padding-right: 0px; padding-left: 15px; padding-bottom: 0px;">
+            <a tooltip="{{app.name | limitTo : 15}}" style="padding-right: 0px; margin-left: 15px; padding-left: 0px; padding-bottom: 0px;">
               <img class="chrome-icon app-toolbar-img"
                    ng-src="{{app.icon.large}}"/>
               <div ng-class="app.isMinimized && layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div>
@@ -72,8 +74,7 @@
             </a>
           </li>
           <li class="hideToolbarButton link-pointer" tooltip="Enter Full Screen"
-              tooltip-placement="top"
-              style="width: 25px; float: right; margin-right: 5px; margin-left: 10px; padding-left: 0px; ">
+              tooltip-placement="top">
             <a ng-click="toggleFullScreenMode();">
               <i class="fa fa-expand fa-lg"></i>
             </a>

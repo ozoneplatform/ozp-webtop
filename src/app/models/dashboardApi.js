@@ -441,52 +441,6 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
       }
     },
     /**
-     * Updates the dynamically generated fields for grid frame size in px
-     * @method updateFrameSizeOnGrid
-     * @param frameId
-     * @param size
-     * @param width
-     * @param height
-     * @returns {Promise}
-     */
-    updateFrameSizeOnGrid: function(frameId, size, width, height) {
-      // TODO: may need to adjust this someday
-      if (size === 'lg') {
-        size = 'md';
-      }
-      var that = this;
-      return this.getFrameById(frameId).then(function(frame) {
-        frame.gridLayout[size].width = width;
-        frame.gridLayout[size].height = height;
-        return that.saveFrame(frame).then(function(response) {
-          return response;
-        }).catch(function(error) {
-          console.log('should not have happened: ' + error);
-        });
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    },
-    /**
-     * Return the frame size (in px) for a given frame in the grid layout
-     * Note that these values are dynamically generated
-     * @method getFrameSizeOnGrid
-     * @param frameId
-     * @returns {Promise}
-     */
-    getFrameSizeOnGrid: function(frameId) {
-      return this.getFrameById(frameId).then(function(frame) {
-        var widgetSize = {'sm': {}, 'md': {}};
-        widgetSize.sm.width = frame.gridLayout.sm.width;
-        widgetSize.sm.height = frame.gridLayout.sm.height;
-        widgetSize.md.width = frame.gridLayout.md.width;
-        widgetSize.md.height = frame.gridLayout.md.height;
-        return widgetSize;
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    },
-    /**
      * Save a dashboard
      * TODO: make sure input is a valid dashboard:
      * - dashboard.id should be unique

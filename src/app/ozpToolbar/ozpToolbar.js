@@ -118,42 +118,8 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       }
     }
 
-    // TODO: these might go away
-
-    $scope.launchPreferences = function() {
-      alert('Launch Preferences functionality coming soon!');
-    };
-
     $scope.helpUser = function() {
       alert('Help functionality coming soon!');
-    };
-
-    $scope.logOutUser = function() {
-      alert('Logout functionality coming soon!');
-    };
-
-    $scope.gotToAppLibrary = function() {
-      alert('Go to App Library not yet implemented');
-    };
-
-    $scope.goToAppBuilder = function() {
-      alert('Go to App Builder not yet implemented');
-    };
-
-    $scope.gotToHud = function() {
-      alert('Go to HUD not yet implemented');
-    };
-
-    $scope.submitListing = function() {
-      alert('Go to Submit Listing not yet implemented');
-    };
-
-    $scope.goToMetrics = function() {
-      alert('Go to Metrics not yet implemented');
-    };
-
-    $scope.goToDeveloperResources = function() {
-      alert('Go to Developer Resources not yet implemented');
     };
   }
 );

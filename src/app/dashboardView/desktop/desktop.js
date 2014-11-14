@@ -246,7 +246,6 @@ angular.module('ozpWebtop.dashboardView.desktop')
         }
       }
 
-      // $scope.activeFrames = $scope.currentDashboard.frames;
       $rootScope.$broadcast(dashboardStateChangedEvent);
     }
 

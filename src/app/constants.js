@@ -79,14 +79,6 @@ angular.module('ozpWebtop.constants')
 .constant('userPreferencesUpdatedEvent', 'userPreferencesUpdated')
 
 /**
- * Event fired when a frame on the grid layout changes size
- *
- * @property gridFrameSizeChangeEvent
- * @type String
- */
-.constant('gridFrameSizeChangeEvent', 'gridFrameSizeChange')
-
-/**
  * Event fired to indicate that the user preferences modal dialog should be
  * displayed
  *

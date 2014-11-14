@@ -44,7 +44,6 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @param {String} windowSizeChangedEvent event name
  * @param {String} dashboardStateChangedEvent event name
  * @param {String} fullScreenModeToggleEvent event name
- * @param {String} gridFrameSizeChangeEvent event name
  * @param {String} highlightFrameOnGridLayoutEvent event name
  */
 angular.module('ozpWebtop.dashboardView.grid')
@@ -56,7 +55,6 @@ angular.module('ozpWebtop.dashboardView.grid')
                                   windowSizeChangedEvent,
                                   dashboardStateChangedEvent,
                                   fullScreenModeToggleEvent,
-                                  gridFrameSizeChangeEvent,
                                   highlightFrameOnGridLayoutEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,12 +84,6 @@ angular.module('ozpWebtop.dashboardView.grid')
      * @type {boolean}
      */
     $scope.fullScreenMode = false;
-
-    /**
-     * @property activeFrames TODO clean this up
-     * @type {Array}
-     */
-    $scope.activeFrames = [];
 
     /**
      * @property dashboard Current dashboard
@@ -282,21 +274,6 @@ angular.module('ozpWebtop.dashboardView.grid')
       console.debug(uiWidget);
       // TODO will probably need a workaround for ie9
       (uiWidget.element).css('pointer-events','none');
-      var frameId = uiWidget.element.context.id;
-      for (var i=0; i < $scope.frames.length; i++) {
-        if ($scope.frames[i].id === frameId) {
-          // trying to do something smarter here didn't work out well - be
-          // sure to perform ample testing if these values are changed
-          $scope.frames[i].gridLayout.width = 100;
-          $scope.frames[i].gridLayout.height = 100;
-
-          $rootScope.$broadcast(gridFrameSizeChangeEvent, {
-            'frameId': frameId,
-            'height': 100,
-            'width': 100
-          });
-        }
-      }
     }
 
     /**
@@ -403,15 +380,10 @@ angular.module('ozpWebtop.dashboardView.grid')
             // push that frame to the local scope. since the changes are
             // automatically bound with the view, no refresh required
             $scope.frames.push(frame);
-            // update the frame size so it fits inside its little widget
-            // boundary
-            return $scope.updateDashboardFramePx(frame.id).then(function(resp) {
-              // now merge my local scope for frames with the
-              // marketplace api to get important stuff on local scope
-              // like url, image, name, etc
-              dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
-              return resp;
-            });
+            // now merge my local scope for frames with the
+            // marketplace api to get important stuff on local scope
+            // like url, image, name, etc
+            dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
           };
 
           // add the frames
@@ -432,47 +404,6 @@ angular.module('ozpWebtop.dashboardView.grid')
     }
 
     /**
-     *
-     * Calculates the size of a frame, saves it, and sends a
-     * gridFrameSizeChangeEvent event
-     *
-     * @method updateDashboardFramePx
-     * @param {String} frameId Id of the frame to update
-     * @returns {Promise} fulfilled with boolean true if frame was updated
-     *                    successfully
-     */
-    $scope.updateDashboardFramePx = function(frameId) {
-      // the dimensions reported by uiWidget are wrong - use custom function
-      // to calculate new size (pixels)
-      var widgetSize = $scope.updateLocalGridFrameSize(frameId);
-      // save the changes
-      if (!$scope.deviceSize) {
-        console.log('WARNING: device size is undefined, setting to sm as ' +
-          'default');
-        $scope.deviceSize = 'sm';
-      }
-      return dashboardApi.updateFrameSizeOnGrid(widgetSize.id,
-        $scope.deviceSize, widgetSize.width,
-        widgetSize.height).then(function(update) {
-          if (!update) {
-            console.log('Error updating framesize on grid');
-          }
-
-          $rootScope.$broadcast(gridFrameSizeChangeEvent, {
-            'frameId': widgetSize.id,
-            'height': widgetSize.height,
-            'width': widgetSize.width
-          });
-
-          // TODO: clean this up
-          $rootScope.activeFrames = $scope.frames;
-
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    };
-
-    /**
      * Reloads the current dashboard
      *
      * @method reloadDashboard
@@ -488,7 +419,6 @@ angular.module('ozpWebtop.dashboardView.grid')
         deferred.reject(false);
         return deferred.promise;
       }
-      console.log('invoking $scope.reloadDashboard');
       // Get the dashboard
       $scope.dashboardId = dashboardChangeMonitor.dashboardId;
       return dashboardApi.getDashboardById($scope.dashboardId).then(function (dashboard) {
@@ -503,20 +433,6 @@ angular.module('ozpWebtop.dashboardView.grid')
         // Merge application data (app name, icons, descriptions, url, etc)
         // with dashboard app data
         dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
-
-        // calculate the size (in px) for each frame and send an update message
-        $scope.frames.reduce(function (previous, current) {
-          return previous.then(function () {
-            var promise = $scope.updateDashboardFramePx(current.id);
-            return promise;
-          }).catch(function (error) {
-            console.log('should not have happened: ' + error);
-          });
-        }, Promise.resolve()).then(function () {
-            // reloadDashboard completed
-        });
-      }).catch(function (error) {
-        console.log('should not have happened: ' + error);
       });
     };
 
@@ -534,7 +450,6 @@ angular.module('ozpWebtop.dashboardView.grid')
             console.log('ERROR: could not update grid frame');
             return;
           }
-          return $scope.updateDashboardFramePx(frameId);
         }).catch(function(error) {
           console.log('should not have happened: ' + error);
         });
@@ -557,67 +472,4 @@ angular.module('ozpWebtop.dashboardView.grid')
         // finished updating all frames
       });
     };
-
-    /**
-     * Calculates the size in pixels for a given frame
-     * Necessary because the built-in angular-gridster method that calculates a
-     * grid tile's size after resizing does not yield the correct results.
-     *
-     * Notes:
-     * - hard-coded value of gridster container padding
-     * - accesses $scope.gridOptions
-     *
-     * @method calculateGridFrameSize
-     * @param {Object} frame The frame for which to calculate size
-     * @returns {Object} height and width
-     */
-    $scope.calculateGridFrameSize = function(frame) {
-      // determine container properties
-
-      // padding on left and right sides of container
-      var gridsterContainerPadding = 15;
-      var cols = $scope.gridOptions.columns;
-      var windowWidth = window.innerWidth;
-      var colMargin = $scope.gridOptions.margins[0];
-      var totalWorkingWidth = windowWidth - 2*gridsterContainerPadding -
-        (cols-1)*colMargin;
-      var baseWidgetWidth = totalWorkingWidth/cols;
-      // assume row margins and height are same as for columns
-      var baseWidgetHeight = baseWidgetWidth;
-
-      // now take the frame into account
-      var sizeX = frame.gridLayout[$scope.deviceSize].sizeX;
-      var sizeY = frame.gridLayout[$scope.deviceSize].sizeY;
-      var widgetWidth = baseWidgetWidth * sizeX + (colMargin*(sizeX-1));
-      // Make small adjustment to width
-      widgetWidth -= 2*sizeX;
-      var widgetHeight = baseWidgetHeight * sizeY + (colMargin*(sizeY-1));
-      return {
-        'height': widgetHeight,
-        'width': widgetWidth
-      };
-    };
-
-    /**
-     * Update the widget's pixel size on the grid (this update is local, the
-     * data is not persisted to the dashboard api)
-     *
-     * @method updateLocalGridFrameSize
-     * @param {String} frameId The id of the frame for which to update size
-     * @returns {Object} widget size (height and width) and the frame id
-     */
-    $scope.updateLocalGridFrameSize = function(frameId) {
-      for (var i = 0; i < $scope.frames.length; i++) {
-        if ($scope.frames[i].id === frameId) {
-          var widgetSize = $scope.calculateGridFrameSize($scope.frames[i]);
-          widgetSize.width -= 10;   // for good measure
-          widgetSize.height -= 30;  // minus height of chrome
-          widgetSize.id = frameId;
-          $scope.frames[i].gridLayout.width = widgetSize.width;
-          $scope.frames[i].gridLayout.height = widgetSize.height;
-          return widgetSize;
-        }
-      }
-    };
-
 });

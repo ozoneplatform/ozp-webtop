@@ -158,46 +158,6 @@ describe('Service: dashboardApi', function () {
     if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
-  // Get the size of a frame on grid layout (in pixels)
-  it('should have a getFrameSizeOnGrid method', function(done) {
-    dashboardApi.getDashboardById(0).then(function(dashboard) {
-      var frame = dashboard.frames[0];
-      dashboardApi.getFrameSizeOnGrid(frame.id).then(function(frameSize) {
-        // Since these values are dynamically generated, they will be undefined
-        // at first
-        expect(frameSize.sm.width).not.toBeDefined();
-        expect(frameSize.sm.height).not.toBeDefined();
-        expect(frameSize.md.width).not.toBeDefined();
-        expect(frameSize.md.height).not.toBeDefined();
-
-        frame.gridLayout.sm.width = 80;
-        frame.gridLayout.sm.height = 80;
-        frame.gridLayout.md.width = 120;
-        frame.gridLayout.md.height = 120;
-        dashboardApi.saveFrame(frame).then(function(response) {
-          expect(response).toEqual(true);
-          dashboardApi.getFrameSizeOnGrid(frame.id).then(function(frameSize) {
-            expect(frameSize.sm.width).toBeDefined();
-            expect(frameSize.sm.height).toBeDefined();
-            expect(frameSize.md.width).toBeDefined();
-            expect(frameSize.md.height).toBeDefined();
-            done();
-          }).catch(function(error) {
-            expect(error).toEqual('should not have happened');
-          });
-        }).catch(function(error) {
-          expect(error).toEqual('should not have happened');
-        });
-      }).catch(function(error) {
-        expect(error).toEqual('should not have happened');
-      });
-    }).catch(function(error) {
-      expect(error).toEqual('should not have happened');
-    });
-
-    if(!rootScope.$$phase) { rootScope.$apply(); }
-  });
-
   // Get the name of the current dashboard
   it('should have a getCurrentDashboardName method', function(done) {
     dashboardApi.getDashboardData().then(function(dashboardData) {
@@ -414,31 +374,6 @@ describe('Service: dashboardApi', function () {
         expect(error).toEqual('should not have happened');
       });
     }).catch(function (error) {
-      expect(error).toEqual('should not have happened');
-    });
-
-    if(!rootScope.$$phase) { rootScope.$apply(); }
-  });
-
-  // update the frame size (in pixels) on grid layout
-  it('should have a updateFrameSizeOnGrid method', function(done) {
-    dashboardApi.getDashboardById(0).then(function(dashboard) {
-      var frame = dashboard.frames[0];
-      var width = 120, height = 240;
-      var size = 'md';
-      dashboardApi.updateFrameSizeOnGrid(frame.id, size, width, height).then(function(update) {
-        expect(update).toEqual(true);
-        dashboardApi.getFrameById(frame.id).then(function(frame) {
-          expect(frame.gridLayout.md.width).toEqual(width);
-          expect(frame.gridLayout.md.height).toEqual(height);
-          done();
-        }).catch(function(error) {
-          expect(error).toEqual('should not have happened');
-        });
-      }).catch(function(error) {
-        expect(error).toEqual('should not have happened');
-      });
-    }).catch(function(error) {
       expect(error).toEqual('should not have happened');
     });
 

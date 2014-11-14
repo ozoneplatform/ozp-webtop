@@ -7,7 +7,7 @@ describe('constants', function () {
   var useIwc, iwcOzoneBus, deviceSizeChangedEvent, windowSizeChangedEvent,
     dashboardStateChangedEvent, dashboardSwitchedEvent,
     userPreferencesUpdatedEvent,
-    gridFrameSizeChangeEvent, launchUserPreferencesModalEvent,
+    launchUserPreferencesModalEvent,
     fullScreenModeToggleEvent, highlightFrameOnGridLayoutEvent;
 
   beforeEach(inject(function (_useIwc_, _iwcOzoneBus_, _deviceSizeChangedEvent_,
@@ -15,7 +15,6 @@ describe('constants', function () {
                               _dashboardStateChangedEvent_,
                               _dashboardSwitchedEvent_,
                               _userPreferencesUpdatedEvent_,
-                              _gridFrameSizeChangeEvent_,
                               _launchUserPreferencesModalEvent_,
                               _fullScreenModeToggleEvent_,
                               _highlightFrameOnGridLayoutEvent_
@@ -27,7 +26,6 @@ describe('constants', function () {
     dashboardStateChangedEvent = _dashboardStateChangedEvent_;
     dashboardSwitchedEvent = _dashboardSwitchedEvent_;
     userPreferencesUpdatedEvent = _userPreferencesUpdatedEvent_;
-    gridFrameSizeChangeEvent = _gridFrameSizeChangeEvent_;
     launchUserPreferencesModalEvent = _launchUserPreferencesModalEvent_;
     fullScreenModeToggleEvent = _fullScreenModeToggleEvent_;
     highlightFrameOnGridLayoutEvent = _highlightFrameOnGridLayoutEvent_;
@@ -60,10 +58,6 @@ describe('constants', function () {
 
   it('should define userPreferencesUpdatedEvent', function() {
     expect(userPreferencesUpdatedEvent).toBe('userPreferencesUpdated');
-  });
-
-  it('should define gridFrameSizeChangeEvent', function() {
-    expect(gridFrameSizeChangeEvent).toBe('gridFrameSizeChange');
   });
 
   it('should define launchUserPreferencesModalEvent', function() {

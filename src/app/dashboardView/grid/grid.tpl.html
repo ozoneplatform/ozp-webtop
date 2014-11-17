@@ -6,7 +6,7 @@
           ng-repeat="frame in frames" id="{{frame.id}}"
           class="ozp-managed-frame">
         <ozp-chrome></ozp-chrome>
-        <iframe class="managed-iframe"
+        <iframe class="iframe-grid"
                 ng-class="{frameHighlighted: frame.highlighted}"
                 ng-src="{{frame.trustedUrl}}" frameBorder="0">
         </iframe>

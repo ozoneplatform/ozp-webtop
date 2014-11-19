@@ -591,6 +591,7 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           var newBoard = {
             'name': name,
             'id': dashboardId,
+            'stickyIndex': -1,
             'layout': 'grid',
             'frames': [
             ]
@@ -659,6 +660,7 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           {
             'name': 'Sample Apps',
             'id': '0',
+            'stickyIndex': 0,
             'layout': 'grid',
             'frames': [
               {
@@ -916,6 +918,7 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           {
             'name': 'Stock Trader',
             'id': '1',
+            'stickyIndex': 1,
             'layout': 'grid',
             'frames': [
               {
@@ -998,6 +1001,7 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           {
             'name': 'Beta Mission',
             'id': '2',
+            'stickyIndex': 2,
             'layout': 'desktop',
             'frames': [
               {
@@ -1030,6 +1034,7 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           {
             'name': 'Bouncing Balls',
             'id': '3',
+            'stickyIndex': -1,
             'layout': 'grid',
             'frames': [
               {

@@ -70,7 +70,7 @@ function generalMarketplacedModel(persistStrategy) {
 
             ],
             'launchUrls': {
-              'default': 'http://ozone-development.github.io/ozp-demo/centerSampleListings/airMail/index.html',
+              'default': 'http://ozone-development.github.io/ozp-demo/frameit/index.html',
               'test': ''
 
             },

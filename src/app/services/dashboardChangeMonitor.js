@@ -45,20 +45,20 @@ angular.module('ozpWebtop.services.dashboardChangeMonitor').factory(
         return $location.path();
       }, function() {
         var dashboardChange = {};
-
         // get dashboard id
         var urlPath = $location.path();
-        var pattern = new RegExp('/(?:grid|desktop)/([0-9]+)');
-        var res = pattern.exec(urlPath);
-        if (res) {
-          newDashboardId = res[1];
-        } else {
-          // if the url regex doesn't match, this page must be something else
+        // make sure we're on a valid page
+        // TODO: this is far from bulletproof
+        if (urlPath.indexOf('grid') === -1 && urlPath.indexOf('desktop') === -1) {
           return;
         }
+        var n = urlPath.lastIndexOf('/');
+        // TODO: this will break if we have a query string, trailing slash, or
+        // pretty much anything else
+        newDashboardId = urlPath.substr(n+1);
 
         // get the dashboard layout
-        var n = $location.path().indexOf('grid');
+        n = $location.path().indexOf('grid');
         if (n !== -1) {
           newLayout = 'grid';
         } else {

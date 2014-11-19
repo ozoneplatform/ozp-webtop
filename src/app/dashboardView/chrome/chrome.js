@@ -37,6 +37,9 @@ chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
     // register to receive notifications if dashboard changes
     dashboardChangeMonitor.run();
 
+    $scope.dashboardId = dashboardChangeMonitor.dashboardId;
+    $scope.layout = dashboardChangeMonitor.layout;
+
     if (dashboardChangeMonitor.layout === 'grid') {
       $scope.isGrid = true;
     } else {
@@ -52,7 +55,8 @@ chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
      */
     $scope.isDisabled = function(e){
       dashboardApi.removeFrame(e.id).then(function() {
-        $rootScope.$broadcast(dashboardStateChangedEvent);
+        $rootScope.$broadcast(dashboardStateChangedEvent, {
+          'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
@@ -66,7 +70,8 @@ chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
      */
     $scope.minimizeFrame = function(e){
       dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function() {
-        $rootScope.$broadcast(dashboardStateChangedEvent);
+        $rootScope.$broadcast(dashboardStateChangedEvent, {
+          'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
@@ -80,7 +85,8 @@ chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
      */
     $scope.maximizeFrame = function(e){
       dashboardApi.toggleFrameKey(e.id, 'isMaximized').then(function() {
-        $rootScope.$broadcast(dashboardStateChangedEvent);
+        $rootScope.$broadcast(dashboardStateChangedEvent, {
+          'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });

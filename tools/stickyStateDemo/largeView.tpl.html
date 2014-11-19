@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-12">
+    <h4>Large View content for view {{viewId}}</h4>
+    <iframe ng-src="{{iframeUrl}}" id="iframe"></iframe>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-7">
+    <input type="text" class="form-control" placeholder="url" ng-model="data.url" id="url-input"
+        ng-keyup="handleKeyup($event)">
+  </div>
+</div>

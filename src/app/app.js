@@ -29,10 +29,12 @@
  * @requires ozpWebtop.dashboardView.desktop
  * @requires ozpWebtop.dashboardView.desktop.managedFrame
  * @requires ozpWebtop.dashboardView.desktop.iframe
+ * * @requires ozpWebtop.dashboardView
  * @requires ozpWebtop.dashboardView.grid
  * @requires ozpWebtop.userSettings
  * @requires ozpWebtop.addApplicationsModal
  * @requires ui.router
+ * @requires ct.ui.router.extras
  * @requires ui.bootstrap
  * @requires gridster
  * @requires ozpIwcClient
@@ -62,40 +64,83 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView.desktop',
   'ozpWebtop.dashboardView.desktop.managedFrame',
   'ozpWebtop.dashboardView.desktop.iframe',
+  'ozpWebtop.dashboardView',
   'ozpWebtop.dashboardView.grid',
   'ozpWebtop.userSettings',
   'ozpWebtop.addApplicationsModal',
   'ui.router',
+  'ct.ui.router.extras',
   'ui.bootstrap',
   'gridster',
   'ozpIwcClient',
   'ozpClassification'
 ])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,
+                 maxStickyBoards) {
 
-    $stateProvider
-    .state('grid', {
-      url: '/grid/{dashboardId}',
-      templateUrl: 'dashboardView/grid/grid.tpl.html',
-      controller: 'GridCtrl'
-    })
-    .state('desktop', {
-      url: '/desktop/{dashboardId}',
-      templateUrl: 'dashboardView/desktop/desktop.tpl.html',
-      controller: 'DesktopCtrl'
-    })
-    .state('launchApp', {
-      url: '/launch/{appId}',
-      controller: 'AppLauncherCtrl'
+    var states = [];
+
+    states.push({name: 'dashboardview', url: '/',
+      views: {
+        '@': {controller: 'DashboardViewCtrl',
+          templateUrl: 'dashboardView/dashboardView.tpl.html'}
+    }});
+
+    // Nonstick views
+    states.push({name: 'dashboardview.grid-nonstick',
+                  url: 'grid/nonstick/:dashboardId',
+      views: {
+        'gridviewnonstick@dashboardview': {controller: 'GridCtrl',
+          templateUrl: 'dashboardView/grid/grid.tpl.html'}},
+      deepStateRedirect: false, sticky: false
     });
 
-    // TODO: will need a new default when grid ids are changed to uuids
-    $urlRouterProvider.otherwise('/grid/0');
+    states.push({name: 'dashboardview.desktop-nonstick',
+      url: 'desktop/nonstick/:dashboardId',
+      views: {
+        'desktopviewnonstick@dashboardview': {controller: 'DesktopCtrl',
+          templateUrl: 'dashboardView/desktop/desktop.tpl.html'}},
+      deepStateRedirect: false, sticky: false
+    });
+
+    // Sticky views
+    for (var slot=0; slot < maxStickyBoards; slot++) {
+      var gridViewName = 'gridlayout-' + slot + '@dashboardview';
+      var desktopViewName = 'desktoplayout-' + slot + '@dashboardview';
+      var gridState = {
+        name: 'dashboardview.grid-sticky-' + slot,
+        url: 'grid/sticky-' + slot + '/:dashboardId',
+        views: {},
+        deepStateRedirect: true,
+        sticky: true
+      };
+      gridState.views[gridViewName] = {controller: 'GridCtrl',
+        templateUrl: 'dashboardView/grid/grid.tpl.html'};
+
+      states.push(gridState);
+
+      var desktopState = {
+        name: 'dashboardview.desktop-sticky-' + slot,
+        url: 'desktop/sticky-' + slot + '/:dashboardId',
+        views: {},
+        deepStateRedirect: true,
+        sticky: true
+      };
+      desktopState.views[desktopViewName] = {controller: 'DesktopCtrl',
+        templateUrl: 'dashboardView/desktop/desktop.tpl.html'};
+
+      states.push(desktopState);
+    }
+
+    angular.forEach(states, function(state) { $stateProvider.state(state); });
+    $urlRouterProvider.otherwise('/');
   })
 
-.run( function run ($rootScope, dashboardApi, marketplaceApi, userSettingsApi,
-                    useIwc) {
+.run( function run ($rootScope, $state, dashboardApi, marketplaceApi,
+                    userSettingsApi, useIwc) {
+
+    $rootScope.$state = $state;
 
     // if using LocalStorage, generate sample data up front
     if (!useIwc) {

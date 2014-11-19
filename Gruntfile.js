@@ -513,6 +513,15 @@ module.exports = function ( grunt ) {
           base: ['tools/ozpDataUtility', '.'],
           keepalive: true
         }
+      },
+      // sticky state demo
+      stickyStateDemo: {
+        options: {
+          port: 9601,
+          hostame: 'localhost',
+          base: ['tools/stickyStateDemo', '.'],
+          keepalive: true
+        }
       }
     },
 

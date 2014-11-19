@@ -26,10 +26,11 @@ angular.module('ozpWebtop.userSettings', ['ozpWebtop.models.dashboard',
  * @param dashboardApi Dashboard API
  * @param userSettingsApi User Settings API
  * @param userPreferencesUpdatedEvent event name
+ * @param maxStickyBoards number of sticky slots available
  */
 var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
                                   dashboardApi, userSettingsApi,
-                                  userPreferencesUpdatedEvent) {
+                                  userPreferencesUpdatedEvent, maxStickyBoards) {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                            $scope properties
@@ -73,6 +74,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
    */
   $scope.addingNewBoard = false;
 
+  // [{'dashboardId': '0', 'stickyIndex': 1}, ...]
+  var preferredStickyIndexes = [];
+
+  var freeStickySlots = 0;
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                           initialization
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -85,6 +91,17 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
 
   dashboardApi.getDashboards().then(function(dashboards) {
     $scope.dashboards = dashboards;
+    preferredStickyIndexes = [];
+    for (var i=0; i < dashboards.length; i++) {
+      if (dashboards[i].stickyIndex > -1) {
+        preferredStickyIndexes.push({'dashboardId': dashboards[i].id,
+          'stickyIndex': dashboards[i].stickyIndex});
+        dashboards[i].sticky = true;
+      } else {
+        dashboards[i].sticky = false;
+      }
+    }
+    freeStickySlots = maxStickyBoards - preferredStickyIndexes.length;
   }).catch(function(error) {
     console.log('should not have happened: ' + error);
   });
@@ -119,6 +136,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
           console.log('should not have happened: ' + error);
         });
       } else {
+        dashboard.stickyIndex = scopeDashboard.stickyIndex;
         dashboard.name = scopeDashboard.name;
         return dashboardApi.saveDashboard(dashboard).then(function() {
           // dashboard saved
@@ -144,6 +162,35 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
    */
   $scope.ok = function () {
     // First, update any existing dashboard that may have changed
+    var freeStickySlots = [];
+    for (var z=0; z < maxStickyBoards; z++) {
+      freeStickySlots[z] = z;
+    }
+    // update sticky indexes for boards that were sticky before
+    var updatedBoardIds = [];
+    for (var n=0; n < $scope.dashboards.length; n++) {
+      var scopeDashboard = $scope.dashboards[n];
+      if (scopeDashboard.stickyIndex > -1 && scopeDashboard.sticky === true) {
+        for (var i = 0; i < preferredStickyIndexes.length; i++) {
+          if (preferredStickyIndexes[i].dashboardId === scopeDashboard.id) {
+            scopeDashboard.stickyIndex = preferredStickyIndexes[i].stickyIndex;
+            var idx = freeStickySlots.indexOf(preferredStickyIndexes[i].stickyIndex);
+            freeStickySlots.splice(idx, 1);
+            updatedBoardIds.push(scopeDashboard.id);
+          }
+        }
+      }
+    }
+
+    // update sticky indexes for boards that were unsticky before
+    freeStickySlots.sort();
+    var freeSlotIdx = 0;
+    for (var m=0; m < $scope.dashboards.length; m++) {
+      if ($scope.dashboards[m].sticky === true && updatedBoardIds.indexOf($scope.dashboards[m].id) < 0) {
+        $scope.dashboards[m].stickyIndex = freeStickySlots[freeSlotIdx];
+        freeSlotIdx++;
+      }
+    }
     $scope.dashboards.reduce(function(previous, current) {
       return previous.then(function() {
         var promise = $scope.updateExistingDashboard(current.id);
@@ -254,11 +301,28 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, currentDashboardId,
     $scope.addingNewBoard = false;
     $scope.newDashboardName.name = '';
   };
+
+  $scope.makeSticky = function(dashboard) {
+    if (freeStickySlots > 0) {
+      dashboard.sticky = true;
+      freeStickySlots--;
+    } else {
+      alert('Limit of sticky dashboards reached: ' + maxStickyBoards);
+      dashboard.sticky = false;
+    }
+  };
+
+  $scope.makeNonstick = function(dashboard) {
+    dashboard.sticky = false;
+    dashboard.stickyIndex = -1;
+    freeStickySlots++;
+  };
 };
 
 // Required to make minification-safe
 ModalInstanceCtrl.$inject = ['$scope', '$modalInstance', 'currentDashboardId',
-  'dashboardApi', 'userSettingsApi', 'userPreferencesUpdatedEvent'];
+  'dashboardApi', 'userSettingsApi', 'userPreferencesUpdatedEvent',
+  'maxStickyBoards'];
 
 /**
  * ng Directive for User Settings modal dialog
@@ -305,14 +369,32 @@ angular.module( 'ozpWebtop.userSettings').directive('userSettings', function(){
 
                 modalInstance.result.then(function () {
                     dashboardApi.getDashboardById($scope.currentDashboardId).then(function(dashboard) {
+                      // if this dashboard has been deleted, redirect user
                       if (!dashboard) {
                         // arbitrarily redirect user to their first valid board using grid layout
                         dashboardApi.getDashboards().then(function(dashboard) {
+                          // TODO: this is broken now (sticky state)
                           var goToBoard = dashboard[0].id;
-                          $state.go('grid', {'dashboardId': goToBoard});
+                          $state.go('dashboardview.grid-nonstick', {'dashboardId': goToBoard});
                         }).catch(function(error) {
                           console.log('should not have happened: ' + error);
                         });
+                      }
+                      // it's possible our stickySlot changed during the update
+                      // note that if this happens, existing state (internal to
+                      // widgets) will be reset
+                      if (dashboard.stickyIndex > -1) {
+                        if (dashboard.layout === 'grid') {
+                          $state.go('dashboardview.grid-sticky-' + dashboard.stickyIndex, {'dashboardId': dashboard.id});
+                        } else if (dashboard.layout === 'desktop') {
+                          $state.go('dashboardview.desktop-sticky-' + dashboard.stickyIndex, {'dashboardId': dashboard.id});
+                        }
+                      } else {
+                          if (dashboard.layout === 'grid') {
+                          $state.go('dashboardview.grid-nonstick', {'dashboardId': dashboard.id});
+                        } else if (dashboard.layout === 'desktop') {
+                          $state.go('dashboardview.desktop-nonstick', {'dashboardId': dashboard.id});
+                        }
                       }
                     }).catch(function(error) {
                       console.log('should not have happened: ' + error);

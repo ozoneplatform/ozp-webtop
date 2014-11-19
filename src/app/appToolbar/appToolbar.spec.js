@@ -55,19 +55,8 @@ describe('App Toolbar', function () {
 
   it('should expose a setCurrentDashboard method', function() {
     var dashboard = 'test dashboard foo';
-    scope.setCurrentDashboard(dashboard);
+    scope.loadDashboard(dashboard);
     expect(scope.currentDashboard).toBe(dashboard);
-  });
-
-  it('should expose a useGridLayout method', function() {
-    scope.useGridLayout();
-    scope.$apply();
-    expect(scope.layout).toBe('grid');
-  });
-
-  it('should expose a useDesktopLayout method', function() {
-    scope.useDesktopLayout();
-    expect(scope.layout).toBe('desktop');
   });
 
   it('should expose $scope.apps', function() {

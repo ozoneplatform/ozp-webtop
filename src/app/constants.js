@@ -32,6 +32,14 @@ angular.module('ozpWebtop.constants')
  */
 .constant('useIwc', true)
 
+/**
+ * Number of sticky dashboard slots (for each grid and desktop layouts)
+ *
+ * @property maxStickyBoards
+ * @type Integer
+ */
+.constant('maxStickyBoards', 3)
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                              Events
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

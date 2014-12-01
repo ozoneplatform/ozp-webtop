@@ -51,6 +51,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param fullScreenModeToggleEvent event name
  * @param launchUserPreferencesModalEvent event name
  * @param highlightFrameOnGridLayoutEvent event name
+ * @param maxStickyBoards number of available sticky slots for dashboards
  */
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
@@ -65,7 +66,8 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  fullScreenModeToggleEvent,
                                                  userPreferencesUpdatedEvent,
                                                  launchUserPreferencesModalEvent,
-                                                 highlightFrameOnGridLayoutEvent) {
+                                                 highlightFrameOnGridLayoutEvent,
+                                                 maxStickyBoards) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -312,28 +314,48 @@ angular.module( 'ozpWebtop.appToolbar')
     };
 
     /**
-     * Set the current dashboard
-     * @method setCurrentDashboard
-     * @param board Current dashboard
+     * Load a dashboard
+     * @method loadDashboard
+     * @param board Dashboard to load
      */
-    $scope.setCurrentDashboard = function(board) {
+    $scope.loadDashboard = function(board) {
       $scope.currentDashboard = board;
+      dashboardApi.getDashboardById(board.id).then(function(dashboard) {
+        var stickyIndex = dashboard.stickyIndex;
+      if (stickyIndex >= 0 && stickyIndex < maxStickyBoards) {
+        if ($scope.layout === 'grid') {
+          $state.go('dashboardview.grid-sticky-' + stickyIndex, {dashboardId: board.id});
+        } else if ($scope.layout === 'desktop') {
+          $state.go('dashboardview.desktop-sticky-' + stickyIndex, {dashboardId: board.id});
+        }
+      } else {
+        if ($scope.layout === 'grid') {
+          $state.go('dashboardview.grid-nonstick', {dashboardId: board.id});
+        } else if ($scope.layout === 'desktop') {
+          $state.go('dashboardview.desktop-nonstick', {dashboardId: board.id});
+        }
+      }
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
     };
 
     /**
      * Use a grid layout
      * @method useGridLayout
      */
-    $scope.useGridLayout = function() {
+    $scope.loadGridLayout = function() {
       $scope.layout = 'grid';
+      $scope.loadDashboard($scope.currentDashboard);
     };
 
     /**
      * Use a desktop layout
      * @method useDesktopLayout
      */
-    $scope.useDesktopLayout = function() {
+    $scope.loadDesktopLayout = function() {
       $scope.layout = 'desktop';
+      $scope.loadDashboard($scope.currentDashboard);
     };
 
     /**
@@ -397,7 +419,8 @@ angular.module( 'ozpWebtop.appToolbar')
        }
        else {
          dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function () {
-           $rootScope.$broadcast(dashboardStateChangedEvent);
+           $rootScope.$broadcast(dashboardStateChangedEvent, {
+             'dashboardId': $scope.currentDashboardId, 'layout': 'desktop'});
          }).catch(function (error) {
            console.log('should not have happened: ' + error);
          });
@@ -543,7 +566,7 @@ angular.module( 'ozpWebtop.appToolbar')
                 // all apps added to dashboard
                 $rootScope.$broadcast(userPreferencesUpdatedEvent);
                 // redirect user to new dashboard (grid view by default)
-                $state.go('grid', {'dashboardId': dashboardId});
+                $state.go('dashboardview.grid-nonstick', {'dashboardId': dashboardId});
               });
             });
           });
@@ -558,7 +581,9 @@ angular.module( 'ozpWebtop.appToolbar')
             });
           }, Promise.resolve()).then(function () {
               // all apps added to dashboard
-            $rootScope.$broadcast(dashboardStateChangedEvent);
+            $rootScope.$broadcast(dashboardStateChangedEvent, {
+              'dashboardId': $scope.currentDashboardId,
+              'layout': $scope.layout});
           });
         }
 

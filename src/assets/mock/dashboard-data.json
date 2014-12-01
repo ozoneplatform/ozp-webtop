@@ -361,8 +361,8 @@
     {
       "name": "Beta Mission",
       "id": "2",
-      "layout": "desktop",
       "stickyIndex": 2,
+      "layout": "desktop",
       "frames": [
         {
           "appId": "26e289fa-fb36-4825-9448-e8760db9e362",
@@ -395,8 +395,8 @@
     {
       "name": "Bouncing Balls",
       "id": "3",
-      "layout": "grid",
       "stickyIndex": -1,
+      "layout": "grid",
       "frames": [
         {
           "appId": "998437ef-9191-4d57-91a7-6ab049361583",

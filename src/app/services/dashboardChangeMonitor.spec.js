@@ -22,22 +22,22 @@ describe('Service: dashboardChangeMonitor', function () {
 
   it('exposes the layout property', function() {
     dashboardChangeMonitor.run();
-    $location.path('/grid/0');
+    $location.path('/grid/nonstick/0');
     $rootScope.$apply();
     expect(dashboardChangeMonitor.layout).toBe('grid');
 
-    $location.path('/desktop/5');
+    $location.path('/desktop/nonstick/5');
     $rootScope.$apply();
     expect(dashboardChangeMonitor.layout).toBe('desktop');
   });
 
   it('exposes the dashboardId property', function() {
     dashboardChangeMonitor.run();
-    $location.path('/grid/0');
+    $location.path('/grid/nonstick/0');
     $rootScope.$apply();
     expect(dashboardChangeMonitor.dashboardId).toBe('0');
 
-    $location.path('/grid/0');
+    $location.path('/grid/nonstick/0');
     $rootScope.$apply();
     expect(dashboardChangeMonitor.dashboardId).toBe('0');
   });
@@ -45,7 +45,7 @@ describe('Service: dashboardChangeMonitor', function () {
   it('sends messages when the url changes', function() {
     dashboardChangeMonitor.run();
 
-    $location.path('/grid/0');
+    $location.path('/grid/nonstick/0');
     $rootScope.$apply();
     var obj = {'layout': 'grid', 'dashboardId': '0'};
     expect($rootScope.$broadcast).toHaveBeenCalledWith(dashboardSwitchedEvent, obj);
@@ -53,7 +53,7 @@ describe('Service: dashboardChangeMonitor', function () {
 
   it('supports double-digit dashboard indexes', function() {
     dashboardChangeMonitor.run();
-    $location.path('/desktop/12');
+    $location.path('/desktop/nonstick/12');
     $rootScope.$apply();
     var obj = {'layout': 'desktop', 'dashboardId': '12'};
     expect($rootScope.$broadcast).toHaveBeenCalledWith(dashboardSwitchedEvent, obj);

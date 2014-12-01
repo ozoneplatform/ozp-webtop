@@ -89,6 +89,12 @@ angular.module('ozpWebtop.dashboardView.desktop')
      */
     $scope.max = {};
 
+    /**
+     * @property initialization flag
+     * @type {boolean}
+     */
+    var initialized = false;
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -121,8 +127,10 @@ angular.module('ozpWebtop.dashboardView.desktop')
       $scope.fullScreenMode = data.fullScreenMode;
     });
 
-    $scope.$on(dashboardStateChangedEvent, function() {
-      dashboardChangeHandler();
+    $scope.$on(dashboardStateChangedEvent, function(event, value) {
+      if (value.dashboardId === $scope.currentDashboardId && value.layout === 'desktop') {
+        dashboardChangeHandler();
+      }
     });
 
     // TODO: First tried sending broadcast events from dashboardChangeMonitor,
@@ -135,7 +143,18 @@ angular.module('ozpWebtop.dashboardView.desktop')
     $scope.$watch(function() {
       return $location.path();
     }, function() {
+      var sticky = ($location.path().indexOf('sticky') !== -1) ? true : false;
+      // TODO: check for layout type??
+      if (dashboardChangeMonitor.dashboardId !== $scope.currentDashboardId &&
+        initialized) {
+        return;
+      }
+      if (sticky && initialized) {
+        return;
+      }
+
       updateDashboard();
+      initialized = true;
     });
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -245,8 +264,8 @@ angular.module('ozpWebtop.dashboardView.desktop')
           $scope.max.zIndex = $scope.frames.length - 1;
         }
       }
-
-      $rootScope.$broadcast(dashboardStateChangedEvent);
+      $rootScope.$broadcast(dashboardStateChangedEvent, {
+        'dashboardId': $scope.currentDashboardId, 'layout': 'desktop'});
     }
 
     /**

@@ -9,13 +9,9 @@
  * @requires ozpWebtop.dashboardView.desktop.iframe
  */
 angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
-  'ozp.common.urlOriginComparer', 'ozpWebtop.models.dashboard',
-  'ozpWebtop.dashboardView.desktop.iframe']);
+  'ozp.common.urlOriginComparer', 'ozpWebtop.models.dashboard']);
 
 /**
- * Used to include an html document in the webtop. If the html in question is from a different 
- * origin than the webtop, then an iframe will be used. If the html is from the same origin as
- * the webtop, a "frame" (div) will be used.
  *
  * ngtype: directive
  *
@@ -23,13 +19,12 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
  * @class ozpManagedFrame
  * @constructor
  * @param {Function} compareUrl the URL comparison service
- * @param {Object} $http the Angular HTTP service
  * @param {Object} $compile the Angular compile service
  * @param {Object} $document the Angular document service
  * @param {Object} dashboardApi the API for dashboard information {{#crossLink "dashboardApi"}}{{/crossLink}}
  */
 angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
-.directive('ozpManagedFrame', function (compareUrl, $http, $compile, $document, dashboardApi) {
+.directive('ozpManagedFrame', function (compareUrl, $compile, $document, dashboardApi) {
   var resizableConfig = {
     // handles: 'all',
     handles: 'nw, sw, se, ne',
@@ -56,32 +51,11 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
     iframeFix: true,
     containment: 'document'
   };
-  /**
-   * Decides which template to use.
-   *
-   * @method getTemplate
-   * @private
-   * @param {Boolean} sameOrigin True if the frame comes from the same origin as the webtop,
-   *     false otherwise.
-   */
-  var getTemplate = function (sameOrigin) {
-    var template = '';
-
-    // If different origin, use an iframe template
-    if (!sameOrigin) {
-      template = 'dashboardView/desktop/genericFrames/managediframe.tpl.html';
-    }
-    // otherwise, use a 'frame' (div) template
-    else {
-      template = 'dashboardView/desktop/genericFrames/managedframe.tpl.html';
-    }
-    return template;
-  };
 
   // Directive definition object
   return {
     restrict: 'E',
-    template: '<div ng-include="getContentUrl()"></div>',
+    templateUrl: 'dashboardView/desktop/managediframe.tpl.html',
     link: function postLink(scope, element) {
       element.draggable(draggableConfig);
       element.resizable(resizableConfig);
@@ -146,16 +120,7 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
       //add listeners
       element.on('mousedown resizestart', start);
       element.on('mouseup mouseleave resizestop', stop);
-      // Is the origin the same as the webtop?
-      // TODO: put this back
-      // var origin = compareUrl(scope.frame.url);
-      // For now, assume different origins
-      var origin = false;
 
-      // configure dynamic template without using $http for ease of testing
-      scope.getContentUrl = function() {
-        return getTemplate(origin);
-      };
 
       // Note: in iframe template height and width of the iframe is calculated based on
       // these styles. May need to change it in the future.

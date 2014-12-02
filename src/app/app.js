@@ -28,7 +28,6 @@
  * @requires ozpWebtop.dashboardView.chrome
  * @requires ozpWebtop.dashboardView.desktop
  * @requires ozpWebtop.dashboardView.desktop.managedFrame
- * @requires ozpWebtop.dashboardView.desktop.iframe
  * * @requires ozpWebtop.dashboardView
  * @requires ozpWebtop.dashboardView.grid
  * @requires ozpWebtop.userSettings
@@ -63,7 +62,6 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView.chrome',
   'ozpWebtop.dashboardView.desktop',
   'ozpWebtop.dashboardView.desktop.managedFrame',
-  'ozpWebtop.dashboardView.desktop.iframe',
   'ozpWebtop.dashboardView',
   'ozpWebtop.dashboardView.grid',
   'ozpWebtop.userSettings',

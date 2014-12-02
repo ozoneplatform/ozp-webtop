@@ -55,9 +55,9 @@
           </li>
           <li class="divider-vertical"></li>
           <!-- stuff on the left side of the nav bar -->
-          <li ng-repeat="app in myPinnedApps" ng-click="maximizeFrame(app)"
-              >
-            <a tooltip="{{app.name | limitTo : 15}}" style="padding-right: 0px; margin-left: 15px; padding-left: 0px; padding-bottom: 0px;">
+          <li ng-repeat="app in myPinnedApps">
+            <a tooltip="{{app.name | limitTo : 15}}" style="padding-right: 0px; margin-left: 15px; padding-left: 0px; padding-bottom: 0px;"
+                ng-click="maximizeFrame(app)">
               <img class="chrome-icon app-toolbar-img"
                    ng-src="{{app.icon.large}}"/>
               <div ng-class="app.isMinimized && layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div>

@@ -182,6 +182,21 @@ angular.module('ozpWebtop.dashboardView.desktop')
             if (updatedDashboard.frames[ii].id === $scope.frames[jj].id) {
               $scope.frames[jj].isMinimized = updatedDashboard.frames[ii].isMinimized;
               $scope.frames[jj].isMaximized = updatedDashboard.frames[ii].isMaximized;
+
+              // also update the positioning
+              // TODO: this logic is odd for a reason - do not change without
+              // careful testing
+              if ($scope.frames[jj].desktopLayout.top !== updatedDashboard.frames[ii].desktopLayout.top) {
+                $scope.frames[jj].desktopLayout.top =  updatedDashboard.frames[ii].desktopLayout.top;
+
+              } else {
+                $scope.frames[jj].desktopLayout.top =  updatedDashboard.frames[ii].desktopLayout.top + 1;
+              }
+
+              $scope.frames[jj].desktopLayout.zIndex = updatedDashboard.frames[ii].desktopLayout.zIndex;
+              $scope.frames[jj].desktopLayout.left = updatedDashboard.frames[ii].desktopLayout.left;
+              $scope.frames[jj].desktopLayout.width = updatedDashboard.frames[ii].desktopLayout.width;
+              $scope.frames[jj].desktopLayout.height = updatedDashboard.frames[ii].desktopLayout.height;
             }
           }
         }

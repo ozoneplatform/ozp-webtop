@@ -54,6 +54,16 @@
             </a>
           </li>
           <li class="divider-vertical"></li>
+
+          <li ng-show="layout === 'desktop'">
+            <a ng-click="cascadeWindows()" class="link-pointer"
+                tooltip="Cascade Windows"
+                tooltip-placement="top">
+              <i class="fa fa-files-o fa-lg"></i>
+            </a>
+          </li>
+          <li class="divider-vertical" ng-show="layout === 'desktop'"></li>
+
           <!-- stuff on the left side of the nav bar -->
           <li ng-repeat="app in myPinnedApps">
             <a tooltip="{{app.name | limitTo : 15}}" style="padding-right: 0px; margin-left: 15px; padding-left: 0px; padding-bottom: 0px;"

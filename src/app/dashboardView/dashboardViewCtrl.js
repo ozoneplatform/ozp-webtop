@@ -22,5 +22,20 @@ angular.module('ozpWebtop.dashboardView', []);
  */
 angular.module('ozpWebtop.dashboardView')
 
-.controller('DashboardViewCtrl', function () {
+.controller('DashboardViewCtrl', function ($scope,
+                                           dashboardChangeMonitor,
+                                           dashboardSwitchedEvent) {
+
+    // activate the dashboard change monitor so we receive notification when the
+    // user's dashboard changes
+    dashboardChangeMonitor.run();
+
+    $scope.layout = dashboardChangeMonitor.layout;
+
+    $scope.$on(dashboardSwitchedEvent, function(event, dashboardChange) {
+      $scope.layout = dashboardChange.layout;
+      console.log('DashboardViewCtrl got layout change: ' + $scope.layout);
+    });
+
+
   });

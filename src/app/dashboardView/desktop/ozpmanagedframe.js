@@ -9,7 +9,7 @@
  * @requires ozpWebtop.dashboardView.desktop.iframe
  */
 angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
-  'ozp.common.urlOriginComparer', 'ozpWebtop.models.dashboard']);
+  'ozpWebtop.models.dashboard']);
 
 /**
  *
@@ -18,120 +18,153 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
  * @namespace dashboardView
  * @class ozpManagedFrame
  * @constructor
- * @param {Function} compareUrl the URL comparison service
- * @param {Object} $compile the Angular compile service
- * @param {Object} $document the Angular document service
  * @param {Object} dashboardApi the API for dashboard information {{#crossLink "dashboardApi"}}{{/crossLink}}
  */
 angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
-.directive('ozpManagedFrame', function (compareUrl, $compile, $document, dashboardApi) {
-  var resizableConfig = {
-    // handles: 'all',
-    handles: 'nw, sw, se, ne',
-    aspectRatio: false,
-    ghost: true,
-    start: function(event,ui) {
-      if(!event){
-        console.debug(ui.element);
-      }
-      (ui.element).parent().parent().parent().css('pointer-events','none');//this is not smart, but works for the demo... will probably need a workaround for ie9
-    },
-    stop: function(event, ui) {
-      if(!event){
-        console.debug(ui.element);
-      }
-      (ui.element).parent().parent().parent().css('pointer-events','auto');//this is not smart, but works for the demo... will probably need a workaround for ie9
-    }
-  };
-
-  var draggableConfig = {
-    addClasses: true,
-    scrollSensitivity: 100,
-    scrollSpeed: 100,
-    iframeFix: true,
-    containment: 'document'
-  };
-
+.directive('ozpManagedFrame', function (dashboardApi) {
   // Directive definition object
   return {
     restrict: 'E',
     templateUrl: 'dashboardView/desktop/managediframe.tpl.html',
-    link: function postLink(scope, element) {
-      element.draggable(draggableConfig);
-      element.resizable(resizableConfig);
-      // Logic for dragging is influenced by Angular directive documentation, under the
-      // heading "Creating a Directive that Adds Event Listeners".
-      // See: https://docs.angularjs.org/guide/directive
+    scope: {
+      'myframe': '='
+    },
+    link: function (scope, element) {
+      var resizableConfig = {
+      // handles: 'all',
+      handles: 'nw, sw, se, ne',
+      aspectRatio: false,
+      ghost: true,
+      containment: '.desktop-view',
+      start: function(event,ui) {
+        angular.element('body').css('pointer-events','none');//this is not smart, but works for the demo... will probably need a workaround for ie9
+        start(event, ui);
+      },
+      stop: function(event, ui) {
+        angular.element('body').css('pointer-events','auto');//this is not smart, but works for the demo... will probably need a workaround for ie9
+        stop(event, ui);
+      }
+    };
 
-      // Get starting positions from state
-      var startX = scope.frame.desktopLayout.left;
-      var startY = scope.frame.desktopLayout.top;
+    var draggableConfig = {
+      addClasses: true,
+      scrollSensitivity: 100,
+      scrollSpeed: 100,
+      iframeFix: true,
+      containment: '.desktop-view',
+      start: function(event, ui) {
+        start(event, ui);
+      },
+      stop: function(event, ui) {
+        stop(event, ui);
+      }
+    };
+    if (!scope.myframe) {
+      console.log('ERROR, scope.myframe is not defined');
+      return;
+    }
+    console.log('initializing frame ' + scope.myframe.id);
+    scope.zIndexMax = 0;
+    element.draggable(draggableConfig);
+    element.resizable(resizableConfig);
+    // Logic for dragging is influenced by Angular directive documentation, under the
+    // heading "Creating a Directive that Adds Event Listeners".
+    // See: https://docs.angularjs.org/guide/directive
 
-      // 'Current' positions are changed as the element moves
-      var x = startX, y = startY;
+    // Get starting positions from state
+    var startX = scope.myframe.desktopLayout.left;
+    var startY = scope.myframe.desktopLayout.top;
 
-      // React to a mousedown and allow the element to move
+    // 'Current' positions are changed as the element moves
+    var x = startX, y = startY;
 
-        // TODO: find a more maintainable way?
-        // Ignore click event if we clicked a button
-      function start (event) {
-        console.debug('event');
-        console.debug(event);
-        if (event.target.className.indexOf('glyphicon') > -1) {
-          event.preventDefault();
-          return;
-        }
-        // Bring frame to foreground
-        if (scope.frame.desktopLayout.zIndex <= scope.max.zIndex) {
-          scope.frame.desktopLayout.zIndex = scope.max.zIndex + 1;
-          scope.max.zIndex = scope.frame.desktopLayout.zIndex;
+    // React to a mousedown and allow the element to move
 
-          element.css({
-            zIndex: scope.frame.desktopLayout.zIndex
-          });
-        }
-
-        // Prevent default dragging of selected content
+    // TODO: find a more maintainable way?
+    // Ignore click event if we clicked a button
+    function start (event) {
+      if (event.target.className.indexOf('glyphicon') > -1) {
+        console.log('preventDefault on mousedown event and returning');
         event.preventDefault();
-        startX = event.pageX - x;
-        startY = event.pageY - y;
+        return;
+      }
+      // Bring frame to foreground
+      bringToFront();
+
+      startX = event.pageX - x;
+      startY = event.pageY - y;
+    }
+
+
+    function stop (event) {
+      y = event.pageY - startY;
+      x = event.pageX - startX;
+
+      // TODO: find a more maintainable way?
+      if (event.target.className.indexOf('glyphicon') > -1) {
+        console.log('stop() prevent default on mouseup and returning');
+        event.preventDefault();
+        return;
+      }
+      saveFramePosition();
       }
 
+      function bringToFront() {
+        dashboardApi.getDashboardById(scope.dashboardId).then(function (dashboard) {
+          for (var i = 0; i < dashboard.frames.length; i++) {
+            if (dashboard.frames[i].desktopLayout.zIndex > scope.zIndexMax) {
+              scope.zIndexMax = dashboard.frames[i].desktopLayout.zIndex;
+            }
+          }
+          scope.zIndexMax += 1;
+          element.css({
+            zIndex: scope.zIndexMax
+          });
+          // save it
+          saveFramePosition();
 
-      function stop (event) {
-        y = event.pageY - startY;
-        x = event.pageX - startX;
+        });
+      }
+
+      function onMouseDown() {
+        console.log('got mousedown event for frame: ' + scope.myframe.id);
+        // change z-index to top
         // TODO: find a more maintainable way?
-
         if (event.target.className.indexOf('glyphicon') > -1) {
+          console.log('stop() prevent default on mouseup and returning');
           event.preventDefault();
           return;
         }
+        bringToFront();
 
-        dashboardApi.updateDesktopFrame(
-          scope.frame.id, 
-          element[0].offsetLeft, 
-          element[0].offsetTop, 
-          element[0].offsetWidth, 
-          element[0].offsetHeight, 
-          scope.max.zIndex
-        );
       }
-      //add listeners
-      element.on('mousedown resizestart', start);
-      element.on('mouseup mouseleave resizestop', stop);
 
+      function saveFramePosition() {
+        dashboardApi.updateDesktopFrame(
+        scope.myframe.id,
+        element[0].offsetLeft,
+        element[0].offsetTop,
+        element[0].offsetWidth,
+        element[0].offsetHeight,
+        scope.zIndexMax
+        ).then(function() {
+          // frame updated
+        });
+      }
 
-      // Note: in iframe template height and width of the iframe is calculated based on
-      // these styles. May need to change it in the future.
+      element.on('mousedown', onMouseDown);
 
-      scope.styles = {
-        'top': scope.frame.desktopLayout.top,
-        'left': scope.frame.desktopLayout.left,
-        'height': scope.frame.desktopLayout.height,
-        'width': scope.frame.desktopLayout.width,
-        'z-index': scope.frame.desktopLayout.zIndex
-      };
+      // Set our dashboard id
+      dashboardApi.getDashboards().then(function(dashboards) {
+          for (var i=0; i < dashboards.length; i++) {
+            for (var j=0; j < dashboards[i].frames.length; j++) {
+              if (dashboards[i].frames[j].id === scope.myframe.id) {
+                // this is our dashboard
+                scope.dashboardId = dashboards[i].id;
+              }
+            }
+          }
+        });
     }
   };
 });

@@ -494,6 +494,19 @@ angular.module( 'ozpWebtop.appToolbar')
       $scope.previousAppsVisible = true;
     };
 
+    $scope.cascadeWindows = function() {
+      // reposition each window on the pagez
+      // get the window size and starting position
+      // TODO: get this dynamically from screen size
+      var origin = {'x': 50, 'y': 80};
+      var frameSize = {'x': 800, 'y': 400};
+      dashboardApi.cascadeWindows($scope.currentDashboardId, origin, frameSize).then(function() {
+        // send dashboard state change msg
+        $rootScope.$broadcast(dashboardStateChangedEvent, {
+           'dashboardId': $scope.currentDashboardId, 'layout': 'desktop'});
+      });
+    };
+
     /**
      * Opens the Add Application modal dialog
      *

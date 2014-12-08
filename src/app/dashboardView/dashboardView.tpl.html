@@ -1,12 +1,20 @@
+<div class="desktop-view" ng-show="layout === 'desktop'">
+
+  <div ui-view="desktopviewnonstick" ng-show="$state.includes('dashboardview.desktop-nonstick')"></div>
+
+  <!-- Number of sticky views must correspond with constants.maxStickyBoards -->
+
+  <div ui-view="desktoplayout-0" ng-show="$state.includes('dashboardview.desktop-sticky-0')"></div>
+
+
+  <div ui-view="desktoplayout-1" ng-show="$state.includes('dashboardview.desktop-sticky-1')"></div>
+
+
+  <div ui-view="desktoplayout-2" ng-show="$state.includes('dashboardview.desktop-sticky-2')"></div>
+</div>
+<div class="grid-view">
 <div ui-view="gridviewnonstick" ng-show="$state.includes('dashboardview.grid-nonstick')"></div>
-<div ui-view="desktopviewnonstick" ng-show="$state.includes('dashboardview.desktop-nonstick')"></div>
-
-<!-- Number of sticky views must correspond with constants.maxStickyBoards -->
-<div ui-view="gridlayout-0" ng-show="$state.includes('dashboardview.grid-sticky-0')"></div>
-<div ui-view="desktoplayout-0" ng-show="$state.includes('dashboardview.desktop-sticky-0')"></div>
-
-<div ui-view="gridlayout-1" ng-show="$state.includes('dashboardview.grid-sticky-1')"></div>
-<div ui-view="desktoplayout-1" ng-show="$state.includes('dashboardview.desktop-sticky-1')"></div>
-
-<div ui-view="gridlayout-2" ng-show="$state.includes('dashboardview.grid-sticky-2')"></div>
-<div ui-view="desktoplayout-2" ng-show="$state.includes('dashboardview.desktop-sticky-2')"></div>
+  <div ui-view="gridlayout-0" ng-show="$state.includes('dashboardview.grid-sticky-0')"></div>
+  <div ui-view="gridlayout-1" ng-show="$state.includes('dashboardview.grid-sticky-1')"></div>
+  <div ui-view="gridlayout-2" ng-show="$state.includes('dashboardview.grid-sticky-2')"></div>
+</div>

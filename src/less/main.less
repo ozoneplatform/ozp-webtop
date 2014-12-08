@@ -24,8 +24,9 @@ html {
   background-color: @dashboard-bg-color;
   // Always show scroll bar - prevents nasty issue with gridster where the
   // screen continuously changes size ~once per second
-  overflow: -moz-scrollbars-vertical;
-  overflow-y: scroll;
+//  overflow: -moz-scrollbars-vertical;
+//  overflow-y: scroll;
+  //overflow-y: hidden;
 }
 
 body {
@@ -176,6 +177,10 @@ body {
 //                        dashboard view
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+.ui-view-style {
+  height: 100%;
+}
+
 // Grid view
 .gridster-container-settings {
   background-color: @dashboard-bg-color;
@@ -283,9 +288,13 @@ body > div.classBanner:last-of-type {
 //                        desktop frames
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+.ui-resizable-handle { z-index: auto !important; }
+
+
 /* Frames must be absolute position */
 .ozp-managed-frame {
     position: absolute;
+  box-sizing: border-box;
     background-color: @ozp-white;
     border: 1px solid #ddd;
     -webkit-border-radius: 5px;
@@ -339,6 +348,20 @@ body > div.classBanner:last-of-type {
 .ozp-chrome > .chrome-controls > .btn:hover,
 .ozp-chrome > .chrome-controls > .btn:active {
     color: @ozp-dk-gray2;
+}
+
+.desktop-view {
+  // TODO: this is not correct, as it guarantees the desktop layout portion of
+  // the screen will be as big as the entire browser window (including the
+  // height of the top and bottom toolbars). Ideally, this would be something
+  // like 100vh - (height of top + bottom toolbars). Haven't found anything
+  // that works like that yet.
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.grid-view {
+  overflow-y: auto;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

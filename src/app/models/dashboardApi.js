@@ -205,6 +205,7 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
       var that = this;
       return this.getFrameById(frameId).then(function(frame) {
         if (!frame) {
+          console.log('Error: frame with id ' + frameId + ' not found');
           return false;
         }
         frame.desktopLayout.left = x;
@@ -640,6 +641,32 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
         return that.getDashboardById(dashboardData.currentDashboard);
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
+      });
+    },
+    cascadeWindows: function(dashboardId, origin, frameSize) {
+      var that = this;
+      var topOffset = 30;
+      var leftOffset = 30;
+      return this.getDashboardById(dashboardId).then(function(dashboard) {
+        for (var i=0; i < dashboard.frames.length; i++) {
+          try {
+            dashboard.frames[i].desktopLayout.zIndex = i;
+            dashboard.frames[i].desktopLayout.top = origin.y + (i*topOffset);
+            dashboard.frames[i].desktopLayout.left = origin.x + (i * leftOffset);
+            dashboard.frames[i].desktopLayout.width = frameSize.x;
+            dashboard.frames[i].desktopLayout.height = frameSize.y;
+            dashboard.frames[i].isMaximized = false;
+          }
+          catch (err) {
+            console.log('Error in cascadeWindows on board ' + i + ':'  + JSON.stringify(err));
+          }
+        }
+        return that.saveDashboard(dashboard).then(function(response) {
+          console.log('saved dashboards after cascade update');
+          return response;
+        });
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });

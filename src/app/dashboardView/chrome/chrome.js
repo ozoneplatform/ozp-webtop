@@ -75,7 +75,6 @@ chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
-
     };
 
     /**

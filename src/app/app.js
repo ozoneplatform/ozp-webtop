@@ -15,7 +15,6 @@
  * @requires ozp.common.utilities
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.constants
- * @requires ozpWebtop.services.dashboardChangeMonitor
  * @requires ozpWebtop.services.iwcInterface
  * @requires ozpWebtop.services.localStorageInterface
  * @requires ozpWebtop.models.dashboard
@@ -30,8 +29,8 @@
  * @requires ozpWebtop.dashboardView.desktop.managedFrame
  * * @requires ozpWebtop.dashboardView
  * @requires ozpWebtop.dashboardView.grid
- * @requires ozpWebtop.userSettings
  * @requires ozpWebtop.addApplicationsModal
+ * @requires ozpWebtop.editDashboardModal
  * @requires ui.router
  * @requires ct.ui.router.extras
  * @requires ui.bootstrap
@@ -49,7 +48,6 @@ angular.module( 'ozpWebtop', [
   'templates-app',
   'templates-common',
   'ozpWebtop.constants',
-  'ozpWebtop.services.dashboardChangeMonitor',
   'ozpWebtop.services.iwcInterface',
   'ozpWebtop.services.localStorageInterface',
   'ozpWebtop.models.dashboard',
@@ -64,8 +62,8 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView.desktop.managedFrame',
   'ozpWebtop.dashboardView',
   'ozpWebtop.dashboardView.grid',
-  'ozpWebtop.userSettings',
   'ozpWebtop.addApplicationsModal',
+  'ozpWebtop.editDashboardModal',
   'ui.router',
   'ct.ui.router.extras',
   'ui.bootstrap',
@@ -84,23 +82,6 @@ angular.module( 'ozpWebtop', [
         '@': {controller: 'DashboardViewCtrl',
           templateUrl: 'dashboardView/dashboardView.tpl.html'}
     }});
-
-    // Nonstick views
-    states.push({name: 'dashboardview.grid-nonstick',
-                  url: 'grid/nonstick/:dashboardId',
-      views: {
-        'gridviewnonstick@dashboardview': {controller: 'GridCtrl',
-          templateUrl: 'dashboardView/grid/grid.tpl.html'}},
-      deepStateRedirect: false, sticky: false
-    });
-
-    states.push({name: 'dashboardview.desktop-nonstick',
-      url: 'desktop/nonstick/:dashboardId',
-      views: {
-        'desktopviewnonstick@dashboardview': {controller: 'DesktopCtrl',
-          templateUrl: 'dashboardView/desktop/desktop.tpl.html'}},
-      deepStateRedirect: false, sticky: false
-    });
 
     // Sticky views
     for (var slot=0; slot < maxStickyBoards; slot++) {

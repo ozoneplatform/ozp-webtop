@@ -17,7 +17,7 @@ describe('Directive: ozpChrome', function () {
     };
   }));
 
-  it('should have a chrome icon', inject(function ($compile) {
+  xit('should have a chrome icon', inject(function ($compile) {
     element = angular.element('<ozp-chrome></ozp-chrome>');
     element = $compile(element)(scope);
     scope.$digest();

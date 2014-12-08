@@ -9,16 +9,15 @@
  * @requires ozpWebtop.models.dashboard
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.models.marketplace
- * @requires ozpWebtop.models.userSettings
  * @requires ozpWebtop.addApplicationsModal
- * @requires ozpWebtop.services.dashboardChangeMonitor
+ * @requires ozpWebtop.editDashboardModal
  * @requires ozp.common.windowSizeWatcher
  */
 angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
   'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
   'ozpWebtop.models.userSettings',
   'ozpWebtop.addApplicationsModal',
-  'ozpWebtop.services.dashboardChangeMonitor',
+  'ozpWebtop.editDashboardModal',
   'ozp.common.windowSizeWatcher']);
 
 /**
@@ -42,43 +41,28 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param $modal $modal service from ui.bootstrap
  * @param marketplaceApi Application data model
  * @param dashbaordApi Dashboard data model
- * @param dashboardChangeMonitor Notify when dashboard changes
  * @param userSettingsApi User settings data model
  * @param windowSizeWatcher Notify when window size changes
  * @param deviceSizeChangedEvent event name
  * @param dashboardStateChangedEvent event name
- * @param dashboardSwitchedEvent event name
  * @param fullScreenModeToggleEvent event name
- * @param launchUserPreferencesModalEvent event name
  * @param highlightFrameOnGridLayoutEvent event name
- * @param maxStickyBoards number of available sticky slots for dashboards
  */
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
                                                  $modal, $interval,
                                                  marketplaceApi, dashboardApi,
-                                                 dashboardChangeMonitor,
                                                  userSettingsApi,
                                                  windowSizeWatcher,
                                                  deviceSizeChangedEvent,
                                                  dashboardStateChangedEvent,
-                                                 dashboardSwitchedEvent,
                                                  fullScreenModeToggleEvent,
-                                                 userPreferencesUpdatedEvent,
-                                                 launchUserPreferencesModalEvent,
-                                                 highlightFrameOnGridLayoutEvent,
-                                                 maxStickyBoards) {
+                                                 highlightFrameOnGridLayoutEvent) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    /**
-     * @property dashboardNameLength Max length of dashboard name, based on
-     * current screen size
-     * @type {String}
-     */
-    $scope.dashboardNameLength = 0;
 
     /**
      * @property dashboards Dashboards for current user
@@ -87,22 +71,37 @@ angular.module( 'ozpWebtop.appToolbar')
     $scope.dashboards = [];
 
     /**
-     * @property Dashboard layout (grid or desktop)
-     * @type {string}
-     */
-    $scope.layout = 'grid';
-
-    /**
      * @property currentDashboard Current active dashboard
      * @type {string}
      */
     $scope.currentDashboard = '';
 
     /**
-     * @property dashboardId Current dashboard id
-     * @type {string}
+     * @property $scope.frames Frames on current dashboard (includes marketplace
+     *  data like app name, icons, description, etc)
+     * @type {Array}
      */
-    $scope.dashboardId = '';
+    $scope.frames = [];
+
+    /**
+     * @property $scope.myPinnedApps Applications in current dashboard that are
+     *  shown in the application toolbar
+     * @type {Array}
+     */
+    $scope.myPinnedApps = [];
+
+    /**
+     * @property $scope.apps All applications available in the marketplace
+     * @type {Array}
+     */
+    $scope.apps = [];
+
+    /**
+     * @property dashboardNameLength Max length of dashboard name, based on
+     * current screen size
+     * @type {String}
+     */
+    $scope.dashboardNameLength = 0;
 
     /**
      * @property $scope.maxAppsDisplayed The maximum number of apps that can be
@@ -110,34 +109,14 @@ angular.module( 'ozpWebtop.appToolbar')
      * @type {Number}
      */
     $scope.maxAppsDisplayed = '';
-    /**
-     * @property $scope.currentDashboardId The id of the current dashboard
-     * @type {string}
-     */
-    $scope.currentDashboardId = '';
+
     /**
      * @property $scope.fullScreenMode Flag indicating if the toolbar is hidden or
      *  not
      * @type {boolean}
      */
     $scope.fullScreenMode = false;
-    /**
-     * @property $scope.apps All applications available in the marketplace
-     * @type {Array}
-     */
-    $scope.apps = [];
-    /**
-     * @property $scope.frames Frames on current dashboard (includes marketplace
-     *  data like app name, icons, description, etc)
-     * @type {Array}
-     */
-    $scope.frames = [];
-    /**
-     * @property $scope.myPinnedApps Applications in current dashboard that are
-     *  shown in the application toolbar
-     * @type {Array}
-     */
-    $scope.myPinnedApps = [];
+
     /**
      * @property $scope.myPinnedAppsFirstDisplayedIndex The index (in
      *  $scope.myPinnedApps) of the first application shown in the application
@@ -157,11 +136,6 @@ angular.module( 'ozpWebtop.appToolbar')
      * @type {boolean}
      */
     $scope.previousAppsVisible = false;
-    /**
-     * @property $scope.layout The current dashboard layout (grid or desktop)
-     * @type {string}
-     */
-    $scope.layout = '';
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                           initialization
@@ -171,36 +145,12 @@ angular.module( 'ozpWebtop.appToolbar')
     // window size changes
     windowSizeWatcher.run();
 
-    // activate the dashboard change monitor so we receive notification when the
-    // user's dashboard changes
-    dashboardChangeMonitor.run();
-
-    // set the dashboard id
-    $scope.currentDashboardId = dashboardChangeMonitor.dashboardId;
-
     // toolbar is not hidden by default
-    // TODO: read saved state to get this value
     $scope.fullScreenMode = false;
 
     // get all apps in the marketplace
     marketplaceApi.getAllApps().then(function(apps) {
       $scope.apps = apps;
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
-
-    // get dashboards for current user
-    dashboardApi.getDashboards().then(function(dashboards) {
-      $scope.dashboards = dashboards;
-      // default board is 0
-      // TODO: Load last board that was used
-      if (dashboards) {
-        $scope.currentDashboard = $scope.dashboards[0];
-      } else {
-        console.log('WARNING: No dashboards found');
-      }
-      // default layout is grid
-      $scope.layout = 'grid';
     }).catch(function(error) {
       console.log('should not have happened: ' + error);
     });
@@ -213,52 +163,22 @@ angular.module( 'ozpWebtop.appToolbar')
       $scope.updateApps();
     });
 
-    $scope.$on(dashboardSwitchedEvent, function(event, dashboardChange) {
-      $scope.handleDashboardChange(dashboardChange);
-    });
-
-    $scope.$on(userPreferencesUpdatedEvent, function() {
-      handleUserSettingsChange();
+    $scope.$on('$stateChangeSuccess',
+      function(event, toState, toParams/*, fromState, fromParams*/){
+        var layoutType = '';
+        if (toState.name.indexOf('grid-sticky') > -1) {
+          layoutType = 'grid';
+        } else if (toState.name.indexOf('desktop-sticky') > -1) {
+          layoutType = 'desktop';
+        } else {
+          return;
+        }
+        $scope.handleStateChange(toParams.dashboardId, layoutType);
     });
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    /**
-     * Launch the user preferences modal dialog
-     *
-     * Sends launchUserPreferencesModalEvent
-     *
-     * @method launchSettingsModal
-     */
-    $scope.launchSettingsModal = function() {
-      $rootScope.$broadcast(launchUserPreferencesModalEvent, {
-        launch: 'true'
-      });
-    };
-
-    /**
-     * Handler invoked when user settings event is fired
-     *
-     * @method handleUserSettingsChange
-     */
-    function handleUserSettingsChange() {
-      dashboardApi.getDashboards().then(function(dashboards) {
-        $scope.dashboards = dashboards;
-        dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
-          if (dashboard) {
-            $scope.currentDashboard = dashboard;
-          } else {
-            console.log('WARNING: Dashboard ' + $scope.dashboardId + ' no longer exists');
-          }
-        }).catch(function(error) {
-          console.log('should not have happened: ' + error);
-        });
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    }
 
     /**
      * Handle the deviceSizeChangedEvent
@@ -289,28 +209,35 @@ angular.module( 'ozpWebtop.appToolbar')
     };
 
     /**
-     * Handle the dashboardSwitchedEvent
+     * Handle state change
      *
-     * Set $scope.currentDashboardId and invoke updateApps()
-     * Update current dashboard and layout
      *
-     * @method handleDashboardChange
-     * @param dashboardChange
+     * @method handleStateChange
      */
-    $scope.handleDashboardChange = function(dashboardChange) {
-      if($scope.currentDashboardId !== dashboardChange.dashboardId){
-        $scope.currentDashboardId = dashboardChange.dashboardId;
-      }
-      $scope.layout = dashboardChange.layout;
-      $scope.dashboardId = dashboardChange.dashboardId;
+    $scope.handleStateChange= function(dashboardId, dashboardLayout) {
+      // get dashboards
+      dashboardApi.getDashboards().then(function(dashboards) {
+        $scope.dashboards = dashboards;
+        for (var i=0; i < dashboards.length; i++) {
+          if (dashboards[i].id === dashboardId) {
+            $scope.currentDashboard = dashboards[i];
+          }
+        }
+        if (!$scope.currentDashboard) {
+          console.log('WARNING: No dashboards found');
+        }
 
-      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
-        $scope.currentDashboard = dashboard;
+        if ($scope.currentDashboard.layout !== dashboardLayout) {
+          console.log('dashboard layout mismatch, changing state');
+          $state.go('dashboardview.' +
+            $scope.currentDashboard.layout + '-sticky-' +
+            $scope.currentDashboard.stickyIndex, {
+            'dashboardId': $scope.currentDashboard.id});
+        }
+        $scope.updateApps();
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
-
-      $scope.updateApps();
     };
 
     /**
@@ -319,43 +246,12 @@ angular.module( 'ozpWebtop.appToolbar')
      * @param board Dashboard to load
      */
     $scope.loadDashboard = function(board) {
-      $scope.currentDashboard = board;
-      dashboardApi.getDashboardById(board.id).then(function(dashboard) {
-        var stickyIndex = dashboard.stickyIndex;
-      if (stickyIndex >= 0 && stickyIndex < maxStickyBoards) {
-        if ($scope.layout === 'grid') {
-          $state.go('dashboardview.grid-sticky-' + stickyIndex, {dashboardId: board.id});
-        } else if ($scope.layout === 'desktop') {
-          $state.go('dashboardview.desktop-sticky-' + stickyIndex, {dashboardId: board.id});
-        }
-      } else {
-        if ($scope.layout === 'grid') {
-          $state.go('dashboardview.grid-nonstick', {dashboardId: board.id});
-        } else if ($scope.layout === 'desktop') {
-          $state.go('dashboardview.desktop-nonstick', {dashboardId: board.id});
-        }
-      }
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
+      $state.go('dashboardview.' + board.layout + '-sticky-' +
+            board.stickyIndex, {dashboardId: board.id});
     };
 
-    /**
-     * Use a grid layout
-     * @method useGridLayout
-     */
-    $scope.loadGridLayout = function() {
-      $scope.layout = 'grid';
-      $scope.loadDashboard($scope.currentDashboard);
-    };
-
-    /**
-     * Use a desktop layout
-     * @method useDesktopLayout
-     */
-    $scope.loadDesktopLayout = function() {
-      $scope.layout = 'desktop';
-      $scope.loadDashboard($scope.currentDashboard);
+    $scope.isCurrentBoard = function(board) {
+      return $scope.currentDashboard.id === board.id;
     };
 
     /**
@@ -382,6 +278,7 @@ angular.module( 'ozpWebtop.appToolbar')
       }
     };
 
+
     /**
      * Update application data in the toolbar (invoked on a dashboard change)
      *
@@ -391,16 +288,18 @@ angular.module( 'ozpWebtop.appToolbar')
       // app information is retrieved asynchronously from IWC. If the
       // information isn't available yet, try again later
       if ($scope.apps.length === 0) {
+        console.log('$scope.apps is empty, retrying later');
         $interval($scope.updateApps, 500, 1);
         return;
       }
-      dashboardApi.getDashboards().then(function(dashboards) {
+      return dashboardApi.getDashboards().then(function(dashboards) {
+        $scope.dashboards = dashboards;
         for (var i=0; i < dashboards.length; i++) {
-          if (dashboards[i].id === dashboardChangeMonitor.dashboardId) {
-            $scope.frames = dashboards[i].frames;
+          if (dashboards[i].id === $scope.currentDashboard.id) {
+            $scope.currentDashboard = dashboards[i];
+            $scope.frames = angular.copy(dashboards[i].frames);
             dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
             $scope.setPinnedApps();
-            $scope.layout = dashboardChangeMonitor.layout;
           }
         }
       }).catch(function(error) {
@@ -414,13 +313,14 @@ angular.module( 'ozpWebtop.appToolbar')
      * @param {Object} e The application to maximize/show
      */
      $scope.maximizeFrame = function(e) {
-       if ($scope.layout === 'grid') {
+       if ($scope.currentDashboard.layout === 'grid') {
+         console.log('sending highlight msg for frame ' + e.id);
          $rootScope.$broadcast(highlightFrameOnGridLayoutEvent, {'frameId': e.id});
        }
        else {
          dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function () {
            $rootScope.$broadcast(dashboardStateChangedEvent, {
-             'dashboardId': $scope.currentDashboardId, 'layout': 'desktop'});
+             'dashboardId': $scope.currentDashboard.id, 'layout': 'desktop'});
          }).catch(function (error) {
            console.log('should not have happened: ' + error);
          });
@@ -495,15 +395,15 @@ angular.module( 'ozpWebtop.appToolbar')
     };
 
     $scope.cascadeWindows = function() {
-      // reposition each window on the pagez
+      // reposition each window on the page
       // get the window size and starting position
       // TODO: get this dynamically from screen size
       var origin = {'x': 50, 'y': 80};
       var frameSize = {'x': 800, 'y': 400};
-      dashboardApi.cascadeWindows($scope.currentDashboardId, origin, frameSize).then(function() {
+      dashboardApi.cascadeWindows($scope.currentDashboard.id, origin, frameSize).then(function() {
         // send dashboard state change msg
         $rootScope.$broadcast(dashboardStateChangedEvent, {
-           'dashboardId': $scope.currentDashboardId, 'layout': 'desktop'});
+           'dashboardId': $scope.currentDashboard.id, 'layout': 'desktop'});
       });
     };
 
@@ -524,6 +424,7 @@ angular.module( 'ozpWebtop.appToolbar')
           }
         }
       });
+
 
       /**
        * Add an application to a dashboard
@@ -553,6 +454,7 @@ angular.module( 'ozpWebtop.appToolbar')
 
       modalInstance.result.then(function (response) {
         var dashboardId;
+        var stickyIndex;
         if (response.useNewDashboard) {
           // create a new dashboard
           // TODO: is this randomly generated name ok?
@@ -564,6 +466,7 @@ angular.module( 'ozpWebtop.appToolbar')
               for (var i=0; i < dashboards.length; i++) {
                 if (dashboards[i].name === name) {
                   dashboardId = dashboards[i].id;
+                  stickyIndex = dashboards[i].stickyIndex;
                 }
               }
 
@@ -577,31 +480,62 @@ angular.module( 'ozpWebtop.appToolbar')
                 });
               }, Promise.resolve()).then(function () {
                 // all apps added to dashboard
-                $rootScope.$broadcast(userPreferencesUpdatedEvent);
                 // redirect user to new dashboard (grid view by default)
-                $state.go('dashboardview.grid-nonstick', {'dashboardId': dashboardId});
+                $state.go('dashboardview.grid-sticky-' + stickyIndex, {
+                  'dashboardId': dashboardId});
               });
             });
           });
         } else {
-          dashboardId = $scope.currentDashboardId;
           response.appsToOpen.reduce(function (previous, current) {
             return previous.then(function () {
-              var promise = addAppToDashboard(current, dashboardId);
+              var promise = addAppToDashboard(current, $scope.currentDashboard.id);
               return promise;
             }).catch(function (error) {
               console.log('should not have happened: ' + error);
             });
           }, Promise.resolve()).then(function () {
               // all apps added to dashboard
+
+            // current dashboard id and layout hasn't changed, so just reload
+            // the applications
             $rootScope.$broadcast(dashboardStateChangedEvent, {
-              'dashboardId': $scope.currentDashboardId,
-              'layout': $scope.layout});
+              'dashboardId': $scope.currentDashboard.id,
+              'layout': $scope.currentDashboard.layout});
           });
         }
 
       });
     };
+
+    $scope.openEditDashboardModal = function() {
+        var modalInstance = $modal.open({
+        templateUrl: 'editDashboardModal/editDashboardModal.tpl.html',
+        controller: 'EditDashboardModalInstanceCtrl',
+        windowClass: 'app-modal-window',
+        scope: $rootScope,
+        resolve: {
+          dashboard: function() {
+            return $scope.currentDashboard;
+          }
+        }
+        });
+
+        modalInstance.result.then(function (response) {
+          // reload current dashboard if the layout type changed (this state
+          // change will be ignored if the dashboard id and layout haven't
+          // changed)
+          $state.go('dashboardview.' + response.layout + '-sticky-' +
+            response.stickyIndex, {dashboardId: response.id});
+
+          // update the dashboard name if that changed
+          if (response.name !== $scope.currentDashboard.name) {
+            $rootScope.$broadcast(dashboardStateChangedEvent, {
+              'dashboardId': $scope.currentDashboard.id,
+              'layout': $scope.currentDashboard.layout});
+          }
+        });
+      };
 
   });
 

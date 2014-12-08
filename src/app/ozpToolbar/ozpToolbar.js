@@ -140,8 +140,7 @@ app.directive('ozpToolbar', function(){
    replace: false,
    transclude: false,
    scope: true,
-   link: function(scope, elem/*, attrs*/) {
-     console.log('elem: ' + elem);
+   link: function(scope/*, elem, attrs*/) {
 
      scope.$watch('fullScreenMode', function() {
        if (scope.fullScreenMode) {

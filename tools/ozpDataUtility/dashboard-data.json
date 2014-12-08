@@ -396,7 +396,7 @@
       "name": "Bouncing Balls",
       "id": "3",
       "layout": "grid",
-      "stickyIndex": -1,
+      "stickyIndex": 3,
       "frames": [
         {
           "appId": "998437ef-9191-4d57-91a7-6ab049361583",

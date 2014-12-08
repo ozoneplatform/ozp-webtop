@@ -138,7 +138,6 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           frame[key] = false;
         }
         else {
-          console.debug(typeof frame[key]);
           frame[key] = true;
         }
         return that.saveFrame(frame).then(function(resp) {
@@ -591,19 +590,25 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
       return this.getDashboardData().then(function(dashboardData) {
         // get new id for board
         return that.getNewDashboardId().then(function(dashboardId) {
-          var newBoard = {
+          return that.getNextStickyIndex().then(function(nextStickyIndex) {
+            console.log('creating new board with sticky slot ' + nextStickyIndex);
+            var newBoard = {
             'name': name,
             'id': dashboardId,
-            'stickyIndex': -1,
+            'stickyIndex': nextStickyIndex,
             'layout': 'grid',
             'frames': [
             ]
-          };
-          return that.getDashboards().then(function(dashboards) {
-            dashboards.push(newBoard);
-            dashboardData.dashboards = dashboards;
-            return that._setDashboardData(dashboardData).then(function(response) {
-              return response;
+            };
+            return that.getDashboards().then(function(dashboards) {
+              dashboards.push(newBoard);
+              dashboardData.dashboards = dashboards;
+              return that._setDashboardData(dashboardData).then(function (response) {
+                return response;
+              }).catch(function (error) {
+                console.log('should not have happened: ' + error);
+              });
+
             }).catch(function(error) {
               console.log('should not have happened: ' + error);
             });
@@ -632,6 +637,26 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
         }
         newId = Math.max.apply(Math, existingIds) + 1;
         return newId.toString();
+      });
+    },
+    /**
+     * Get the next available sticky slot for a new dashboard
+     */
+    getNextStickyIndex: function() {
+      return this.getDashboards().then(function(dashboards) {
+        var usedStickySlots = [];
+        for (var i = 0; i < dashboards.length; i++) {
+          usedStickySlots.push(dashboards[i].stickyIndex);
+        }
+        // TODO: use constants.maxStickyBoards
+        for (var j=0; j < 10; j++) {
+          if (usedStickySlots.indexOf(j) < 0) {
+            return j;
+          }
+        }
+        console.log('WARNING: Sticky dashboard slots are full!');
+      }).catch(function(error) {
+        console.log('should not have happened: ' + error);
       });
     },
     /**
@@ -666,7 +691,6 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           }
         }
         return that.saveDashboard(dashboard).then(function(response) {
-          console.log('saved dashboards after cascade update');
           return response;
         });
       }).catch(function(error) {
@@ -1063,7 +1087,7 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           {
             'name': 'Bouncing Balls',
             'id': '3',
-            'stickyIndex': -1,
+            'stickyIndex': 3,
             'layout': 'grid',
             'frames': [
               {

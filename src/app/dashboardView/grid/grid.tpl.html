@@ -6,7 +6,7 @@
             size-x="frame.gridLayout[deviceSize].sizeX" size-y="frame.gridLayout[deviceSize].sizeY"
             id="{{frame.id}}"
             class="ozp-managed-frame">
-          <ozp-chrome></ozp-chrome>
+          <ozp-chrome frame="frame"></ozp-chrome>
           <iframe class="iframe-grid"
                   ng-class="{frameHighlighted: frame.highlighted}"
                   ng-src="{{frame.trustedUrl}}" frameBorder="0">

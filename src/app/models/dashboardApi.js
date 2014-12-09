@@ -208,11 +208,13 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           console.log('Error: frame with id ' + frameId + ' not found');
           return false;
         }
-        frame.desktopLayout.left = x;
-        frame.desktopLayout.top = y;
-        frame.desktopLayout.width = width;
-        frame.desktopLayout.height = height;
-        frame.desktopLayout.zIndex = zIndex;
+        if(!frame.isMaximized) {
+          frame.desktopLayout.left = x;
+          frame.desktopLayout.top = y;
+          frame.desktopLayout.width = width;
+          frame.desktopLayout.height = height;
+          frame.desktopLayout.zIndex = zIndex;
+        }
         return that.saveFrame(frame).then(function(response) {
           return response;
         }).catch(function(error) {

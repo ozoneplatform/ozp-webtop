@@ -299,21 +299,6 @@ angular.module('ozpWebtop.dashboardView.desktop')
     };
 
     /**
-     * Getter for frame.isMaximized
-     *
-     * @method isFrameMaximized
-     * @param e Frame to get data for
-     * @returns {boolean}
-     */
-    $scope.isFrameMaximized = function(e) {
-      for (var i=0; i < $scope.frames.length; i++) {
-        if ($scope.frames[i].id === e.id) {
-          return $scope.frames[i].isMaximized;
-        }
-      }
-    };
-
-    /**
      * Sort the zIndex of all frames
      *
      * @method sortFrames

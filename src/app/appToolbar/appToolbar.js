@@ -39,6 +39,8 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param $rootScope $rootScope service
  * @param $state $state service
  * @param $modal $modal service from ui.bootstrap
+ * @param $interval $interval service from ui.bootstrap
+ * @param $window $window service from ui.bootstrap
  * @param marketplaceApi Application data model
  * @param dashbaordApi Dashboard data model
  * @param userSettingsApi User settings data model
@@ -50,7 +52,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  */
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
-                                                 $modal, $interval,
+                                                 $modal, $interval, $window,
                                                  marketplaceApi, dashboardApi,
                                                  userSettingsApi,
                                                  windowSizeWatcher,
@@ -536,6 +538,28 @@ angular.module( 'ozpWebtop.appToolbar')
           }
         });
       };
+
+    $scope.openDeleteDashboardModal = function(board) {
+      if ($scope.dashboards.length === 1) {
+        console.log('ERROR: You may not delete your last dashboard');
+        return;
+      } else {
+        console.log('dashboards remaining: ' + $scope.dashboards.length);
+      }
+      var msg = 'Are you sure you want to delete dashboard ' +
+          board.name + '? This action cannot be undone';
+      if ($window.confirm(msg)) {
+        dashboardApi.removeDashboard(board.id).then(function() {
+          // redirect user to their first board
+          dashboardApi.getDashboards().then(function(dashboards) {
+            $state.go('dashboardview.' +
+            dashboards[0].layout + '-sticky-' +
+            dashboards[0].stickyIndex, {
+            'dashboardId': dashboards[0].id});
+          });
+        });
+      }
+    };
 
   });
 

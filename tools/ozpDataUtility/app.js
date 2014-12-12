@@ -18,7 +18,7 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
       peerUrl: $scope.ozpBusInfo.url
     });
 
-    $scope.iwcClient.on('connected', function() {
+    return $scope.iwcClient.connect().then(function() {
       console.log('client connected to ozp bus successfully');
       $scope.ozpBusInfo.connected = true;
       if(!$scope.$$phase) { $scope.$apply(); }
@@ -35,12 +35,13 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
     if ($scope.ozpBusInfo.connected) {
       $scope.disconnectFromBus();
     }
-    $scope.connectToBus();
-    $scope.appListings = [];
-    $scope.dashboardData = [];
-    getApplications().then(function() {
-      getDashboards().then(function() {
-        if(!$scope.$$phase) { $scope.$apply(); }
+    $scope.connectToBus().then(function(){
+      $scope.appListings = [];
+      $scope.dashboardData = [];
+      getApplications().then(function() {
+        getDashboards().then(function() {
+          if(!$scope.$$phase) { $scope.$apply(); }
+        });
       });
     });
   };

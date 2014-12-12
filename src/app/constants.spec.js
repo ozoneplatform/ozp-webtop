@@ -5,17 +5,12 @@ describe('constants', function () {
   beforeEach(module('ozpWebtop'));
 
   var useIwc, iwcOzoneBus, deviceSizeChangedEvent, windowSizeChangedEvent,
-    dashboardStateChangedEvent, dashboardSwitchedEvent,
-    userPreferencesUpdatedEvent,
-    launchUserPreferencesModalEvent,
+    dashboardStateChangedEvent,
     fullScreenModeToggleEvent, highlightFrameOnGridLayoutEvent;
 
   beforeEach(inject(function (_useIwc_, _iwcOzoneBus_, _deviceSizeChangedEvent_,
                               _windowSizeChangedEvent_,
                               _dashboardStateChangedEvent_,
-                              _dashboardSwitchedEvent_,
-                              _userPreferencesUpdatedEvent_,
-                              _launchUserPreferencesModalEvent_,
                               _fullScreenModeToggleEvent_,
                               _highlightFrameOnGridLayoutEvent_
     ) {
@@ -24,9 +19,6 @@ describe('constants', function () {
     deviceSizeChangedEvent = _deviceSizeChangedEvent_;
     windowSizeChangedEvent = _windowSizeChangedEvent_;
     dashboardStateChangedEvent = _dashboardStateChangedEvent_;
-    dashboardSwitchedEvent = _dashboardSwitchedEvent_;
-    userPreferencesUpdatedEvent = _userPreferencesUpdatedEvent_;
-    launchUserPreferencesModalEvent = _launchUserPreferencesModalEvent_;
     fullScreenModeToggleEvent = _fullScreenModeToggleEvent_;
     highlightFrameOnGridLayoutEvent = _highlightFrameOnGridLayoutEvent_;
 
@@ -50,18 +42,6 @@ describe('constants', function () {
 
   it('should define dashboardStateChangedEvent', function() {
     expect(dashboardStateChangedEvent).toBe('dashboardStateChange');
-  });
-
-  it('should define dashboardSwitchedEvent', function() {
-    expect(dashboardSwitchedEvent).toBe('dashboardSwitched');
-  });
-
-  it('should define userPreferencesUpdatedEvent', function() {
-    expect(userPreferencesUpdatedEvent).toBe('userPreferencesUpdated');
-  });
-
-  it('should define launchUserPreferencesModalEvent', function() {
-    expect(launchUserPreferencesModalEvent).toBe('launchUserPreferencesModal');
   });
 
   it('should define fullScreenModeToggleEvent', function() {

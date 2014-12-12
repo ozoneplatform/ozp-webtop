@@ -6,7 +6,6 @@
  * @module ozpWebtop.dashboardView.grid
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.constants
- * @requires ozpWebtop.services.dashboardChangeMonitor
  * @requires ozpWebtop.models.dashboard
  * @requires ozpWebtop.models.marketplace
  * @requires ozpWebtop.models.userSettings
@@ -14,7 +13,6 @@
  */
 angular.module('ozpWebtop.dashboardView.grid', [
   'ozp.common.windowSizeWatcher', 'ozpWebtop.constants',
-  'ozpWebtop.services.dashboardChangeMonitor',
   'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
   'ozpWebtop.models.userSettings']);
 
@@ -28,15 +26,12 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @constructor
  * @param {Object} $scope an Angular scope
  * @param {Object} $rootScope the Angular root scope
- * @param {Object} $location the Angular location service
  * @param {Object} $interval the Angular interval service
  * @param {Object} $q the Angular q service
  * @param {Object} $timeout the Angular timeout service
  * @param {Object} dashboardApi the API for dashboard information
  * @param {Object} marketplaceApi the API for marketplace application
  * information
- * @param {Object} dashboardChangeMonitor the service that monitors dashboard
- * changes
  * @param {Object} userSettingsApi the API for user settings
  * @param {Object} windowSizeWatcher service that notifies on window size
  * changes
@@ -48,9 +43,9 @@ angular.module('ozpWebtop.dashboardView.grid', [
  */
 angular.module('ozpWebtop.dashboardView.grid')
 
-.controller('GridCtrl', function ($scope, $rootScope, $location,
+.controller('GridCtrl', function ($scope, $rootScope,
                                   $interval, $q, $timeout, dashboardApi, marketplaceApi,
-                                  dashboardChangeMonitor, userSettingsApi,
+                                  userSettingsApi,
                                   windowSizeWatcher, deviceSizeChangedEvent,
                                   windowSizeChangedEvent,
                                   dashboardStateChangedEvent,
@@ -174,9 +169,6 @@ angular.module('ozpWebtop.dashboardView.grid')
     // Detect window resize events
     windowSizeWatcher.run();
 
-    // receive notification when the current dashboard changes (via URL)
-    dashboardChangeMonitor.run();
-
     // initialize device size
     $scope.deviceSize = windowSizeWatcher.getCurrentSize();
     if ($scope.deviceSize === 'lg') {
@@ -241,38 +233,43 @@ angular.module('ozpWebtop.dashboardView.grid')
       }
     });
 
-   function removeFrameHighlight () {
+    function removeFrameHighlight () {
       $scope.frames[$scope.frameIndexToUnhighlight].highlighted = false;
     }
 
-    // TODO: Originally tried sending broadcast events from
-    // dashboardChangeMonitor, but that did not work out - led to lots of
-    // problems such as the desktop and grid controllers not being
-    // loaded/unloaded properly. So instead, we'll just reach into the internal
-    // state of the dashboardChangeMonitor to get this info and use $watch on
-    // $location.path to trigger the update. To see what happens, just
-    // uncomment the console.logs in $on.(...) in grid.js and desktop.js
-    $scope.$watch(function() {
-      return $location.path();
-    }, function() {
-      var sticky = ($location.path().indexOf('sticky') !== -1) ? true : false;
-      // TODO: check for layout type??
-      if (dashboardChangeMonitor.dashboardId !== $scope.dashboardId && initialized) {
-        return;
-      }
-      if (sticky && initialized) {
-        return;
-      }
+    $scope.$on('$stateChangeSuccess',
+      function(event, toState, toParams/*, fromState, fromParams*/){
+        var layoutType = '';
+        if (toState.name.indexOf('grid-sticky') > -1) {
+          layoutType = 'grid';
+        } else if (toState.name.indexOf('desktop-sticky') > -1) {
+          layoutType = 'desktop';
+        } else {
+          return;
+        }
+        if (layoutType !== 'grid') {
+          return;
+        }
+        if (initialized && toParams.dashboardId === $scope.dashboardId) {
+          // if widgets were added to this dashboard in desktop layout, those
+          // same widgets need to be added to this layout as well
+          handleDashboardChange();
+          return;
+        }
+        if (initialized && toParams.dashboardId !== $scope.dashboardId) {
+          return;
+        }
+        $scope.dashboardId = toParams.dashboardId;
 
-      $scope.reloadDashboard().then(function () {
+        $scope.reloadDashboard().then(function () {
         // dashboard reloaded
         // TODO: not guaranteed to end up here - do initialization at end of
         // reloadDashboard function
-      }).catch(function (error) {
-        console.log('should not have happened: ' + error);
-      });
-
-    });
+        }).catch(function (error) {
+          console.log('should not have happened: ' + error);
+        });
+      }
+    );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
@@ -287,7 +284,6 @@ angular.module('ozpWebtop.dashboardView.grid')
     function handleGridsterResizeStart(uiWidget) {
       // reduce the size of the frame when resizing is started so that
       // gridster behaves itself
-      console.debug(uiWidget);
       // TODO will probably need a workaround for ie9
       (uiWidget.element).css('pointer-events','none');
     }
@@ -354,8 +350,7 @@ angular.module('ozpWebtop.dashboardView.grid')
         $interval(handleDashboardChange, 500, 1);
         return;
       }
-      var currentDashboardId = dashboardChangeMonitor.dashboardId;
-      dashboardApi.getDashboardById(currentDashboardId).then(function(dashboard) {
+      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
         if ($scope.frames === dashboard.frames) {
           return;
         }
@@ -430,13 +425,12 @@ angular.module('ozpWebtop.dashboardView.grid')
       // app information is retrieved asynchronously from IWC. If the
       // information isn't available yet, try again later
       if ($scope.apps.length === 0) {
+        console.log('$scope.apps.length = 0, waiting ...');
         $interval($scope.reloadDashboard, 500, 1);
         var deferred = $q.defer();
         deferred.reject(false);
         return deferred.promise;
       }
-      // Get the dashboard
-      $scope.dashboardId = dashboardChangeMonitor.dashboardId;
       return dashboardApi.getDashboardById($scope.dashboardId).then(function (dashboard) {
         if (!dashboard) {
           console.log('Dashboard changed, but dashboard does not exist');

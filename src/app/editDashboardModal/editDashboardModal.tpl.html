@@ -1,0 +1,46 @@
+<div class="wt-modal">
+  <div class="modal-header wt-modal-header">
+    <button type="button" class="close" ng-click="cancel()">
+      <span aria-hidden="true"><i class="fa fa-close close-icon"></i> </span>
+      <span class="sr-only">Close</span>
+    </button>
+    <h3 class="modal-title">Edit Dashboard</h3>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-md-8">
+          <form class="form-horizontal" role="form" name="editDashboardForm">
+            <div class="form-group">
+              <label for="inputName" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputName" ng-model="dashboard.name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="selectLayout" class="col-sm-2 control-label">Layout</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="selectLayout" ng-model="dashboard.layout">
+                  <option>grid</option>
+                  <option>desktop</option>
+                </select>
+              </div>
+            </div>
+            <div class="alert alert-warning" ng-show="layoutChanged()">
+              <strong>Warning!</strong> Changing the dashboard layout will reset
+              the current widget states
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer wt-modal-footer">
+    <button ng-show="editDashboardForm.$error.pattern || editDashboardsForm.$error.required"
+            class="btn btn-primary" disabled="disabled">Ok</button>
+    <button ng-show="!editDashboardForm.$error.pattern && !editDashboardsForm.$error.required"
+            class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
+  </div>
+
+</div>

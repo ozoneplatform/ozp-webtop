@@ -25,44 +25,25 @@
         <ul class="nav navbar-nav">
           <li class="dropup">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span ng-class="{nonstickboard: currentDashboard.stickyIndex < 0}">
-              {{currentDashboard.name | limitTo : dashboardNameLength}}</span> <span class="caret"></span></a>
+              {{currentDashboard.name | limitTo : dashboardNameLength}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="board in dashboards">
-                <a ng-click="loadDashboard(board)" class="link-pointer"
-                   >
-                  <i class="fa fa-desktop"></i>&nbsp&nbsp <span ng-class="{nonstickboard: board.stickyIndex < 0}">{{board.name}}</span></a>
+                <div style="margin-left: 20px; margin-right: 20px;">
+                  <a ng-click="loadDashboard(board)" class="link-pointer"><i class="fa fa-desktop"></i>&nbsp&nbsp {{board.name}} &nbsp&nbsp&nbsp </a>
+                  <a ng-click="openEditDashboardModal()" class="link-pointer pull-right" ng-show="isCurrentBoard(board)"><i class="fa fa-pencil"></i></a>
+                </div>
               </li>
             </ul>
           </li>
           <li class="divider-vertical"></li>
-          <li>
-            <a ng-click="loadGridLayout()" class="link-pointer"
-               ng-class="{navLinkSelected: layout == 'grid'}"
-                tooltip="Grid layout" tooltip-placement="top">
-              <i class="fa fa-th fa-lg"></i>
-              <div ng-class="layout === 'desktop'? 'layout-icon-inactive' : 'layout-icon-active'">&nbsp</div>
-            </a>
-          </li>
-          <li class="divider-vertical"></li>
-          <li>
-            <a ng-click="loadDesktopLayout()" class="link-pointer"
-               ng-class="{navLinkSelected: layout == 'desktop'}" tooltip="Desktop layout"
-                tooltip-placement="top">
-              <i class="fa fa-clipboard fa-lg"></i>
-              <div ng-class="layout === 'grid'? 'layout-icon-inactive' : 'layout-icon-active'">&nbsp</div>
-            </a>
-          </li>
-          <li class="divider-vertical"></li>
-
-          <li ng-show="layout === 'desktop'">
+          <li ng-show="currentDashboard.layout === 'desktop'">
             <a ng-click="cascadeWindows()" class="link-pointer"
                 tooltip="Cascade Windows"
                 tooltip-placement="top">
               <i class="fa fa-files-o fa-lg"></i>
             </a>
           </li>
-          <li class="divider-vertical" ng-show="layout === 'desktop'"></li>
+          <li class="divider-vertical" ng-show="currentDashboard.layout === 'desktop'"></li>
 
           <!-- stuff on the left side of the nav bar -->
           <li ng-repeat="app in myPinnedApps">
@@ -70,7 +51,7 @@
                 ng-click="maximizeFrame(app)">
               <img class="chrome-icon app-toolbar-img"
                    ng-src="{{app.icon.large}}"/>
-              <div ng-class="app.isMinimized && layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div>
+              <div ng-class="app.isMinimized && currentDashboard.layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div>
             </a>
           </li>
         </ul>
@@ -81,11 +62,6 @@
                  ng-click="nextApps()" style="margin-top: 15px;"></i></li>
 
           <li class="divider-vertical" style="margin-right: 0px; padding-right: 0px"></li>
-          <li style="margin-right: 0px; padding-right: 0px; margin-left: 0px; padding-left: 0px;">
-            <a ng-click="launchSettingsModal()">
-              <i class="fa fa-cog fa-lg link-pointer"></i>
-            </a>
-          </li>
           <li class="hideToolbarButton link-pointer" tooltip="Enter Full Screen"
               tooltip-placement="top">
             <a ng-click="toggleFullScreenMode();">

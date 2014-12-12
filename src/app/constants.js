@@ -38,7 +38,7 @@ angular.module('ozpWebtop.constants')
  * @property maxStickyBoards
  * @type Integer
  */
-.constant('maxStickyBoards', 3)
+.constant('maxStickyBoards', 10)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                              Events
@@ -68,32 +68,6 @@ angular.module('ozpWebtop.constants')
  * @type String
  */
 .constant('dashboardStateChangedEvent', 'dashboardStateChange')
-
-/**
- * Event fired when the active dashboard is switched
- *
- * @property dashboardSwitchedEvent
- * @type String
- */
-.constant('dashboardSwitchedEvent', 'dashboardSwitched')
-
-/**
- * Event fired when the user updates their preferences (add/remove/rename
- * dashboards, change theme, etc)
- *
- * @property userPreferencesUpdatedEvent
- * @type String
- */
-.constant('userPreferencesUpdatedEvent', 'userPreferencesUpdated')
-
-/**
- * Event fired to indicate that the user preferences modal dialog should be
- * displayed
- *
- * @property launchUserPreferencesModalEvent
- * @type String
- */
-.constant('launchUserPreferencesModalEvent', 'launchUserPreferencesModal')
 
 /**
  * Event fired when full-screen mode is changed

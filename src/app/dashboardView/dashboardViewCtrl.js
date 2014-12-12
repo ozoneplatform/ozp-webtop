@@ -22,20 +22,16 @@ angular.module('ozpWebtop.dashboardView', []);
  */
 angular.module('ozpWebtop.dashboardView')
 
-.controller('DashboardViewCtrl', function ($scope,
-                                           dashboardChangeMonitor,
-                                           dashboardSwitchedEvent) {
+.controller('DashboardViewCtrl', function ($scope) {
 
-    // activate the dashboard change monitor so we receive notification when the
-    // user's dashboard changes
-    dashboardChangeMonitor.run();
-
-    $scope.layout = dashboardChangeMonitor.layout;
-
-    $scope.$on(dashboardSwitchedEvent, function(event, dashboardChange) {
-      $scope.layout = dashboardChange.layout;
-      console.log('DashboardViewCtrl got layout change: ' + $scope.layout);
+    $scope.$on('$stateChangeSuccess',
+      function(event, toState/*, toParams, fromState, fromParams*/){
+        if (toState.name.indexOf('grid-sticky') > -1) {
+          $scope.layout = 'grid';
+        } else if (toState.name.indexOf('desktop-sticky') > -1) {
+          $scope.layout = 'desktop';
+        } else {
+        }
     });
-
 
   });

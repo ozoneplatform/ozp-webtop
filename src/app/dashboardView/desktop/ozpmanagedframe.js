@@ -63,7 +63,6 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
       console.log('ERROR, scope.myframe is not defined');
       return;
     }
-    console.log('initializing frame ' + scope.myframe.id);
     scope.zIndexMax = 0;
     element.draggable(draggableConfig);
     element.resizable(resizableConfig);
@@ -127,11 +126,10 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
       }
 
       function onMouseDown() {
-        console.log('got mousedown event for frame: ' + scope.myframe.id);
         // change z-index to top
         // TODO: find a more maintainable way?
         if (event.target.className.indexOf('glyphicon') > -1) {
-          console.log('stop() prevent default on mouseup and returning');
+          // console.log('stop() prevent default on mouseup and returning');
           event.preventDefault();
           return;
         }

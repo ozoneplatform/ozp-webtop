@@ -5,13 +5,12 @@
  *
  * @module ozpWebtop.dashboardView.desktop
  * @requires ozpWebtop.constants
- * @requires ozpWebtop.services.dashboardChangeMonitor
  * @requires ozpWebtop.models.dashboard
  * @requires ozpWebtop.models.marketplace
  * @requires ozpWebtop.models.userSettings
  */
 angular.module('ozpWebtop.dashboardView.desktop', [
-  'ozpWebtop.constants', 'ozpWebtop.services.dashboardChangeMonitor',
+  'ozpWebtop.constants',
   'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
   'ozpWebtop.models.userSettings']);
 
@@ -25,20 +24,17 @@ angular.module('ozpWebtop.dashboardView.desktop')
  * @constructor
  * @param $scope ng $scope
  * @param $rootScope ng $rootScope
- * @param $location ng $location
  * @param $interval ng $interval
  * @param dashboardApi dashboard data
  * @param marketplaceApi marketplace listings data
- * @param dashboardChangeMonitor notify when dashboard changes
  * @param userSettingsApi user preferences data
  * @param dashboardStateChangedEvent event name
  * @param fullScreenModeToggleEvent event name
  * @namespace dashboardView
  */
-  .controller('DesktopCtrl', function ($scope, $rootScope, $location,
+  .controller('DesktopCtrl', function ($scope, $rootScope,
                                        $interval,
                                        dashboardApi, marketplaceApi,
-                                       dashboardChangeMonitor,
                                        userSettingsApi,
                                        dashboardStateChangedEvent,
                                        fullScreenModeToggleEvent) {
@@ -99,16 +95,12 @@ angular.module('ozpWebtop.dashboardView.desktop')
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // register to receive notifications when active dashboard changes
-    dashboardChangeMonitor.run();
-
     // get dashboards
     dashboardApi.getDashboards().then(function(dashboards) {
       if (!dashboards) {
         console.log('No dashboards exist');
         return;
       }
-      console.log('re getting dasboards');
       $scope.dashboards = dashboards;
 
       $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
@@ -133,28 +125,31 @@ angular.module('ozpWebtop.dashboardView.desktop')
       }
     });
 
-    // TODO: First tried sending broadcast events from dashboardChangeMonitor,
-    // but that did not work out - led to lots of problems such as the desktop
-    // and grid controllers not being loaded/unloaded properly. So instead, we'll
-    // just reach into the internal state of the dashboardChangeMonitor to get
-    // this info and use $watch on $location.path to trigger the update. To
-    // see what happens, just uncomment the console.logs in $on.(...) in
-    // grid.js and desktop.js
-    $scope.$watch(function() {
-      return $location.path();
-    }, function() {
-      var sticky = ($location.path().indexOf('sticky') !== -1) ? true : false;
-      // TODO: check for layout type??
-      if (dashboardChangeMonitor.dashboardId !== $scope.currentDashboardId &&
-        initialized) {
-        return;
-      }
-      if (sticky && initialized) {
-        return;
-      }
-
-      updateDashboard();
-      initialized = true;
+    $scope.$on('$stateChangeSuccess',
+      function(event, toState, toParams/*, fromState, fromParams*/){
+        var layoutType = '';
+        if (toState.name.indexOf('grid-sticky') > -1) {
+          layoutType = 'grid';
+        } else if (toState.name.indexOf('desktop-sticky') > -1) {
+          layoutType = 'desktop';
+        } else {
+          return;
+        }
+        if (layoutType !== 'desktop') {
+          return;
+        }
+        if (initialized && toParams.dashboardId === $scope.currentDashboardId) {
+          // if widgets were added to this dashboard in grid layout, those
+          // same widgets need to be added to this layout as well
+          dashboardChangeHandler();
+          return;
+        }
+        if (initialized && toParams.dashboardId !== $scope.currentDashboardId) {
+          return;
+        }
+        $scope.currentDashboardId = toParams.dashboardId;
+        reloadDashboard();
+        initialized = true;
     });
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -174,7 +169,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
         return;
       }
 
-      dashboardApi.getDashboardById(dashboardChangeMonitor.dashboardId).then(function(updatedDashboard) {
+      dashboardApi.getDashboardById($scope.currentDashboardId).then(function(updatedDashboard) {
 
         // update the isMinimized and isMaximized state
         for (var ii=0; ii < updatedDashboard.frames.length; ii++) {
@@ -242,25 +237,24 @@ angular.module('ozpWebtop.dashboardView.desktop')
     }
 
     /**
-     * Update the active dashboard and broadcast dashboardStateChangedEvent on
-     * completion
+     * Reload this dashboard
      *
-     * @method updateDashboard
+     * @method reloadDashboard
      */
-    function updateDashboard() {
+    function reloadDashboard() {
       // app information is retrieved asynchronously from IWC. If the
       // information isn't available yet, try again later
       if ($scope.apps.length === 0) {
-        $interval(updateDashboard, 500, 1);
+        console.log('reloadDashboard waiting to run since $scope.apps is empty');
+        $interval(reloadDashboard, 500, 1);
         return;
       }
       if (!$scope.dashboards) {
         console.log('Dashboard changed, but no dashboards exist');
         return;
       }
-      var dashboardId = dashboardChangeMonitor.dashboardId;
       for (var i=0; i < $scope.dashboards.length; i++) {
-        if ($scope.dashboards[i].id.toString() === dashboardId) {
+        if ($scope.dashboards[i].id.toString() === $scope.currentDashboardId) {
           $scope.currentDashboard = $scope.dashboards[i];
           $scope.currentDashboardId = $scope.currentDashboard.id;
           $scope.frames = $scope.currentDashboard.frames;

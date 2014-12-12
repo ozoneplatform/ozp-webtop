@@ -5,11 +5,10 @@
  *
  * @module ozpWebtop.dashboardView.chrome
  * @requires ozpWebtop.constants
- * @requires ozpWebtop.services.dashboardChangeMonitor
  * @requires ozpWebtop.models.dashboard
  */
 angular.module('ozpWebtop.dashboardView.chrome', [
-  'ozpWebtop.constants', 'ozpWebtop.services.dashboardChangeMonitor',
+  'ozpWebtop.constants',
   'ozpWebtop.models.dashboard']);
 
 var chrome = angular.module('ozpWebtop.dashboardView.chrome');
@@ -25,71 +24,82 @@ var chrome = angular.module('ozpWebtop.dashboardView.chrome');
  * @param $scope ng $scope
  * @param $rootScope ng $rootScope
  * @param dashboardApi dashboard data
- * @param dashboardChangeMonitor notify when active dashboard changes
  * @param dashboardStateChangedEvent event name
  * @namespace dashboardView
  */
 chrome.controller('ChromeCtrl', function ($scope, $rootScope, dashboardApi,
-                                    dashboardChangeMonitor,
                                     dashboardStateChangedEvent) {
 
+  // need to get initial data from frame - can't rely on getting the
+  // $stateChangeSuccess message initially
+  if ($scope.frame) {
+    dashboardApi.getDashboards().then(function(dashboards) {
+      for (var i=0; i < dashboards.length; i++) {
+        for (var j=0; j < dashboards[i].frames.length; j++) {
+          if (dashboards[i].frames[j].id === $scope.frame.id) {
+            $scope.dashboardId = dashboards[i].id;
+            $scope.layout = dashboards[i].layout;
+          }
+        }
+      }
+    });
+  } else {
+    console.log('WARNING: frame not defined');
+  }
 
-    // register to receive notifications if dashboard changes
-    dashboardChangeMonitor.run();
+  $scope.$on('$stateChangeSuccess',
+    function(event, toState, toParams/*, fromState, fromParams*/){
+      if (toState.name.indexOf('grid-sticky') > -1) {
+        $scope.layout = 'grid';
+      } else if (toState.name.indexOf('desktop-sticky') > -1) {
+        $scope.layout = 'desktop';
+      } else {
+        return;
+      }
+      $scope.dashboardId = toParams.dashboardId;
+  });
 
-    $scope.dashboardId = dashboardChangeMonitor.dashboardId;
-    $scope.layout = dashboardChangeMonitor.layout;
+  /**
+   * Remove a frame from the current dashboard and send
+   * dashboardStateChangedEvent
+   *
+   * @method removeFrame
+   */
+  $scope.removeFrame = function(){
+    dashboardApi.removeFrame($scope.frame.id).then(function() {
+      $rootScope.$broadcast(dashboardStateChangedEvent, {
+        'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
 
-    if (dashboardChangeMonitor.layout === 'grid') {
-      $scope.isGrid = true;
-    } else {
-      $scope.isGrid = false;
-    }
+  };
 
-    /**
-     * Remove a frame from the current dashboard and send
-     * dashboardStateChangedEvent
-     *
-     * @method isDisabled
-     * @param e the frame (?) clicked containing e.id
-     */
-    $scope.isDisabled = function(e){
-      dashboardApi.removeFrame(e.id).then(function() {
-        $rootScope.$broadcast(dashboardStateChangedEvent, {
-          'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
+  /**
+   * Hide a frame on the dashboard
+   * @method minimizeFrame
+   */
+  $scope.minimizeFrame = function(){
+    dashboardApi.toggleFrameKey($scope.frame.id, 'isMinimized').then(function() {
+      $rootScope.$broadcast(dashboardStateChangedEvent, {
+        'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
+  };
 
-    };
-
-    /**
-     * Hide a frame on the dashboard
-     * @method minimizeFrame
-     * @param e The frame (?) clicked containing e.id
-     */
-    $scope.minimizeFrame = function(e){
-      dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function() {
-        $rootScope.$broadcast(dashboardStateChangedEvent, {
-          'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    };
-
-    /**
-     * Show a frame on the dashboard
-     * @method maximizeFrame
-     * @param e The frame (?) clicked containing e.id
-     */
-    $scope.maximizeFrame = function(e){
-      dashboardApi.toggleFrameKey(e.id, 'isMaximized').then(function() {
-        $rootScope.$broadcast(dashboardStateChangedEvent, {
-          'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
-    };
+  /**
+   * Show a frame on the dashboard
+   * @method maximizeFrame
+   */
+  $scope.maximizeFrame = function(){
+    dashboardApi.toggleFrameKey($scope.frame.id, 'isMaximized').then(function() {
+      $rootScope.$broadcast(dashboardStateChangedEvent, {
+        'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
+    }).catch(function(error) {
+      console.log('should not have happened: ' + error);
+    });
+  };
 
 });
 
@@ -107,6 +117,9 @@ chrome.directive('ozpChrome', function () {
     templateUrl: 'dashboardView/chrome/ozpchrome.tpl.html',
     restrict: 'E',
     replace: true,
-    controller: 'ChromeCtrl'
+    controller: 'ChromeCtrl',
+    scope: {
+      'frame': '='
+    }
   };
 });

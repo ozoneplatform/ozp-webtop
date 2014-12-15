@@ -4,7 +4,6 @@
  * Desktop managed frame
  *
  * @module ozpWebtop.dashboardView.desktop.managedFrame
- * @requires ozp.common.urlOriginComparer
  * @requires ozpWebtop.models.dashboard
  * @requires ozpWebtop.dashboardView.desktop.iframe
  */

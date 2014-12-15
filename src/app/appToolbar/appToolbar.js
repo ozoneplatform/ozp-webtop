@@ -45,6 +45,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param dashbaordApi Dashboard data model
  * @param userSettingsApi User settings data model
  * @param windowSizeWatcher Notify when window size changes
+ * @param maxStickyBoards max number of dashboards
  * @param deviceSizeChangedEvent event name
  * @param dashboardStateChangedEvent event name
  * @param fullScreenModeToggleEvent event name
@@ -56,6 +57,7 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  marketplaceApi, dashboardApi,
                                                  userSettingsApi,
                                                  windowSizeWatcher,
+                                                 maxStickyBoards,
                                                  deviceSizeChangedEvent,
                                                  dashboardStateChangedEvent,
                                                  fullScreenModeToggleEvent,
@@ -458,6 +460,13 @@ angular.module( 'ozpWebtop.appToolbar')
         var dashboardId;
         var stickyIndex;
         if (response.useNewDashboard) {
+          // make sure max # of dashboards hasn't been hit
+          if ($scope.dashboards.length >= maxStickyBoards) {
+            var msg = 'ERROR: Max number of dashboards reached';
+            console.log(msg);
+            alert(msg);
+            return;
+          }
           // create a new dashboard
           // TODO: is this randomly generated name ok?
           var random_integer = Math.floor((Math.random()+0.10)*101);

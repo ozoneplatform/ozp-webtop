@@ -145,9 +145,9 @@ app.directive('ozpToolbar', function(){
      scope.$watch('fullScreenMode', function() {
        if (scope.fullScreenMode) {
          // TODO: a cleaner way?
-         $('body').css('padding-top', '16px');
+         $('body').css('padding', '16px 0px');
        } else {
-         $('body').css('padding-top', '57px');
+         $('body').css('padding', '57px 0px');
          $('.navbar-fixed-top').css('top', '16px');
        }
      });

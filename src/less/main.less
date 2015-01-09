@@ -19,18 +19,14 @@
 
 
 html {
-  position: relative;
-  min-height: 100%;
+  height: 100%;
+  width: 100%;
   background-color: @dashboard-bg-color;
   // Always show scroll bar - prevents nasty issue with gridster where the
   // screen continuously changes size ~once per second
 //  overflow: -moz-scrollbars-vertical;
 //  overflow-y: scroll;
   //overflow-y: hidden;
-}
-
-body {
-  margin-bottom: @app-toolbar-height;
 }
 
 // bring back vertical dividers in bootstrap 3.0
@@ -184,6 +180,8 @@ input.ng-invalid {
 
 .ui-view-style {
   height: 100%;
+  width: 100%;
+  overflow-y: scroll;
 }
 
 // Grid view
@@ -357,11 +355,14 @@ body > div.classBanner:last-of-type {
   // height of the top and bottom toolbars). Ideally, this would be something
   // like 100vh - (height of top + bottom toolbars). Haven't found anything
   // that works like that yet.
-  height: 100vh;
+  position: fixed;
+  width: 100%;
+  height: 100%;
   overflow-y: hidden;
 }
 
 .grid-view {
+  position: relative;
   overflow-y: auto;
 }
 
@@ -381,6 +382,8 @@ body > div.classBanner:last-of-type {
   left: 0 !important;
   top: @app-toolbar-height + @classification-banner !important;
   bottom: @app-toolbar-height  + @classification-banner !important;
+  position: fixed;
+  z-index: 999999;
 }
 
 .fullWidthTopHidden {

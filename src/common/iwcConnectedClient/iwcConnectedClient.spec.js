@@ -5,7 +5,7 @@ describe('Service: iwcConnectedClient', function () {
   beforeEach(function() {
     angular.mock.module('ozpWebtop.constants', function($provide) {
       $provide.constant('useIwc', true);
-      $provide.constant('iwcOzoneBus', 'http://ozone-development.github.io/iwc/');
+      $provide.constant('defaultIwcOzoneBus', 'http://ozone-development.github.io/iwc/');
     });
   });
   // load the service's module
@@ -13,7 +13,7 @@ describe('Service: iwcConnectedClient', function () {
 
   // instantiate service
   var iwcConnectedClient, rootScope;
-  beforeEach(inject(function ($rootScope, iwcOzoneBus,
+  beforeEach(inject(function ($rootScope, defaultIwcOzoneBus,
                               _iwcConnectedClient_) {
     rootScope = $rootScope.$new();
     iwcConnectedClient = _iwcConnectedClient_;

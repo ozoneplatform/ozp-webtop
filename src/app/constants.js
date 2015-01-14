@@ -19,11 +19,11 @@ angular.module('ozpWebtop.constants')
 /**
  * URL of OZONE bus used by the application
  *
- * @property iwcOzoneBus
+ * @property defaultIwcOzoneBus
  * @type String
  */
-.constant('iwcOzoneBus', 'http://ozone-development.github.io/iwc/')
-//.constant('iwcOzoneBus', 'http://localhost:9044')
+.constant('defaultIwcOzoneBus', 'http://ozone-development.github.io/iwc/')
+//.constant('defaultIwcOzoneBus', 'http://localhost:9044')
 /**
  * Flag to use IWC
  *

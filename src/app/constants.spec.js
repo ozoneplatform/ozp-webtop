@@ -4,18 +4,18 @@ describe('constants', function () {
   // load the service's module
   beforeEach(module('ozpWebtop'));
 
-  var useIwc, iwcOzoneBus, deviceSizeChangedEvent, windowSizeChangedEvent,
+  var useIwc, defaultIwcOzoneBus, deviceSizeChangedEvent, windowSizeChangedEvent,
     dashboardStateChangedEvent,
     fullScreenModeToggleEvent, highlightFrameOnGridLayoutEvent;
 
-  beforeEach(inject(function (_useIwc_, _iwcOzoneBus_, _deviceSizeChangedEvent_,
+  beforeEach(inject(function (_useIwc_, _defaultIwcOzoneBus_, _deviceSizeChangedEvent_,
                               _windowSizeChangedEvent_,
                               _dashboardStateChangedEvent_,
                               _fullScreenModeToggleEvent_,
                               _highlightFrameOnGridLayoutEvent_
     ) {
     useIwc = _useIwc_;
-    iwcOzoneBus = _iwcOzoneBus_;
+    defaultIwcOzoneBus = _defaultIwcOzoneBus_;
     deviceSizeChangedEvent = _deviceSizeChangedEvent_;
     windowSizeChangedEvent = _windowSizeChangedEvent_;
     dashboardStateChangedEvent = _dashboardStateChangedEvent_;
@@ -28,8 +28,8 @@ describe('constants', function () {
     expect(useIwc).toBeDefined();
   });
 
-  it('should define iwcOzoneBus', function() {
-    expect(iwcOzoneBus).toBe('http://ozone-development.github.io/iwc/');
+  it('should define defaultIwcOzoneBus', function() {
+    expect(defaultIwcOzoneBus).toBe('http://ozone-development.github.io/iwc/');
   });
 
   it('should define deviceSizeChangedEvent', function() {

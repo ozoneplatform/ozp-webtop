@@ -12,7 +12,7 @@
     "ui-router-extras": "latest",
     "angular-gridster": "~0.9.11",
     "jquery-ui": "~1.11.0",
-    "ozp-iwc-angular": "ozone-development/ozp-iwc-angular",
+    "ozp-iwc-angular": "ozone-development/ozp-iwc-angular#master",
     "ozp-classification": "ozone-development/ozp-classification",
     "ozp-style": "ozone-development/ozp-style"
   }

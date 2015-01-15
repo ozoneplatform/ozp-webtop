@@ -156,6 +156,13 @@ angular.module('OzpDataUtility').controller('MainController', function($scope, $
     });
   };
 
+  $scope.clearDashboardData = function() {
+    var data = {};
+    setData('data.api', dashboardDataResource, data).then(function() {
+        $scope.refresh();
+      });
+  };
+
   // initialization
   $scope.refresh();
 

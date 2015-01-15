@@ -629,14 +629,36 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
      * @returns {Promise}
      */
     getNewDashboardId: function() {
+      var that = this;
       return this.getDashboards().then(function(dashboards) {
         var existingIds = [];
         var newId = -1;
-        for (var i=0; i < dashboards.length; i++) {
-          existingIds.push(Number(dashboards[i].id));
-        }
-        newId = Math.max.apply(Math, existingIds) + 1;
+        // just a simple test to determine if the dashboardData is valid. Should
+        // do something better eventually
+        if (Object.prototype.toString.call( dashboards ) === '[object Array]') {
+          for (var i=0; i < dashboards.length; i++) {
+            existingIds.push(Number(dashboards[i].id));
+          }
+          newId = Math.max.apply(Math, existingIds) + 1;
         return newId.toString();
+        } else {
+          // TODO: this logic should really be in its own top-level method
+          //  (like createInitialDashboardData)
+          // dashboard data is not structured properly (or completely missing),
+          // so create it. The new dashboard Id will be 0, since we have no
+          // dashboards
+          // TODO: get username
+          var data = {
+            'name': 'dashboards',
+            'user': 'J Smith',
+            'currentDashboard': '0',
+            'persist': true,
+            'dashboards': []
+          };
+          return that._setDashboardData(data).then(function() {
+            return '0';
+          });
+        }
       });
     },
     /**
@@ -667,6 +689,13 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
     getCurrentDashboard: function() {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
+        try {
+          if (dashboardData.currentDashboard === undefined || dashboardData.currentDashboard === {}) {
+            return null;
+          }
+        } catch (err) {
+          return null;
+        }
         return that.getDashboardById(dashboardData.currentDashboard);
       }).catch(function(error) {
         console.log('should not have happened: ' + error);

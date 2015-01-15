@@ -113,7 +113,7 @@ angular.module( 'ozpWebtop', [
     }
 
     angular.forEach(states, function(state) { $stateProvider.state(state); });
-    $urlRouterProvider.otherwise('/grid/sticky-0/0');
+    $urlRouterProvider.otherwise('/');
   })
 
 .run( function run ($rootScope, $state, dashboardApi, marketplaceApi,

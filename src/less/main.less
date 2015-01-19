@@ -294,8 +294,9 @@ body > div.classBanner:last-of-type {
 .ozp-managed-frame {
     position: absolute;
   box-sizing: border-box;
-    background-color: @ozp-white;
-    border: 1px solid #ddd;
+    background-color: @ozp-dk-gray2;
+    margin: 1px;
+    border: 1px solid @ozp-black;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -305,10 +306,10 @@ body > div.classBanner:last-of-type {
 }
 
 .ozp-chrome {
-    background: @ozp-lt-gray1;
-    color: @ozp-gray2;
+    background: @ozp-dk-gray2;
+    color: @ozp-white;
     font-size: 10pt;
-    height: 25px;
+    height: 15px;
     cursor: default;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -319,11 +320,13 @@ body > div.classBanner:last-of-type {
     max-height: 19px;
     max-width: 19px;
     margin: 3px;
+    padding-top: 3px;
     float: left;
 }
 
 .ozp-chrome > .chrome-name {
     line-height: 25px;
+    padding-top: 3px;
     white-space: nowrap;
     margin-left: 3px;
     max-width: 115px;
@@ -339,14 +342,15 @@ body > div.classBanner:last-of-type {
 
 .ozp-chrome > .chrome-controls > .btn {
     background: transparent;
-    padding: 0;
-    color: @ozp-lt-gray2;
+    padding-left: 3px;
+    padding-right: 3px;
+    color: @ozp-lt-gray3;
     font-size: 10px;
 }
 
 .ozp-chrome > .chrome-controls > .btn:hover,
 .ozp-chrome > .chrome-controls > .btn:active {
-    color: @ozp-dk-gray2;
+    color: @ozp-white;
 }
 
 .desktop-view {

@@ -124,9 +124,9 @@ angular.module('ozpWebtop.dashboardView.grid')
       // square widgets.
       rowHeight: 'match',
       // the pixel distance between each widget
-      margins: [20, 20],
+      margins: [5, 5],
       // don't apply margins to outside of grid
-      outerMargin: false,
+      outerMargin: true,
       // stacks the grid items if true
       isMobile: false,
       // the minimum columns the grid must have

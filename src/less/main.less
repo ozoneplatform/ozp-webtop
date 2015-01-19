@@ -39,8 +39,9 @@ html {
 }
 
 .navbar-inverse .divider-vertical {
-  border-right-color: #222222;
-  border-left-color: #111111;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  width: 10px;
 }
 
 @media (max-width: 767px) {
@@ -242,23 +243,23 @@ input.ng-invalid {
 }
 
 .app-toolbar-active-app {
-  position: relative;
-  top: -2px;
-  width: 32px;
-  height: 2px;
-  background-color: @ozp-blue2;
+//  position: relative;
+//  top: -2px;
+//  width: 32px;
+//  height: 2px;
+//  background-color: @ozp-blue3;
 }
 
 .app-toolbar-inactive-app {
   .app-toolbar-active-app;
-  background-color: @ozp-black;
+//  background-color: @ozp-black;
 }
 
 .layout-icon-active {
   position: relative;
   height: 2px;
   top: 10px;
-  background-color: @ozp-blue2;
+  background-color: @ozp-blue3;
 }
 
 .layout-icon-inactive {

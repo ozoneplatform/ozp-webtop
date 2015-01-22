@@ -36,7 +36,7 @@ angular.module('ozpWebtop.dashboardView')
           dashboardApi.getCurrentDashboard().then(function(dashboard) {
             if (!dashboard) {
               console.log('No dashboards found, creating a default one');
-              dashboardApi.createDashboard('Default').then(function() {
+              dashboardApi.createInitialDashboardData().then(function() {
                 // now get this dashboard id
                 dashboardApi.getDashboards().then(function(dashboards) {
                   // we know we only have one dashboard

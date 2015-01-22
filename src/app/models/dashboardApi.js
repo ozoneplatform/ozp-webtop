@@ -622,6 +622,28 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
         console.log('should not have happened: ' + error);
       });
     },
+    createInitialDashboardData: function() {
+      var that = this;
+      //  (like createInitialDashboardData)
+      // dashboard data is not structured properly (or completely missing),
+      // so create it. The new dashboard Id will be 0, since we have no
+      // dashboards
+      // TODO: get username
+      var data = {
+        'name': 'dashboards',
+        'user': 'J Smith',
+        'currentDashboard': '0',
+        'persist': true,
+        'dashboards': []
+      };
+      return this._setDashboardData(data).then(function() {
+        // create default dashboard
+        return that.createDashboard('Default').then(function() {
+          console.log('Default dashboard created');
+          return;
+        });
+      });
+    },
     /**
      * Get the next available id for a new dashboard
      * TODO: this assumes ids are integers and not uuids
@@ -629,7 +651,6 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
      * @returns {Promise}
      */
     getNewDashboardId: function() {
-      var that = this;
       return this.getDashboards().then(function(dashboards) {
         var existingIds = [];
         var newId = -1;
@@ -639,25 +660,14 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
           for (var i=0; i < dashboards.length; i++) {
             existingIds.push(Number(dashboards[i].id));
           }
-          newId = Math.max.apply(Math, existingIds) + 1;
+          if (!dashboards || dashboards.length === 0) {
+            newId = 0;
+          } else {
+            newId = Math.max.apply(Math, existingIds) + 1;
+          }
         return newId.toString();
         } else {
-          // TODO: this logic should really be in its own top-level method
-          //  (like createInitialDashboardData)
-          // dashboard data is not structured properly (or completely missing),
-          // so create it. The new dashboard Id will be 0, since we have no
-          // dashboards
-          // TODO: get username
-          var data = {
-            'name': 'dashboards',
-            'user': 'J Smith',
-            'currentDashboard': '0',
-            'persist': true,
-            'dashboards': []
-          };
-          return that._setDashboardData(data).then(function() {
-            return '0';
-          });
+          console.log('ERROR: Invalid dashboard data in getNewDashboardId');
         }
       });
     },

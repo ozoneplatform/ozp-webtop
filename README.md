@@ -31,7 +31,7 @@ Development tasks are run with Grunt:
  - `grunt release:type` and `git push --tags` to create a patch, minor, or 
  major release (updates changelog, versions, and creates tag)
  - `grunt run` - serve the production version of the application
- 
+
 Run `grunt -h` for a full list of Grunt tasks
 
 ## Important Links

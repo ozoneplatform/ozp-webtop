@@ -1,3 +1,19 @@
+# 0.3.1 (2015-01-23)
+
+
+
+## Bug fixes
+### dashboardApi, dashboardViewCtrl
+
+* fix bug where duplicate default dashboards are created ([d39d7766](git@github.com:ozone-development/ozp-webtop/commit/d39d7766))
+
+### ozpDataUtility
+
+* use ng-src for images to prevent error ([584d1847](git@github.com:ozone-development/ozp-webtop/commit/584d1847))
+
+
+
+
 # 0.3.0 (2015-01-22)
 
 ## Features

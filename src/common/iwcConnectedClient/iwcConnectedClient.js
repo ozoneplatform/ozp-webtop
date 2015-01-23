@@ -63,6 +63,9 @@ app.factory('iwcConnectedClient', function($q, $location, iwcClient, defaultIwcO
       });
 
       return deferred.promise;
-      }
+      },
+    getIwcBusUrl: function() {
+      return ozpIwcPeerUrl;
+    }
   };
 });

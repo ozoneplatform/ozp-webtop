@@ -10,7 +10,7 @@
  * @requires ozpWebtop.services.localStorageInterface
  */
 angular.module('ozpWebtop.models.dashboard', [
-  'ozp.common.utilities', 'ozpWebtop.constants',
+  'ozp.common.utilities', 'ozp.common.iwc.client', 'ozpWebtop.constants',
   'ozpWebtop.services.iwcInterface',
   'ozpWebtop.services.localStorageInterface']);
 
@@ -24,7 +24,8 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
-function generalDashboardModel($sce, persistStrategy, Utilities) {
+function generalDashboardModel($sce, persistStrategy, Utilities,
+                               iwcConnectedClient) {
 
   return {
     /**
@@ -261,8 +262,10 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
         var newRowSmall = 0;
         var newRowMedium = 0;
         for (var i=0; i < dashboard.frames.length; i++) {
-          var thisNewRowSmall = dashboard.frames[i].gridLayout.sm.row + dashboard.frames[i].gridLayout.sm.sizeY + 1;
-          var thisNewRowMd = dashboard.frames[i].gridLayout.md.row + dashboard.frames[i].gridLayout.md.sizeY + 1;
+          var thisNewRowSmall = dashboard.frames[i].gridLayout.sm.row +
+            dashboard.frames[i].gridLayout.sm.sizeY + 1;
+          var thisNewRowMd = dashboard.frames[i].gridLayout.md.row +
+            dashboard.frames[i].gridLayout.md.sizeY + 1;
           if ((thisNewRowSmall + 2) > newRowSmall) {
             newRowSmall = thisNewRowSmall;
           }
@@ -434,7 +437,8 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
             frames[j].icon.small = marketplaceApps[i].icons.small;
             frames[j].icon.large = marketplaceApps[i].icons.large;
             frames[j].url = marketplaceApps[i].launchUrls.default;
-            frames[j].trustedUrl = $sce.trustAsResourceUrl(frames[j].url);
+            frames[j].trustedUrl = $sce.trustAsResourceUrl(frames[j].url +
+              '?ozpIwc.peer=' + iwcConnectedClient.getIwcBusUrl());
             frames[j].name = marketplaceApps[i].name;
             frames[j].descriptionShort = marketplaceApps[i].descriptionShort;
             frames[j].singleton = marketplaceApps[i].uiHints.singleton;
@@ -726,7 +730,8 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
             dashboard.frames[i].isMaximized = false;
           }
           catch (err) {
-            console.log('Error in cascadeWindows on board ' + i + ':'  + JSON.stringify(err));
+            console.log('Error in cascadeWindows on board ' + i + ':'  +
+              JSON.stringify(err));
           }
         }
         return that.saveDashboard(dashboard).then(function(response) {
@@ -1247,9 +1252,12 @@ function generalDashboardModel($sce, persistStrategy, Utilities) {
  * ngtype: service
  *
  */
-models.service('dashboardModelLocalStorage', function($sce, localStorageInterface,
-                                                    Utilities) {
-  var model = generalDashboardModel($sce, localStorageInterface, Utilities);
+models.service('dashboardModelLocalStorage', function($sce,
+                                                      localStorageInterface,
+                                                      Utilities,
+                                                      iwcConnectedClient) {
+  var model = generalDashboardModel($sce, localStorageInterface, Utilities,
+    iwcConnectedClient);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
       this[prop] = model[prop];
@@ -1264,8 +1272,10 @@ models.service('dashboardModelLocalStorage', function($sce, localStorageInterfac
  * ngtype: service
  *
  */
-models.service('dashboardModelIwc', function($sce, iwcInterface, Utilities) {
-  var model = generalDashboardModel($sce, iwcInterface, Utilities);
+models.service('dashboardModelIwc', function($sce, iwcInterface, Utilities,
+                                             iwcConnectedClient) {
+  var model = generalDashboardModel($sce, iwcInterface, Utilities,
+    iwcConnectedClient);
   for (var prop in model) {
     if (model.hasOwnProperty(prop)) {
       this[prop] = model[prop];

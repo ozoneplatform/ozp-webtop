@@ -137,10 +137,10 @@
           <tbody>
           <tr ng-repeat="app in appListings">
             <td>
-              <img width="32" height="32" src="{{app.icons.large}}"/>
+              <img width="32" height="32" ng-src="{{app.icons.large}}"/>
             </td>
             <td>
-              <img width="16" height="16" src="{{app.icons.small}}"/>
+              <img width="16" height="16" ng-src="{{app.icons.small}}"/>
             </td>
             <td>{{app.name}}</td>
             <td>{{app.descriptionShort}}</td>

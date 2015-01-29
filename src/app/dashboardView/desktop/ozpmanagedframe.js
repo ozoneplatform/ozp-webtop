@@ -30,10 +30,11 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
     },
     link: function (scope, element) {
       var resizableConfig = {
-      // handles: 'all',
       handles: 'nw, sw, se, ne',
       aspectRatio: false,
       ghost: true,
+      minWidth: 210,
+      minHeight: 210,
       containment: '.desktop-view',
       start: function(event,ui) {
         angular.element('body').css('pointer-events','none');//this is not smart, but works for the demo... will probably need a workaround for ie9

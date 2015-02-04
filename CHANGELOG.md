@@ -1,3 +1,15 @@
+# 0.4.0 (2015-02-04)
+
+
+
+## Bug fixes
+### ozpManagedFrame
+
+* Set min height & min width on frames, increase … …height of chrome draggable space to be entire widget top bar. ([9fc0e7d8](git@github.com:ozone-development/ozp-webtop/commit/9fc0e7d8))
+
+
+
+
 # 0.3.2 (2015-01-23)
 
 

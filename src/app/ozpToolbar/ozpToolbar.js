@@ -148,7 +148,7 @@ app.directive('ozpToolbar', function(){
          $('body').css('padding', '16px 0px');
        } else {
          $('body').css('padding', '57px 0px');
-         $('.navbar-fixed-top').css('top', '16px');
+         $('.navbar-fixed-top').css('top', '20px');
        }
      });
    }

@@ -31,6 +31,7 @@
  * @requires ozpWebtop.dashboardView.grid
  * @requires ozpWebtop.addApplicationsModal
  * @requires ozpWebtop.editDashboardModal
+ * @requires ozpWebtop.urlWidgetLauncher
  * @requires ui.router
  * @requires ct.ui.router.extras
  * @requires ui.bootstrap
@@ -64,6 +65,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView.grid',
   'ozpWebtop.addApplicationsModal',
   'ozpWebtop.editDashboardModal',
+  'ozpWebtop.urlWidgetLauncher',
   'ui.router',
   'ct.ui.router.extras',
   'ui.bootstrap',
@@ -111,6 +113,9 @@ angular.module( 'ozpWebtop', [
 
       states.push(desktopState);
     }
+
+    states.push({name: 'url-launch-app', url: '/launchApp/:appId',
+      controller: 'UrlWidgetLauncherCtrl'});
 
     angular.forEach(states, function(state) { $stateProvider.state(state); });
     $urlRouterProvider.otherwise('/');

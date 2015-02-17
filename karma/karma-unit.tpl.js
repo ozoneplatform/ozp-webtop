@@ -13,7 +13,7 @@ module.exports = function ( karma ) {
                                         // purposes since jqLite is gimped (e.g.
                                         // their find method). Must be loaded
                                         // before angular!
-      'vendor/ozp-iwc/app/js/common/es5-shim.js', // PhantomJS is missing
+      'vendor/es5-shim/es5-shim.js', // PhantomJS is missing
                                                   // Function.prototype.call.bind
                                                   // and requires polyfills
       <% scripts.forEach( function ( file ) { %>'<%= file %>',

@@ -21,14 +21,15 @@
 html {
   height: 100%;
   width: 100%;
-  background-color: @dashboard-bg-color;
   // Always show scroll bar - prevents nasty issue with gridster where the
   // screen continuously changes size ~once per second
 //  overflow: -moz-scrollbars-vertical;
 //  overflow-y: scroll;
   //overflow-y: hidden;
 }
-
+body, html {
+  background-color: @dashboard-bg-color;
+}
 // bring back vertical dividers in bootstrap 3.0
 // http://stackoverflow.com/questions/19203816/vertical-divider-wont-work-in-bootstrap-3-0
 .navbar .divider-vertical {
@@ -90,7 +91,7 @@ html {
   background-color: @ozp-gray2;
 }
 
-.close-icon {
+.close-icon, .close {
   color: @ozp-white;
 }
 
@@ -234,8 +235,8 @@ input.ng-invalid {
 }
 
 .hiddenToggle {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   right: 0;
   position: fixed;
   z-index: 10000;
@@ -244,18 +245,6 @@ input.ng-invalid {
   color: @ozp-white;
 }
 
-.app-toolbar-active-app {
-//  position: relative;
-//  top: -2px;
-//  width: 32px;
-//  height: 2px;
-//  background-color: @ozp-blue3;
-}
-
-.app-toolbar-inactive-app {
-  .app-toolbar-active-app;
-//  background-color: @ozp-black;
-}
 
 .layout-icon-active {
   position: relative;
@@ -365,7 +354,7 @@ body > div.classBanner:last-of-type {
   position: fixed;
   width: 100%;
   height: 100%;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .grid-view {
@@ -410,7 +399,8 @@ body > div.classBanner:last-of-type {
 }
 
 .appHiddenToggle {
-  bottom: @classification-banner;
+  bottom: @classification-banner + 4px;
+  padding-right: 4px;
 }
 
 .appToggle {
@@ -456,7 +446,7 @@ body > div.classBanner:last-of-type {
   bottom: 0;
   position: absolute;
   opacity: 1;
-  zIndex: 1000;
+  z-index: 1000;
 }
 
 .ui-body-iframe-fix {
@@ -469,4 +459,41 @@ body > div.classBanner:last-of-type {
 
 .classBanner {
   bottom: 0 !important;
+}
+
+.navbar .navbar-nav > .app > a { 
+  padding: 0 0 2px 0;
+  margin: -2px 5px 0 5px;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; 
+  filter: alpha(opacity=70);
+  opacity: 0.7;
+}
+.navbar .navbar-nav > .app.active > a,
+.navbar .navbar-nav > .app > a:hover,
+.navbar .navbar-nav > .app.active > a:focus {
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; 
+  filter: alpha(opacity=100);
+  opacity: 1.0;
+  border-top: none;
+  padding-top: 4px;
+  border-bottom: 4px solid @ozp-blue3 !important;
+}
+
+.highlight {
+  background-color: @ozp-blue3;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu > li, .dropdown-header {
+  color: @ozp-blue3 !important;
+}
+.modal-content {
+  border: none;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom:0;
+  left:0;
+  right:0;
 }

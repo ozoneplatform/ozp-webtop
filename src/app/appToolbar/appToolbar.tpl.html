@@ -1,81 +1,62 @@
 <div ng-controller="ApplicationToolbarCtrl">
-  <nav class="navbar navbar-default navbar-inverse app-toolbar no-rounded-corners"
-       role="navigation" ng-class="{true: 'hide', false: ''}[fullScreenMode]">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <ul class="nav navbar-nav">
-          <!-- stuff on the left side of the nav bar -->
-          <li>
-            <a class="navbar-brand" href="" ng-click="openApplicationsModal()">
-              <i class="fa fa-plus" style="margin-top: 4px;"></i>
-            </a>
-          </li>
-          </ul>
-      </div>
+    <div class="navbar navbar-default app-toolbar navbar-inverse"
+         ng-class="{true: 'hide', false: ''}[fullScreenMode]">
+        <div class="container-fluid">
+            <div class="navbar-left">
+                <ul class="nav navbar-nav">
+                    <li class="highlight">
+                      <a class="lrg" href="" ng-click="openApplicationsModal()">
+                        <i class="icon-plus"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="navbar-spacer"></li>
+                    <li class="dropdown dropup">
+                    <!-- we start -->
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {{currentDashboard.name | limitTo : dashboardNameLength}} <i class="icon-caret-up"></i></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header">Dashboards</li>
+                        <li ng-repeat="board in dashboards">
+                          <a href=""><i ng-class="{desktop:'icon-stack', grid:'icon-grid'}[board.layout]"></i>
+                            <span ng-click="loadDashboard(board)">{{board.name}}</span>
+                              <!-- <button type="button" ng-click="openDeleteDashboardModal(board)" class="close pull-right"><span aria-hidden="true">x</span></button> -->
+                              <span class="pull-right" ng-click="openDeleteDashboardModal(board)">X</span>
+                              <i class="icon-pencil pull-right" ng-click="openEditDashboardModal()"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a class="caboose" href="#">
+                            <!-- TODO create dashboard view-->
+                            <i class="icon-plus"></i>Create a new dashboard
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="navbar-spacer"></li>
+ 
+                    <li class="app" ng-repeat="app in myPinnedApps" ng-class="{true:'',false:'active', 'undefined':'active'}[app.isMinimized]">
+                      <a tooltip="{{app.name | limitTo : 15}}"
+                          ng-click="maximizeFrame(app)">
+                        <img ng-src="{{app.icon.large}}" />
+                        <!-- <div ng-class="app.isMinimized && currentDashboard.layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div> -->
+                      </a>
+                    </li>                   
+                </ul>
+            </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="dropup">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              {{currentDashboard.name | limitTo : dashboardNameLength}} <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="board in dashboards">
-                <div style="margin-left: 20px; margin-right: 20px;">
-                  <a ng-click="loadDashboard(board)" class="link-pointer"><i class="fa fa-desktop"></i>&nbsp&nbsp {{board.name}} &nbsp&nbsp&nbsp </a>
-                  <a ng-click="openDeleteDashboardModal(board)" class="link-pointer pull-right" ng-show="isCurrentBoard(board)"><i class="fa fa-close"></i></a>
-                  <a ng-click="openEditDashboardModal()" class="link-pointer pull-right" ng-show="isCurrentBoard(board)"><i class="fa fa-pencil">&nbsp&nbsp</i></a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li class="divider-vertical"></li>
-          <li ng-show="currentDashboard.layout === 'desktop'">
-            <a ng-click="cascadeWindows()" class="link-pointer"
-                tooltip="Cascade Windows"
-                tooltip-placement="top">
-              <i class="fa fa-files-o fa-lg"></i>
-            </a>
-          </li>
-          <li class="divider-vertical" ng-show="currentDashboard.layout === 'desktop'"></li>
-
-          <!-- stuff on the left side of the nav bar -->
-          <li ng-repeat="app in myPinnedApps">
-            <a tooltip="{{app.name | limitTo : 15}}" style="padding-right: 0px; margin-left: 15px; padding-left: 0px; padding-bottom: 0px;"
-                ng-click="maximizeFrame(app)">
-              <img class="chrome-icon app-toolbar-img"
-                   ng-src="{{app.icon.large}}"/>
-              <div ng-class="app.isMinimized && currentDashboard.layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div>
-            </a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li ng-show="previousAppsVisible"><i class="fa fa-angle-double-left fa-inverse fa-lg link-pointer"
-                 ng-click="previousApps()" style="margin-top: 15px;"></i></li>
-          <li ng-show="nextAppsVisible"><i class="fa fa-angle-double-right fa-inverse fa-lg link-pointer"
-                 ng-click="nextApps()" style="margin-top: 15px;"></i></li>
-
-          <li class="divider-vertical" style="margin-right: 0px; padding-right: 0px"></li>
-          <li class="hideToolbarButton link-pointer" tooltip="Enter Full Screen"
-              tooltip-placement="top">
-            <a ng-click="toggleFullScreenMode();">
-              <i class="fa fa-expand fa-lg"></i>
-            </a>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-<button class="hiddenToggle appHiddenToggle" ng-click="toggleFullScreenMode();"
-        ng-class="{false: 'hide'}[fullScreenMode]"
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <!-- <li><a href="#"><i class="icon-fast-forward"></i></a></li> -->
+                    <li><a href=""><i class="icon-maximize" ng-click="toggleFullScreenMode();" tooltip="Enter Full Screen" tooltip-placement="top"></i></a></li>
+                    <li><a href=""><i class="icon-stack-2" ng-click="cascadeWindows()" tooltip="Cascade Windows" tooltip-placement="top" ng-hide="currentDashboard.layout === 'grid'"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <button class="hiddenToggle appHiddenToggle" ng-click="toggleFullScreenMode();"
+        ng-class="{false: 'hide', true:''}[fullScreenMode]"
         tooltip="Exit Full Screen" tooltip-placement="left">
-  <i class="fa fa-compress fa-lg"></i>
-</button>
+      <i class="icon-minimize"></i>
+    </button>
 </div>

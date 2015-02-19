@@ -1,10 +1,11 @@
-<div class="wt-modal add-apps-style">
+<div class="wt-modal add-apps-style" id="modal_openApps">
   <div class="modal-header wt-modal-header">
     <button type="button" class="close" ng-click="cancel()">
       <span aria-hidden="true"><i class="fa fa-close close-icon"></i> </span>
       <span class="sr-only">Close</span>
     </button>
     <h3 class="modal-title">Open bookmarked apps</h3>
+    <button type="button" class="btn btn-default pull-right">Find more apps</button>
     <p> These are apps you have already bookmarked from the Center. To edit your
       bookmarks, visit the HUD
     </p>
@@ -31,14 +32,14 @@
       <div ng-switch-when="true">
         <button class="btn add-apps-dark-text"
                 ng-click="openAppsInNewDashboard()">
-        Open apps in new dashboard
+        Open in new dashboard
         </button>
         <button class="btn btn-primary" ng-click="openApps()">Open</button>
       </div>
       <div ng-switch-default>
         <button class="btn add-apps-dark-text" disabled="disabled"
                 ng-click="openAppsInNewDashboard()">
-        Open apps in new dashboard
+        Open in new dashboard
         </button>
         <button class="btn btn-primary"
                 ng-click="openApps()" disabled="disabled">Open

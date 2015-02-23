@@ -42,6 +42,7 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-shell');
 
 
   /**
@@ -595,7 +596,29 @@ module.exports = function ( grunt ) {
         ]
       }
     },
-
+    /**
+     * create a version.txt file in the build and release dirs
+     */
+    shell: {
+      buildVersionFile: {
+          command: [
+            'echo "Version: <%= pkg.version %>" > <%= build_dir %>/version.txt',
+            'echo "Git hash: " >> <%= build_dir %>/version.txt',
+            'git rev-parse HEAD >> <%= build_dir %>/version.txt',
+            'echo Date: >> <%= build_dir %>/version.txt',
+            'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= build_dir %>/version.txt'
+          ].join('&&')
+      },
+      compileVersionFile: {
+          command: [
+            'echo "Version: <%= pkg.version %>" > <%= compile_dir %>/version.txt',
+            'echo "Git hash: " >> <%= compile_dir %>/version.txt',
+            'git rev-parse HEAD >> <%= compile_dir %>/version.txt',
+            'echo Date: >> <%= compile_dir %>/version.txt',
+            'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= compile_dir %>/version.txt'
+          ].join('&&')
+      }
+    },
     yuidoc: {
       compile: {
         name: '<%= pkg.name %>',
@@ -788,7 +811,8 @@ module.exports = function ( grunt ) {
     'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build', 'yuidoc',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
     'copy:build_jquery_ui_images', 'copy:build_appjs', 'copy:build_vendorjs',
-    'copy:docs', 'copy:tools', 'index:build', 'karmaconfig', 'karma:continuous'
+    'copy:docs', 'copy:tools', 'index:build', 'karmaconfig', 'karma:continuous',
+    'shell:buildVersionFile'
   ]);
 
   /**
@@ -807,7 +831,8 @@ module.exports = function ( grunt ) {
    *    vendor css (in build.config.js), and build_dir/assets/<pkg.name>-<pkg.version>.css
    */
   grunt.registerTask( 'compile', [
-    'cssmin', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile'
+    'cssmin', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify',
+    'index:compile','shell:compileVersionFile'
   ]);
 
   grunt.registerTask('serve', [

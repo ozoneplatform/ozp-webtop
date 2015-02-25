@@ -1,5 +1,5 @@
 <div ng-controller="ApplicationToolbarCtrl">
-    <div class="navbar navbar-default app-toolbar navbar-inverse"
+    <div class="navbar navbar-default app-toolbar"
          ng-class="{true: 'hide', false: ''}[fullScreenMode]">
         <div class="container-fluid">
             <div class="navbar-left">
@@ -48,8 +48,14 @@
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
                     <!-- <li><a href="#"><i class="icon-fast-forward"></i></a></li> -->
-                    <li><a href=""><i class="icon-maximize" ng-click="toggleFullScreenMode();" tooltip="Enter Full Screen" tooltip-placement="top"></i></a></li>
-                    <li><a href=""><i class="icon-stack-2" ng-click="cascadeWindows()" tooltip="Cascade Windows" tooltip-placement="top" ng-hide="currentDashboard.layout === 'grid'"></i></a></li>
+                    <li ng-click="toggleFullScreenMode();">
+                      <a href="" tooltip="Enter Full Screen" tooltip-placement="top">
+                        <i class="icon-maximize"  ></i></a>
+                    </li>
+                    <li ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
+                      <a href="" tooltip="Cascade Windows" tooltip-placement="top">
+                        <i class="icon-stack-2"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>

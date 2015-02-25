@@ -437,8 +437,9 @@ function generalDashboardModel($sce, persistStrategy, Utilities,
             frames[j].icon.small = marketplaceApps[i].icons.small;
             frames[j].icon.large = marketplaceApps[i].icons.large;
             frames[j].url = marketplaceApps[i].launchUrls.default;
-            frames[j].trustedUrl = $sce.trustAsResourceUrl(frames[j].url +
-              '?ozpIwc.peer=' + iwcConnectedClient.getIwcBusUrl());
+            var utils = new Utilities();
+            var newUrl = utils.updateQueryString('ozpIwc.peer', iwcConnectedClient.getIwcBusUrl(), frames[j].url);
+            frames[j].trustedUrl = $sce.trustAsResourceUrl(newUrl);
             frames[j].name = marketplaceApps[i].name;
             frames[j].descriptionShort = marketplaceApps[i].descriptionShort;
             frames[j].singleton = marketplaceApps[i].uiHints.singleton;

@@ -127,6 +127,7 @@ app.factory('iwcInterface', function($q, iwcConnectedClient) {
      * @private
      */
     _getData: function(dst, resource) {
+      console.log('iwcClient.api(' + dst + ').get(' + resource + ')');
       return iwcConnectedClient.getClient().then(function(client) {
         return client.api(dst)
           .get(resource)
@@ -146,6 +147,7 @@ app.factory('iwcInterface', function($q, iwcConnectedClient) {
      * @private
      */
     _setData: function(dst, resource, setData) {
+      console.log('iwcClient.api(' + dst + ').set(' + resource + ')');
       return iwcConnectedClient.getClient().then(function(client) {
         return client.api(dst)
           .set(resource, setData)

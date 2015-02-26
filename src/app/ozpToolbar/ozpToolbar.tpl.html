@@ -3,9 +3,9 @@
   <div class="container-fluid">
     <div class="navbar-left">
       <ul class="nav navbar-nav">
-        <li><a class="lrg" href="http://ozone-development.github.io/hud-ui"><i class="icon-home"></i></a></li>
-        <li><a class="lrg" href="http://ozone-development.github.io/center-ui"><i class="icon-shopping"></i></a></li>
-        <li class="active"><a class="lrg" href="http://ozone-development.github.io/ozp-webtop/#/grid"><i class="icon-layout"></i></a></li>
+        <li><a class="lrg" ng-href="{{hudUrl}}"><i class="icon-home"></i></a></li>
+        <li><a class="lrg" ng-href="{{centerUrl}}"><i class="icon-shopping"></i></a></li>
+        <li class="active"><a class="lrg" ng-href="{{webtopUrl}}"><i class="icon-layout"></i></a></li>
       </ul>
     </div>
 
@@ -58,7 +58,7 @@
             <li class="dropdown-header">Manage</li>
             <li><a href="#"><i class="icon-layers"></i>Listing Management</a></li>
             <li><a href="#"><i class="icon-shopping-settings"></i>Marketplace Settings</a></li>
-            <li><a href="https://www.owfgoss.org:10443/dev/metrics/" target="_blank"><i class="icon-bar-graph-2"></i>Metrics</a></li>
+            <li><a ng-href="{{metricsUrl}}" target="_blank"><i class="icon-bar-graph-2"></i>Metrics</a></li>
             <li><a class="caboose" href="#"><i class="icon-arrow-right"></i>Logout</a></li>
           </ul>
         </li>

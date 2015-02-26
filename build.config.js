@@ -25,7 +25,7 @@ module.exports = {
    * app's unit tests.
    */
   app_files: {
-    js: [ 'src/**/*.js', '!src/**/*.spec.js', '!src/assets/**/*.js' ],
+    js: [ 'src/**/*.js', '!src/**/*.spec.js', '!src/assets/**/*.js', '!src/OzoneConfig.js' ],
     jsunit: [ 'src/**/*.spec.js' ],
     
     coffee: [ 'src/**/*.coffee', '!src/**/*.spec.coffee' ],

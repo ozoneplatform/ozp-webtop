@@ -169,6 +169,12 @@ module.exports = function ( grunt ) {
             dest: '<%= build_dir %>/',
             cwd: '.',
             expand: true
+          },
+          {
+            src: ['OzoneConfig.js'],
+            dest: '<%= build_dir %>',
+            cwd: 'src/',
+            expand: true
           }
         ]
       },
@@ -188,6 +194,12 @@ module.exports = function ( grunt ) {
             src: [ '**' ],
             dest: '<%= compile_dir %>/assets',
             cwd: '<%= build_dir %>/assets',
+            expand: true
+          },
+          {
+            src: ['OzoneConfig.js'],
+            dest: '<%= compile_dir %>',
+            cwd: 'src',
             expand: true
           }
         ]

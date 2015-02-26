@@ -33,7 +33,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
  *
  */
 .controller('OzpToolbarCtrl',
-  function($scope, $rootScope,
+  function($scope, $rootScope, $window,
            userSettingsApi, windowSizeWatcher, deviceSizeChangedEvent,
            fullScreenModeToggleEvent) {
 
@@ -96,6 +96,11 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.$on(fullScreenModeToggleEvent, function(event, data) {
       $scope.fullScreenMode = data.fullScreenMode;
     });
+
+    $scope.hudUrl = $window.OzoneConfig.HUD_URL;
+    $scope.centerUrl = $window.OzoneConfig.CENTER_URL;
+    $scope.webtopUrl = $window.OzoneConfig.WEBTOP_URL;
+    $scope.metricsUrl = $window.OzoneConfig.METRICS_URL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods

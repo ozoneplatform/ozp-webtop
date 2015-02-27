@@ -74,4 +74,11 @@ angular.module('ozpWebtop.constants')
  * @property highlightFrameOnGridLayoutEvent
  * @type String
  */
-.constant('highlightFrameOnGridLayoutEvent', 'highlightFrameOnGridLayout');
+.constant('highlightFrameOnGridLayoutEvent', 'highlightFrameOnGridLayout')
+
+/**
+ * Event fired when app and dashboard data is initially retrieved
+ * @property initialDataReceived
+ * @type String
+ */
+.constant('initialDataReceivedEvent', 'initialDataReceived');

@@ -30,8 +30,6 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @param {Object} $q the Angular q service
  * @param {Object} $timeout the Angular timeout service
  * @param {Object} dashboardApi the API for dashboard information
- * @param {Object} marketplaceApi the API for marketplace application
- * information
  * @param {Object} userSettingsApi the API for user settings
  * @param {Object} windowSizeWatcher service that notifies on window size
  * changes
@@ -44,13 +42,14 @@ angular.module('ozpWebtop.dashboardView.grid', [
 angular.module('ozpWebtop.dashboardView.grid')
 
 .controller('GridCtrl', function ($scope, $rootScope,
-                                  $interval, $q, $timeout, dashboardApi, marketplaceApi,
+                                  $interval, $q, $timeout, $log, dashboardApi,
                                   userSettingsApi,
                                   windowSizeWatcher, deviceSizeChangedEvent,
                                   windowSizeChangedEvent,
                                   dashboardStateChangedEvent,
                                   fullScreenModeToggleEvent,
-                                  highlightFrameOnGridLayoutEvent) {
+                                  highlightFrameOnGridLayoutEvent,
+                                  initialDataReceivedEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -176,11 +175,9 @@ angular.module('ozpWebtop.dashboardView.grid')
       console.log('size changed from lg to md');
     }
 
-    // get application data
-    marketplaceApi.getAllApps().then(function(apps) {
-      $scope.apps = apps;
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
+    $scope.$on(initialDataReceivedEvent, function() {
+      $scope.apps = dashboardApi._applicationData;
+      $scope.ready = true;
     });
 
     // Initialize grid columns based on screen size
@@ -203,7 +200,7 @@ angular.module('ozpWebtop.dashboardView.grid')
     // current dashboard changed
     $scope.$on(dashboardStateChangedEvent, function(event, value) {
       if (value.dashboardId === $scope.dashboardId && value.layout === 'grid') {
-        handleDashboardChange();
+        $scope.handleDashboardChange();
       }
     });
 
@@ -239,37 +236,52 @@ angular.module('ozpWebtop.dashboardView.grid')
 
     $scope.$on('$stateChangeSuccess',
       function(event, toState, toParams/*, fromState, fromParams*/){
-        var layoutType = '';
-        if (toState.name.indexOf('grid-sticky') > -1) {
-          layoutType = 'grid';
-        } else if (toState.name.indexOf('desktop-sticky') > -1) {
-          layoutType = 'desktop';
-        } else {
-          return;
-        }
-        if (layoutType !== 'grid') {
-          return;
-        }
-        if (initialized && toParams.dashboardId === $scope.dashboardId) {
-          // if widgets were added to this dashboard in desktop layout, those
-          // same widgets need to be added to this layout as well
-          handleDashboardChange();
-          return;
-        }
-        if (initialized && toParams.dashboardId !== $scope.dashboardId) {
-          return;
-        }
-        $scope.dashboardId = toParams.dashboardId;
-
-        $scope.reloadDashboard().then(function () {
-        // dashboard reloaded
-        // TODO: not guaranteed to end up here - do initialization at end of
-        // reloadDashboard function
-        }).catch(function (error) {
-          console.log('should not have happened: ' + error);
-        });
+        $scope.handleStateChangeSuccess(event, toState, toParams);
       }
     );
+
+    $scope.handleStateChangeSuccess = function(event, toState, toParams) {
+      if (!$scope.ready) {
+        $log.warn('GridCtrl: delaying call to handleStateChangeSuccess by 500ms - no data yet');
+        $scope.handleStateChangeSuccessInterval = $interval(function() {
+          $scope.handleStateChangeSuccess(event, toState, toParams);
+        }, 500, 1);
+        return;
+      }
+      if ($scope.handleStateChangeSuccessInterval) {
+        $interval.cancel($scope.handleStateChangeSuccessInterval);
+      }
+
+      var layoutType = '';
+      if (toState.name.indexOf('grid-sticky') > -1) {
+        layoutType = 'grid';
+      } else if (toState.name.indexOf('desktop-sticky') > -1) {
+        layoutType = 'desktop';
+      } else {
+        return;
+      }
+      if (layoutType !== 'grid') {
+        return;
+      }
+      if (initialized && toParams.dashboardId === $scope.dashboardId) {
+        // if widgets were added to this dashboard in desktop layout, those
+        // same widgets need to be added to this layout as well
+        $scope.handleDashboardChange();
+        return;
+      }
+      if (initialized && toParams.dashboardId !== $scope.dashboardId) {
+        return;
+      }
+      $scope.dashboardId = toParams.dashboardId;
+
+      $scope.reloadDashboard().then(function () {
+      // dashboard reloaded
+      // TODO: not guaranteed to end up here - do initialization at end of
+      // reloadDashboard function
+      }).catch(function (error) {
+        console.log('should not have happened: ' + error);
+      });
+    };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
@@ -343,13 +355,18 @@ angular.module('ozpWebtop.dashboardView.grid')
      *
      * @method handleDashboardChange
      */
-    function handleDashboardChange() {
-      // app information is retrieved asynchronously from IWC. If the
-      // information isn't available yet, try again later
-      if ($scope.apps.length === 0) {
-        $interval(handleDashboardChange, 500, 1);
+    $scope.handleDashboardChange = function() {
+      if (!$scope.ready) {
+        $log.warn('GridCtrl: delaying call to handleDashboardChange by 500ms - no data yet');
+        $scope.handleDashboardChangeInterval = $interval(function() {
+          $scope.handleDashboardChange();
+        }, 500, 1);
         return;
       }
+      if ($scope.handleDashboardChangeInterval) {
+        $interval.cancel($scope.handleDashboardChangeInterval);
+      }
+
       dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
         if ($scope.frames === dashboard.frames) {
           return;
@@ -394,7 +411,7 @@ angular.module('ozpWebtop.dashboardView.grid')
             // now merge my local scope for frames with the
             // marketplace api to get important stuff on local scope
             // like url, image, name, etc
-            dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
+            dashboardApi.mergeApplicationData($scope.frames);
           };
 
           // add the frames
@@ -407,12 +424,13 @@ angular.module('ozpWebtop.dashboardView.grid')
             });
           }, Promise.resolve()).then(function () {
               // reloadDashboard completed
+              $timeout(function() {$log.debug('$timeout to apply scope');}, 50);
           });
         }
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
-    }
+    };
 
     /**
      * Reloads the current dashboard
@@ -422,18 +440,9 @@ angular.module('ozpWebtop.dashboardView.grid')
      *                    found
      */
     $scope.reloadDashboard = function() {
-      // app information is retrieved asynchronously from IWC. If the
-      // information isn't available yet, try again later
-      if ($scope.apps.length === 0) {
-        console.log('$scope.apps.length = 0, waiting ...');
-        $interval($scope.reloadDashboard, 500, 1);
-        var deferred = $q.defer();
-        deferred.reject(false);
-        return deferred.promise;
-      }
       return dashboardApi.getDashboardById($scope.dashboardId).then(function (dashboard) {
         if (!dashboard) {
-          console.log('Dashboard changed, but dashboard does not exist');
+          $log.warn('Dashboard changed, but dashboard does not exist');
           return;
         }
         $scope.dashboard = dashboard;
@@ -442,7 +451,7 @@ angular.module('ozpWebtop.dashboardView.grid')
 
         // Merge application data (app name, icons, descriptions, url, etc)
         // with dashboard app data
-        dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
+        dashboardApi.mergeApplicationData($scope.frames);
         initialized = true;
       });
     };

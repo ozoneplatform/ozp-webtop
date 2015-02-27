@@ -26,18 +26,18 @@ angular.module('ozpWebtop.dashboardView.desktop')
  * @param $rootScope ng $rootScope
  * @param $interval ng $interval
  * @param dashboardApi dashboard data
- * @param marketplaceApi marketplace listings data
  * @param userSettingsApi user preferences data
  * @param dashboardStateChangedEvent event name
  * @param fullScreenModeToggleEvent event name
  * @namespace dashboardView
  */
   .controller('DesktopCtrl', function ($scope, $rootScope,
-                                       $interval,
-                                       dashboardApi, marketplaceApi,
+                                       $interval, $log,
+                                       dashboardApi,
                                        userSettingsApi,
                                        dashboardStateChangedEvent,
-                                       fullScreenModeToggleEvent) {
+                                       fullScreenModeToggleEvent,
+                                       initialDataReceivedEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -95,24 +95,14 @@ angular.module('ozpWebtop.dashboardView.desktop')
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // get dashboards
-    dashboardApi.getDashboards().then(function(dashboards) {
-      if (!dashboards) {
-        console.log('No dashboards exist');
-        return;
-      }
-      $scope.dashboards = dashboards;
-
-      $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
-    });
-
-    // get application listings
-    marketplaceApi.getAllApps().then(function(apps) {
-      $scope.apps = apps;
-    }).catch(function(error) {
-      console.log('should not have happened: ' + error);
+    $scope.$on(initialDataReceivedEvent, function() {
+      $scope.apps = dashboardApi._applicationData;
+      dashboardApi.getDashboardData().then(function(dashboardData) {
+        $scope.dashboards = dashboardData.dashboards;
+        $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
+        $scope.ready = true;
+      });
+      //$scope.frames = $scope.dashboards[0].frames;  // to make tests happy
     });
 
     $scope.$on(fullScreenModeToggleEvent, function(event, data) {
@@ -127,34 +117,49 @@ angular.module('ozpWebtop.dashboardView.desktop')
 
     $scope.$on('$stateChangeSuccess',
       function(event, toState, toParams/*, fromState, fromParams*/){
-        var layoutType = '';
-        if (toState.name.indexOf('grid-sticky') > -1) {
-          layoutType = 'grid';
-        } else if (toState.name.indexOf('desktop-sticky') > -1) {
-          layoutType = 'desktop';
-        } else {
-          return;
-        }
-        if (layoutType !== 'desktop') {
-          return;
-        }
-        if (initialized && toParams.dashboardId === $scope.currentDashboardId) {
-          // if widgets were added to this dashboard in grid layout, those
-          // same widgets need to be added to this layout as well
-          dashboardChangeHandler();
-          return;
-        }
-        if (initialized && toParams.dashboardId !== $scope.currentDashboardId) {
-          return;
-        }
-        $scope.currentDashboardId = toParams.dashboardId;
-        reloadDashboard();
-        initialized = true;
+        stateChangeSuccessHandler(event, toState, toParams);
     });
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    function stateChangeSuccessHandler(event, toState, toParams) {
+      if (!$scope.ready) {
+        $log.warn('DesktopCtrl: delaying call to stateChangeSuccessHandler by 500ms - no data yet');
+        $scope.handleStateChangeSuccessInterval = $interval(function() {
+          stateChangeSuccessHandler(event, toState, toParams);
+        }, 500, 1);
+        return;
+      }
+      if ($scope.handleStateChangeSuccessInterval) {
+        $interval.cancel($scope.handleStateChangeSuccessInterval);
+      }
+
+      var layoutType = '';
+      if (toState.name.indexOf('grid-sticky') > -1) {
+        layoutType = 'grid';
+      } else if (toState.name.indexOf('desktop-sticky') > -1) {
+        layoutType = 'desktop';
+      } else {
+        return;
+      }
+      if (layoutType !== 'desktop') {
+        return;
+      }
+      if (initialized && toParams.dashboardId === $scope.currentDashboardId) {
+        // if widgets were added to this dashboard in grid layout, those
+        // same widgets need to be added to this layout as well
+        dashboardChangeHandler();
+        return;
+      }
+      if (initialized && toParams.dashboardId !== $scope.currentDashboardId) {
+        return;
+      }
+      $scope.currentDashboardId = toParams.dashboardId;
+      reloadDashboard();
+      initialized = true;
+    }
 
     /**
      * Handler invoked when a dashboardStateChangedEvent is received
@@ -162,11 +167,15 @@ angular.module('ozpWebtop.dashboardView.desktop')
      * @method dashboardChangeHandler
      */
     function dashboardChangeHandler() {
-      // app information is retrieved asynchronously from IWC. If the
-      // information isn't available yet, try again later
-      if ($scope.apps.length === 0) {
-        $interval(dashboardChangeHandler, 500, 1);
+      if (!$scope.ready) {
+        $log.warn('DesktopCtrl: delaying call to dashboardChangeHandler by 500ms - no data yet');
+        $scope.dashboardChangeHandlerInterval = $interval(function() {
+          dashboardChangeHandler();
+        }, 500, 1);
         return;
+      }
+      if ($scope.dashboardChangeHandlerInterval) {
+        $interval.cancel($scope.dashboardChangeHandlerInterval);
       }
 
       dashboardApi.getDashboardById($scope.currentDashboardId).then(function(updatedDashboard) {
@@ -229,7 +238,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
             $scope.frames.push(updatedDashboard.frames[k]);
           }
         }
-        dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
+        dashboardApi.mergeApplicationData($scope.frames);
 
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
@@ -244,13 +253,18 @@ angular.module('ozpWebtop.dashboardView.desktop')
     function reloadDashboard() {
       // app information is retrieved asynchronously from IWC. If the
       // information isn't available yet, try again later
-      if ($scope.apps.length === 0) {
-        console.log('reloadDashboard waiting to run since $scope.apps is empty');
-        $interval(reloadDashboard, 500, 1);
+      if (!$scope.ready) {
+        $log.warn('DesktopCtrl: delaying call to reloadDashboard by 500ms - no data yet');
+        $scope.reloadDashboardInterval = $interval(function() {
+          reloadDashboard();
+        }, 500, 1);
         return;
       }
+      if ($scope.reloadDashboardInterval) {
+        $interval.cancel($scope.reloadDashboardInterval);
+      }
       if (!$scope.dashboards) {
-        console.log('Dashboard changed, but no dashboards exist');
+        $log.warn('Dashboard changed, but no dashboards exist');
         return;
       }
       for (var i=0; i < $scope.dashboards.length; i++) {
@@ -261,7 +275,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
 
           // Merge application data (app name, icons, descriptions, url, etc)
           // with dashboard app data
-          dashboardApi.mergeApplicationData($scope.frames, $scope.apps);
+          dashboardApi.mergeApplicationData($scope.frames);
 
           $scope.max = {};
 

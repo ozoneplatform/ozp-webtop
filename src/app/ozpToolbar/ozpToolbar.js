@@ -33,7 +33,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
  *
  */
 .controller('OzpToolbarCtrl',
-  function($scope, $rootScope, $window,
+  function($scope, $rootScope, $window, $log,
            userSettingsApi, windowSizeWatcher, deviceSizeChangedEvent,
            fullScreenModeToggleEvent) {
 

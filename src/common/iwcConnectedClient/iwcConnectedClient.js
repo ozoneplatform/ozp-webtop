@@ -23,17 +23,9 @@ var app = angular.module('ozp.common.iwc.client');
  */
 app.factory('iwcConnectedClient', function($q, $location, $window, iwcClient) {
 
-  var ozpIwcPeerUrl = '';
-  var queryParams = $location.search();
-  if (queryParams.hasOwnProperty('ozpIwc.peer')) {
-    ozpIwcPeerUrl = queryParams['ozpIwc.peer'];
-  } else {
-    ozpIwcPeerUrl = $window.OzoneConfig.IWC_URL;
-  }
-
-  console.log('creating iwc client using bus: ' + ozpIwcPeerUrl);
+  console.log('creating iwc client using bus: ' + $window.OzoneConfig.IWC_URL);
   var client = new iwcClient.Client({
-    peerUrl: ozpIwcPeerUrl
+    peerUrl: $window.OzoneConfig.IWC_URL
   });
 
   var isConnected = false;
@@ -64,7 +56,7 @@ app.factory('iwcConnectedClient', function($q, $location, $window, iwcClient) {
       return deferred.promise;
       },
     getIwcBusUrl: function() {
-      return ozpIwcPeerUrl;
+      return $window.OzoneConfig.IWC_URL;
     }
   };
 });

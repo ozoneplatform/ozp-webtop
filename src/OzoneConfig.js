@@ -4,6 +4,5 @@ window.OzoneConfig = {
     'CENTER_URL': 'https://ozone-development.github.io/center-ui',
     'HUD_URL': 'https://ozone-development.github.io/hud-ui',
     'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop',
-    'METRICS_URL': '/path/to/metrics',
-    'MORE_APPS_URL': 'https://ozone-development.github.io/center-ui'
+    'METRICS_URL': '/path/to/metrics'  
 };

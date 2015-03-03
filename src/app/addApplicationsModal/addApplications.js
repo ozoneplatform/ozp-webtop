@@ -63,7 +63,7 @@ angular.module('ozpWebtop.addApplicationsModal').controller(
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    $scope.moreAppsUrl = $window.OzoneConfig.MORE_APPS_URL;
+    $scope.centerUrl = $window.OzoneConfig.CENTER_URL;
 
 
 

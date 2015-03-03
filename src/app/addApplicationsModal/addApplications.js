@@ -22,7 +22,6 @@ angular.module('ozpWebtop.addApplicationsModal', ['ui.bootstrap',
  * @constructor
  */
 angular.module('ozpWebtop.addApplicationsModal').controller(
-  'AddApplicationsModalInstanceCtrl', function($scope, $modalInstance, $window, apps) {
   'AddApplicationsModalInstanceCtrl', function($scope, $modalInstance, $log, $window, apps) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

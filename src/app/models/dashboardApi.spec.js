@@ -195,9 +195,12 @@ describe('Service: dashboardApi', function () {
     var dashboardId = 1;
     var appId = '12345678';
     var gridMaxRows = 25;
+    console.log('#### HERE 0000!');
     dashboardApi.createFrame(dashboardId, appId, gridMaxRows).then(function (frame) {
       // Check that the frame returned has also been saved in the dashboard
+      console.log('#### HERE 1111!');
       dashboardApi.getFrameById(frame.id).then(function (frameFromBoard) {
+        console.log('#### HERE 2222!');
         expect(frame).toEqual(frameFromBoard);
         // Generated frameId should be a uuid
         var re = /\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/;
@@ -230,7 +233,11 @@ describe('Service: dashboardApi', function () {
       expect(error).toEqual('should not have happened');
     });
 
-    if(!rootScope.$$phase) { rootScope.$apply(); }
+    if (!rootScope.$$phase) {
+      rootScope.$apply();
+    } else {
+      console.log('WARNING, COULD NOT ROOTSCOPE.APPLY!!!');
+    }
   });
 
   it('should have a createFrame method that handles a full grid', function(done) {

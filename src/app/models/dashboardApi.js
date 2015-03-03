@@ -145,7 +145,6 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
      * @private
      */
     _setDashboardData: function(dashboardData) {
-      var deferred = $q.defer();
       this._dashboardData = angular.copy(dashboardData);
       var that = this;
       if (this._readyToPut) {
@@ -163,15 +162,15 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
 
         return $http(req).success(function() {
             that._readyToPut = true;
-            deferred.resolve(true);
           }).error(function(data, status) {
             $log.error('DashboardApi: Error from PUT at ' + url + ', status: ' + status + ', msg: ' + JSON.stringify(data));
             that._readyToPut = true;
-            deferred.resolve(true);
           });
       }
 
       //persistStrategy.setDashboardData(dashboardData);
+      var deferred = $q.defer();
+      deferred.resolve(true);
       return deferred.promise;
       //return persistStrategy.setDashboardData(dashboardData).then(function(response) {
       //  return response;

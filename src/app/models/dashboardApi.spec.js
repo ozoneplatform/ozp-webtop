@@ -394,45 +394,45 @@ describe('Service: dashboardApi', function () {
     if(!rootScope.$$phase) { rootScope.$apply(); }
   });
 
-  // update the current dashboard
-  it('should have a updateCurrentDashboardName method - return false on invalid dashboard name', function(done) {
-    // test a dashboard that doesn't exist
-    dashboardApi.updateCurrentDashboardName('doesntexist').then(function (update) {
-      expect(update).toEqual(false);
-      done();
-    }).catch(function (error) {
-      expect(error).toEqual('should not have happened');
-    });
+  // // update the current dashboard
+  // it('should have a updateCurrentDashboardName method - return false on invalid dashboard name', function(done) {
+  //   // test a dashboard that doesn't exist
+  //   dashboardApi.updateCurrentDashboardName('doesntexist').then(function (update) {
+  //     expect(update).toEqual(false);
+  //     done();
+  //   }).catch(function (error) {
+  //     expect(error).toEqual('should not have happened');
+  //   });
 
-    if(!rootScope.$$phase) { rootScope.$apply(); }
-  });
+  //   if(!rootScope.$$phase) { rootScope.$apply(); }
+  // });
 
-  it('should have a updateCurrentDashboardName method', function(done) {
-    dashboardApi.getCurrentDashboardName().then(function(currentDashboard) {
-      dashboardApi.getDashboardById(1).then(function(dashboard) {
-        var newCurrent = dashboard.name;
-        expect(currentDashboard).not.toEqual(newCurrent);
-        expect(newCurrent).toBeTruthy();
-        dashboardApi.updateCurrentDashboardName(newCurrent).then(function(update) {
-          expect(update).toEqual(true);
-          dashboardApi.getCurrentDashboardName().then(function(updatedCurrentName) {
-            expect(updatedCurrentName).toEqual(newCurrent);
-            done();
-          }).catch(function(error) {
-            expect(error).toEqual('should not have happened');
-          });
-        }).catch(function(error) {
-          expect(error).toEqual('should not have happened');
-        });
-      }).catch(function(error) {
-        expect(error).toEqual('should not have happened');
-      });
-    }).catch(function(error) {
-      expect(error).toEqual('should not have happened');
-    });
+  // it('should have a updateCurrentDashboardName method', function(done) {
+  //   dashboardApi.getCurrentDashboardName().then(function(currentDashboard) {
+  //     dashboardApi.getDashboardById(1).then(function(dashboard) {
+  //       var newCurrent = dashboard.name;
+  //       expect(currentDashboard).not.toEqual(newCurrent);
+  //       expect(newCurrent).toBeTruthy();
+  //       dashboardApi.updateCurrentDashboardName(newCurrent).then(function(update) {
+  //         expect(update).toEqual(true);
+  //         dashboardApi.getCurrentDashboardName().then(function(updatedCurrentName) {
+  //           expect(updatedCurrentName).toEqual(newCurrent);
+  //           done();
+  //         }).catch(function(error) {
+  //           expect(error).toEqual('should not have happened');
+  //         });
+  //       }).catch(function(error) {
+  //         expect(error).toEqual('should not have happened');
+  //       });
+  //     }).catch(function(error) {
+  //       expect(error).toEqual('should not have happened');
+  //     });
+  //   }).catch(function(error) {
+  //     expect(error).toEqual('should not have happened');
+  //   });
 
-    if(!rootScope.$$phase) { rootScope.$apply(); }
-  });
+  //   if(!rootScope.$$phase) { rootScope.$apply(); }
+  // });
 
   // update the desktop layout of a frame
   it('should have a updateDesktopFrame method', function(done) {

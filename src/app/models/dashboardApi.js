@@ -465,36 +465,31 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
       });
 
     },
+
     /**
      * Change the user's current dashboard
      *
-     * @method updateCurrentDashboardName
-     * @param dashboardName
+     * @method updateDashboard
+     * @param updatedDashboardData
      * @returns {Promise}
      */
-    updateCurrentDashboardName: function(dashboardName) {
+    updateDashboard: function(updatedDashboardData) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
-        var dashboardFound = false;
         for (var i=0; i < dashboardData.dashboards.length; i++) {
-          if (dashboardData.dashboards[i].name === dashboardName) {
-            dashboardData.currentDashboard = dashboardData.dashboards[i].id;
-            dashboardFound = true;
+          if(dashboardData.dashboards[i].id === updatedDashboardData.id) {
+            dashboardData.dashboards[i].name = updatedDashboardData.name;
+            dashboardData.dashboards[i].layout = updatedDashboardData.layout;            
+            that._setDashboardData(dashboardData).then(function(response) {
+              return response;
+            });
           }
-        }
-        if (dashboardFound) {
-          return that._setDashboardData(dashboardData).then(function(response) {
-            return response;
-          }).catch(function(error) {
-            console.log('should not have happened: ' + error);
-          });
-        } else {
-          return false;
         }
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });
     },
+
     /**
      * Return the name of the user's current dashboard
      * @method getCurrentDashboardName
@@ -532,9 +527,7 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
             frames[j].icon.small = marketplaceApps[i].icons.small;
             frames[j].icon.large = marketplaceApps[i].icons.large;
             frames[j].url = marketplaceApps[i].launchUrls.default;
-            var utils = new Utilities();
-            var newUrl = utils.updateQueryString('ozpIwc.peer', iwcConnectedClient.getIwcBusUrl(), frames[j].url);
-            frames[j].trustedUrl = $sce.trustAsResourceUrl(newUrl);
+            frames[j].trustedUrl = $sce.trustAsResourceUrl(frames[j].url + '?ozpIwc.peer=' + iwcConnectedClient.getIwcBusUrl());
             frames[j].name = marketplaceApps[i].name;
             frames[j].descriptionShort = marketplaceApps[i].descriptionShort;
             // TODO: get this data for real

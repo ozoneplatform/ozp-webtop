@@ -20,15 +20,12 @@
                         <li ng-repeat="board in dashboards">
                           <a class="link-pointer"><i ng-class="{desktop:'icon-stack', grid:'icon-grid'}[board.layout]"></i>
                             <span ng-click="loadDashboard(board)">{{board.name}}</span>
-                              <span ng-show="board.id === currentDashboard.id">
-                                <!-- <button type="button" ng-click="openDeleteDashboardModal(board)" class="close pull-right"><span aria-hidden="true">x</span></button> -->
-                                <span class="pull-right" ng-click="openDeleteDashboardModal(board)">X</span>
-                                <i class="icon-pencil pull-right" style="margin-right: 10px;" ng-click="openEditDashboardModal()"></i>
-                              </span>
+                              <span class="pull-right" ng-click="openDeleteDashboardModal(board)">X</span>
+                              <i class="icon-pencil pull-right" ng-click="openEditDashboardModal(board)"></i>
                           </a>
                         </li>
                         <li>
-                          <a class="caboose" class="link-pointer">
+                          <a class="caboose" class="link-pointer" ng-click="openNewDashboardModal()">
                             <!-- TODO create dashboard view-->
                             <i class="icon-plus"></i>Create a new dashboard
                           </a>
@@ -49,7 +46,6 @@
 
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
-                    <!-- <li><a href="#"><i class="icon-fast-forward"></i></a></li> -->
                     <li ng-click="toggleFullScreenMode();">
                       <a href="" tooltip="Enter Full Screen" tooltip-placement="top">
                         <i class="icon-maximize"  ></i></a>

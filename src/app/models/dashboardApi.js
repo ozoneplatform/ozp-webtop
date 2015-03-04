@@ -527,7 +527,9 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
             frames[j].icon.small = marketplaceApps[i].icons.small;
             frames[j].icon.large = marketplaceApps[i].icons.large;
             frames[j].url = marketplaceApps[i].launchUrls.default;
-            frames[j].trustedUrl = $sce.trustAsResourceUrl(frames[j].url + '?ozpIwc.peer=' + iwcConnectedClient.getIwcBusUrl());
+            var utils = new Utilities();
+            var newUrl = utils.updateQueryString('ozpIwc.peer', iwcConnectedClient.getIwcBusUrl(), frames[j].url);
+            frames[j].trustedUrl = $sce.trustAsResourceUrl(newUrl);
             frames[j].name = marketplaceApps[i].name;
             frames[j].descriptionShort = marketplaceApps[i].descriptionShort;
             // TODO: get this data for real
@@ -679,18 +681,21 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
      * @param name
      * @returns {Promise}
      */
-    createDashboard: function(name) {
+    createDashboard: function(dashboard) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
         // get new id for board
         return that.getNewDashboardId().then(function(dashboardId) {
           return that.getNextStickyIndex().then(function(nextStickyIndex) {
             console.log('creating new board with sticky slot ' + nextStickyIndex);
+            if(!dashboard.layout){
+              dashboard.layout = 'grid';
+            }
             var newBoard = {
-              'name': name,
+              'name': dashboard.name,
               'id': dashboardId,
               'stickyIndex': nextStickyIndex,
-              'layout': 'grid',
+              'layout': dashboard.layout,
               'frames': [
               ]
             };

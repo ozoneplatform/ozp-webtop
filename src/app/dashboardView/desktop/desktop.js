@@ -201,6 +201,13 @@ angular.module('ozpWebtop.dashboardView.desktop')
               $scope.frames[jj].desktopLayout.left = updatedDashboard.frames[ii].desktopLayout.left;
               $scope.frames[jj].desktopLayout.width = updatedDashboard.frames[ii].desktopLayout.width;
               $scope.frames[jj].desktopLayout.height = updatedDashboard.frames[ii].desktopLayout.height;
+              $scope.frames[jj].desktopLayout.style = {
+                width: $scope.frames[jj].desktopLayout.width + 'px',
+                height: $scope.frames[jj].desktopLayout.height + 'px',
+                top: $scope.frames[jj].desktopLayout.top + 'px',
+                left: $scope.frames[jj].desktopLayout.left + 'px',
+                'z-index': $scope.frames[jj].desktopLayout.zIndex
+              };
             }
           }
         }
@@ -251,8 +258,6 @@ angular.module('ozpWebtop.dashboardView.desktop')
      * @method reloadDashboard
      */
     function reloadDashboard() {
-      // app information is retrieved asynchronously from IWC. If the
-      // information isn't available yet, try again later
       if (!$scope.ready) {
         $log.warn('DesktopCtrl: delaying call to reloadDashboard by 500ms - no data yet');
         $scope.reloadDashboardInterval = $interval(function() {

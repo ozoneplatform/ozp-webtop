@@ -86,7 +86,7 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
         var newBoard = {
           'name': 'Default',
           'id': '0',
-          'stickyIndex': '0',
+          'stickyIndex': 0,
           'layout': 'grid',
           'frames': [
           ]

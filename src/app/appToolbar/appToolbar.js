@@ -481,12 +481,13 @@ angular.module( 'ozpWebtop.appToolbar')
           // create a new dashboard
           // TODO: is this randomly generated name ok?
           var random_integer = Math.floor((Math.random()+0.10)*101);
-          var name = 'Dashboard ' + random_integer.toString();
-          dashboardApi.createDashboard(name).then(function() {
+          var newDashboard = {};
+          newDashboard.name = 'Dashboard ' + random_integer.toString();
+          dashboardApi.createDashboard(newDashboard).then(function() {
             // now get this dashboard id
             dashboardApi.getDashboards().then(function(dashboards) {
               for (var i=0; i < dashboards.length; i++) {
-                if (dashboards[i].name === name) {
+                if (dashboards[i].name === newDashboard.name) {
                   dashboardId = dashboards[i].id;
                   stickyIndex = dashboards[i].stickyIndex;
                 }
@@ -596,7 +597,7 @@ angular.module( 'ozpWebtop.appToolbar')
         // change will be ignored if the dashboard id and layout haven't
         // changed)
         var dashboardId, stickyIndex;
-        dashboardApi.createDashboard(response.name).then(function() {
+        dashboardApi.createDashboard(response).then(function() {
           // now get this dashboard id
           dashboardApi.getDashboards().then(function(dashboards) {
             for (var i=0; i < dashboards.length; i++) {

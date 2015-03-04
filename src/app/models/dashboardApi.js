@@ -681,18 +681,21 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
      * @param name
      * @returns {Promise}
      */
-    createDashboard: function(name) {
+    createDashboard: function(dashboard) {
       var that = this;
       return this.getDashboardData().then(function(dashboardData) {
         // get new id for board
         return that.getNewDashboardId().then(function(dashboardId) {
           return that.getNextStickyIndex().then(function(nextStickyIndex) {
             console.log('creating new board with sticky slot ' + nextStickyIndex);
+            if(!dashboard.layout){
+              dashboard.layout = 'grid';
+            }
             var newBoard = {
-              'name': name,
+              'name': dashboard.name,
               'id': dashboardId,
               'stickyIndex': nextStickyIndex,
-              'layout': 'grid',
+              'layout': dashboard.layout,
               'frames': [
               ]
             };

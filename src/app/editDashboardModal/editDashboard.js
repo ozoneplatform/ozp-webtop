@@ -40,6 +40,21 @@ angular.module('ozpWebtop.editDashboardModal').controller(
       return $scope.dashboard.layout !== $scope.originalLayout;
     };
 
+     /**
+     * Handler invoked when dialog Create Dashboard is selected
+     *
+     *
+     * @method createDashboard
+     */
+    $scope.createDashboard = function() {
+        var response = {
+          'layout': $scope.dashboard.layout,
+          'name': $scope.dashboard.name
+        };
+        $modalInstance.close(response);
+      // });
+    };
+
     /**
      * Handler invoked when dialog is closed via Ok button
      *
@@ -48,7 +63,7 @@ angular.module('ozpWebtop.editDashboardModal').controller(
      */
     $scope.ok = function () {
       // update the dashboard layout and name
-      dashboardApi.saveDashboard($scope.dashboard).then(function() {
+      dashboardApi.saveDashboard($scope.board).then(function() {
         var response = {
           'layout': $scope.dashboard.layout,
           'stickyIndex': $scope.dashboard.stickyIndex,

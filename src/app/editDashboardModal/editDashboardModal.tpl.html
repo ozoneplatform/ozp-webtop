@@ -20,10 +20,10 @@
       <div class="form-group col-lg-2">
         <label>View</label><br />
         <button type="button" class="btn btn-default" ng-class="{'grid': 'active', 'desktop': ''}[dashboard.layout]" ng-click="dashboard.layout = 'grid'">
-            <i class="icon-grid"></i>
+            <i class="icon icon-grid"></i>
         </button>
         <button type="button" class="btn btn-default" ng-class="{'grid': '', 'desktop': 'active'}[dashboard.layout]" ng-click="dashboard.layout = 'desktop'">
-            <i class="icon-stack"></i>
+            <i class="icon icon-stack"></i>
         </button>
       </div>
       <div class="form-group col-lg-4 alert alert-warning" style="padding-bottom: 0;" ng-show="layoutChanged() && modalInstanceType != 'new'">

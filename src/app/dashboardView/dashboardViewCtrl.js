@@ -26,6 +26,14 @@ angular.module('ozpWebtop.dashboardView')
                                            dashboardApi, initialDataReceivedEvent) {
 
     $scope.$on(initialDataReceivedEvent, function() {
+      if(window.location.hash === '#/'){
+        dashboardApi.getDashboards().then(function(dashboard) {
+          var state = 'dashboardview.' + dashboard[0].layout + '-sticky-' +
+            dashboard[0].stickyIndex;
+          $log.info('DashboardViewCtrl: $state.go for board ' + state + ', id: ' + dashboard[0].id);
+          $state.go(state, {dashboardId: dashboard[0].id});
+        });
+      }
       $scope.ready = true;
     });
 

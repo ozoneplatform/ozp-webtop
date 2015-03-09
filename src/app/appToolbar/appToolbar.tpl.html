@@ -6,7 +6,7 @@
                 <ul class="nav navbar-nav">
                     <li class="highlight">
                       <a class="lrg" href="" ng-click="openApplicationsModal()">
-                        <i class="icon-plus"></i>
+                        <i class="icon-plus-18-white"></i>
                       </a>
                     </li>
                     
@@ -20,8 +20,8 @@
                         <li ng-repeat="board in dashboards">
                           <a class="link-pointer"><i ng-class="{desktop:'icon-stack', grid:'icon-grid'}[board.layout]"></i>
                             <span ng-click="loadDashboard(board)">{{board.name}}</span>
-                              <span class="pull-right" ng-click="openDeleteDashboardModal(board)">X</span>
-                              <i class="icon-pencil pull-right" ng-click="openEditDashboardModal(board)"></i>
+                              <i class="icon-cross-14-grayLightest pull-right" ng-click="openDeleteDashboardModal(board)"></i>
+                              <i class="icon-pencil-grayLightest pull-right" ng-click="openEditDashboardModal(board)"></i>
                           </a>
                         </li>
                         <li>
@@ -46,14 +46,15 @@
 
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
+                  <li ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
+                      <a href="" tooltip="Cascade Windows" tooltip-placement="top">
+                        <i class="icon-stack"></i></a>
+                    </li>
                     <li ng-click="toggleFullScreenMode();">
                       <a href="" tooltip="Enter Full Screen" tooltip-placement="top">
-                        <i class="icon-maximize"  ></i></a>
+                        <i class="icon-maximize"></i></a>
                     </li>
-                    <li ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
-                      <a href="" tooltip="Cascade Windows" tooltip-placement="top">
-                        <i class="icon-stack-2"></i></a>
-                    </li>
+
                 </ul>
             </div>
         </div>

@@ -1,15 +1,15 @@
 <div class="ozp-chrome" ng-dblclick="maximizeFrame()">
-  <img class="icon chrome-icon" ng-src="{{frame.icon.small}}">
+  <img class="chrome-icon" ng-src="{{frame.icon.small}}">
   <span class="chrome-name">{{frame.name}}</span>
   <span class="chrome-controls" >
     <button type="button" class="btn chrome-minimize" ng-hide="layout !== 'desktop'" ng-click="minimizeFrame()">
-      <span class="icon icon-minus"></span>
+      <i class="icon-minus-10-white"></i>
     </button>
     <button type="button" class="btn chrome-maximize" ng-hide="layout !== 'desktop'" ng-click="maximizeFrame()">
-      <span class="icon icon-plus"></span>
+      <span class="icon-plus-10-white"></span>
     </button>
     <button type="button" class="btn chrome-close" ng-click="removeFrame()">
-      <span class="icon icon-cross"></span>
+      <span class="icon-cross-10-white"></span>
     </button>
   </span>
 </div>

@@ -29,6 +29,7 @@ html {
 }
 body, html {
   background-color: @dashboard-bg-color;
+  font-weight: 300;
 }
 // bring back vertical dividers in bootstrap 3.0
 // http://stackoverflow.com/questions/19203816/vertical-divider-wont-work-in-bootstrap-3-0
@@ -505,4 +506,20 @@ body > div.classBanner:last-of-type {
 .icon {
   height: inherit;
   width: inherit;
+}
+
+// Catchall baseclass
+[class^="icon-"], [class*=" icon-"] {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

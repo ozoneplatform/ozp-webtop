@@ -6,7 +6,7 @@
                 <ul class="nav navbar-nav">
                     <li class="highlight">
                       <a class="lrg" href="" ng-click="openApplicationsModal()">
-                        <i class="icon icon-plus"></i>
+                        <i class="icon-plus-18-white"></i>
                       </a>
                     </li>
                     
@@ -14,20 +14,20 @@
                     <li class="dropdown dropup">
                     <!-- we start -->
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {{currentDashboard.name | limitTo : dashboardNameLength}} <i class="icon icon-caret-up"></i></a>
+                        {{currentDashboard.name | limitTo : dashboardNameLength}} <i class="icon-caret-up"></i></a>
                       <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">Dashboards</li>
                         <li ng-repeat="board in dashboards">
-                          <a class="link-pointer"><i ng-class="{desktop:'icon icon-stack', grid:'icon icon-grid'}[board.layout]"></i>
+                          <a class="link-pointer"><i ng-class="{desktop:'icon-stack', grid:'icon-grid'}[board.layout]"></i>
                             <span ng-click="loadDashboard(board)">{{board.name}}</span>
-                              <i class="icon icon-cross pull-right" ng-click="openDeleteDashboardModal(board)"></i>
-                              <i class="icon icon-pencil pull-right" ng-click="openEditDashboardModal(board)"></i>
+                              <i class="icon-cross-14-grayLightest pull-right" ng-click="openDeleteDashboardModal(board)"></i>
+                              <i class="icon-pencil-grayLightest pull-right" ng-click="openEditDashboardModal(board)"></i>
                           </a>
                         </li>
                         <li>
                           <a class="caboose" class="link-pointer" href="" ng-click="openNewDashboardModal()">
                             <!-- TODO create dashboard view-->
-                            <i class="icon icon-plus"></i>Create a new dashboard
+                            <i class="icon-plus"></i>Create a new dashboard
                           </a>
                         </li>
                       </ul>
@@ -46,14 +46,15 @@
 
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
+                  <li ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
+                      <a href="" tooltip="Cascade Windows" tooltip-placement="top">
+                        <i class="icon-stack"></i></a>
+                    </li>
                     <li ng-click="toggleFullScreenMode();">
                       <a href="" tooltip="Enter Full Screen" tooltip-placement="top">
-                        <i class="icon icon-maximize"  ></i></a>
+                        <i class="icon-maximize"></i></a>
                     </li>
-                    <li ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
-                      <a href="" tooltip="Cascade Windows" tooltip-placement="top">
-                        <i class="icon icon-stack-2"></i></a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -61,6 +62,6 @@
     <button class="hiddenToggle appHiddenToggle" ng-click="toggleFullScreenMode();"
         ng-class="{false: 'hide', true:''}[fullScreenMode]"
         tooltip="Exit Full Screen" tooltip-placement="left">
-      <i class="icon icon-minimize"></i>
+      <i class="icon-minimize"></i>
     </button>
 </div>

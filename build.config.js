@@ -89,17 +89,6 @@ module.exports = {
       'vendor/angular-gridster/dist/angular-gridster.min.css'
     ],
     assets: [
-      'vendor/components-font-awesome/fonts/FontAwesome.otf',
-      'vendor/components-font-awesome/fonts/fontawesome-webfont.eot',
-      'vendor/components-font-awesome/fonts/fontawesome-webfont.svg',
-      'vendor/components-font-awesome/fonts/fontawesome-webfont.ttf',
-      'vendor/components-font-awesome/fonts/fontawesome-webfont.woff',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.eot',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.svg',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff',
-      'vendor/bootstrap/fonts/icons.woff',
-      'vendor/bootstrap/fonts/icons.ttf',
       'vendor/ubuntu-fontface/**'
     ]
   }

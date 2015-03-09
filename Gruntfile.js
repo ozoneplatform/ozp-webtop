@@ -146,6 +146,13 @@ module.exports = function ( grunt ) {
             cwd: '.',
             expand: true,
             flatten: true
+          },
+          {
+            src: [ '*.svg' ],
+            dest: '<%= build_dir %>/assets/svg/',
+            cwd: 'vendor/icons/dist/css/svg',
+            expand: true,
+            flatten: true
           }
         ]
       },

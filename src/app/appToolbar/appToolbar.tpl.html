@@ -9,16 +9,16 @@
                         <i class="icon-plus-18-white"></i>
                       </a>
                     </li>
-                    
+
                     <li class="navbar-spacer"></li>
                     <li class="dropdown dropup">
                     <!-- we start -->
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {{currentDashboard.name | limitTo : dashboardNameLength}} <i class="icon-caret-up"></i></a>
+                        {{currentDashboard.name | limitTo : dashboardNameLength}} <i class="icon-caret-up-white"></i></a>
                       <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">Dashboards</li>
                         <li ng-repeat="board in dashboards">
-                          <a class="link-pointer"><i ng-class="{desktop:'icon-stack', grid:'icon-grid'}[board.layout]"></i>
+                          <a class="link-pointer"><i ng-class="{desktop:'icon-stack-grayLightest', grid:'icon-grid-grayLightest'}[board.layout]"></i>
                             <span ng-click="loadDashboard(board)">{{board.name}}</span>
                               <i class="icon-cross-14-grayLightest pull-right" ng-click="openDeleteDashboardModal(board)"></i>
                               <i class="icon-pencil-grayLightest pull-right" ng-click="openEditDashboardModal(board)"></i>
@@ -27,20 +27,20 @@
                         <li>
                           <a class="caboose" class="link-pointer" href="" ng-click="openNewDashboardModal()">
                             <!-- TODO create dashboard view-->
-                            <i class="icon-plus"></i>Create a new dashboard
+                            <i class="icon-plus-14-white"></i>Create a new dashboard
                           </a>
                         </li>
                       </ul>
                     </li>
                     <li class="navbar-spacer"></li>
- 
+
                     <li class="app" ng-repeat="app in myPinnedApps" ng-class="{true:'',false:'active', 'undefined':'active'}[app.isMinimized]">
                       <a tooltip="{{app.name | limitTo : 15}}"
                           ng-click="maximizeFrame(app)">
                         <img ng-src="{{app.icon.large}}" />
                         <!-- <div ng-class="app.isMinimized && currentDashboard.layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div> -->
                       </a>
-                    </li>                   
+                    </li>
                 </ul>
             </div>
 
@@ -48,11 +48,11 @@
                 <ul class="nav navbar-nav">
                   <li ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
                       <a href="" tooltip="Cascade Windows" tooltip-placement="top">
-                        <i class="icon-stack"></i></a>
+                        <i class="icon-stack-grayLightest"></i></a>
                     </li>
                     <li ng-click="toggleFullScreenMode();">
                       <a href="" tooltip="Enter Full Screen" tooltip-placement="top">
-                        <i class="icon-maximize"></i></a>
+                        <i class="icon-maximize-grayLightest"></i></a>
                     </li>
 
                 </ul>

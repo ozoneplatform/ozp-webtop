@@ -486,20 +486,27 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
      * @param updatedDashboardData
      * @returns {Promise}
      */
-    updateDashboard: function(updatedDashboardData) {
+    updateDashboard: function(updatedDashboard) {
       var that = this;
-      return this.getDashboardData().then(function(dashboardData) {
-        for (var i=0; i < dashboardData.dashboards.length; i++) {
-          if(dashboardData.dashboards[i].id === updatedDashboardData.id) {
-            dashboardData.dashboards[i].name = updatedDashboardData.name;
-            dashboardData.dashboards[i].layout = updatedDashboardData.layout;            
-            that._setDashboardData(dashboardData).then(function(response) {
-              return response;
+      return this.getDashboardById(updatedDashboard.id).then(function(dashboard) {
+        dashboard.name = updatedDashboard.name;
+        // if the layout changes, we need to change the stickyIndex too
+        if (dashboard.layout !== updatedDashboard.layout) {
+          $log.debug('dashboard layout changed for board ' + dashboard.name);
+          return that.getNextStickyIndex(updatedDashboard.layout).then(function(stickyIndex) {
+            dashboard.layout = updatedDashboard.layout;
+            dashboard.stickyIndex = stickyIndex;
+            $log.debug('changing stickyIndex of board ' + dashboard.name + ' to ' + stickyIndex);
+            return that.saveDashboard(dashboard).then(function() {
+              return dashboard;
             });
-          }
+          });
+        } else {
+          $log.debug('dashboard ' + dashboard.name + ' layout did not change');
         }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
+        return that.saveDashboard(dashboard).then(function() {
+          return dashboard;
+        });
       });
     },
 
@@ -696,14 +703,14 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
      */
     createDashboard: function(dashboard) {
       var that = this;
+      if(!dashboard.layout){
+        dashboard.layout = 'grid';
+      }
       return this.getDashboardData().then(function(dashboardData) {
         // get new id for board
         return that.getNewDashboardId().then(function(dashboardId) {
-          return that.getNextStickyIndex().then(function(nextStickyIndex) {
+          return that.getNextStickyIndex(dashboard.layout).then(function(nextStickyIndex) {
             console.log('creating new board with sticky slot ' + nextStickyIndex);
-            if(!dashboard.layout){
-              dashboard.layout = 'grid';
-            }
             var newBoard = {
               'name': dashboard.name,
               'id': dashboardId,
@@ -764,19 +771,34 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
     /**
      * Get the next available sticky slot for a new dashboard
      */
-    getNextStickyIndex: function() {
+    getNextStickyIndex: function(dashboardLayout) {
       return this.getDashboards().then(function(dashboards) {
-        var usedStickySlots = [];
+        var gridUsedStickySlots = [];
+        var desktopUsedStickySlots = [];
         for (var i = 0; i < dashboards.length; i++) {
-          usedStickySlots.push(dashboards[i].stickyIndex);
+          if (dashboards[i].layout === 'grid') {
+            gridUsedStickySlots.push(dashboards[i].stickyIndex);
+          } else if (dashboards[i].layout === 'desktop') {
+            desktopUsedStickySlots.push(dashboards[i].stickyIndex);
+          } else {
+            $log.error('Invalid dashboard layout');
+          }
         }
         // TODO: use constants.maxStickyBoards
         for (var j=0; j < 10; j++) {
-          if (usedStickySlots.indexOf(j) < 0) {
-            return j;
+          if (dashboardLayout === 'grid') {
+            if (gridUsedStickySlots.indexOf(j) < 0) {
+              return j;
+            }
+          } else if (dashboardLayout === 'desktop') {
+            if (desktopUsedStickySlots.indexOf(j) < 0) {
+              return j;
+            }
+          } else {
+            $log.error('Invalid layout passed to getNextStickyIndex: ' + dashboardLayout);
           }
         }
-        console.log('WARNING: Sticky dashboard slots are full!');
+        $log.error('WARNING: Sticky dashboard slots are full!');
       }).catch(function(error) {
         console.log('should not have happened: ' + error);
       });

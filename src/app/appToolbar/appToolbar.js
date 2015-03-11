@@ -556,26 +556,36 @@ angular.module( 'ozpWebtop.appToolbar')
       });
 
       modalInstance.result.then(function (response) {
-        // if user updates the current dashboard layout, update browser state
-        if (($scope.currentDashboard.id === response.id) && (response.layout !== $scope.currentDashboard.layout)) {
-          $rootScope.$broadcast(dashboardStateChangedEvent, {
-            'dashboardId': $scope.currentDashboard.id,
-            'layout': $scope.currentDashboard.layout});
-          $state.go('dashboardview.' + response.layout + '-sticky-' +
-            response.stickyIndex, {dashboardId: response.id});
-        }
-
+        // NOTE: response.stickyIndex is invalid at this point
         // update backend with dashboard changes
-        for(var a in $scope.dashboards){
-          console.log('now doing this');
-          if($scope.dashboards[a].id === response.id){
+        var updatedDashboardData = {};
+        for (var i=0; i < $scope.dashboards.length; i++) {
+          if ($scope.dashboards[i].id === response.id) {
             // changes the drop-up text and dashboard/grid icon
-            $scope.dashboards[a].name = response.name;
-            $scope.dashboards[a].layout = response.layout;
-            $scope.updatedDashboardData = $scope.dashboards[a];
+            $scope.dashboards[i].name = response.name;
+            $scope.dashboards[i].layout = response.layout;
+            updatedDashboardData = $scope.dashboards[i];
           }
         }
-        dashboardApi.updateDashboard($scope.updatedDashboardData);
+
+        dashboardApi.updateDashboard(updatedDashboardData).then(function(dashboard) {
+          for (var i=0; i < $scope.dashboards.length; i++) {
+            if ($scope.dashboards[i].id === dashboard.id) {
+              // changes the drop-up text and dashboard/grid icon
+              $scope.dashboards[i].stickyIndex = dashboard.stickyIndex;
+            }
+          }
+          // if user updates the current dashboard layout, update browser state
+          if ($scope.currentDashboard.id === dashboard.id) {
+            $rootScope.$broadcast(dashboardStateChangedEvent, {
+              'dashboardId': dashboard.id,
+              'layout': dashboard.layout});
+            $state.go('dashboardview.' + dashboard.layout + '-sticky-' +
+              dashboard.stickyIndex, {dashboardId: dashboard.id});
+          }
+        }).catch(function(error) {
+          $log.error('Error updateDashboardData: ' + error);
+        });
       });
     };
 

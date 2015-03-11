@@ -541,6 +541,7 @@ angular.module( 'ozpWebtop.appToolbar')
        */
     $scope.openEditDashboardModal = function(board) {
       $scope.board = board;
+      $scope.modalInstanceType = 'edit';
       var modalInstance = $modal.open({
         templateUrl: 'editDashboardModal/editDashboardModal.tpl.html',
         controller: 'EditDashboardModalInstanceCtrl',

@@ -538,10 +538,12 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
      */
     mergeApplicationData: function(frames) {
       var marketplaceApps = this._applicationData;
-      for (var i=0; i < marketplaceApps.length; i++) {
-        // check if this app is on our dashboard
-        for (var j=0; j < frames.length; j++) {
+
+      for (var j=0; j < frames.length; j++) {
+        var foundApp = false;
+        for (var i=0; i < marketplaceApps.length; i++) {
           if (frames[j].appId === marketplaceApps[i].id) {
+            foundApp = true;
             // if it is, then get all relevant info
             frames[j].icon = {};
             frames[j].icon.small = marketplaceApps[i].icons.small;
@@ -554,7 +556,14 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
             frames[j].descriptionShort = marketplaceApps[i].descriptionShort;
             // TODO: get this data for real
             frames[j].singleton = false;
+            break;
           }
+        }
+        if (!foundApp) {
+          $log.warn('Found a frame with no corresponding application');
+          frames[j].trustedUrl = 'assets/appNotFound/index.html';
+          frames[j].name = 'Not Found';
+          frames[j].singleton = false;
         }
       }
     },

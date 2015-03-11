@@ -149,32 +149,45 @@ function generalDashboardModel($sce, $q, $log, $http, $window, persistStrategy, 
       var that = this;
       if (this._readyToPut) {
         this._readyToPut = false;
-        var url = $window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data';
-        var req = {
-          method: 'PUT',
-          url: url,
-          headers: {
-            'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
-          },
-          data: dashboardData,
-          withCredentials: true,
-        };
+        // - - - - - - - - - - - - - - -
+        //LEAVE THIS HERE FOR NOW
+        //
+        // Example shows how to use raw HTTP requests to interact with the
+        // server endpoint intended exclusively for use via IWC's data.api, which
+        // could be useful in the future
+        // - - - - - - - - - - - - - - -
 
-        return $http(req).success(function() {
-            that._readyToPut = true;
-          }).error(function(data, status) {
-            $log.error('DashboardApi: Error from PUT at ' + url + ', status: ' + status + ', msg: ' + JSON.stringify(data));
-            that._readyToPut = true;
-          });
+        //var url = $window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data';
+        //var req = {
+        //  method: 'PUT',
+        //  url: url,
+        //  headers: {
+        //    'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
+        //  },
+        //  data: dashboardData,
+        //  withCredentials: true,
+        //};
+
+        //return $http(req).success(function() {
+        //    that._readyToPut = true;
+        //  }).error(function(data, status) {
+        //    $log.error('DashboardApi: Error from PUT at ' + url + ', status: ' + status + ', msg: ' + JSON.stringify(data));
+        //    that._readyToPut = true;
+        //  });
+
+        return persistStrategy.setDashboardData(dashboardData).then(function (resp) {
+          that._readyToPut = true;
+          return resp;
+        }).catch(function (error) {
+          $log.error('DashboardApi: Error setting dashboard data: ' + JSON.stringify(error));
+          that._readyToPut = true;
+        });
       }
-
-      //persistStrategy.setDashboardData(dashboardData);
+      // if we aren't ready to PUT, just ignore the failure and try again next
+      // time (this happens a lot, so don't bother logging it)
       var deferred = $q.defer();
       deferred.resolve(true);
       return deferred.promise;
-      //return persistStrategy.setDashboardData(dashboardData).then(function(response) {
-      //  return response;
-      //});
     },
     /**
      * Set all dashboards

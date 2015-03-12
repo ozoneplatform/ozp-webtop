@@ -26,7 +26,16 @@ angular.module('ozpWebtop.dashboardView')
                                            dashboardApi, initialDataReceivedEvent) {
 
     $scope.$on(initialDataReceivedEvent, function() {
-      if(window.location.hash === '#/'){
+      $scope.ready = true;
+    });
+
+    $scope.$on('$stateChangeSuccess',
+      function(event, toState, toParams/*, fromState, fromParams*/){
+        stateChangeHandler(event, toState, toParams);
+    });
+
+    function stateChangeHandler (event, toState, toParams) {
+      if(!toParams.dashboardId){
         dashboardApi.getDashboards().then(function(dashboard) {
           var state = 'dashboardview.' + dashboard[0].layout + '-sticky-' +
             dashboard[0].stickyIndex;
@@ -34,19 +43,10 @@ angular.module('ozpWebtop.dashboardView')
           $state.go(state, {dashboardId: dashboard[0].id});
         });
       }
-      $scope.ready = true;
-    });
-
-    $scope.$on('$stateChangeSuccess',
-      function(event, toState/*, toParams, fromState, fromParams*/){
-        stateChangeHandler(event, toState);
-    });
-
-    function stateChangeHandler (event, toState) {
       if (!$scope.ready) {
         $log.warn('DashboardViewCtrl: delaying call to handleStateChange by 500ms - no data yet');
         $scope.readyPromise = $interval(function() {
-          stateChangeHandler(event, toState);
+          stateChangeHandler(event, toState, toParams);
         }, 500, 1);
         return;
       }

@@ -122,8 +122,7 @@ angular.module( 'ozpWebtop', [
   })
 
 .run( function run ($rootScope, $state, $http, $window, $log, dashboardApi, marketplaceApi,
-                    userSettingsApi, useIwc, initialDataReceivedEvent,
-                    iwcInterface) {
+                    userSettingsApi, useIwc, initialDataReceivedEvent) {
 
     $rootScope.$state = $state;
 
@@ -148,18 +147,27 @@ angular.module( 'ozpWebtop', [
         }
       dashboardApi.setApplicationData(data);
       // now the the current dashboard data
-      iwcInterface.getDashboardData().then(function(dashboardData) {
-        if (dashboardData) {
-          dashboardApi.setInitialDashboardData(dashboardData).then(function() {
-            $log.info('application listings and dashboard data retrieved - ready to start');
-            $rootScope.$broadcast(initialDataReceivedEvent);
-          });
-        } else {
+      $http.get($window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data', {withCredentials: true, headers: {'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'}}).success(function(data, status) {
+        if (status !== 200) {
+          $log.warn('WARNING: got non 200 status from /profile/self/data/dashboard-data: ' + status);
+        }
+        var parsedData = JSON.parse(data['entity']); // jshint ignore:line
+        // TODO: this is abusing the IWC store on the backend!
+        // dashboardApi.setInitialDashboardData(parsedData.entity);
+
+        dashboardApi.setInitialDashboardData(parsedData).then(function() {
+          $log.info('application listings and dashboard data retrieved - ready to start');
+          $rootScope.$broadcast(initialDataReceivedEvent);
+        });
+      }).error(function(data, status) {
+        if (status === 404) {
           $log.warn('No dashboard data found. Creating default dashboard');
           dashboardApi.setInitialDashboardData({}).then(function() {
             $log.info('application listings and dashboard data retrieved - ready to start');
             $rootScope.$broadcast(initialDataReceivedEvent);
           });
+        } else {
+         $log.error('ERROR getting dashboard data. status: ' + JSON.stringify(status) + ', data: ' + JSON.stringify(data));
         }
       });
     }).error(function(data, status) {

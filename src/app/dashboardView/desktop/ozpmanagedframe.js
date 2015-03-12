@@ -127,7 +127,7 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
         });
       }
 
-      function onMouseDown() {
+      function onMouseDown(event) {
         // change z-index to top
         // TODO: find a more maintainable way?
         var className = event.target ? event.target.className : event.srcElement.className;

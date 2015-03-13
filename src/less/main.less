@@ -481,17 +481,17 @@ body > div.classBanner:last-of-type {
   bottom: 0 !important;
 }
 
-.navbar .navbar-nav > .app > a { 
+.navbar .navbar-nav > .app > a {
   padding: 0 0 2px 0;
   margin: -2px 5px 0 5px;
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; 
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
   filter: alpha(opacity=70);
   opacity: 0.7;
 }
 .navbar .navbar-nav > .app.active > a,
 .navbar .navbar-nav > .app > a:hover,
 .navbar .navbar-nav > .app.active > a:focus {
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; 
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   filter: alpha(opacity=100);
   opacity: 1.0;
   border-top: none;
@@ -542,4 +542,84 @@ body > div.classBanner:last-of-type {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+//icon hovers
+.nav.navbar-nav {
+
+    > .open {
+        > a, > a:hover, > a:focus {
+
+            > .icon-caret-up-grayLightest{
+              .icon-caret-up-blue;
+            }
+
+            > .icon-menu-grayLightest{
+              .icon-menu-blue;
+            }
+        }
+    }
+    a:hover, a:focus {
+
+        > .icon-home-grayLightest{
+          .icon-home-white;
+        }
+
+        > .icon-shopping-grayLightest{
+          .icon-shopping-white;
+        }
+
+        > .icon-bell-grayLightest{
+          .icon-bell-white;
+        }
+
+        > .icon-question-grayLightest{
+          .icon-question-white;
+        }
+
+        > .icon-menu-grayLightest{
+          .icon-menu-white;
+        }
+   }
+}
+
+.dropup > .dropdown-toggle.ng-binding {
+  border-top:0px;
+  border-bottom: 4px solid transparent;
+
+    &:hover, &:focus {
+      border-bottom: 4px solid @blue;
+
+      > .icon-caret-up-grayLightest {
+        .icon-caret-up-white;
+      }
+    }
+}
+
+.dropup.open > .dropdown-toggle.ng-binding {
+  border-top:0px;
+  border-bottom: 4px solid @blue;
+}
+
+.icon-pencil-grayLightest.pull-right {
+
+  &:hover, &:focus{
+    .icon-pencil-blue;
+  }
+
+}
+
+.icon-cross-14-grayLightest.pull-right {
+
+  &:hover, &:focus{
+    .icon-cross-14-blue;
+  }
+
+}
+
+.close.icon-cross-16-white {
+
+  &:hover, &:focus{
+    .icon-cross-16-blue;
+  }
 }

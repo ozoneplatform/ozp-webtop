@@ -17,7 +17,8 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
   'ozpWebtop.models.userSettings',
   'ozpWebtop.addApplicationsModal',
   'ozpWebtop.editDashboardModal',
-  'ozp.common.windowSizeWatcher']);
+  'ozp.common.windowSizeWatcher',
+  'ozpWebtop.dashboardView.grid']);
 
 /**
  * Application toolbar on the bottom of Webtop. Contains a menu for adding
@@ -60,7 +61,8 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  dashboardStateChangedEvent,
                                                  fullScreenModeToggleEvent,
                                                  highlightFrameOnGridLayoutEvent,
-                                                 initialDataReceivedEvent) {
+                                                 initialDataReceivedEvent,
+                                                 removeFramesOnDeleteEvent) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -639,6 +641,8 @@ angular.module( 'ozpWebtop.appToolbar')
       var msg = 'Are you sure you want to delete dashboard ' +
           board.name + '? This action cannot be undone';
       if ($window.confirm(msg)) {
+        // Notify the grid controller to remove its widgets.
+        $rootScope.$broadcast(removeFramesOnDeleteEvent, {'dashboardId': board.id});
         dashboardApi.removeDashboard(board.id).then(function() {
           // redirect user to their first board
           dashboardApi.getDashboards().then(function(dashboards) {

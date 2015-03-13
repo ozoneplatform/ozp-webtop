@@ -77,6 +77,14 @@ angular.module('ozpWebtop.constants')
 .constant('highlightFrameOnGridLayoutEvent', 'highlightFrameOnGridLayout')
 
 /**
+ * Event fired when a dashboard is closed to remove its frames.
+ * @property removeFrameOnDeleteEvent
+ * @type String
+ */
+.constant('removeFramesOnDeleteEvent', 'removeFramesOnDelete')
+
+
+/**
  * Event fired when app and dashboard data is initially retrieved
  * @property initialDataReceived
  * @type String

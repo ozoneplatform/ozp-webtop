@@ -2,7 +2,7 @@
 
 describe('Add Applications', function () {
 
-  var scope, marketplaceApi, modalInstance;
+  var scope, modalInstance;
 
   // load the filter's module
   beforeEach(module('ozpWebtop.addApplicationsModal'));
@@ -14,7 +14,7 @@ describe('Add Applications', function () {
     });
   });
 
-  beforeEach(inject(function($rootScope, $controller, _marketplaceApi_) {
+  beforeEach(inject(function($rootScope, $httpBackend, $controller) {
     scope = $rootScope.$new();
     modalInstance = {                    // Create a mock object using spies
       close: jasmine.createSpy('modalInstance.close'),
@@ -23,24 +23,21 @@ describe('Add Applications', function () {
         then: jasmine.createSpy('modalInstance.result.then')
       }
     };
-    marketplaceApi = _marketplaceApi_;
-    var apps = [];
-    marketplaceApi.createExampleMarketplace().then(function() {
-      marketplaceApi.getAllApps().then(function(resp) {
-        apps = resp;
-        $controller('AddApplicationsModalInstanceCtrl', {$scope: scope,
-          $modalInstance: modalInstance, apps: apps});
-      });
-    }).catch(function(error) {
-      expect(error).toEqual('should not have happened');
-    });
 
-    $rootScope.$apply();
+    jasmine.getJSONFixtures().fixturesPath='base/testData';
+    var listingData = getJSONFixture('ApplicationData.json');
+
+    $controller('AddApplicationsModalInstanceCtrl', {
+      $scope: scope,
+      $modalInstance: modalInstance,
+      apps: listingData.apps}
+    );
 
   }));
 
   it('should expose a sorted list of applications', function() {
     expect(scope.applications).toBeDefined();
+    expect(scope.applications.length).toBeGreaterThan(3);
     var appNames = [];
     for (var i=0; i < scope.applications.length; i++) {
      appNames[i] = scope.applications[i].name;

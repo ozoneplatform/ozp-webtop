@@ -5,10 +5,10 @@
  *
  * @module ozpWebtop.ozpToolbar
  * @requires ozp.common.windowSizeWatcher
- * @requires ozpWebtop.models.userSettings
+ * @requires ozpWebtop.models
  */
 angular.module('ozpWebtop.ozpToolbar', [ 'ozp.common.windowSizeWatcher',
-  'ozpWebtop.models.userSettings']);
+  'ozpWebtop.models']);
 
 var app = angular.module( 'ozpWebtop.ozpToolbar')
 /**
@@ -25,7 +25,6 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
  * @constructor
  * @param $scope ng $scope
  * @param $rootScope ng $rootScope
- * @param userSettingsApi user preferences data
  * @param windowSizeWatcher notify when window size changes
  * @param deviceSizeChangedEvent event name
  * @param fullScreenModeToggleEvent event name
@@ -34,7 +33,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
  */
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope, $window, $log,
-           userSettingsApi, windowSizeWatcher, deviceSizeChangedEvent,
+           models, windowSizeWatcher, deviceSizeChangedEvent,
            fullScreenModeToggleEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

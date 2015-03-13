@@ -6,12 +6,10 @@
  * @module ozpWebtop.addApplicationsModal
  *
  * @requires ui.bootstrap
- * @requires ozpWebtop.models.marketplace
  *
  */
 
-angular.module('ozpWebtop.addApplicationsModal', ['ui.bootstrap',
-  'ozpWebtop.models.marketplace']);
+angular.module('ozpWebtop.addApplicationsModal', ['ui.bootstrap']);
 
 /**
  * Controller for Add Applications modal

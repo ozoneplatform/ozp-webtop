@@ -10,7 +10,7 @@
  */
 
 angular.module('ozpWebtop.editDashboardModal', ['ui.bootstrap',
-  'ozpWebtop.models.dashboard']);
+  'ozpWebtop.models']);
 
 /**
  * Controller for Edit Dashboard modal
@@ -21,7 +21,7 @@ angular.module('ozpWebtop.editDashboardModal', ['ui.bootstrap',
  */
 angular.module('ozpWebtop.editDashboardModal').controller(
   'EditDashboardModalInstanceCtrl', function($scope, $modalInstance,
-                                             dashboardApi, dashboard) {
+                                             models, dashboard) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -63,16 +63,14 @@ angular.module('ozpWebtop.editDashboardModal').controller(
      */
     $scope.ok = function () {
       // update the dashboard layout and name
-      dashboardApi.saveDashboard($scope.board).then(function() {
-        var response = {
-          'layout': $scope.dashboard.layout,
-          'stickyIndex': $scope.dashboard.stickyIndex,
-          'id': $scope.dashboard.id,
-          'name': $scope.dashboard.name
-        };
-        $modalInstance.close(response);
-      });
-
+      models.saveDashboard($scope.board);
+      var response = {
+        'layout': $scope.dashboard.layout,
+        'stickyIndex': $scope.dashboard.stickyIndex,
+        'id': $scope.dashboard.id,
+        'name': $scope.dashboard.name
+      };
+      $modalInstance.close(response);
     };
 
     /**

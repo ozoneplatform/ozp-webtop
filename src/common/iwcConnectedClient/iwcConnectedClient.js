@@ -21,9 +21,9 @@ var app = angular.module('ozp.common.iwc.client');
  * @param iwcClient iwcClient service from ozp-iwc-angular library
  * @namespace ozp.common.iwc
  */
-app.factory('iwcConnectedClient', function($q, $location, $window, iwcClient) {
+app.factory('iwcConnectedClient', function($q, $location, $window, $log, iwcClient) {
 
-  console.log('creating iwc client using bus: ' + $window.OzoneConfig.IWC_URL);
+  $log.debug('creating iwc client using bus: ' + $window.OzoneConfig.IWC_URL);
   var client = new iwcClient.Client({
     peerUrl: $window.OzoneConfig.IWC_URL
   });
@@ -46,7 +46,7 @@ app.factory('iwcConnectedClient', function($q, $location, $window, iwcClient) {
 
       client.on('connected', function () {
         if (initialConnection) {
-          console.log('OZP client is connected to bus: ' + client.peerUrl);
+          $log.debug('OZP client is connected to bus: ' + client.peerUrl);
           initialConnection = false;
         }
         isConnected = true;

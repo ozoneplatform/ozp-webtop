@@ -2,7 +2,9 @@
   "name": "dashboards",
   "user": "J Smith",
   "currentDashboard": "0",
-  "persist": true,
+  "userSettings": {
+    "fullScreenMode": false
+  },
   "dashboards": [
     {
       "name": "Sample Apps",
@@ -12,7 +14,7 @@
       "frames": [
         {
           "appId": "b0700c81-65cd-45f5-b599-07d9b3764511",
-          "appName": "Air Mail",
+          "name": "AirMail",
           "id": "45a08744-686b-4b14-820a-ebc8c24fbfb0",
           "gridLayout": {
             "sm": {
@@ -38,7 +40,7 @@
         },
         {
           "appId": "e9db1f3e-2615-40c1-9972-8a3a7c8733b6",
-          "appName": "Bread Basket",
+          "name": "Bread Basket",
           "id": "59891c69-dde5-4926-b4b1-e53dac90b271",
           "gridLayout": {
             "sm": {
@@ -64,7 +66,7 @@
         },
         {
           "appId": "fe79bd04-aa78-4c55-89bc-cedb88eeae38",
-          "appName": "Chart Course",
+          "name": "ChartCourse",
           "id": "87078824-fac8-4c04-84d5-f6a424f955fb",
           "gridLayout": {
             "sm": {
@@ -90,7 +92,7 @@
         },
         {
           "appId": "8c9716db-00f1-4086-a413-03a2891fcf27",
-          "appName": "PlotPossum",
+          "name": "Plot Possum",
           "id": "23baefc8-872a-4da4-84ed-e8fa62c09819",
           "gridLayout": {
             "sm": {
@@ -116,7 +118,7 @@
         },
         {
           "appId": "773c2bf4-069d-4b9d-9f7d-e767613388b0",
-          "appName": "ChatterBox",
+          "name": "ChatterBox",
           "id": "8ca6dba0-b7bb-47e4-a1a1-06e451f9a0f1",
           "gridLayout": {
             "sm": {
@@ -142,7 +144,7 @@
         },
         {
           "appId": "26e289fa-fb36-4825-9448-e8760db9e362",
-          "appName": "Clipboard",
+          "name": "Clipboard",
           "id": "99fb827c-4828-4855-8d39-e163fb76a5e0",
           "gridLayout": {
             "sm": {
@@ -168,7 +170,7 @@
         },
         {
           "appId": "65a026aa-fe21-4aa4-b455-e7c8e3c1160d",
-          "appName": "HatchLatch",
+          "name": "Hatch Latch",
           "id": "0c20bc75-1eca-4b89-8a8d-2c699f401039",
           "gridLayout": {
             "sm": {
@@ -194,7 +196,7 @@
         },
         {
           "appId": "21c6715e-a204-4ae8-a041-625a644e65b1",
-          "appName": "JotSpot",
+          "name": "JotSpot",
           "id": "44527090-b8f0-46a1-acc7-df736c655ae2",
           "gridLayout": {
             "sm": {
@@ -220,7 +222,7 @@
         },
         {
           "appId": "904a99cf-9da5-4b07-aecd-e1cbff534bb7",
-          "appName": "LunarLantern",
+          "name": "Lunar Lantern",
           "id": "1b27150b-3e3a-42fa-868d-18114318a9e7",
           "gridLayout": {
             "sm": {
@@ -246,7 +248,7 @@
         },
         {
           "appId": "3ddeb636-dd93-4875-88d6-ff0da56c98ee",
-          "appName": "JournalForge",
+          "name": "Journal Forge",
           "id": "d1681ade-fb6e-4d6a-9f11-3e8e1e803b0d",
           "gridLayout": {
             "sm": {
@@ -280,7 +282,7 @@
       "frames": [
         {
           "appId": "cd0e3e24-cae8-4886-a0d4-c7e04b5b104e",
-          "appName": "Greek Analysis",
+          "name": "Greek analysis",
           "id": "2b585b22-5de9-4389-b536-57bcb602bf3a",
           "gridLayout": {
             "sm": {
@@ -306,7 +308,7 @@
         },
         {
           "appId": "f38e10db-eb3f-4b90-8ec5-cb0a7dbd9191",
-          "appName": "Stock Trader",
+          "name": "Stock Trader",
           "id": "3886bbea-0421-4a2a-9851-b8e1c6a59f5b",
           "gridLayout": {
             "sm": {
@@ -332,7 +334,7 @@
         },
         {
           "appId": "00605b24-baff-4270-b0b5-2b6bd6455883",
-          "appName": "Stock Price Charter",
+          "name": "Chart",
           "id": "fe9fd6bf-e7be-446a-8ab7-a3fc4ac279a8",
           "gridLayout": {
             "sm": {
@@ -366,7 +368,7 @@
       "frames": [
         {
           "appId": "26e289fa-fb36-4825-9448-e8760db9e362",
-          "appName": "Clipboard",
+          "name": "Clipboard",
           "id": "04648023-6ab0-448d-83a1-bb378639237f",
           "gridLayout": {
             "sm": {
@@ -395,12 +397,12 @@
     {
       "name": "Bouncing Balls",
       "id": "3",
-      "stickyIndex": -1,
+      "stickyIndex": 3,
       "layout": "grid",
       "frames": [
         {
           "appId": "998437ef-9191-4d57-91a7-6ab049361583",
-          "appName": "Bouncing Green Ball",
+          "name": "Bouncing Balls",
           "id": "6c84a76c-f149-4c4d-90a8-1df397ed588b",
           "gridLayout": {
             "sm": {
@@ -426,7 +428,7 @@
         },
         {
           "appId": "3af849aa-dad0-4223-b15b-9da3b48d1845",
-          "appName": "Bouncing Blue Ball",
+          "name": "Bouncing Balls",
           "id": "c951a160-0917-45cf-8c7f-a3748958ced1",
           "gridLayout": {
             "sm": {
@@ -452,8 +454,8 @@
         },
         {
           "appId": "e5f52929-3f00-4766-a820-f0452ff74572",
-          "appName": "Bouncing Red Ball",
           "id": "dad15d4a-0da1-4181-9e99-15c9197a0180",
+          "name": "Bouncing Balls",
           "gridLayout": {
             "sm": {
               "col": 2,
@@ -478,8 +480,8 @@
         },
         {
           "appId": "93eb7a1d-618c-4478-a59e-326eccbe86d5",
-          "appName": "Bouncing Black Ball",
           "id": "32769aa5-2c34-45e9-9a63-a155f3d77073",
+          "name": "Bouncing Balls",
           "gridLayout": {
             "sm": {
               "col": 1,

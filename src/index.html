@@ -24,6 +24,12 @@
 
     <!-- runtime configurable constants -->
     <script src="OzoneConfig.js"></script>
+    <!-- cuz IE -->
+    <script>
+      if (!window.console) { window.console = {}; }
+      if (!window.console.log) { window.console.log = function () { }; }
+    </script>
+
     <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
 

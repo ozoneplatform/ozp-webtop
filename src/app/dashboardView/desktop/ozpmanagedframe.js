@@ -4,11 +4,11 @@
  * Desktop managed frame
  *
  * @module ozpWebtop.dashboardView.desktop.managedFrame
- * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models
  * @requires ozpWebtop.dashboardView.desktop.iframe
  */
 angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
-  'ozpWebtop.models.dashboard']);
+  'ozpWebtop.models']);
 
 /**
  *
@@ -17,10 +17,10 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame', [
  * @namespace dashboardView
  * @class ozpManagedFrame
  * @constructor
- * @param {Object} dashboardApi the API for dashboard information {{#crossLink "dashboardApi"}}{{/crossLink}}
+ * @param {Object} models the API for dashboard information {{#crossLink "models"}}{{/crossLink}}
  */
 angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
-.directive('ozpManagedFrame', function (dashboardApi) {
+.directive('ozpManagedFrame', function ($log, models) {
   // Directive definition object
   return {
     restrict: 'E',
@@ -60,7 +60,7 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
       }
     };
     if (!scope.myframe) {
-      console.log('ERROR, scope.myframe is not defined');
+      $log.error('ERROR, scope.myframe is not defined');
       return;
     }
     scope.zIndexMax = 0;
@@ -84,7 +84,7 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
     function start (event) {
       var className = event.target ? event.target.className : event.srcElement.className;
       if (className.indexOf('icons') > -1) {
-        console.log('preventDefault on mousedown event and returning');
+        $log.debug('preventDefault on mousedown event and returning');
         event.preventDefault();
         return;
       }
@@ -103,7 +103,7 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
       // TODO: find a more maintainable way?
       var className = event.target ? event.target.className : event.srcElement.className;
       if (className.indexOf('icons') > -1) {
-        console.log('stop() prevent default on mouseup and returning');
+        $log.debug('stop() prevent default on mouseup and returning');
         event.preventDefault();
         return;
       }
@@ -111,20 +111,18 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
       }
 
       function bringToFront() {
-        dashboardApi.getDashboardById(scope.dashboardId).then(function (dashboard) {
-          for (var i = 0; i < dashboard.frames.length; i++) {
-            if (dashboard.frames[i].desktopLayout.zIndex > scope.zIndexMax) {
-              scope.zIndexMax = dashboard.frames[i].desktopLayout.zIndex;
-            }
+        var dashboard = models.getDashboardById(scope.dashboardId);
+        for (var i = 0; i < dashboard.frames.length; i++) {
+          if (dashboard.frames[i].desktopLayout.zIndex > scope.zIndexMax) {
+            scope.zIndexMax = dashboard.frames[i].desktopLayout.zIndex;
           }
-          scope.zIndexMax += 1;
-          element.css({
-            zIndex: scope.zIndexMax
-          });
-          // save it
-          saveFramePosition();
-
+        }
+        scope.zIndexMax += 1;
+        element.css({
+          zIndex: scope.zIndexMax
         });
+        // save it
+        saveFramePosition();
       }
 
       function onMouseDown(event) {
@@ -132,7 +130,7 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
         // TODO: find a more maintainable way?
         var className = event.target ? event.target.className : event.srcElement.className;
         if (className.indexOf('icons') > -1) {
-          // console.log('stop() prevent default on mouseup and returning');
+          // $log.debug('stop() prevent default on mouseup and returning');
           event.preventDefault();
           return;
         }
@@ -141,31 +139,27 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
       }
 
       function saveFramePosition() {
-        dashboardApi.updateDesktopFrame(
+        models.updateDesktopFrame(
         scope.myframe.id,
         element[0].offsetLeft,
         element[0].offsetTop,
         element[0].offsetWidth,
         element[0].offsetHeight,
-        scope.zIndexMax
-        ).then(function() {
-          // frame updated
-        });
+        scope.zIndexMax);
       }
 
       element.on('mousedown', onMouseDown);
 
       // Set our dashboard id
-      dashboardApi.getDashboards().then(function(dashboards) {
-          for (var i=0; i < dashboards.length; i++) {
-            for (var j=0; j < dashboards[i].frames.length; j++) {
-              if (dashboards[i].frames[j].id === scope.myframe.id) {
-                // this is our dashboard
-                scope.dashboardId = dashboards[i].id;
-              }
-            }
+      var dashboards = models.getDashboards();
+      for (var i=0; i < dashboards.length; i++) {
+        for (var j=0; j < dashboards[i].frames.length; j++) {
+          if (dashboards[i].frames[j].id === scope.myframe.id) {
+            // this is our dashboard
+            scope.dashboardId = dashboards[i].id;
           }
-        });
+        }
+      }
     }
   };
 });

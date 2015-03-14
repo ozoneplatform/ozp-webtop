@@ -42,14 +42,15 @@ angular.module('ozpWebtop.dashboardView.grid', [
 angular.module('ozpWebtop.dashboardView.grid')
 
 .controller('GridCtrl', function ($scope, $rootScope,
-                                  $interval, $q, $timeout, $log, dashboardApi,
+                                  $interval, $q, $timeout, $log, $sce, dashboardApi,
                                   userSettingsApi,
                                   windowSizeWatcher, deviceSizeChangedEvent,
                                   windowSizeChangedEvent,
                                   dashboardStateChangedEvent,
                                   fullScreenModeToggleEvent,
                                   highlightFrameOnGridLayoutEvent,
-                                  initialDataReceivedEvent) {
+                                  initialDataReceivedEvent,
+                                  removeFramesOnDeleteEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -230,6 +231,20 @@ angular.module('ozpWebtop.dashboardView.grid')
       }
     });
 
+    // Cycles through all frames in the dashboard and drives their url's to about:blank to free up resources
+    // and remove IWC bus connections.
+    $scope.$on(removeFramesOnDeleteEvent,function(event,data){
+       if($scope.dashboardId === data.dashboardId){
+           for(var i=0; i<$scope.frames.length;i++){
+               $scope.frames[i].trustedUrl = $sce.trustAsResourceUrl('about:blank');
+           }
+           //let the frame's unload events trigger, then remove them.
+           $timeout(function(){
+               $scope.frames = [];
+           },25);
+       }
+    });
+
     function removeFrameHighlight () {
       $scope.frames[$scope.frameIndexToUnhighlight].highlighted = false;
     }
@@ -377,6 +392,15 @@ angular.module('ozpWebtop.dashboardView.grid')
 
         // remove old frames from the view
         var originalFramesCopy = originalFrames.slice();
+
+        //Push the iframe to about:blank to let the frame handle its unload
+        var asyncRemoveFrame = function(i){
+          $scope.frames[i].trustedUrl = $sce.trustAsResourceUrl('about:blank');
+          $timeout(function(){
+            $scope.frames.splice(i,1);
+          },25);
+        };
+
         for (var i=0; i < originalFramesCopy.length; i++) {
           var removeFrame = true;
           for (var j=0; j < dashboard.frames.length; j++) {
@@ -385,7 +409,7 @@ angular.module('ozpWebtop.dashboardView.grid')
             }
           }
           if (removeFrame) {
-            $scope.frames.splice(i,1);
+            asyncRemoveFrame(i);
           }
         }
 

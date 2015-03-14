@@ -6,13 +6,14 @@ describe('constants', function () {
 
   var useIwc, deviceSizeChangedEvent, windowSizeChangedEvent,
     dashboardStateChangedEvent,
-    fullScreenModeToggleEvent, highlightFrameOnGridLayoutEvent;
+    fullScreenModeToggleEvent, highlightFrameOnGridLayoutEvent, removeFramesOnDeleteEvent;
 
   beforeEach(inject(function (_useIwc_, _deviceSizeChangedEvent_,
                               _windowSizeChangedEvent_,
                               _dashboardStateChangedEvent_,
                               _fullScreenModeToggleEvent_,
-                              _highlightFrameOnGridLayoutEvent_
+                              _highlightFrameOnGridLayoutEvent_,
+                              _removeFramesOnDeleteEvent_
     ) {
     useIwc = _useIwc_;
     deviceSizeChangedEvent = _deviceSizeChangedEvent_;
@@ -20,6 +21,7 @@ describe('constants', function () {
     dashboardStateChangedEvent = _dashboardStateChangedEvent_;
     fullScreenModeToggleEvent = _fullScreenModeToggleEvent_;
     highlightFrameOnGridLayoutEvent = _highlightFrameOnGridLayoutEvent_;
+    removeFramesOnDeleteEvent = _removeFramesOnDeleteEvent_;
 
   }));
 

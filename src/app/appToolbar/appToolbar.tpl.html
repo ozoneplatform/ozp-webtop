@@ -4,14 +4,14 @@
         <div class="container-fluid">
             <div class="navbar-left">
                 <ul class="nav navbar-nav">
-                    <li class="highlight">
+                    <li class="highlight app-toolbar-li">
                       <a class="lrg" href="" ng-click="openApplicationsModal()">
                         <i class="icon-plus-18-white"></i>
                       </a>
                     </li>
 
                     <li class="navbar-spacer"></li>
-                    <li class="dropdown dropup">
+                    <li class="dropdown dropup app-toolbar-li">
                     <!-- we start -->
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {{currentDashboard.name | limitTo : dashboardNameLength}} <i class="icon-caret-up-grayLightest"></i></a>
@@ -46,11 +46,11 @@
 
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
-                  <li ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
+                  <li class="app-toolbar-li" ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
                       <a href="" tooltip="Cascade Windows" tooltip-placement="top">
                         <i class="icon-stack-grayLightest"></i></a>
                     </li>
-                    <li ng-click="toggleFullScreenMode();">
+                    <li class="app-toolbar-li" ng-click="toggleFullScreenMode();">
                       <a href="" tooltip="Enter Full Screen" tooltip-placement="top">
                         <i class="icon-maximize-grayLightest"></i></a>
                     </li>

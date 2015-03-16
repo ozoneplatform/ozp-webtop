@@ -234,12 +234,38 @@ input.ng-invalid {
   /* Set the fixed height of the footer here */
   height: @app-toolbar-height;
   z-index: 200;
-  border-top: 1px #191F25 solid;
+  border-top: 1px @gray-base solid;
 }
 
 .app-toolbar-ng-include {
   padding-top: 75px;  // 15px more than @app-toolbar-height
   background-color: @dashboard-bg-color;
+}
+
+.navbar-default .navbar-nav > li.app-toolbar-li > a{
+  border-top: none;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  border-bottom: 4px solid transparent;
+
+  &:hover, &:focus{
+    border-bottom: 4px solid @blue;
+  }
+}
+
+button.hiddenToggle.appHiddenToggle.ng-scope{
+  border-top: none;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  border-bottom: 4px solid transparent;
+
+  &:hover, &:focus{
+    border-bottom: 4px solid @blue;
+
+    > .icon-minimize-grayLightest{
+      .icon-minimize-white;
+    }
+  }
 }
 
 // useful if you have a link using ng-click with no href-="..."
@@ -363,6 +389,17 @@ body > div.classBanner:last-of-type {
 .ozp-chrome > .chrome-controls > .btn:hover,
 .ozp-chrome > .chrome-controls > .btn:active {
     color: @white;
+
+    > .icon-plus-10-white{
+      .icon-plus-10-blue;
+    }
+    > .icon-minus-10-white{
+      .icon-minus-10-blue;
+    }
+    > .icon-cross-10-white{
+      .icon-cross-10-blue;
+    }
+
 }
 
 .desktop-view {
@@ -501,6 +538,20 @@ body > div.classBanner:last-of-type {
 
 .highlight {
   background-color: @blue;
+
+  &:hover, &:focus{
+    background-color:@blue-dark;
+  }
+
+}
+
+.navbar-default .navbar-nav > li.app-toolbar-li.highlight > a{
+  border:0px;
+
+  &:hover, &:focus{
+    border: 0px;
+  }
+
 }
 
 .navbar-inverse .navbar-nav .open .dropdown-menu > li, .dropdown-header {
@@ -588,16 +639,17 @@ body > div.classBanner:last-of-type {
         > .icon-minimize-grayLightest{
           .icon-minimize-white;
         }
+
+        > .icon-stack-grayLightest{
+          .icon-stack-white;
+        }
    }
 }
 
 
 .dropup > .dropdown-toggle.ng-binding {
-  border-top:0px;
-  border-bottom: 4px solid transparent;
 
     &:hover, &:focus {
-      border-bottom: 4px solid @blue;
 
       > .icon-caret-up-grayLightest {
         .icon-caret-up-white;

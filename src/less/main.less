@@ -646,11 +646,49 @@ body > div.classBanner:last-of-type {
    }
 }
 
+.dropdown-menu > li > a{
+
+  &:hover, &:focus {
+
+    > .icon-ribbon-grayLightest{
+      .icon-ribbon-white;
+    }
+
+    > .icon-head-grayLightest{
+      .icon-head-white;
+    }
+
+    > .icon-cog-grayLightest{
+      .icon-cog-white;
+    }
+
+    > .icon-square-plus-grayLightest{
+      .icon-square-plus-white;
+    }
+
+    > .icon-cloud-grayLightest{
+      .icon-cloud-white;
+    }
+
+    > .icon-layers-grayLightest{
+      .icon-layers-white;
+    }
+
+    > .icon-shopping-settings-grayLightest{
+      .icon-shopping-settings-white;
+    }
+
+    > .icon-bar-graph-2-grayLightest{
+      .icon-bar-graph-2-white;
+    }
+
+  }
+
+}
 
 .dropup > .dropdown-toggle.ng-binding {
 
     &:hover, &:focus {
-
       > .icon-caret-up-grayLightest {
         .icon-caret-up-white;
       }
@@ -660,6 +698,16 @@ body > div.classBanner:last-of-type {
 .dropup.open > .dropdown-toggle.ng-binding {
   border-top:0px;
   border-bottom: 4px solid @blue;
+
+  .dropdown-menu > li > a.caboose{
+
+    &:hover, &:focus {
+      >  .icon-plus-14-grayLightest{
+        .icon-plus-14-white;
+      }
+    }
+  }
+
 }
 
 .icon-pencil-grayLightest.pull-right {
@@ -674,6 +722,14 @@ body > div.classBanner:last-of-type {
 
   &:hover, &:focus{
     .icon-cross-14-blue;
+  }
+
+}
+
+.icon-trash-grayLightest.pull-right {
+
+  &:hover, &:focus{
+    .icon-trash-blue;
   }
 
 }

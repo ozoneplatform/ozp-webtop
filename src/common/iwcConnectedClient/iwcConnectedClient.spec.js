@@ -41,9 +41,7 @@ describe('Service: iwcConnectedClient', function () {
     setTimeout(function() {
       if(!rootScope.$$phase) {
         rootScope.$apply();
-        console.log('rootScope.$apply()ied');
       } else {
-        console.log('nope');
       }
     }, 1000);
 

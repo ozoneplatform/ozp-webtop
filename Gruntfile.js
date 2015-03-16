@@ -231,25 +231,6 @@ module.exports = function ( grunt ) {
             expand: true
           }
         ]
-      },
-      // Creates an OZONE bus for testing purposes in demoApps/
-      demo_ozone_bus: {
-        files: [
-          {
-            src: ['vendor/ozp-iwc/dist/iframe_peer.html'],
-            dest: 'demoApps/ozoneBus',
-            cwd: '.',
-            expand: true,
-            flatten: true
-          },
-          {
-            src: ['vendor/ozp-iwc/dist/js/defaultWiring.js', 'vendor/ozp-iwc/dist/js/ozpIwc-bus.js'],
-            dest: 'demoApps/ozoneBus/js',
-            cwd: '.',
-            expand: true,
-            flatten: true
-          }
-        ]
       }
     },
 
@@ -413,7 +394,8 @@ module.exports = function ( grunt ) {
           'alert': false,
           '$state': false,
           'spyOn': false,
-          '$': false
+          '$': false,
+          'getJSONFixture': false
         }
       }
     },

@@ -13,6 +13,8 @@ module.exports = function ( karma ) {
                                         // purposes since jqLite is gimped (e.g.
                                         // their find method). Must be loaded
                                         // before angular!
+      'vendor/jasmine-jquery/lib/jasmine-jquery.js',  // used for loading JSON
+                                                      // text fixtures
       'vendor/es5-shim/es5-shim.js', // PhantomJS is missing
                                                   // Function.prototype.call.bind
                                                   // and requires polyfills
@@ -21,6 +23,8 @@ module.exports = function ( karma ) {
       'src/**/*.js',
       'src/**/*.coffee',
 
+      // fixtures
+      {pattern: 'testData/*.json', watched: true, served: true, included: false}
     ],
     exclude: [
       'src/assets/**/*.js'

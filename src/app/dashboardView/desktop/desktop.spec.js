@@ -13,24 +13,19 @@ describe('Controller: DesktopCtrl', function () {
   // load the controller's module
   beforeEach(module('ozpWebtop.dashboardView.desktop'));
 
-  var desktopcontrollerCtrl, scope, dashboardApi, marketplaceApi;
+  var desktopcontrollerCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, _dashboardApi_, _marketplaceApi_) {
+  beforeEach(inject(function ($controller, $rootScope, models) {
     scope = $rootScope.$new();
-    dashboardApi = _dashboardApi_;
-    marketplaceApi = _marketplaceApi_;
 
-    // create example dashboards
-    dashboardApi.createExampleDashboards().then(function() {
-    });
+    // TODO: create Webtop data
 
     $rootScope.$apply();
 
     desktopcontrollerCtrl = $controller('DesktopCtrl', {
       $scope: scope,
-      dashboardApi: dashboardApi,
-      marketplaceApi: marketplaceApi
+      models: models
     });
 
   }));

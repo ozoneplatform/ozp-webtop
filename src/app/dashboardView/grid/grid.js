@@ -6,15 +6,12 @@
  * @module ozpWebtop.dashboardView.grid
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.constants
- * @requires ozpWebtop.models.dashboard
- * @requires ozpWebtop.models.marketplace
- * @requires ozpWebtop.models.userSettings
+ * @requires ozpWebtop.models
  *
  */
 angular.module('ozpWebtop.dashboardView.grid', [
   'ozp.common.windowSizeWatcher', 'ozpWebtop.constants',
-  'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
-  'ozpWebtop.models.userSettings']);
+  'ozpWebtop.models']);
 
 /**
  * Controller managing the frames in the grid layout
@@ -29,8 +26,7 @@ angular.module('ozpWebtop.dashboardView.grid', [
  * @param {Object} $interval the Angular interval service
  * @param {Object} $q the Angular q service
  * @param {Object} $timeout the Angular timeout service
- * @param {Object} dashboardApi the API for dashboard information
- * @param {Object} userSettingsApi the API for user settings
+ * @param {Object} models the API for dashboard information
  * @param {Object} windowSizeWatcher service that notifies on window size
  * changes
  * @param {String} deviceSizeChangedEvent event name
@@ -42,8 +38,7 @@ angular.module('ozpWebtop.dashboardView.grid', [
 angular.module('ozpWebtop.dashboardView.grid')
 
 .controller('GridCtrl', function ($scope, $rootScope,
-                                  $interval, $q, $timeout, $log, $sce, dashboardApi,
-                                  userSettingsApi,
+                                  $interval, $q, $timeout, $log, $sce, models,
                                   windowSizeWatcher, deviceSizeChangedEvent,
                                   windowSizeChangedEvent,
                                   dashboardStateChangedEvent,
@@ -173,11 +168,11 @@ angular.module('ozpWebtop.dashboardView.grid')
     $scope.deviceSize = windowSizeWatcher.getCurrentSize();
     if ($scope.deviceSize === 'lg') {
       $scope.deviceSize = 'md';
-      console.log('size changed from lg to md');
+      $log.debug('size changed from lg to md');
     }
 
     $scope.$on(initialDataReceivedEvent, function() {
-      $scope.apps = dashboardApi._applicationData;
+      $scope.apps = models.getApplicationData();
       $scope.ready = true;
     });
 
@@ -289,13 +284,7 @@ angular.module('ozpWebtop.dashboardView.grid')
       }
       $scope.dashboardId = toParams.dashboardId;
 
-      $scope.reloadDashboard().then(function () {
-      // dashboard reloaded
-      // TODO: not guaranteed to end up here - do initialization at end of
-      // reloadDashboard function
-      }).catch(function (error) {
-        console.log('should not have happened: ' + error);
-      });
+      $scope.reloadDashboard();
     };
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -381,103 +370,91 @@ angular.module('ozpWebtop.dashboardView.grid')
       if ($scope.handleDashboardChangeInterval) {
         $interval.cancel($scope.handleDashboardChangeInterval);
       }
+      var dashboard = models.getDashboardById($scope.dashboardId);
+      if ($scope.frames === dashboard.frames) {
+        return;
+      }
 
-      dashboardApi.getDashboardById($scope.dashboardId).then(function(dashboard) {
-        if ($scope.frames === dashboard.frames) {
-          return;
+      // save the original frames for use later on
+      var originalFrames = $scope.frames.slice();
+
+      // remove old frames from the view
+      var originalFramesCopy = originalFrames.slice();
+
+      //Push the iframe to about:blank to let the frame handle its unload
+      var asyncRemoveFrame = function(i){
+        $scope.frames[i].trustedUrl = $sce.trustAsResourceUrl('about:blank');
+        $timeout(function(){
+          $scope.frames.splice(i,1);
+        },25);
+      };
+
+      for (var i=0; i < originalFramesCopy.length; i++) {
+        var removeFrame = true;
+        for (var j=0; j < dashboard.frames.length; j++) {
+          if (originalFramesCopy[i].id === dashboard.frames[j].id) {
+            removeFrame = false;
+          }
         }
+        if (removeFrame) {
+          asyncRemoveFrame(i);
+        }
+      }
 
-        // save the original frames for use later on
-        var originalFrames = $scope.frames.slice();
+      // Make a list of frames to add to the view
+      var framesToAdd = [];
+      for (var k=0; k < dashboard.frames.length; k++) {
+        var addFrame = true;
+        for (var l=0; l < originalFrames.length; l++) {
+          if (dashboard.frames[k].id === originalFrames[l].id) {
+            addFrame = false;
+          }
+        }
+        if (addFrame) {
+          framesToAdd.push(dashboard.frames[k]);
+        }
+      }
 
-        // remove old frames from the view
-        var originalFramesCopy = originalFrames.slice();
-
-        //Push the iframe to about:blank to let the frame handle its unload
-        var asyncRemoveFrame = function(i){
-          $scope.frames[i].trustedUrl = $sce.trustAsResourceUrl('about:blank');
-          $timeout(function(){
-            $scope.frames.splice(i,1);
-          },25);
+      if (framesToAdd.length > 0) {
+        var updateNewFrames = function (frame) {
+          // push that frame to the local scope. since the changes are
+          // automatically bound with the view, no refresh required
+          $scope.frames.push(frame);
+          // now merge my local scope for frames with the
+          // marketplace api to get important stuff on local scope
+          // like url, image, name, etc
+          models.mergeApplicationData($scope.frames);
         };
 
-        for (var i=0; i < originalFramesCopy.length; i++) {
-          var removeFrame = true;
-          for (var j=0; j < dashboard.frames.length; j++) {
-            if (originalFramesCopy[i].id === dashboard.frames[j].id) {
-              removeFrame = false;
-            }
-          }
-          if (removeFrame) {
-            asyncRemoveFrame(i);
-          }
+        // add the frames
+        for (var m=0; m < framesToAdd.length; m++) {
+          updateNewFrames(framesToAdd[m]);
         }
-
-        // Make a list of frames to add to the view
-        var framesToAdd = [];
-        for (var k=0; k < dashboard.frames.length; k++) {
-          var addFrame = true;
-          for (var l=0; l < originalFrames.length; l++) {
-            if (dashboard.frames[k].id === originalFrames[l].id) {
-              addFrame = false;
-            }
-          }
-          if (addFrame) {
-            framesToAdd.push(dashboard.frames[k]);
-          }
-        }
-
-        if (framesToAdd.length > 0) {
-          var updateNewFrames = function (frame) {
-            // push that frame to the local scope. since the changes are
-            // automatically bound with the view, no refresh required
-            $scope.frames.push(frame);
-            // now merge my local scope for frames with the
-            // marketplace api to get important stuff on local scope
-            // like url, image, name, etc
-            dashboardApi.mergeApplicationData($scope.frames);
-          };
-
-          // add the frames
-          framesToAdd.reduce(function (previous, current) {
-            return previous.then(function () {
-              var promise = updateNewFrames(current);
-              return promise;
-            }).catch(function (error) {
-              console.log('should not have happened: ' + error);
-            });
-          }, Promise.resolve()).then(function () {
-              // reloadDashboard completed
-              $timeout(function() {$log.debug('$timeout to apply scope');}, 50);
-          });
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
+        // reloadDashboard completed
+        $timeout(function() {$log.debug('$timeout to apply scope');}, 50);
+      }
     };
 
     /**
      * Reloads the current dashboard
      *
      * @method reloadDashboard
-     * @returns {Promise} Promise fulfilled with Boolean, true if dashboard was
-     *                    found
+     * @returns true if dashboard was found
      */
     $scope.reloadDashboard = function() {
-      return dashboardApi.getDashboardById($scope.dashboardId).then(function (dashboard) {
-        if (!dashboard) {
-          $log.warn('Dashboard changed, but dashboard does not exist');
-          return;
-        }
-        $scope.dashboard = dashboard;
-        // Get frames on this dashboard
-        $scope.frames = $scope.dashboard.frames;
+      var dashboard = models.getDashboardById($scope.dashboardId);
+      if (!dashboard) {
+        $log.warn('Dashboard changed, but dashboard does not exist');
+        return;
+      }
+      $scope.dashboard = dashboard;
+      // Get frames on this dashboard
+      $scope.frames = $scope.dashboard.frames;
 
-        // Merge application data (app name, icons, descriptions, url, etc)
-        // with dashboard app data
-        dashboardApi.mergeApplicationData($scope.frames);
-        initialized = true;
-      });
+      // Merge application data (app name, icons, descriptions, url, etc)
+      // with dashboard app data
+      models.mergeApplicationData($scope.frames);
+      initialized = true;
     };
 
     /**
@@ -485,35 +462,28 @@ angular.module('ozpWebtop.dashboardView.grid')
      *
      * @method updateFrameAfterChange
      * @param {Object} frame The frame to update
-     * @returns {Promise} Promise fulfilled with the frame id that was updated
+     * @returns {String} frame id that was updated
      */
     $scope.updateFrameAfterChange = function(frame) {
       // save the basic grid settings
-      return dashboardApi.updateGridFrame(frame.id, frame.gridLayout).then(function(frameId) {
-          if (!frameId) {
-            console.log('ERROR: could not update grid frame');
-            return;
-          }
-        }).catch(function(error) {
-          console.log('should not have happened: ' + error);
-        });
+      var frameId = models.updateGridFrame(frame.id, frame.gridLayout);
+      if (!frameId) {
+        $log.error('ERROR: could not update grid frame');
+        return;
+      }
+      return frameId;
     };
 
     /**
      * Update all frames after the user finishes moving or resizing a frame
      *
      * @method updateAllFramesAfterChange
-     * @returns {Promise} Promise fulfilled with TODO
+     * @returns {}
      */
     $scope.updateAllFramesAfterChange = function() {
       var frames = $scope.frames;
-      frames.reduce(function(previous, current) {
-      return previous.then(function() {
-        var promise = $scope.updateFrameAfterChange(current);
-        return promise;
-      });
-      }, Promise.resolve()).then(function() {
-        // finished updating all frames
-      });
+      for (var i=0; i < frames.length; i++) {
+        $scope.updateFrameAfterChange(frames[i]);
+      }
     };
 });

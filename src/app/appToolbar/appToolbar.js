@@ -6,19 +6,17 @@
  * @module ozpWebtop.appToolbar
  * @requires ui.router
  * @requires ui.bootstrap
- * @requires ozpWebtop.models.dashboard
+ * @requires ozpWebtop.models
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.addApplicationsModal
  * @requires ozpWebtop.editDashboardModal
  * @requires ozp.common.windowSizeWatcher
  */
 angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
-  'ozpWebtop.models.dashboard',
-  'ozpWebtop.models.userSettings',
+  'ozpWebtop.models',
   'ozpWebtop.addApplicationsModal',
   'ozpWebtop.editDashboardModal',
-  'ozp.common.windowSizeWatcher',
-  'ozpWebtop.dashboardView.grid']);
+  'ozp.common.windowSizeWatcher']);
 
 /**
  * Application toolbar on the bottom of Webtop. Contains a menu for adding
@@ -41,8 +39,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
  * @param $modal $modal service from ui.bootstrap
  * @param $interval $interval service from ui.bootstrap
  * @param $window $window service from ui.bootstrap
- * @param dashbaordApi Dashboard data model
- * @param userSettingsApi User settings data model
+ * @param models webtop data model
  * @param windowSizeWatcher Notify when window size changes
  * @param maxStickyBoards max number of dashboards
  * @param deviceSizeChangedEvent event name
@@ -53,8 +50,7 @@ angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
 angular.module( 'ozpWebtop.appToolbar')
   .controller('ApplicationToolbarCtrl', function($scope, $rootScope, $state,
                                                  $modal, $interval, $window,
-                                                 $log, dashboardApi,
-                                                 userSettingsApi,
+                                                 $log, models,
                                                  windowSizeWatcher,
                                                  maxStickyBoards,
                                                  deviceSizeChangedEvent,
@@ -154,7 +150,7 @@ angular.module( 'ozpWebtop.appToolbar')
     $scope.fullScreenMode = false;
 
     $scope.$on(initialDataReceivedEvent, function() {
-      $scope.apps = dashboardApi._applicationData;
+      $scope.apps = models.getApplicationData();
       $scope.ready = true;
     });
 
@@ -229,28 +225,25 @@ angular.module( 'ozpWebtop.appToolbar')
       if ($scope.handleStateChangeInterval) {
         $interval.cancel($scope.handleStateChangeInterval);
       }
-      dashboardApi.getDashboards().then(function(dashboards) {
-        $scope.dashboards = dashboards;
-        for (var i=0; i < dashboards.length; i++) {
-          if (dashboards[i].id === dashboardId) {
-            $scope.currentDashboard = dashboards[i];
-          }
+      var dashboards = models.getDashboards();
+      $scope.dashboards = dashboards;
+      for (var i=0; i < dashboards.length; i++) {
+        if (dashboards[i].id === dashboardId) {
+          $scope.currentDashboard = dashboards[i];
         }
-        if (!$scope.currentDashboard) {
-          $log.warn('WARNING: No dashboards found');
-        }
+      }
+      if (!$scope.currentDashboard) {
+        $log.warn('WARNING: No dashboards found');
+      }
 
-        if ($scope.currentDashboard.layout !== dashboardLayout) {
-          console.log('dashboard layout mismatch, changing state');
-          $state.go('dashboardview.' +
-            $scope.currentDashboard.layout + '-sticky-' +
-            $scope.currentDashboard.stickyIndex, {
-            'dashboardId': $scope.currentDashboard.id});
-        }
-        $scope.updateApps();
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
+      if ($scope.currentDashboard.layout !== dashboardLayout) {
+        $log.debug('dashboard layout mismatch, changing state');
+        $state.go('dashboardview.' +
+          $scope.currentDashboard.layout + '-sticky-' +
+          $scope.currentDashboard.stickyIndex, {
+          'dashboardId': $scope.currentDashboard.id});
+      }
+      $scope.updateApps();
     };
 
     /**
@@ -307,19 +300,16 @@ angular.module( 'ozpWebtop.appToolbar')
         $interval.cancel($scope.updateAppsInterval);
       }
 
-      return dashboardApi.getDashboards().then(function(dashboards) {
-        $scope.dashboards = dashboards;
-        for (var i=0; i < dashboards.length; i++) {
-          if (dashboards[i].id === $scope.currentDashboard.id) {
-            $scope.currentDashboard = dashboards[i];
-            $scope.frames = angular.copy(dashboards[i].frames);
-            dashboardApi.mergeApplicationData($scope.frames);
-            $scope.setPinnedApps();
-          }
+      var dashboards = models.getDashboards();
+      $scope.dashboards = dashboards;
+      for (var i=0; i < dashboards.length; i++) {
+        if (dashboards[i].id === $scope.currentDashboard.id) {
+          $scope.currentDashboard = dashboards[i];
+          $scope.frames = angular.copy(dashboards[i].frames);
+          models.mergeApplicationData($scope.frames);
+          $scope.setPinnedApps();
         }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
+      }
     };
 
     /**
@@ -329,16 +319,13 @@ angular.module( 'ozpWebtop.appToolbar')
      */
      $scope.maximizeFrame = function(e) {
        if ($scope.currentDashboard.layout === 'grid') {
-         console.log('sending highlight msg for frame ' + e.id);
+         $log.debug('sending highlight msg for frame ' + e.id);
          $rootScope.$broadcast(highlightFrameOnGridLayoutEvent, {'frameId': e.id});
        }
        else {
-         dashboardApi.toggleFrameKey(e.id, 'isMinimized').then(function () {
-           $rootScope.$broadcast(dashboardStateChangedEvent, {
-             'dashboardId': $scope.currentDashboard.id, 'layout': 'desktop'});
-         }).catch(function (error) {
-           console.log('should not have happened: ' + error);
-         });
+         models.toggleFrameKey(e.id, 'isMinimized');
+         $rootScope.$broadcast(dashboardStateChangedEvent, {
+           'dashboardId': $scope.currentDashboard.id, 'layout': 'desktop'});
        }
      };
 
@@ -357,17 +344,14 @@ angular.module( 'ozpWebtop.appToolbar')
       }
       $scope.fullScreenMode = fullScreenVal;
       $rootScope.$broadcast(fullScreenModeToggleEvent, {'fullScreenMode': fullScreenVal});
-      userSettingsApi.updateUserSettingByKey('fullScreenMode', fullScreenVal).then(function(resp) {
-        if (resp) {
-          // TODO: fix this
-          //$rootScope.$broadcast(fullScreenModeToggleEvent, {'fullScreenMode': fullScreenVal});
-        } else {
-          console.log('ERROR failed to update fullScreenMode in user ' +
-            'settings');
-        }
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
+      var resp = models.updateUserSettingByKey('fullScreenMode', fullScreenVal);
+      if (resp) {
+        // TODO: fix this
+        //$rootScope.$broadcast(fullScreenModeToggleEvent, {'fullScreenMode': fullScreenVal});
+      } else {
+        $log.error('ERROR failed to update fullScreenMode in user ' +
+          'settings');
+      }
     };
 
     /**
@@ -417,11 +401,10 @@ angular.module( 'ozpWebtop.appToolbar')
       // TODO: get this dynamically from screen size
       var origin = {'x': 50, 'y': 80};
       var frameSize = {'x': 800, 'y': 400};
-      dashboardApi.cascadeWindows($scope.currentDashboard.id, origin, frameSize).then(function() {
-        // send dashboard state change msg
-        $rootScope.$broadcast(dashboardStateChangedEvent, {
-           'dashboardId': $scope.currentDashboard.id, 'layout': 'desktop'});
-      });
+      models.cascadeWindows($scope.currentDashboard.id, origin, frameSize);
+      // send dashboard state change msg
+      $rootScope.$broadcast(dashboardStateChangedEvent, {
+         'dashboardId': $scope.currentDashboard.id, 'layout': 'desktop'});
     };
 
     /**
@@ -453,20 +436,13 @@ angular.module( 'ozpWebtop.appToolbar')
        */
       function addAppToDashboard(app, dashboardId) {
         // check if the app is already on the current dashboard
-        return dashboardApi.isAppOnDashboard(dashboardId, app.id).then(function (isOnDashboard) {
-          if (isOnDashboard && app.singleton) {
-            $log.warn('WARNING: Only one instance of ' + app.name + ' may be on your dashboard');
-          } else {
-            // TODO: use message broadcast to get grid max rows and grid max cols
-            return dashboardApi.createFrame(dashboardId, app.id, 25).then(function (response) {
-              return response;
-            }).catch(function (error) {
-              console.log('should not have happened: ' + error);
-            });
-          }
-        }).catch(function (error) {
-          console.log('should not have happened: ' + error);
-        });
+        var isOnDashboard = models.isAppOnDashboard(dashboardId, app.id);
+        if (isOnDashboard && app.singleton) {
+          $log.warn('WARNING: Only one instance of ' + app.name + ' may be on your dashboard');
+        } else {
+          // TODO: use message broadcast to get grid max rows and grid max cols
+          return models.createFrame(dashboardId, app.id, 25);
+        }
       }
 
       modalInstance.result.then(function (response) {
@@ -476,7 +452,7 @@ angular.module( 'ozpWebtop.appToolbar')
           // make sure max # of dashboards hasn't been hit
           if ($scope.dashboards.length >= maxStickyBoards) {
             var msg = 'ERROR: Max number of dashboards reached';
-            console.log(msg);
+            $log.error(msg);
             alert(msg);
             return;
           }
@@ -485,50 +461,35 @@ angular.module( 'ozpWebtop.appToolbar')
           var random_integer = Math.floor((Math.random()+0.10)*101);
           var newDashboard = {};
           newDashboard.name = 'Dashboard ' + random_integer.toString();
-          dashboardApi.createDashboard(newDashboard).then(function() {
-            // now get this dashboard id
-            dashboardApi.getDashboards().then(function(dashboards) {
-              for (var i=0; i < dashboards.length; i++) {
-                if (dashboards[i].name === newDashboard.name) {
-                  dashboardId = dashboards[i].id;
-                  stickyIndex = dashboards[i].stickyIndex;
-                }
-              }
+          models.createDashboard(newDashboard);
+          // now get this dashboard id
+          var dashboards = models.getDashboards();
+          for (var i=0; i < dashboards.length; i++) {
+            if (dashboards[i].name === newDashboard.name) {
+              dashboardId = dashboards[i].id;
+              stickyIndex = dashboards[i].stickyIndex;
+            }
+          }
 
-              // add the apps to the newly minted dashboard
-              response.appsToOpen.reduce(function (previous, current) {
-                return previous.then(function () {
-                  var promise = addAppToDashboard(current, dashboardId);
-                  return promise;
-                }).catch(function (error) {
-                  console.log('should not have happened: ' + error);
-                });
-              }, Promise.resolve()).then(function () {
-                // all apps added to dashboard
-                // redirect user to new dashboard (grid view by default)
-                $state.go('dashboardview.grid-sticky-' + stickyIndex, {
-                  'dashboardId': dashboardId});
-              });
-            });
-          });
+          // add the apps to the newly minted dashboard
+          for (var a=0; a < response.appsToOpen.length; a++) {
+            addAppToDashboard(response.appsToOpen[a], dashboardId);
+          }
+          // all apps added to dashboard
+          // redirect user to new dashboard (grid view by default)
+          $state.go('dashboardview.grid-sticky-' + stickyIndex, {
+            'dashboardId': dashboardId});
         } else {
-          response.appsToOpen.reduce(function (previous, current) {
-            return previous.then(function () {
-              var promise = addAppToDashboard(current, $scope.currentDashboard.id);
-              return promise;
-            }).catch(function (error) {
-              console.log('should not have happened: ' + error);
-            });
-          }, Promise.resolve()).then(function () {
-              // all apps added to dashboard
-
-            // current dashboard id and layout hasn't changed, so just reload
-            // the applications
-            $log.debug('issuing dashboardStateChangedEvent');
-            $rootScope.$broadcast(dashboardStateChangedEvent, {
-              'dashboardId': $scope.currentDashboard.id,
-              'layout': $scope.currentDashboard.layout});
-          });
+          for (var b=0; b < response.appsToOpen.length; b++) {
+            addAppToDashboard(response.appsToOpen[b], $scope.currentDashboard.id);
+          }
+          // all apps added to dashboard
+          // current dashboard id and layout hasn't changed, so just reload
+          // the applications
+          $log.debug('issuing dashboardStateChangedEvent');
+          $rootScope.$broadcast(dashboardStateChangedEvent, {
+            'dashboardId': $scope.currentDashboard.id,
+            'layout': $scope.currentDashboard.layout});
         }
 
       });
@@ -570,24 +531,21 @@ angular.module( 'ozpWebtop.appToolbar')
           }
         }
 
-        dashboardApi.updateDashboard(updatedDashboardData).then(function(dashboard) {
-          for (var i=0; i < $scope.dashboards.length; i++) {
-            if ($scope.dashboards[i].id === dashboard.id) {
-              // changes the drop-up text and dashboard/grid icon
-              $scope.dashboards[i].stickyIndex = dashboard.stickyIndex;
-            }
+        var dashboard = models.updateDashboard(updatedDashboardData);
+        for (var j=0; j < $scope.dashboards.length; j++) {
+          if ($scope.dashboards[j].id === dashboard.id) {
+            // changes the drop-up text and dashboard/grid icon
+            $scope.dashboards[j].stickyIndex = dashboard.stickyIndex;
           }
-          // if user updates the current dashboard layout, update browser state
-          if ($scope.currentDashboard.id === dashboard.id) {
-            $rootScope.$broadcast(dashboardStateChangedEvent, {
-              'dashboardId': dashboard.id,
-              'layout': dashboard.layout});
-            $state.go('dashboardview.' + dashboard.layout + '-sticky-' +
-              dashboard.stickyIndex, {dashboardId: dashboard.id});
-          }
-        }).catch(function(error) {
-          $log.error('Error updateDashboardData: ' + error);
-        });
+        }
+        // if user updates the current dashboard layout, update browser state
+        if ($scope.currentDashboard.id === dashboard.id) {
+          $rootScope.$broadcast(dashboardStateChangedEvent, {
+            'dashboardId': dashboard.id,
+            'layout': dashboard.layout});
+          $state.go('dashboardview.' + dashboard.layout + '-sticky-' +
+            dashboard.stickyIndex, {dashboardId: dashboard.id});
+        }
       });
     };
 
@@ -610,51 +568,46 @@ angular.module( 'ozpWebtop.appToolbar')
         // change will be ignored if the dashboard id and layout haven't
         // changed)
         var dashboardId, stickyIndex;
-        dashboardApi.createDashboard(response).then(function() {
-          // now get this dashboard id
-          dashboardApi.getDashboards().then(function(dashboards) {
-            for (var i=0; i < dashboards.length; i++) {
-              if (dashboards[i].name === response.name) {
-                dashboardId = dashboards[i].id;
-                stickyIndex = dashboards[i].stickyIndex;
-              }
-            }
-            $state.go('dashboardview.' + response.layout + '-sticky-' + stickyIndex, {dashboardId: dashboardId});
+        models.createDashboard(response);
+        // now get this dashboard id
+        var dashboards = models.getDashboards();
+        for (var i=0; i < dashboards.length; i++) {
+          if (dashboards[i].name === response.name) {
+            dashboardId = dashboards[i].id;
+            stickyIndex = dashboards[i].stickyIndex;
+          }
+        }
+        $state.go('dashboardview.' + response.layout + '-sticky-' + stickyIndex, {dashboardId: dashboardId});
 
-            // update the dashboard name if that changed
-            $rootScope.$broadcast(dashboardStateChangedEvent, {
-              'dashboardId': dashboardId,
-              'layout': response.layout
-            });
-          });
+        // update the dashboard name if that changed
+        $rootScope.$broadcast(dashboardStateChangedEvent, {
+          'dashboardId': dashboardId,
+          'layout': response.layout
         });
       });
     };
 
     $scope.openDeleteDashboardModal = function(board) {
       if ($scope.dashboards.length === 1) {
-        console.log('ERROR: You may not delete your last dashboard');
+        $log.error('ERROR: You may not delete your last dashboard');
         return;
       } else {
-        console.log('dashboards remaining: ' + $scope.dashboards.length);
+        $log.debug('dashboards remaining: ' + $scope.dashboards.length);
       }
       var msg = 'Are you sure you want to delete dashboard ' +
           board.name + '? This action cannot be undone';
       if ($window.confirm(msg)) {
         // Notify the grid controller to remove its widgets.
         $rootScope.$broadcast(removeFramesOnDeleteEvent, {'dashboardId': board.id});
-        dashboardApi.removeDashboard(board.id).then(function() {
-          // redirect user to their first board
-          dashboardApi.getDashboards().then(function(dashboards) {
-            $state.go('dashboardview.' +
-            dashboards[0].layout + '-sticky-' +
-            dashboards[0].stickyIndex, {
-            'dashboardId': dashboards[0].id});
-          });
-        });
+        models.removeDashboard(board.id);
+        // redirect user to their first board
+        $scope.dashboards = models.getDashboards();
+        $state.go('dashboardview.' +
+        $scope.dashboards[0].layout + '-sticky-' +
+        $scope.dashboards[0].stickyIndex, {
+        'dashboardId': $scope.dashboards[0].id});
       }
     };
-
   });
 
 /**

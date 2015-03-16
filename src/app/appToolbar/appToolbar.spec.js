@@ -2,7 +2,7 @@
 
 describe('App Toolbar', function () {
 
-  var scope, marketplaceApi, dashboardApi;
+  var scope;
 
   // use IWC for tests?
   beforeEach(function() {
@@ -14,19 +14,17 @@ describe('App Toolbar', function () {
   // load the filter's module
   beforeEach(module('ozpWebtop.appToolbar'));
 
-  beforeEach(inject(function($rootScope, $controller, _marketplaceApi_,
-    _dashboardApi_) {
+  beforeEach(inject(function($rootScope, $controller, $httpBackend, $window, models) {
     scope = $rootScope.$new();
-    marketplaceApi = _marketplaceApi_;
-    dashboardApi = _dashboardApi_;
-    marketplaceApi.createExampleMarketplace();
 
-    // create example dashboards
-    dashboardApi.createExampleDashboards().then(function() {
+    $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data')
+                            .respond({});
 
-    }).catch(function(error) {
-      expect(error).toEqual('should not have happened');
-    });
+    jasmine.getJSONFixtures().fixturesPath='base/testData';
+    var listingData = getJSONFixture('ApplicationLibrary.json');
+    var webtopData = getJSONFixture('WebtopData.json');
+    models.setInitialWebtopData(webtopData);
+    models.setApplicationData(listingData);
 
     $controller('ApplicationToolbarCtrl', {$scope: scope});
 
@@ -36,11 +34,8 @@ describe('App Toolbar', function () {
     $rootScope.$apply();
   }));
 
-  xit('should expose $scope.apps', function() {
-    if(!scope.$$phase) { scope.$apply(); }
+  it('should expose $scope.apps', function() {
     expect(scope.apps).toBeDefined();
   });
-
-
 
 });

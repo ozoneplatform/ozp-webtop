@@ -5,14 +5,11 @@
  *
  * @module ozpWebtop.dashboardView.desktop
  * @requires ozpWebtop.constants
- * @requires ozpWebtop.models.dashboard
- * @requires ozpWebtop.models.marketplace
- * @requires ozpWebtop.models.userSettings
+ * @requires ozpWebtop.models
  */
 angular.module('ozpWebtop.dashboardView.desktop', [
   'ozpWebtop.constants',
-  'ozpWebtop.models.dashboard', 'ozpWebtop.models.marketplace',
-  'ozpWebtop.models.userSettings']);
+  'ozpWebtop.models']);
 
 angular.module('ozpWebtop.dashboardView.desktop')
 /**
@@ -25,16 +22,14 @@ angular.module('ozpWebtop.dashboardView.desktop')
  * @param $scope ng $scope
  * @param $rootScope ng $rootScope
  * @param $interval ng $interval
- * @param dashboardApi dashboard data
- * @param userSettingsApi user preferences data
+ * @param models dashboard data
  * @param dashboardStateChangedEvent event name
  * @param fullScreenModeToggleEvent event name
  * @namespace dashboardView
  */
   .controller('DesktopCtrl', function ($scope, $rootScope,
                                        $interval, $log,
-                                       dashboardApi,
-                                       userSettingsApi,
+                                       models,
                                        dashboardStateChangedEvent,
                                        fullScreenModeToggleEvent,
                                        initialDataReceivedEvent) {
@@ -96,12 +91,11 @@ angular.module('ozpWebtop.dashboardView.desktop')
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     $scope.$on(initialDataReceivedEvent, function() {
-      $scope.apps = dashboardApi._applicationData;
-      dashboardApi.getDashboardData().then(function(dashboardData) {
-        $scope.dashboards = dashboardData.dashboards;
-        $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
-        $scope.ready = true;
-      });
+      $scope.apps = models.getApplicationData();
+      var dashboardData = models.getWebtopData();
+      $scope.dashboards = dashboardData.dashboards;
+      $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
+      $scope.ready = true;
       //$scope.frames = $scope.dashboards[0].frames;  // to make tests happy
     });
 
@@ -178,7 +172,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
         $interval.cancel($scope.dashboardChangeHandlerInterval);
       }
 
-      dashboardApi.getDashboardById($scope.currentDashboardId).then(function(updatedDashboard) {
+      var updatedDashboard = models.getDashboardById($scope.currentDashboardId);
 
         // update the isMinimized and isMaximized state
         for (var ii=0; ii < updatedDashboard.frames.length; ii++) {
@@ -245,11 +239,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
             $scope.frames.push(updatedDashboard.frames[k]);
           }
         }
-        dashboardApi.mergeApplicationData($scope.frames);
-
-      }).catch(function(error) {
-        console.log('should not have happened: ' + error);
-      });
+        models.mergeApplicationData($scope.frames);
     }
 
     /**
@@ -280,7 +270,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
 
           // Merge application data (app name, icons, descriptions, url, etc)
           // with dashboard app data
-          dashboardApi.mergeApplicationData($scope.frames);
+          models.mergeApplicationData($scope.frames);
 
           $scope.max = {};
 

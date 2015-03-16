@@ -57,7 +57,6 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  dashboardStateChangedEvent,
                                                  fullScreenModeToggleEvent,
                                                  highlightFrameOnGridLayoutEvent,
-                                                 initialDataReceivedEvent,
                                                  removeFramesOnDeleteEvent) {
 
 
@@ -149,11 +148,6 @@ angular.module( 'ozpWebtop.appToolbar')
     // toolbar is not hidden by default
     $scope.fullScreenMode = false;
 
-    $scope.$on(initialDataReceivedEvent, function() {
-      $scope.apps = models.getApplicationData();
-      $scope.ready = true;
-    });
-
     $scope.$on(deviceSizeChangedEvent, function(event, value) {
       $scope.handleWindowSizeChange(value);
     });
@@ -178,6 +172,19 @@ angular.module( 'ozpWebtop.appToolbar')
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    function initializeData() {
+      if (!models.dataCached()) {
+        $log.warn('ApplicationToolbarCtrl: delaying initialization by 500ms - no data yet');
+        $scope.initInterval = $interval(function() {
+          initializeData();
+        }, 500, 1);
+        return;
+      }
+      $scope.apps = models.getApplicationData();
+    }
+
+    initializeData();
 
     /**
      * Handle the deviceSizeChangedEvent
@@ -215,7 +222,7 @@ angular.module( 'ozpWebtop.appToolbar')
      */
     $scope.handleStateChange= function(dashboardId, dashboardLayout) {
       // get dashboards
-      if (!$scope.ready) {
+      if (!models.dataCached()) {
         $log.warn('ApplicationToolbarCtrl: delaying call to handleStateChange by 500ms - no data yet');
         $scope.handleStateChangeInterval = $interval(function() {
           $scope.handleStateChange(dashboardId, dashboardLayout);
@@ -291,7 +298,7 @@ angular.module( 'ozpWebtop.appToolbar')
      * @method updateApps
      */
     $scope.updateApps = function() {
-      if (!$scope.ready) {
+      if (!models.dataCached()) {
         $log.warn('ApplicationToolbarCtrl: delaying call to updateApps by 500ms - no data yet');
         $scope.updateAppsInterval = $interval($scope.updateApps, 500, 1);
         return;

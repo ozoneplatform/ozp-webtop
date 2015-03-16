@@ -171,11 +171,6 @@ angular.module('ozpWebtop.dashboardView.grid')
       $log.debug('size changed from lg to md');
     }
 
-    $scope.$on(initialDataReceivedEvent, function() {
-      $scope.apps = models.getApplicationData();
-      $scope.ready = true;
-    });
-
     // Initialize grid columns based on screen size
     if (windowSizeWatcher.getCurrentSize() === 'sm') {
       $scope.gridOptions.columns = 3;
@@ -251,7 +246,7 @@ angular.module('ozpWebtop.dashboardView.grid')
     );
 
     $scope.handleStateChangeSuccess = function(event, toState, toParams) {
-      if (!$scope.ready) {
+      if (!models.dataCached()) {
         $log.warn('GridCtrl: delaying call to handleStateChangeSuccess by 500ms - no data yet');
         $scope.handleStateChangeSuccessInterval = $interval(function() {
           $scope.handleStateChangeSuccess(event, toState, toParams);
@@ -290,6 +285,19 @@ angular.module('ozpWebtop.dashboardView.grid')
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    function initializeData() {
+      if (!models.dataCached()) {
+        $log.warn('GridCtrl: delaying initialization by 500ms - no data yet');
+        $scope.initInterval = $interval(function() {
+          initializeData();
+        }, 500, 1);
+        return;
+      }
+      $scope.apps = models.getApplicationData();
+    }
+
+    initializeData();
 
     /**
      * Handle start event resizing a widget on Gridster
@@ -360,7 +368,7 @@ angular.module('ozpWebtop.dashboardView.grid')
      * @method handleDashboardChange
      */
     $scope.handleDashboardChange = function() {
-      if (!$scope.ready) {
+      if (!models.dataCached()) {
         $log.warn('GridCtrl: delaying call to handleDashboardChange by 500ms - no data yet');
         $scope.handleDashboardChangeInterval = $interval(function() {
           $scope.handleDashboardChange();

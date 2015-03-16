@@ -35,8 +35,8 @@ var models = angular.module('ozpWebtop.models');
 models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
                                   iwcInterface, restInterface, Utilities) {
   
-  var cachedWebtopData = {};
-  var cachedApplicationData = {};
+  var cachedWebtopData = null;
+  var cachedApplicationData = null;
   
   /**
    * Set all webtop data
@@ -137,6 +137,16 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
      */
     getWebtopData: function() {
       return angular.copy(cachedWebtopData);
+    },
+    /**
+     * Check that we have received Listing and Webtop data
+     */
+    dataCached: function() {
+      if (cachedWebtopData && cachedApplicationData) {
+        return true;
+      } else {
+        return false;
+      }
     },
     /**
      * Get all dashboards

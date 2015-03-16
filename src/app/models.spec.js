@@ -126,6 +126,8 @@ describe('Service: models', function () {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   it('should have a createFrame method', function() {
+    // need application data set for this test
+    models.setApplicationData(appLibraryData);
     var dashboardId = 1;
     var appId = '12345678';
     var gridMaxRows = 25;
@@ -235,6 +237,9 @@ describe('Service: models', function () {
 
   // save a single frame inside a dashboard
   it('should have a saveFrame method', function() {
+    // need application data set for this test
+    models.setApplicationData(appLibraryData);
+
     // create a new frame and save to dashboard
     var dashboardId = '0';
     var appId = '12345678';
@@ -251,6 +256,9 @@ describe('Service: models', function () {
   });
 
   it('should have a saveFrame method that returns false on invalid frame', function() {
+    // need application data set for this test
+    models.setApplicationData(appLibraryData);
+
     // if a frameid is given that does not match any frames in the user's
     // dashboards, false is returned and no update is performed
     // modify new frame and save

@@ -31,8 +31,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
                                        $interval, $log,
                                        models,
                                        dashboardStateChangedEvent,
-                                       fullScreenModeToggleEvent,
-                                       initialDataReceivedEvent) {
+                                       fullScreenModeToggleEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -90,15 +89,6 @@ angular.module('ozpWebtop.dashboardView.desktop')
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    $scope.$on(initialDataReceivedEvent, function() {
-      $scope.apps = models.getApplicationData();
-      var dashboardData = models.getWebtopData();
-      $scope.dashboards = dashboardData.dashboards;
-      $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
-      $scope.ready = true;
-      //$scope.frames = $scope.dashboards[0].frames;  // to make tests happy
-    });
-
     $scope.$on(fullScreenModeToggleEvent, function(event, data) {
       $scope.fullScreenMode = data.fullScreenMode;
     });
@@ -118,8 +108,24 @@ angular.module('ozpWebtop.dashboardView.desktop')
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    function initializeData() {
+      if (!models.dataCached()) {
+        $log.warn('GridCtrl: delaying initialization by 500ms - no data yet');
+        $scope.initInterval = $interval(function() {
+          initializeData();
+        }, 500, 1);
+        return;
+      }
+      $scope.apps = models.getApplicationData();
+      var dashboardData = models.getWebtopData();
+      $scope.dashboards = dashboardData.dashboards;
+      $scope.frames = $scope.dashboards[0].frames;  // to make tests happy
+    }
+
+    initializeData();
+
     function stateChangeSuccessHandler(event, toState, toParams) {
-      if (!$scope.ready) {
+      if (!models.dataCached()) {
         $log.warn('DesktopCtrl: delaying call to stateChangeSuccessHandler by 500ms - no data yet');
         $scope.handleStateChangeSuccessInterval = $interval(function() {
           stateChangeSuccessHandler(event, toState, toParams);
@@ -161,7 +167,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
      * @method dashboardChangeHandler
      */
     function dashboardChangeHandler() {
-      if (!$scope.ready) {
+      if (!models.dataCached()) {
         $log.warn('DesktopCtrl: delaying call to dashboardChangeHandler by 500ms - no data yet');
         $scope.dashboardChangeHandlerInterval = $interval(function() {
           dashboardChangeHandler();
@@ -248,7 +254,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
      * @method reloadDashboard
      */
     function reloadDashboard() {
-      if (!$scope.ready) {
+      if (!models.dataCached()) {
         $log.warn('DesktopCtrl: delaying call to reloadDashboard by 500ms - no data yet');
         $scope.reloadDashboardInterval = $interval(function() {
           reloadDashboard();

@@ -4,11 +4,31 @@
  * the Grunt configuration that is automatically processed.
  */
 
-/**
- * Import ozp-style, which also includes Bootstrap, Font-Awesome, and Ubuntu
- * fonts
- */
-@import '../../vendor/ozp-style/src/less/ozp-style.less';
+// Path to vendor files (normally installed in bower_components/) relative to
+// this file
+@vendor-path: '../../vendor';
+// Path to Icons
+@vendor-path-icons: '@{vendor-path}/icons/dist/css/sprite';
+// Path to Ubuntu Fonts
+@vendor-path-ubuntu-font: '@{vendor-path}/ubuntu-fontface/ubuntu';
+
+
+// Import vendor libraries
+@import '@{vendor-path-icons}';
+@import '@{vendor-path-ubuntu-font}';
+
+// Path to Ubuntu fonts (will be used directly in generated CSS and must be
+// relative to the html file that will load the CSS
+@UbuntuFontsPath: '../vendor/ubuntu-fontface/fonts';
+
+
+// Bootstrap, colors, fonts
+
+// Exclude glyphicons and carousel from Bootstrap
+@import '_bootstrap';
+@import 'ubuntu-font';
+@import 'colors';
+@import 'bootstrap-variables';
 
 /**
  * This is our main variables file. We must include it last so we can overwrite

@@ -16,7 +16,7 @@
     "jquery-ui": "~1.11.0",
     "ozp-iwc-angular": "ozone-development/ozp-iwc-angular#master",
     "ozp-classification": "ozone-development/ozp-classification",
-    "bootstrap": "ozone-development/bootstrap#8272566a1853d79fc63094aa88fdc8924ec90f88",
+    "bootstrap": "ozone-development/bootstrap#0a0ac832c7a6c060b785b6cfd46219cedfb30033",
     "ubuntu-fontface": "~0.1.3",
     "icons": "ozone-development/icons"
   }

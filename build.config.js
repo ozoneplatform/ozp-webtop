@@ -79,6 +79,7 @@ module.exports = {
       'vendor/javascript-detect-element-resize/detect-element-resize.js',
       'vendor/ozp-iwc-angular/dist/js/ozpIwc-client-angular.js',
       'vendor/es6-promise/promise.min.js',  // Promises not enabled by default in FF until v29.0
+      'vendor/console-polyfill/index.js',
       'vendor/ozp-classification/jquery.classification.js',
       'vendor/ozp-classification/ozp-classification.js' // WARNING: things after ozp-classification are not being included!!!!
     ],

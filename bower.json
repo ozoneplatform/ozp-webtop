@@ -14,6 +14,7 @@
     "ui-router-extras": "latest",
     "angular-gridster": "~0.9.11",
     "jquery-ui": "~1.11.0",
+    "console-polyfill": "latest",
     "ozp-iwc-angular": "ozone-development/ozp-iwc-angular#master",
     "ozp-classification": "ozone-development/ozp-classification",
     "bootstrap": "ozone-development/bootstrap#0a0ac832c7a6c060b785b6cfd46219cedfb30033",

@@ -1,3 +1,90 @@
+# 0.4.0 (2015-03-18)
+
+## Features
+### version.txt
+
+* Add a version.txt file to the output directories (build/ and bin/) ([75a4469b](git@github.com:ozone-development/ozp-webtop/commit/75a4469b))
+
+### config
+
+* Add support for OzoneConfig.js config file ([19ee1cdf](git@github.com:ozone-development/ozp-webtop/commit/19ee1cdf))
+
+### dashboardModals
+
+* Fixes create and edit dashboard modals, allowing users to edit any dashboard or create new empty dashboards. Closes #424 #408 #428 ([9e9ef898](git@github.com:ozone-development/ozp-webtop/commit/9e9ef898))
+
+### dashboardApi
+
+* Provide name of missing apps ([759bde91](git@github.com:ozone-development/ozp-webtop/commit/759bde91))
+
+
+
+## Bug fixes
+### styling
+
+* Matched navbar height ([f329c6be](git@github.com:ozone-development/ozp-webtop/commit/f329c6be))
+
+* Matched navbar height ([842ddb5e](git@github.com:ozone-development/ozp-webtop/commit/842ddb5e))
+
+* Updated old favicon with new ([b2c75fc1](git@github.com:ozone-development/ozp-webtop/commit/b2c75fc1))
+
+* replaced all glyphicons ([e50db4aa](git@github.com:ozone-development/ozp-webtop/commit/e50db4aa))
+
+* Adding colors to icons ([59625e01](git@github.com:ozone-development/ozp-webtop/commit/59625e01))
+
+* Add App Modal buttons ([fd394bac](git@github.com:ozone-development/ozp-webtop/commit/fd394bac))
+
+### ozpManagedFrame
+
+* Set min height & min width on frames, increase … …height of chrome draggable space to be entire widget top bar. ([755970b1](git@github.com:ozone-development/ozp-webtop/commit/755970b1))
+
+### *
+
+* Disable IE compatibility mode ([a27eb4a2](git@github.com:ozone-development/ozp-webtop/commit/a27eb4a2))
+
+* Fixes broken logic when creating urls loaded into iframes ([57c48f7a](git@github.com:ozone-development/ozp-webtop/commit/57c48f7a))
+
+* Default dashboard state would get overwritten when creating new boards ([f51e2d2c](git@github.com:ozone-development/ozp-webtop/commit/f51e2d2c))
+
+* Dashboard state fix when changing layouts ([fbf3124f](git@github.com:ozone-development/ozp-webtop/commit/fbf3124f))
+
+* Handle frames with no matching application data ([43fc8a04](git@github.com:ozone-development/ozp-webtop/commit/43fc8a04))
+
+* Dashboard removal now removes widgets. Widgets now are able to trigger unload on close ([0a6cef58](git@github.com:ozone-development/ozp-webtop/commit/0a6cef58))
+
+### addApplicationsModal
+
+* Fixes broken link on Find more apps button ([53b1e920](git@github.com:ozone-development/ozp-webtop/commit/53b1e920))
+
+### desktopLayout
+
+* fixes IE desktop layout bug ([98183e7a](git@github.com:ozone-development/ozp-webtop/commit/98183e7a))
+
+### newDashboard
+
+* New dashboards now allow a user to select default layout (grid or desktop). If a layout is not specified, grid is used. Fixes #451 ([78d93e06](git@github.com:ozone-development/ozp-webtop/commit/78d93e06))
+
+* New dashboards now allow a user to select default layout (grid or desktop). If a layout is not specified, grid is used. Fixes #451 ([3bde9f72](git@github.com:ozone-development/ozp-webtop/commit/3bde9f72))
+
+### defaultURL
+
+* Fixes issue where if user goes to base webtop URL, no dashboards are shown. This fix directs the user to their first dashboard. Fixes #461 ([150c8089](git@github.com:ozone-development/ozp-webtop/commit/150c8089))
+
+### editDashboardModal
+
+* Fix edit dashboard link ([976d0e5b](git@github.com:ozone-development/ozp-webtop/commit/976d0e5b))
+
+### icon
+
+* Fixed color of "Minimize" icon ([c66e0e82](git@github.com:ozone-development/ozp-webtop/commit/c66e0e82))
+
+### urlWidgetLauncher
+
+* Fix broken feature ([8ae8f110](git@github.com:ozone-development/ozp-webtop/commit/8ae8f110))
+
+
+
+
 # 0.3.3 (2015-02-04)
 
 

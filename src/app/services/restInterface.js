@@ -22,12 +22,15 @@ var app = angular.module('ozpWebtop.services.restInterface');
  * * @param $q ng $q service
  * @namespace services
  */
-app.factory('restInterface', function($window, $log, $http, $q) {
+app.factory('restInterface', function($window, $log, $http, $q, $interval) {
 
   // flag to ensure multiple PUT requests are not made concurrently
   var readyToPut = true;
 
-  return {
+  // data that wasn't saved
+  var webtopDataToRetrySaving = null;
+
+  var service = {
     /**
      * Set all webtop data
      *
@@ -53,7 +56,7 @@ app.factory('restInterface', function($window, $log, $http, $q) {
             'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
           },
           data: webtopData,
-          withCredentials: true,
+          withCredentials: true
         };
 
         $http(req).success(function() {
@@ -63,8 +66,10 @@ app.factory('restInterface', function($window, $log, $http, $q) {
           readyToPut = true;
         });
 
+        webtopDataToRetrySaving = null;
         return true;
       }
+      webtopDataToRetrySaving = webtopData;
       return false;
     },
     /**
@@ -126,4 +131,16 @@ app.factory('restInterface', function($window, $log, $http, $q) {
       return deferred.promise;
     }
   };
+
+  // TODO: Find a more efficient way to do this
+  function retryPut() {
+    if (webtopDataToRetrySaving) {
+      $log.debug('Retrying PUT request');
+      service.setWebtopData(webtopDataToRetrySaving);
+    }
+  }
+
+  $interval(retryPut, 500);
+
+  return service;
 });

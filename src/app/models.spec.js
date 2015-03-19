@@ -12,9 +12,9 @@ describe('Service: models', function () {
   beforeEach(module('ozpWebtop.models'));
 
   // Dashboards service
-  var models, appLibraryData, rootScope, $httpBackend, $window;
+  var models, appLibraryData, rootScope, $httpBackend, $window, $interval;
 
-  beforeEach(inject(function ($rootScope, _models_, _$httpBackend_, _$window_) {
+  beforeEach(inject(function ($rootScope, _models_, _$httpBackend_, _$window_, _$interval_) {
 
     rootScope = $rootScope.$new();
 
@@ -23,6 +23,8 @@ describe('Service: models', function () {
     $httpBackend = _$httpBackend_;
 
     $window = _$window_;
+
+    $interval = _$interval_;
 
     $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data')
                             .respond({});

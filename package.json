@@ -51,6 +51,7 @@
   },
   "scripts": {
     "build": "grunt build",
+    "compile": "grunt compile",
     "bower": "bower install"
   }
 }

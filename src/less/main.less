@@ -56,8 +56,8 @@ body, html {
 .navbar .divider-vertical {
   height: @app-toolbar-height;
   margin: 0 9px;
-  border-right: 1px solid @ozp-white;
-  border-left: 1px solid @ozp-lt-gray1;
+  border-right: 1px solid @white;
+  border-left: 1px solid @gray-lightest;
 }
 
 .navbar-inverse .divider-vertical {
@@ -96,35 +96,35 @@ body, html {
 }
 
 .wt-modal {
-  background-color: @ozp-dk-gray1;
-  color: @ozp-lt-gray2;
+  background-color: @gray-darker;
+  color: @gray-lighter;
 }
 
 .wt-modal-header {
-  background-color: @ozp-gray2;
+  background-color: @gray-dark;
 }
 
 .wt-modal-body {
-  background-color: @ozp-dk-gray1;
+  background-color: @gray-darker;
 }
 
 .wt-modal-footer {
-  background-color: @ozp-gray2;
+  background-color: @gray-dark;
 }
 
 .close-icon, .close {
-  color: @ozp-white;
+  color: @white;
 }
 
 .error {
-  color: @ozp-red;
+  color: @red;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                        edit dashboard modal
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 input.ng-invalid {
-  borer: 1px solid @ozp-red;
+  border: 1px solid @red;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -150,7 +150,7 @@ input.ng-invalid {
 
 // no dashes for use with ng-class conditional
 .addappselected {
-  background-color: @ozp-black;
+  background-color: @gray-base;
   padding: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -158,7 +158,7 @@ input.ng-invalid {
 }
 
 .add-apps-dark-text {
-  color: @ozp-dk-gray2;
+  color: @gray-darkest;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -166,7 +166,7 @@ input.ng-invalid {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .iconWhite {
-  color: @ozp-white;
+  color: @white;
 }
 
 #main-menu-dropdown {
@@ -176,7 +176,7 @@ input.ng-invalid {
 .ozp-toolbar {
   margin-top: 0;
   margin-bottom: 0;
-  border-bottom: 1px #191F25 solid;
+  border-bottom: 1px @gray-base solid;
 }
 
 .notification-text {
@@ -190,7 +190,7 @@ input.ng-invalid {
 }
 
 .no-notifications-icon {
-  color: @ozp-gray1;
+  color: @gray;
   padding-top: 7px;
 }
 
@@ -216,7 +216,7 @@ input.ng-invalid {
 .frameHighlighted {
   border-style: solid;
   border-width: 10px;
-  border-color: @ozp-orange;
+  border-color: @orange;
   list-style-position: inside;
 }
 
@@ -234,12 +234,38 @@ input.ng-invalid {
   /* Set the fixed height of the footer here */
   height: @app-toolbar-height;
   z-index: 200;
-  border-top: 1px #191F25 solid;
+  border-top: 1px @gray-base solid;
 }
 
 .app-toolbar-ng-include {
   padding-top: 75px;  // 15px more than @app-toolbar-height
   background-color: @dashboard-bg-color;
+}
+
+.navbar-default .navbar-nav > li.app-toolbar-li > a{
+  border-top: none;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  border-bottom: 4px solid transparent;
+
+  &:hover, &:focus{
+    border-bottom: 4px solid @blue;
+  }
+}
+
+button.hiddenToggle.appHiddenToggle.ng-scope{
+  border-top: none;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  border-bottom: 4px solid transparent;
+
+  &:hover, &:focus{
+    border-bottom: 4px solid @blue;
+
+    > .icon-minimize-grayLightest{
+      .icon-minimize-white;
+    }
+  }
 }
 
 // useful if you have a link using ng-click with no href-="..."
@@ -260,9 +286,9 @@ input.ng-invalid {
   right: 0;
   position: fixed;
   z-index: 10000;
-  background-color: @ozp-dk-gray1;
+  background-color: @gray-darker;
   border: none;
-  color: @ozp-white;
+  color: @white;
 }
 
 
@@ -270,12 +296,12 @@ input.ng-invalid {
   position: relative;
   height: 2px;
   top: 10px;
-  background-color: @ozp-blue3;
+  background-color: @blue;
 }
 
 .layout-icon-inactive {
   .layout-icon-active;
-  background-color: @ozp-black;
+  background-color: @gray-base;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -306,9 +332,9 @@ body > div.classBanner:last-of-type {
 .ozp-managed-frame {
     position: absolute;
     box-sizing: border-box;
-    background-color: @ozp-dk-gray2;
+    background-color: @gray-darkest;
     margin: 1px;
-    border: 1px solid @ozp-black;
+    border: 1px solid @gray-base;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -318,8 +344,8 @@ body > div.classBanner:last-of-type {
 }
 
 .ozp-chrome {
-    background: @ozp-dk-gray2;
-    color: @ozp-white;
+    background: @gray-darkest;
+    color: @white;
     font-size: 10pt;
     height: 32px;
     cursor: default;
@@ -356,13 +382,24 @@ body > div.classBanner:last-of-type {
     background: transparent;
     padding-left: 3px;
     padding-right: 3px;
-    color: @ozp-lt-gray3;
+    color: @gray-light;
     font-size: 10px;
 }
 
 .ozp-chrome > .chrome-controls > .btn:hover,
 .ozp-chrome > .chrome-controls > .btn:active {
-    color: @ozp-white;
+    color: @white;
+
+    > .icon-plus-10-white{
+      .icon-plus-10-blue;
+    }
+    > .icon-minus-10-white{
+      .icon-minus-10-blue;
+    }
+    > .icon-cross-10-white{
+      .icon-cross-10-blue;
+    }
+
 }
 
 .desktop-view {
@@ -481,30 +518,44 @@ body > div.classBanner:last-of-type {
   bottom: 0 !important;
 }
 
-.navbar .navbar-nav > .app > a { 
+.navbar .navbar-nav > .app > a {
   padding: 0 0 2px 0;
   margin: -2px 5px 0 5px;
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; 
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
   filter: alpha(opacity=70);
   opacity: 0.7;
 }
 .navbar .navbar-nav > .app.active > a,
 .navbar .navbar-nav > .app > a:hover,
 .navbar .navbar-nav > .app.active > a:focus {
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; 
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   filter: alpha(opacity=100);
   opacity: 1.0;
   border-top: none;
   padding-top: 4px;
-  border-bottom: 4px solid @ozp-blue3 !important;
+  border-bottom: 4px solid @blue !important;
 }
 
 .highlight {
-  background-color: @ozp-blue3;
+  background-color: @blue;
+
+  &:hover, &:focus{
+    background-color:@blue-dark;
+  }
+
+}
+
+.navbar-default .navbar-nav > li.app-toolbar-li.highlight > a{
+  border:0px;
+
+  &:hover, &:focus{
+    border: 0px;
+  }
+
 }
 
 .navbar-inverse .navbar-nav .open .dropdown-menu > li, .dropdown-header {
-  color: @ozp-blue3 !important;
+  color: @blue !important;
 }
 .modal-content {
   border: none;
@@ -542,4 +593,150 @@ body > div.classBanner:last-of-type {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+//icon hovers
+.nav.navbar-nav {
+
+    > .open {
+        > a, > a:hover, > a:focus {
+
+            > .icon-caret-up-grayLightest{
+              .icon-caret-up-blue;
+            }
+
+            > .icon-menu-grayLightest{
+              .icon-menu-blue;
+            }
+        }
+    }
+    a:hover, a:focus {
+
+        > .icon-home-grayLightest{
+          .icon-home-white;
+        }
+
+        > .icon-shopping-grayLightest{
+          .icon-shopping-white;
+        }
+
+        > .icon-bell-grayLightest{
+          .icon-bell-white;
+        }
+
+        > .icon-question-grayLightest{
+          .icon-question-white;
+        }
+
+        > .icon-menu-grayLightest{
+          .icon-menu-white;
+        }
+
+        > .icon-maximize-grayLightest{
+          .icon-maximize-white;
+        }
+
+        > .icon-minimize-grayLightest{
+          .icon-minimize-white;
+        }
+
+        > .icon-stack-grayLightest{
+          .icon-stack-white;
+        }
+   }
+}
+
+.dropdown-menu > li > a{
+
+  &:hover, &:focus {
+
+    > .icon-ribbon-grayLightest{
+      .icon-ribbon-white;
+    }
+
+    > .icon-head-grayLightest{
+      .icon-head-white;
+    }
+
+    > .icon-cog-grayLightest{
+      .icon-cog-white;
+    }
+
+    > .icon-square-plus-grayLightest{
+      .icon-square-plus-white;
+    }
+
+    > .icon-cloud-grayLightest{
+      .icon-cloud-white;
+    }
+
+    > .icon-layers-grayLightest{
+      .icon-layers-white;
+    }
+
+    > .icon-shopping-settings-grayLightest{
+      .icon-shopping-settings-white;
+    }
+
+    > .icon-bar-graph-2-grayLightest{
+      .icon-bar-graph-2-white;
+    }
+
+  }
+
+}
+
+.dropup > .dropdown-toggle.ng-binding {
+
+    &:hover, &:focus {
+      > .icon-caret-up-grayLightest {
+        .icon-caret-up-white;
+      }
+    }
+}
+
+.dropup.open > .dropdown-toggle.ng-binding {
+  border-top:0px;
+  border-bottom: 4px solid @blue;
+
+  .dropdown-menu > li > a.caboose{
+
+    &:hover, &:focus {
+      >  .icon-plus-14-grayLightest{
+        .icon-plus-14-white;
+      }
+    }
+  }
+
+}
+
+.icon-pencil-grayLightest.pull-right {
+
+  &:hover, &:focus{
+    .icon-pencil-blue;
+  }
+
+}
+
+.icon-cross-14-grayLightest.pull-right {
+
+  &:hover, &:focus{
+    .icon-cross-14-blue;
+  }
+
+}
+
+.icon-trash-grayLightest.pull-right {
+
+  &:hover, &:focus{
+    .icon-trash-blue;
+  }
+
+}
+
+.close.icon-cross-16-white {
+
+  &:hover, &:focus{
+    .icon-cross-16-blue;
+  }
 }

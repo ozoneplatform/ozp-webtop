@@ -599,6 +599,8 @@ module.exports = function ( grunt ) {
     },
     /**
      * create a version.txt file in the build and release dirs
+     *
+     * tars and compresses build/ and bin/ dirs for release
      */
     shell: {
       buildVersionFile: {
@@ -618,6 +620,32 @@ module.exports = function ( grunt ) {
             'echo Date: >> <%= compile_dir %>/version.txt',
             'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= compile_dir %>/version.txt'
           ].join('&&')
+      },
+      tarDevVersion: {
+        command: [
+          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
+          'tar -czf webtop-dev-$BRANCH_NAME-<%= pkg.version %>.tar.gz build/'
+        ].join('&&')
+      },
+      tarProdVersion: {
+        command: [
+          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
+          'tar -czf webtop-dist-$BRANCH_NAME-<%= pkg.version %>.tar.gz bin/'
+        ].join('&&')
+      },
+      tarDevDate: {
+        command: [
+          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
+          "DATETIME=$(date '+%m_%d_%Y-%H:%M')",
+          'tar -czf webtop-dev-$BRANCH_NAME-$DATETIME.tar.gz bin/'
+        ].join('&&')
+      },
+      tarProdDate: {
+        command: [
+          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
+          "DATETIME=$(date '+%m_%d_%Y-%H:%M')",
+          'tar -czf webtop-dist-$BRANCH_NAME-$DATETIME.tar.gz bin/'
+        ].join('&&')
       }
     },
     yuidoc: {

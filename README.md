@@ -56,7 +56,7 @@ devices, as defined by Bootstrap)
 
 ## Contributing
 See the [wiki](https://github.com/ozone-development/ozp-webtop/wiki/Pull-Request-Checklist)
- for a list of guidelines for submitting pull requests
+ for a list of guidelines for submitting pull requests 
 
 ## Copyrights
 > Software (c) 2014 [Department of Defense](http://defense.gov/ "DoD")

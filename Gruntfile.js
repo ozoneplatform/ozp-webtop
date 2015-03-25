@@ -624,6 +624,7 @@ module.exports = function ( grunt ) {
       tarDevVersion: {
         command: [
           'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
+          'echo GIT_BRANCH var: $GIT_BRANCH',
           'tar -czf webtop-dev-$BRANCH_NAME-<%= pkg.version %>.tar.gz build/'
         ].join('&&')
       },

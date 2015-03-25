@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Trivial script to tar up a release of front-end app (static files)
 # name like: 	<name>-<branch>-<version|date_time>.tar.gz

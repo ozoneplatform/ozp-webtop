@@ -623,29 +623,22 @@ module.exports = function ( grunt ) {
       },
       tarDevVersion: {
         command: [
-          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
-          'tar -czf webtop-dev-$BRANCH_NAME-<%= pkg.version %>.tar.gz build/'
+          'source packageRelease.sh webtop-dev build <%= pkg.version %>'
         ].join('&&')
       },
       tarProdVersion: {
         command: [
-          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
-          'tar -czf webtop-dist-$BRANCH_NAME-<%= pkg.version %>.tar.gz bin/'
+          'source packageRelease.sh webtop-prod bin <%= pkg.version %>'
         ].join('&&')
       },
       tarDevDate: {
         command: [
-          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
-          'echo GIT_BRANCH var: ${GIT_BRANCH#*/}',
-          "DATETIME=$(date '+%m_%d_%Y-%H_%M')", // jshint ignore:line
-          'tar -czf webtop-dev-$BRANCH_NAME-$DATETIME.tar.gz build/'
+          'source packageRelease.sh webtop-dev build'
         ].join('&&')
       },
       tarProdDate: {
         command: [
-          'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
-          "DATETIME=$(date '+%m_%d_%Y-%H_%M')", // jshint ignore:line
-          'tar -czf webtop-dist-$BRANCH_NAME-$DATETIME.tar.gz bin/'
+          'source packageRelease.sh webtop-prod bin'
         ].join('&&')
       }
     },

@@ -636,9 +636,9 @@ module.exports = function ( grunt ) {
       tarDevDate: {
         command: [
           'BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)',
-          'echo GIT_BRANCH var: $GIT_BRANCH',
+          'echo GIT_BRANCH var: ${GIT_BRANCH#*/}',
           "DATETIME=$(date '+%m_%d_%Y-%H_%M')", // jshint ignore:line
-          'tar -czf webtop-dev-$BRANCH_NAME-$DATETIME.tar.gz bin/'
+          'tar -czf webtop-dev-$BRANCH_NAME-$DATETIME.tar.gz build/'
         ].join('&&')
       },
       tarProdDate: {

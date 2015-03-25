@@ -633,11 +633,13 @@ module.exports = function ( grunt ) {
       },
       tarDevDate: {
         command: [
+          'ls -als',
           'source packageRelease.sh webtop-dev build'
         ].join('&&')
       },
       tarProdDate: {
         command: [
+          'ls -als',
           'source packageRelease.sh webtop-prod bin'
         ].join('&&')
       }

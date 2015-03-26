@@ -599,6 +599,8 @@ module.exports = function ( grunt ) {
     },
     /**
      * create a version.txt file in the build and release dirs
+     * 
+     * tars and compresses build/ and bin/ dirs for release
      */
     shell: {
       buildVersionFile: {
@@ -618,7 +620,27 @@ module.exports = function ( grunt ) {
             'echo Date: >> <%= compile_dir %>/version.txt',
             'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= compile_dir %>/version.txt'
           ].join('&&')
-      }
+      },
+      tarDevVersion: {
+         command: [
+           'source packageRelease.sh webtop-dev build <%= pkg.version %>'
+         ].join('&&')
+       },
+      tarProdVersion: {
+         command: [
+           'source packageRelease.sh webtop-prod bin <%= pkg.version %>'
+         ].join('&&')
+       },
+       tarDevDate: {
+         command: [
+           './packageRelease.sh webtop-dev build'
+         ].join('&&')
+       },
+       tarProdDate: {
+         command: [
+           './packageRelease.sh webtop-prod bin'
+         ].join('&&')
+       }
     },
     yuidoc: {
       compile: {

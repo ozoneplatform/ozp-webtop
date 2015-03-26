@@ -27,8 +27,6 @@
 // Exclude glyphicons and carousel from Bootstrap
 @import '_bootstrap';
 @import 'ubuntu-font';
-@import 'colors';
-@import 'bootstrap-variables';
 
 /**
  * This is our main variables file. We must include it last so we can overwrite
@@ -41,20 +39,18 @@
 html {
   height: 100%;
   width: 100%;
+  font-weight: 300;
   // Always show scroll bar - prevents nasty issue with gridster where the
   // screen continuously changes size ~once per second
-//  overflow: -moz-scrollbars-vertical;
-//  overflow-y: scroll;
-  //overflow-y: hidden;
+//overflow: -moz-scrollbars-vertical;
+//overflow-y: scroll;
+//overflow-y: hidden;
 }
-body, html {
-  background-color: @dashboard-bg-color;
-  font-weight: 300;
-}
+
 // bring back vertical dividers in bootstrap 3.0
 // http://stackoverflow.com/questions/19203816/vertical-divider-wont-work-in-bootstrap-3-0
 .navbar .divider-vertical {
-  height: @app-toolbar-height;
+  height: @navbar-height;
   margin: 0 9px;
   border-right: 1px solid @white;
   border-left: 1px solid @gray-lightest;
@@ -72,14 +68,8 @@ body, html {
   }
 }
 
-.no-rounded-corners {
-  -webkit-border-radius: 0 !important;
-  -moz-border-radius: 0 !important;
-  border-radius: 0 !important;
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                        generic modal styles
+//                                modals
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // Fixes modal sizing issue with UI Bootstrap
@@ -95,36 +85,16 @@ body, html {
   }
 }
 
-.wt-modal {
-  background-color: @gray-darker;
-  color: @gray-lighter;
-}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                        edit dashboard modal
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.wt-modal-header {
-  background-color: @gray-dark;
-}
-
-.wt-modal-body {
-  background-color: @gray-darker;
-}
-
-.wt-modal-footer {
-  background-color: @gray-dark;
-}
-
-.close-icon, .close {
-  color: @white;
+input.ng-invalid {
+  border: 1px solid @red;
 }
 
 .error {
   color: @red;
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                        edit dashboard modal
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-input.ng-invalid {
-  border: 1px solid @red;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,68 +108,44 @@ input.ng-invalid {
     padding:0;
 }
 
-.add-apps-style ul > li {
-  line-height: 1.75em;
-  float:left;
-  display:inline;
-}
+    .add-apps-style ul > li {
+      float: left;
+      display: inline;
+      margin: 6px 0;
+    }
+
+        .add-apps-style ul > li img {
+          margin-right: 5px;
+        }
 
 #triple li  {
   width:33.333%;
 }
 
+.add-apps-list ul li span {
+  margin-left: 10px;
+}
+
 // no dashes for use with ng-class conditional
 .addappselected {
-  background-color: @gray-base;
-  padding: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.add-apps-dark-text {
-  color: @gray-darkest;
+  background-color: @blue-dark;
+  padding: 5px 10px;
+  margin-left: 0 !important;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                        ozp navigation bar
+//                        global toolbar
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-.iconWhite {
-  color: @white;
-}
-
-#main-menu-dropdown {
-  margin-left: -30px;
-}
 
 .ozp-toolbar {
-  margin-top: 0;
   margin-bottom: 0;
-  border-bottom: 1px @gray-base solid;
-}
-
-.notification-text {
-  margin-top: .1em;
-  margin-left: -.6em;
-  font-size: 10px;
-}
-
-.notification-icon {
-  padding-top: 2px;
-}
-
-.no-notifications-icon {
-  color: @gray;
-  padding-top: 7px;
-}
-
-.menu-icon {
-  margin-right: 7px;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                        dashboard view
+//                         app layout
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .ui-view-style {
@@ -209,7 +155,7 @@ input.ng-invalid {
 
 // Grid view
 .gridster-container-settings {
-  background-color: @dashboard-bg-color;
+  background-color: @body-bg;
   width: 100%;
 }
 
@@ -220,8 +166,6 @@ input.ng-invalid {
   list-style-position: inside;
 }
 
-// Desktop view
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                        app toolbar
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -231,18 +175,16 @@ input.ng-invalid {
   margin-bottom: 0;
   bottom: @classification-banner; // height of the classification banner
   width: 100%;
-  /* Set the fixed height of the footer here */
-  height: @app-toolbar-height;
+  height: @navbar-height + 4px;
   z-index: 200;
-  border-top: 1px @gray-base solid;
 }
 
 .app-toolbar-ng-include {
-  padding-top: 75px;  // 15px more than @app-toolbar-height
-  background-color: @dashboard-bg-color;
+  padding-top: 75px;
+  background-color: @body-bg;
 }
 
-.navbar-default .navbar-nav > li.app-toolbar-li > a{
+.navbar-default .navbar-nav > li.app-toolbar-li > a {
   border-top: none;
   padding-top: 10px;
   padding-bottom: 6px;
@@ -268,6 +210,47 @@ button.hiddenToggle.appHiddenToggle.ng-scope{
   }
 }
 
+.navbar .navbar-nav > .app > a {
+  padding: 0 0 2px 0;
+  margin: -2px 5px 0 5px;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+  filter: alpha(opacity=70);
+  opacity: 0.7;
+}
+.navbar .navbar-nav > .app.active > a,
+.navbar .navbar-nav > .app > a:hover,
+.navbar .navbar-nav > .app.active > a:focus {
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  opacity: 1.0;
+  border-top: none;
+  padding-top: 4px;
+  border-bottom: 4px solid @blue !important;
+}
+
+.highlight {
+  background-color: @blue;
+
+  &:hover, &:focus{
+    background-color:@blue-dark;
+  }
+
+}
+
+.navbar-default .navbar-nav > li.app-toolbar-li.highlight > a{
+  border:0px;
+  padding-bottom: 10px;
+
+  &:hover, &:focus{
+    border: 0px;
+  }
+
+}
+
+.navbar-fixed-bottom {
+  border: 0;
+}
+
 // useful if you have a link using ng-click with no href-="..."
 .link-pointer {
   cursor: pointer;
@@ -290,7 +273,6 @@ button.hiddenToggle.appHiddenToggle.ng-scope{
   border: none;
   color: @white;
 }
-
 
 .layout-icon-active {
   position: relative;
@@ -419,9 +401,8 @@ body > div.classBanner:last-of-type {
   overflow-y: auto;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                        user settings modal
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 /**
  * Now that all app-wide styles have been applied, we can load the styles for
  * all the submodules and components we are using.
@@ -429,22 +410,22 @@ body > div.classBanner:last-of-type {
 
 // @import '../app/home/home.less';
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                           layout
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 .fullWidth {
   width: 100% !important;
   height: auto !important;
   left: 0 !important;
-  top: @app-toolbar-height + @classification-banner !important;
-  bottom: @app-toolbar-height  + @classification-banner !important;
+  top: @navbar-height + @classification-banner !important;
+  bottom: @navbar-height  + @classification-banner !important;
   position: fixed;
   z-index: 999999;
 }
 
 .fullWidthTopHidden {
   top: @classification-banner !important;
-}
-
-.navbar-fixed-bottom {
-  border: 0;
 }
 
 .hide {
@@ -469,7 +450,7 @@ body > div.classBanner:last-of-type {
 }
 
 .grid-toolbar-padding {
-  padding-bottom: @app-toolbar-height;
+  padding-bottom: @navbar-height;
 }
 
 .ozp-managed-frame .ng-scope {
@@ -518,42 +499,6 @@ body > div.classBanner:last-of-type {
   bottom: 0 !important;
 }
 
-.navbar .navbar-nav > .app > a {
-  padding: 0 0 2px 0;
-  margin: -2px 5px 0 5px;
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-  filter: alpha(opacity=70);
-  opacity: 0.7;
-}
-.navbar .navbar-nav > .app.active > a,
-.navbar .navbar-nav > .app > a:hover,
-.navbar .navbar-nav > .app.active > a:focus {
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-  filter: alpha(opacity=100);
-  opacity: 1.0;
-  border-top: none;
-  padding-top: 4px;
-  border-bottom: 4px solid @blue !important;
-}
-
-.highlight {
-  background-color: @blue;
-
-  &:hover, &:focus{
-    background-color:@blue-dark;
-  }
-
-}
-
-.navbar-default .navbar-nav > li.app-toolbar-li.highlight > a{
-  border:0px;
-
-  &:hover, &:focus{
-    border: 0px;
-  }
-
-}
-
 .navbar-inverse .navbar-nav .open .dropdown-menu > li, .dropdown-header {
   color: @blue !important;
 }
@@ -573,6 +518,10 @@ body > div.classBanner:last-of-type {
   padding: 3px 0 0 0;
   margin: 0;
 }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                              icons
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .icon {
   height: inherit;

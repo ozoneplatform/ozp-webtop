@@ -623,12 +623,12 @@ module.exports = function ( grunt ) {
       },
       tarDevVersion: {
          command: [
-           'source packageRelease.sh webtop-dev build <%= pkg.version %>'
+           './packageRelease.sh webtop-dev build <%= pkg.version %>'
          ].join('&&')
        },
       tarProdVersion: {
          command: [
-           'source packageRelease.sh webtop-prod bin <%= pkg.version %>'
+           './packageRelease.sh webtop-prod bin <%= pkg.version %>'
          ].join('&&')
        },
        tarDevDate: {

@@ -599,7 +599,7 @@ module.exports = function ( grunt ) {
     },
     /**
      * create a version.txt file in the build and release dirs
-     *
+     * 
      * tars and compresses build/ and bin/ dirs for release
      */
     shell: {
@@ -622,25 +622,25 @@ module.exports = function ( grunt ) {
           ].join('&&')
       },
       tarDevVersion: {
-        command: [
-          './packageRelease.sh webtop-dev build <%= pkg.version %>'
-        ].join('&&')
-      },
+         command: [
+           './packageRelease.sh webtop-dev build <%= pkg.version %>'
+         ].join('&&')
+       },
       tarProdVersion: {
-        command: [
-          './packageRelease.sh webtop-prod bin <%= pkg.version %>'
-        ].join('&&')
-      },
-      tarDevDate: {
-        command: [
-          './packageRelease.sh webtop-dev build'
-        ].join('&&')
-      },
-      tarProdDate: {
-        command: [
-          './packageRelease.sh webtop-prod bin'
-        ].join('&&')
-      }
+         command: [
+           './packageRelease.sh webtop-prod bin <%= pkg.version %>'
+         ].join('&&')
+       },
+       tarDevDate: {
+         command: [
+           './packageRelease.sh webtop-dev build'
+         ].join('&&')
+       },
+       tarProdDate: {
+         command: [
+           './packageRelease.sh webtop-prod bin'
+         ].join('&&')
+       }
     },
     yuidoc: {
       compile: {

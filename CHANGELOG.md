@@ -1,3 +1,29 @@
+# 0.4.1 (2015-03-31)
+
+
+
+## Bug fixes
+### styling
+
+* Added hover to main toolbars and fixed modal close icon ([59b1b313](git@github.com:ozone-development/ozp-webtop/commit/59b1b313))
+
+### app-toolbar
+
+* Style app-toolbar hovers ([27d46414](git@github.com:ozone-development/ozp-webtop/commit/27d46414))
+
+### icons
+
+* Close icon in notifications demo ([e16cdde7](git@github.com:ozone-development/ozp-webtop/commit/e16cdde7))
+
+* Added hovers ([6074dd2d](git@github.com:ozone-development/ozp-webtop/commit/6074dd2d))
+
+### restInterface
+
+* Automatically retry a failed/aborted PUT request ([ab254ffe](git@github.com:ozone-development/ozp-webtop/commit/ab254ffe))
+
+
+
+
 # 0.4.0 (2015-03-18)
 
 ## Features

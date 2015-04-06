@@ -83,4 +83,3 @@ angular.module('ozpWebtop.editDashboardModal').controller(
     };
 
 });
-

@@ -34,10 +34,10 @@ var models = angular.module('ozpWebtop.models');
  */
 models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
                                   iwcInterface, restInterface, Utilities) {
-  
+
   var cachedWebtopData = null;
   var cachedApplicationData = null;
-  
+
   /**
    * Set all webtop data
    *
@@ -55,8 +55,8 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
       return restInterface.setWebtopData(webtopData);
     }
   }
-  
-  
+
+
   return {
     /**
      * Transform the raw Listing data into a format used for webtop
@@ -758,5 +758,3 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
     }
   };
 });
-
-

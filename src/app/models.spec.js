@@ -26,7 +26,7 @@ describe('Service: models', function () {
 
     $interval = _$interval_;
 
-    $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data')
+    $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/api/profile/self/data/dashboard-data')
                             .respond({});
 
     jasmine.getJSONFixtures().fixturesPath='base/testData';

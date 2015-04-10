@@ -48,7 +48,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       if (readyToPut) {
         readyToPut = false;
         // TODO: change dashboard-data to ozp-webtop-data
-        var url = $window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data';
+        var url = $window.OzoneConfig.API_URL + '/api/profile/self/data/dashboard-data';
         var req = {
           method: 'PUT',
           url: url,
@@ -85,7 +85,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       var deferred = $q.defer();
       $http.get(
         // TODO: change dashboard-data to ozp-webtop-data
-        $window.OzoneConfig.API_URL + '/profile/self/data/dashboard-data', {
+        $window.OzoneConfig.API_URL + '/api/profile/self/data/dashboard-data', {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
@@ -112,7 +112,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
      */
     getListings: function() {
       var deferred = $q.defer();
-      $http.get($window.OzoneConfig.API_URL + '/profile/self/library', {
+      $http.get($window.OzoneConfig.API_URL + '/api/profile/self/library', {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/vnd.ozp-library-v1+json'

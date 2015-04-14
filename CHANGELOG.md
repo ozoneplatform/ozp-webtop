@@ -1,3 +1,15 @@
+# 0.4.2-rc (2015-04-07)
+
+
+
+## Bug fixes
+### appToolbar
+
+* When a user updates a dashboard name or layout through the editDashboard modal, the names update appropriately in app toolbar and state changes if current dashboard has a layout modification. #504 ([937a0e25](git@github.com:ozone-development/ozp-webtop/commit/937a0e25))
+
+
+
+
 # 0.4.1 (2015-03-31)
 
 

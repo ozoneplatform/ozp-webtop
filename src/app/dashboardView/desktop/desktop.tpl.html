@@ -2,7 +2,7 @@
 <div ng-repeat="frame in frames">
   <ozp-managed-frame myframe="frame" class="ozp-managed-frame"
                      ng-hide="isFrameMinimized(frame)"
-                     ng-style="frame.desktopLayout.style"
+                     ng-style="frame.desktopLayout"
                      ng-class="{'fullWidth' : frame.isMaximized}">
   </ozp-managed-frame>
 </div>

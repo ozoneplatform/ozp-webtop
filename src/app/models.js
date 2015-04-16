@@ -697,6 +697,9 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
       } catch (err) {
         return null;
       }
+      if(this.getDashboardById(dashboardData.currentDashboard) === null) {
+        return dashboardData;
+      }
       return this.getDashboardById(dashboardData.currentDashboard);
     },
     cascadeWindows: function(dashboardId, origin, frameSize) {

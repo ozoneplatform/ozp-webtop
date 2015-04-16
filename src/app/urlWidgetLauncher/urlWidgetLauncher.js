@@ -50,10 +50,11 @@ app.controller('UrlWidgetLauncherCtrl',
         $log.error('Error: cannot open widget - no current dashboard');
       } else {
         // redirect user to this dashboard after adding this app to the board
-        models.createFrame(dashboard.id, toParams.appId, 25);
-        $log.debug('Adding app ' + toParams.appId + ' to existing dashboard ' + dashboard.id + ' and redirecting ...');
-        $state.go('dashboardview.' + dashboard.layout + '-sticky-' +
-          dashboard.stickyIndex, {dashboardId: dashboard.id});
+        var workingDashboard = dashboard.dashboards[dashboard.currentDashboard];
+        models.createFrame(workingDashboard.id, toParams.appId, 25);
+        $log.debug('Adding app ' + toParams.appId + ' to existing dashboard ' + workingDashboard.id + ' and redirecting ...');
+        $state.go('dashboardview.' + workingDashboard.layout + '-sticky-' +
+          workingDashboard.stickyIndex, {dashboardId: workingDashboard.id});
         }
     };
   }

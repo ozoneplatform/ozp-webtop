@@ -1,8 +1,11 @@
 window.OzoneConfig = {
     'API_URL': 'https://www.owfgoss.org/ng/dev/mp',
-    'IWC_URL': 'https://ozone-development.github.io/iwc',
     'CENTER_URL': 'https://ozone-development.github.io/ozp-center',
+    'DEVELOPER_RESOURCES_URL': '#',
+    "FEEDBACK_ADDRESS": "mailto:person@address.com",
+    "HELP_URL": "https://localhost:8088/dist/assets/PlaceholderUserGuide.pdf",
     'HUD_URL': 'https://ozone-development.github.io/ozp-hud',
-    'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop',
-    'METRICS_URL': '/path/to/metrics'
+    'IWC_URL': 'https://ozone-development.github.io/iwc',
+    'METRICS_URL': '/path/to/metrics',
+    'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop'
 };

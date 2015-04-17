@@ -100,6 +100,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.centerUrl = $window.OzoneConfig.CENTER_URL;
     $scope.webtopUrl = $window.OzoneConfig.WEBTOP_URL;
     $scope.metricsUrl = $window.OzoneConfig.METRICS_URL;
+    $scope.developerResourcesUrl = $window.OzoneConfig.DEVELOPER_RESOURCES_URL;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
@@ -124,6 +125,10 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
 
     $scope.helpUser = function() {
       alert('Help functionality coming soon!');
+    };
+
+    $scope.profileAlert = function() {
+      alert('Profile functionality coming soon!');
     };
 
 
@@ -154,7 +159,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
 
   }
 );
-  
+
 /**
  * Directive for the ozp toolbar
  *

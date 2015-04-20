@@ -127,8 +127,29 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       alert('Help functionality coming soon!');
     };
 
-    $scope.profileAlert = function() {
-      alert('Profile functionality coming soon!');
+    /**
+      * @method openProfileModal
+      * @param board the changed board object
+      * @returns {*}
+      */
+    $scope.openProfileModal = function(board) {
+      $scope.board = board;
+      var modalInstance = $modal.open({
+        templateUrl: 'profileModal/profileModal.tpl.html',
+        controller: 'profileModalInstanceCtrl',
+        windowClass: 'app-modal-window',
+        scope: $scope,
+        resolve: {
+          dashboard: function() {
+            // return $scope.board;
+            return $scope.board;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+
+      });
     };
 
 

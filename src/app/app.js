@@ -26,6 +26,7 @@
  * @requires ozpWebtop.dashboardView.grid
  * @requires ozpWebtop.addApplicationsModal
  * @requires ozpWebtop.editDashboardModal
+ * @requires ozpWebtop.profileModal
  * @requires ozpWebtop.settingsModal
  * @requires ozpWebtop.urlWidgetLauncher
  * @requires ui.router
@@ -55,6 +56,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView',
   'ozpWebtop.dashboardView.grid',
   'ozpWebtop.addApplicationsModal',
+  'ozpWebtop.profileModal',
   'ozpWebtop.settingsModal',
   'ozpWebtop.editDashboardModal',
   'ozpWebtop.urlWidgetLauncher',

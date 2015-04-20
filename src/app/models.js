@@ -691,14 +691,13 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
     getCurrentDashboard: function() {
       var dashboardData = this.getWebtopData();
       try {
-        if (dashboardData.currentDashboard === undefined || dashboardData.currentDashboard === {}) {
+        if (dashboardData.currentDashboard === undefined ||
+            dashboardData.currentDashboard === {} ||
+            dashboardData.currentDashboard === null) {
           return null;
         }
       } catch (err) {
         return null;
-      }
-      if(this.getDashboardById(dashboardData.currentDashboard) === null) {
-        return dashboardData;
       }
       return this.getDashboardById(dashboardData.currentDashboard);
     },

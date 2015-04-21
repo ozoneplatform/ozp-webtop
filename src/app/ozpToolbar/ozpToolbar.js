@@ -101,6 +101,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.webtopUrl = $window.OzoneConfig.WEBTOP_URL;
     $scope.metricsUrl = $window.OzoneConfig.METRICS_URL;
     $scope.developerResourcesUrl = $window.OzoneConfig.DEVELOPER_RESOURCES_URL;
+    $scope.feedbackAddress = $window.OzoneConfig.FEEDBACK_ADDRESS;
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,3 +1,15 @@
+# 0.4.3 (2015-04-14)
+
+
+
+## Bug fixes
+### iframe
+
+* Fixes bugs with iframe being too small, and with desktopLayout initially loading widgets all funky. #519 ([251e5f1c](git@github.com:ozone-development/ozp-webtop/commit/251e5f1c))
+
+
+
+
 # 0.4.2-rc (2015-04-07)
 
 

@@ -69,23 +69,6 @@ html {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//                                modals
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-// Fixes modal sizing issue with UI Bootstrap
-@media(min-width: @screen-sm-min){
-  .app-modal-window .modal-dialog {
-    width: @modal-md;
-  }
-}
-
-@media(min-width: @screen-md-min){
-    .app-modal-window .modal-dialog {
-    width: @modal-lg;
-  }
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                        edit dashboard modal
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -684,9 +667,111 @@ body > div.classBanner:last-of-type {
 
 }
 
-.close.icon-cross-16-white {
+.close .icon-cross-16 {
+    .icon-cross-16-white;
 
   &:hover, &:focus{
     .icon-cross-16-blue;
   }
+
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//                              Modals
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+@profile-body-height: 90%;
+
+// App Modal Window
+// Fixes modal sizing issue with UI Bootstrap
+@media(min-width: @screen-sm-min){
+  .app-modal-window-large .modal-dialog {
+    width: @modal-md;
+  }
+}
+
+@media(min-width: @screen-md-min){
+    .app-modal-window-large .modal-dialog {
+    width: @modal-lg;
+  }
+}
+
+
+.modal-body {
+    position: relative;
+    padding: 22px;
+
+
+    > iframe {
+        height: 90%;
+        min-height: 550px;
+        width: 100%;
+        border: 0;
+    }
+}
+
+
+.modal-dialog .help {
+    .modal-body {
+        padding: 0px auto;
+    }
+}
+
+.modal-dialog {
+    height: 90%;
+}
+
+.profile-window {
+    .modal-body {
+        overflow-y: auto;
+        height: @profile-body-height;
+    }
+
+    .modal-content {
+      border: 1px solid @gray-darker;
+    }
+}
+
+.profile-info {
+    dd, dt {
+        display: inline;
+    }
+
+    dt::after {
+        content: ": ";
+    }
+
+    dd::after {
+        //\A is an escape sequence for newline
+        content: "\A";
+        white-space: pre-line;
+    }
+
+    > dl {
+        margin-bottom: 40px;
+    }
+}
+
+.owned-listings {
+    > ul {
+        .list-unstyled;
+        margin-top: 20px;
+    }
+
+    h4 {
+        margin-bottom: 0px;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    .listing {
+        margin: 10px 0;
+
+        img {
+            margin-right: 10px;
+            max-height: 32px;
+            max-width: 32px;
+        }
+    }
 }

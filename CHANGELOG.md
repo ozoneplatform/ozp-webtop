@@ -1,3 +1,24 @@
+# 0.4.4 (2015-04-21)
+
+## Features
+### profileModal
+
+* Adds a profile modal template ([6258f856](git@github.com:ozone-development/ozp-webtop/commit/6258f856))
+
+
+
+## Bug fixes
+### urlWidgetLauncher
+
+* Open in Webtop from hud launches widget in your first dashboard. #509 ([6ada7209](git@github.com:ozone-development/ozp-webtop/commit/6ada7209))
+
+### ozpToolbar
+
+* fix most of the dead links ([e4c7391f](git@github.com:ozone-development/ozp-webtop/commit/e4c7391f))
+
+
+
+
 # 0.4.3 (2015-04-14)
 
 

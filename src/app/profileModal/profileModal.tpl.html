@@ -5,14 +5,21 @@
 			<span class="sr-only">Close</span>
 		</button>
 
-
-		<h3 class="modal-title">Settings</h3>
+		<h3 class="modal-title">Profile</h3>
 	</div>
 
 	<div class="modal-body wt-modal-body">
 		<form role="form" class="row">
 			<div class="form-group col-lg-6">
-				<p>Webtop currently has no configurable user settings</p>
+			  <ul style="list-style-type: none; margin-left: 0; padding-left: 0;">
+			    <li><b> Name: </b> {{profileName}}</li>
+			    <li><b> Username: </b> {{profileUsername}}</li>
+			    <li><b> Email: </b> {{profileEmail}}</li>
+			  </ul>
+
+			  <h4> {{profileName}}'s Listings</h4>
+			  <p> A list of the Marketplace listings that this user owns</p>
+			  <p> TODO: Get listings </p>
 			</div>
 		</form>
 	</div>

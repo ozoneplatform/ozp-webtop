@@ -424,7 +424,7 @@ angular.module( 'ozpWebtop.appToolbar')
       var modalInstance = $modal.open({
         templateUrl: 'addApplicationsModal/addApplicationsModal.tpl.html',
         controller: 'AddApplicationsModalInstanceCtrl',
-        windowClass: 'app-modal-window',
+        windowClass: 'app-modal-window-large',
         scope: $rootScope,
         resolve: {
           apps: function() {
@@ -516,7 +516,7 @@ angular.module( 'ozpWebtop.appToolbar')
          var modalInstance = $modal.open({
            templateUrl: 'editDashboardModal/editDashboardModal.tpl.html',
            controller: 'EditDashboardModalInstanceCtrl',
-           windowClass: 'app-modal-window',
+           windowClass: 'app-modal-window-large',
            scope: $scope,
            resolve: {
              dashboard: function() {
@@ -563,7 +563,7 @@ angular.module( 'ozpWebtop.appToolbar')
       var modalInstance = $modal.open({
         templateUrl: 'editDashboardModal/editDashboardModal.tpl.html',
         controller: 'EditDashboardModalInstanceCtrl',
-        windowClass: 'app-modal-window',
+        windowClass: 'app-modal-window-large',
         scope: $scope,
         resolve: {
           dashboard: function() {

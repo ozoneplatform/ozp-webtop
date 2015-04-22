@@ -7,5 +7,6 @@ window.OzoneConfig = {
     'HUD_URL': 'https://ozone-development.github.io/ozp-hud',
     'IWC_URL': 'https://ozone-development.github.io/iwc',
     'METRICS_URL': '/path/to/metrics',
-    'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop'
+    'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop',
+    'APP_TITLE' : 'OZONE'
 };

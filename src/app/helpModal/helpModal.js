@@ -26,6 +26,7 @@ angular.module('ozpWebtop.helpModal').controller(
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	$scope.helpUrl = $sce.trustAsResourceUrl($window.OzoneConfig.HELP_URL);
+	$scope.appTitle = $window.OzoneConfig.APP_TITLE;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// methods

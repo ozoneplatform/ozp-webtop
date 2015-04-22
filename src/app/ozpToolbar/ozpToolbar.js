@@ -134,7 +134,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       var modalInstance = $modal.open({
         templateUrl: 'helpModal/helpModal.tpl.html',
         controller: 'helpModalInstanceCtrl',
-        windowClass: 'app-modal-window',
+        windowClass: 'app-modal-window-large',
         scope: $scope,
         resolve: {
           dashboard: function() {

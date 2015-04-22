@@ -102,6 +102,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.metricsUrl = $window.OzoneConfig.METRICS_URL;
     $scope.developerResourcesUrl = $window.OzoneConfig.DEVELOPER_RESOURCES_URL;
 
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -123,9 +124,32 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       }
     }
 
-    $scope.helpUser = function() {
-      alert('Help functionality coming soon!');
+    /**
+      * @method openHelpModal
+      * @param board the changed board object
+      * @returns {*}
+      */
+    $scope.openHelpModal = function(board) {
+      $scope.board = board;
+      var modalInstance = $modal.open({
+        templateUrl: 'helpModal/helpModal.tpl.html',
+        controller: 'helpModalInstanceCtrl',
+        windowClass: 'app-modal-window',
+        scope: $scope,
+        resolve: {
+          dashboard: function() {
+            // return $scope.board;
+            return $scope.board;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+
+      });
     };
+
+
 
     /**
       * @method openProfileModal

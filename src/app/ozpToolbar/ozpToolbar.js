@@ -8,7 +8,7 @@
  * @requires ozpWebtop.models
  */
 angular.module('ozpWebtop.ozpToolbar', [ 'ozp.common.windowSizeWatcher',
-  'ozpWebtop.models', 'ozpWebtop.settingsModal']);
+  'ozpWebtop.models', 'ozpWebtop.settingsModal','ozpWebtop.services.restInterface']);
 
 var app = angular.module( 'ozpWebtop.ozpToolbar')
 /**
@@ -34,7 +34,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope, $window, $log, $modal,
            models, windowSizeWatcher, deviceSizeChangedEvent,
-           fullScreenModeToggleEvent) {
+           fullScreenModeToggleEvent, restInterface) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -203,6 +203,18 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       });
     };
 
+
+    /**
+      * @property isAdmin indicates if the metrics link in ozpToolbar should be hidden
+      */
+     restInterface.getProfile().then(function(d){
+       var userRole=d.highestRole;
+       if(userRole === 'ADMIN' || userRole === 'METRICS'){
+          $scope.isAdmin =  true;
+       }else{
+         $scope.isAdmin = false;
+       }
+    }); 
   }
 );
 

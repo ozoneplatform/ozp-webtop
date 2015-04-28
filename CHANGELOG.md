@@ -1,5 +1,5 @@
-<a name"0.4.3"></a>
-### 0.4.3 (2015-04-28)
+<a name"0.4.5"></a>
+### 0.4.5 (2015-04-28)
 
 
 #### Bug Fixes
@@ -7,20 +7,13 @@
 * **Global Toolbar:** Update Dev Resources to open as new tab ([0f714fe2](https://github.com/ozone-development/ozp-webtop/commit/0f714fe2))
 * **chrome:** Fix app title in Chrome ([dff2d751](https://github.com/ozone-development/ozp-webtop/commit/dff2d751))
 * **graphics:** add iOS icons for favs ([abd7e095](https://github.com/ozone-development/ozp-webtop/commit/abd7e095))
-* **ozpToolbar:** fix most of the dead links ([e4c7391f](https://github.com/ozone-development/ozp-webtop/commit/e4c7391f))
 * **restInterface.js:** Hide metrics link unless users are ADMIN and METRICS ([8bc1ea09](https://github.com/ozone-development/ozp-webtop/commit/8bc1ea09))
 * **styling:**
   * App Not Found updates #475 ([fb131d4b](https://github.com/ozone-development/ozp-webtop/commit/fb131d4b))
   * Help modal width ([8f7806c5](https://github.com/ozone-development/ozp-webtop/commit/8f7806c5))
-* **urlWidgetLauncher:** Open in Webtop from hud launches widget in your first dashboard. #509 ([6ada7209](https://github.com/ozone-development/ozp-webtop/commit/6ada7209))
 
 
-#### Features
-
-* **profileModal:** Adds a profile modal template ([6258f856](https://github.com/ozone-development/ozp-webtop/commit/6258f856))
-
-
-# 0.4.3 (2015-04-28)
+# 0.4.4 (2015-04-21)
 
 ## Features
 ### profileModal
@@ -37,29 +30,6 @@
 ### ozpToolbar
 
 * fix most of the dead links ([e4c7391f](git@github.com:ozone-development/ozp-webtop/commit/e4c7391f))
-
-### styling
-
-* Help modal width ([8f7806c5](git@github.com:ozone-development/ozp-webtop/commit/8f7806c5))
-
-* App Not Found updates #475 ([fb131d4b](git@github.com:ozone-development/ozp-webtop/commit/fb131d4b))
-
-### graphics
-
-* add iOS icons for favs ([abd7e095](git@github.com:ozone-development/ozp-webtop/commit/abd7e095))
-
-### chrome
-
-* Fix app title in Chrome ([dff2d751](git@github.com:ozone-development/ozp-webtop/commit/dff2d751))
-
-### Global Toolbar
-
-* Update Dev Resources to open as new tab ([0f714fe2](git@github.com:ozone-development/ozp-webtop/commit/0f714fe2))
-
-### restInterface.js
-
-* Hide metrics link unless users are ADMIN and METRICS ([8bc1ea09](git@github.com:ozone-development/ozp-webtop/commit/8bc1ea09))
-
 
 
 

@@ -1,3 +1,18 @@
+<a name"0.4.5"></a>
+### 0.4.5 (2015-04-28)
+
+
+#### Bug Fixes
+
+* **Global Toolbar:** Update Dev Resources to open as new tab ([0f714fe2](https://github.com/ozone-development/ozp-webtop/commit/0f714fe2))
+* **chrome:** Fix app title in Chrome ([dff2d751](https://github.com/ozone-development/ozp-webtop/commit/dff2d751))
+* **graphics:** add iOS icons for favs ([abd7e095](https://github.com/ozone-development/ozp-webtop/commit/abd7e095))
+* **restInterface.js:** Hide metrics link unless users are ADMIN and METRICS ([8bc1ea09](https://github.com/ozone-development/ozp-webtop/commit/8bc1ea09))
+* **styling:**
+  * App Not Found updates #475 ([fb131d4b](https://github.com/ozone-development/ozp-webtop/commit/fb131d4b))
+  * Help modal width ([8f7806c5](https://github.com/ozone-development/ozp-webtop/commit/8f7806c5))
+
+
 # 0.4.4 (2015-04-21)
 
 ## Features

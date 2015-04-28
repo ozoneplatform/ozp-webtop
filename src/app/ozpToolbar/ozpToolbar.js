@@ -8,7 +8,7 @@
  * @requires ozpWebtop.models
  */
 angular.module('ozpWebtop.ozpToolbar', [ 'ozp.common.windowSizeWatcher',
-  'ozpWebtop.models', 'ozpWebtop.settingsModal']);
+  'ozpWebtop.models', 'ozpWebtop.settingsModal','ozpWebtop.services.restInterface']);
 
 var app = angular.module( 'ozpWebtop.ozpToolbar')
 /**
@@ -34,7 +34,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope, $window, $log, $modal,
            models, windowSizeWatcher, deviceSizeChangedEvent,
-           fullScreenModeToggleEvent) {
+           fullScreenModeToggleEvent, restInterface) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -101,6 +101,8 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.webtopUrl = $window.OzoneConfig.WEBTOP_URL;
     $scope.metricsUrl = $window.OzoneConfig.METRICS_URL;
     $scope.developerResourcesUrl = $window.OzoneConfig.DEVELOPER_RESOURCES_URL;
+    $scope.feedbackAddress = $window.OzoneConfig.FEEDBACK_ADDRESS;
+
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          methods
@@ -123,9 +125,32 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       }
     }
 
-    $scope.helpUser = function() {
-      alert('Help functionality coming soon!');
+    /**
+      * @method openHelpModal
+      * @param board the changed board object
+      * @returns {*}
+      */
+    $scope.openHelpModal = function(board) {
+      $scope.board = board;
+      var modalInstance = $modal.open({
+        templateUrl: 'helpModal/helpModal.tpl.html',
+        controller: 'helpModalInstanceCtrl',
+        windowClass: 'app-modal-window-large',
+        scope: $scope,
+        resolve: {
+          dashboard: function() {
+            // return $scope.board;
+            return $scope.board;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+
+      });
     };
+
+
 
     /**
       * @method openProfileModal
@@ -178,6 +203,18 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       });
     };
 
+
+    /**
+      * @property isAdmin indicates if the metrics link in ozpToolbar should be hidden
+      */
+     restInterface.getProfile().then(function(d){
+       var userRole=d.highestRole;
+       if(userRole === 'ADMIN' || userRole === 'METRICS'){
+          $scope.isAdmin =  true;
+       }else{
+         $scope.isAdmin = false;
+       }
+    }); 
   }
 );
 

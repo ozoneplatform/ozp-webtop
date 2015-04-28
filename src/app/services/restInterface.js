@@ -129,7 +129,34 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         deferred.reject(data);
       });
       return deferred.promise;
-    }
+    },
+
+     /**
+       * Get user Profile
+       * @method getProfile
+       * @returns {promise}
+       */
+    getProfile: function(){
+      var deferred = $q.defer();
+      $http.get($window.OzoneConfig.API_URL + '/api/profile/self', {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/vnd.ozp-profile-v1+json'
+        }
+
+      }).success(function(data, status){
+        if (status !== 200) {
+          $log.warn('WARNING: got non 200 status from /profile/self: ' + status);
+        }
+        deferred.resolve(data);
+      }).error(function(data, status) {
+        $log.error('ERROR getting user profile. status: ' + JSON.stringify(status) +
+          ', data: ' + JSON.stringify(data));
+        deferred.reject(data);
+      });
+      return deferred.promise;
+     }
+     
   };
 
   // TODO: Find a more efficient way to do this

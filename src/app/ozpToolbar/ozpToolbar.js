@@ -102,6 +102,11 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.metricsUrl = $window.OzoneConfig.METRICS_URL;
     $scope.developerResourcesUrl = $window.OzoneConfig.DEVELOPER_RESOURCES_URL;
     $scope.feedbackAddress = $window.OzoneConfig.FEEDBACK_ADDRESS;
+    $scope.feedbackTarget = '_blank';
+
+    if($scope.feedbackAddress.substring(0,7)=== 'mailto:'){
+      $scope.feedbackTarget = '_self';
+    }
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -124,6 +129,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
           $scope.usernameLength = 12;
       }
     }
+
 
     /**
       * @method openHelpModal

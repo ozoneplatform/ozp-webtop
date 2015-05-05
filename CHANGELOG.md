@@ -1,3 +1,12 @@
+<a name"0.4.6"></a>
+### 0.4.6 (2015-05-05)
+
+
+#### Bug Fixes
+
+* **ozpToolbar:** Feedback modal logic ([45a87974](https://github.com/ozone-development/ozp-webtop/commit/45a87974))
+
+
 <a name"0.4.5"></a>
 ### 0.4.5 (2015-04-28)
 

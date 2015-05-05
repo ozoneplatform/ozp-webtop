@@ -23,7 +23,13 @@
 								  <small> A list of the Marketplace listings that this user owns</small>
 								</header>
 							  <p>TODO add listings</p>
-							  
+							  		<ul ng-repeat="list in getUserListings"> 
+							  			<li> 
+							  				<a href="{{}}">
+							  					<img src="list.listing.imageMediumUrl"> &nbsp;{{list.listing.title}}
+							  				</a>
+							  			</li>
+							  		</ul>
 							</section>
 					</section>
 			</div>

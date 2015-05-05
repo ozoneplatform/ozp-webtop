@@ -37,6 +37,15 @@ angular.module('ozpWebtop.profileModal').controller(
 		$scope.profileEmail = getProfile.email;
 	});
 
+/**
+	* Gets user listing data 
+	*
+	*/
+	restInterface.getUserListings().then(function(data){
+		 $scope.getUserListings = data;
+		console.log(data);
+	});
+
 
 	/**
 	* Handler invoked when dialog is closed via Ok button

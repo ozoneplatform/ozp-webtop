@@ -12,33 +12,23 @@
     <div class="navbar-right">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-bell-filled-blue"></i></a>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="#">
-                <button type="button" class="close pull-right"><span aria-hidden="true"><i class="icon-cross-10-white"></i></span></button>
-                <img class="img-thumbnail pull-left" src="https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot32.png" />
-                <span>Writing down for maintenance</span><br /><i class="small">12/12/12 00:00</i>
-              </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a href="#">
-                <button type="button" class="close pull-right"><span aria-hidden="true"><i class="icon-cross-10-white"></i></span></button>
-                <img class="img-thumbnail pull-left" src="https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail32.png" />
-                <span>Airplanes down for maintenance</span><br /><i class="small">12/12/12 00:00</i>
-              </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a href="#">
-                <button type="button" class="close pull-right"><span aria-hidden="true"><i class="icon-cross-10-white"></i></span></button>
-                <img class="img-thumbnail pull-left" src="https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox32.png" />
-                <span>Chat down for maintenance</span><br /><i class="small">12/12/12 00:00</i>
-              </a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i ng-class="thereAreUnexpiredNotifications == true ? 'icon-bell-filled-blue' : 'icon-bell-grayLightest'"></i></a>
+          <ul class="dropdown-menu" ng-show="thereAreUnexpiredNotifications">
+            <li class="UserNotification" ng-repeat="message in messages">
+              <div>
+                <button type="button" class="close pull-right" ng-click="dismissNotification(message)" alt="Dismiss Notification">
+                  <i class="icon-cross-16-white"></i>
+                </button>
+                <h5 class="created-by">OZONE</h5>
+                <div class="created-at">
+                  <span class="Time" style="font-style: italic">{{message.createdDate | cmdate: 'MM/dd/yyyy HH:mm'}}</span>
+                </div>
+                <p class="message small">{{message.message}}</p>
+              </div>
+              <!-- don't show last divider -->
+              <div ng-show="$index !== messages.length - 1" class="divider"></div>
             </li>
           </ul>
-        </li>
         <li>
           <a href="" ng-click="openHelpModal()" data-toggle="modal" data-target="#modal_help"><i class="icon-question-grayLightest"></i></a>
         </li>

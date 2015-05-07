@@ -132,7 +132,7 @@ angular.module( 'ozpWebtop', [
   })
 
 .run( function run ($rootScope, $state, $http, $window, $log,
-                    models, restInterface, useIwc, initialDataReceivedEvent) {
+                    models, restInterface, useIwc, initialDataReceivedEvent, notificationReceivedEvent) {
 
     $rootScope.$state = $state;
 
@@ -157,6 +157,12 @@ angular.module( 'ozpWebtop', [
           $log.info('application listings and dashboard data retrieved - ready to start');
           $rootScope.$broadcast(initialDataReceivedEvent);
         }
+      });
+      // Get the notifications on load.
+      // TODO when there is a way to communicate changes from the server to the 
+      //      application show notification updates live
+      restInterface.getNotifications().then(function(notifications) {
+        $rootScope.$broadcast(notificationReceivedEvent, notifications);
       });
     });
 });

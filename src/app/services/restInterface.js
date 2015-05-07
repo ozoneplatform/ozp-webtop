@@ -181,8 +181,55 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         deferred.reject(data);
       });
       return deferred.promise;
-     }
-     
+     },
+    /**
+     * Get all notifications for user that have not been dismissed/seen.
+     * @method getNotifications
+     * @returns {promise} (null if not found or error)
+     */
+    getNotifications: function() {
+      var deferred = $q.defer();
+      $http.get($window.OzoneConfig.API_URL + '/api/profile/self/notification', {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
+        }
+      }).success(function(data, status) {
+        if (status !== 200) {
+          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status); 
+        }
+        deferred.resolve(data);
+      }).error(function(data, status) {
+        $log.error('ERROR getting user notifications. status: ' + JSON.stringify(status) +
+          ', data: ' + JSON.stringify(data));
+        deferred.reject(data);
+      });
+      return deferred.promise;
+    },
+    /**
+     * Dismiss/remove a single notification from the users notifications.
+     * @method dismissNotification
+     * @returns {promise} (null if not found or error)
+     */
+    dismissNotification: function(notification){
+      var deferred = $q.defer();
+      $http.delete($window.OzoneConfig.API_URL + '/api/profile/self/notification/' + notification.id, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
+        }
+      }).success(function(data, status) {
+        if (status !== 200) {
+          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status); 
+        }
+        deferred.resolve(data);
+      }).error(function(data, status) {
+        $log.error('ERROR getting user notifications. status: ' + JSON.stringify(status) +
+          ', data: ' + JSON.stringify(data));
+        deferred.reject(data);
+      });
+      return deferred.promise;
+    }
   };
 
   // TODO: Find a more efficient way to do this

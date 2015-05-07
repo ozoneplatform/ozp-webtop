@@ -132,8 +132,8 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
     },
 
     /**
-     * Get user Listings (applications/widgets) for user
-     * @method getListings
+     * Get user Listings (applications/widgets)
+     * @method getUserListings
      * @returns {promise} (null if not found or error)
      */
     getUserListings: function() {
@@ -141,7 +141,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       $http.get($window.OzoneConfig.API_URL + '/api/profile/self/listing', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-listing-v1+json'
+          'Content-Type': 'application/json'
         }
       }).success(function(data, status) {
         if (status !== 200) {

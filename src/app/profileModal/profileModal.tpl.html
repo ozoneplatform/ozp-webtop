@@ -22,8 +22,12 @@
 								  <h4> {{profileName}}'s Listings</h4>
 								  <small> A list of the Marketplace listings that this user owns</small>
 								</header>
-							  <p>TODO add listings</p>
-							  
+							  		<ul ng-show="getUserListings.length" ng-repeat="list in getUserListings"> 
+							  			<li> 
+							  				
+							  				<img ng-src="{{list.imageMediumUrl}}"> &nbsp;<a target="_blank" ng-href="{{centerUrl}}/#/home?listing={{list.id}}&action=view&tab=overview">{{list.title}}</a>
+							  			</li>
+							  		</ul>
 							</section>
 					</section>
 			</div>

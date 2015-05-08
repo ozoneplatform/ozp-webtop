@@ -101,7 +101,7 @@ angular.module( 'ozpWebtop.appToolbar')
      * current screen size
      * @type {String}
      */
-    $scope.dashboardNameLength = 0;
+    $scope.dashboardNameLength = 16;
 
     /**
      * @property $scope.maxAppsDisplayed The maximum number of apps that can be
@@ -206,13 +206,14 @@ angular.module( 'ozpWebtop.appToolbar')
         $scope.setPinnedApps();
       }
 
-      if (value.deviceSize === 'sm') {
-        $scope.dashboardNameLength = 9;
-      } else if (value.deviceSize === 'md') {
-          $scope.dashboardNameLength = 28;
-      } else if (value.deviceSize === 'lg') {
-          $scope.dashboardNameLength = 48;
-      }
+      //leaving this in because it may be helpful for ticket #554/when dashboardNameLength gets smarter.
+      // if (value.deviceSize === 'sm') {
+      //   $scope.dashboardNameLength = 9;
+      // } else if (value.deviceSize === 'md') {
+      //     $scope.dashboardNameLength = 28;
+      // } else if (value.deviceSize === 'lg') {
+      //     $scope.dashboardNameLength = 48;
+      // }
     };
 
     /**

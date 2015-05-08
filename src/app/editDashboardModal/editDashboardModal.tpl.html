@@ -13,6 +13,7 @@
         <!-- New vs Edit Dashboard -->
         <input type="text" class="form-control" id="name" ng-show="modalInstanceType != 'new'" placeholder="{{dashboard.name}}" ng-model="dashboard.name">
         <input type="text" class="form-control" id="name" ng-show="modalInstanceType == 'new'" ng-model="dashboard.name">
+        <small>Only the first 16 characters of the dashboard name are shown in the dashboard picker.</small>
         <small class="error" ng-show="editDashboardForm.inputName.$error.required">
           <strong>Dashboard name is required</strong>
         </small>

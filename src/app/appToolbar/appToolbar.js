@@ -612,10 +612,12 @@ angular.module( 'ozpWebtop.appToolbar')
         models.removeDashboard(board.id);
         // redirect user to their first board
         $scope.dashboards = models.getDashboards();
-        $state.go('dashboardview.' +
-        $scope.dashboards[0].layout + '-sticky-' +
-        $scope.dashboards[0].stickyIndex, {
-        'dashboardId': $scope.dashboards[0].id});
+        //if currentDashboard equals the daashboard being deleted's id:
+        if($scope.currentDashboard === board.id){
+          // redirect user to their first board
+          $state.go('dashboardview.' + $scope.dashboards[0].layout + '-sticky-' +
+            $scope.dashboards[0].stickyIndex, {'dashboardId': $scope.dashboards[0].id});
+        }
       }
     };
   });

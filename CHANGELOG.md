@@ -1,3 +1,15 @@
+<a name"0.4.7"></a>
+### 0.4.7 (2015-05-12)
+
+
+#### Bug Fixes
+
+* **appToolbar:**
+  * Used built in angular filter to limit the length of the dashboard names in the d ([70acd5b6](https://github.com/ozone-development/ozp-webtop/commit/70acd5b6))
+  * Added a class that limits the icon size in appToolbar to prevent huge icons from ([547930e3](https://github.com/ozone-development/ozp-webtop/commit/547930e3))
+* **notifications:** Bring notifications from the backend. Currently working on page load. #397. ([7e6cbc0c](https://github.com/ozone-development/ozp-webtop/commit/7e6cbc0c))
+
+
 <a name"0.4.6"></a>
 ### 0.4.6 (2015-05-05)
 

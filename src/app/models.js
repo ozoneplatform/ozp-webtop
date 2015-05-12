@@ -757,6 +757,21 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
       }
       webtopData.userSettings[key] = value;
       return setWebtopData(webtopData);
+    },
+    /**
+     * Update the backend that a notification has been dismissed
+     *
+     * @method dismissNotification
+     * @param {Object} notification object
+     * @returns {object} New object with notifications, empty if error.
+     */
+    dismissNotification: function(notification){
+      restInterface.dismissNotification(notification).then(function(data, err){
+        if(err){
+          return {};
+        }
+        return data;
+      });
     }
   };
 });

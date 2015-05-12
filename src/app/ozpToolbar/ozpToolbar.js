@@ -34,7 +34,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope, $window, $log, $modal,
            models, windowSizeWatcher, deviceSizeChangedEvent,
-           fullScreenModeToggleEvent, restInterface) {
+           fullScreenModeToggleEvent, restInterface, notificationReceivedEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -58,27 +58,50 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
      * @type {string}
      */
     $scope.user = 'J Smith';
+    /**
+    * @property messages Messages that have not been dismissed
+    * type {array}
+    */
+    $scope.messages = [];
 
     /**
-     * @property messages Messages for current user TBD
-     * @type {Array}
-     */
-    $scope.messages = {
-      'unread': 0,
-      'messages': [
-        {
-          'subject': 'Photo Editing Tools',
-          'message': 'Daryl just shared a dashboard with you! ' +
-          'Click to add it to your webtop.'
-        },
-        {
-          'subject': 'Math Tools',
-          'message': 'Kay just shared a dashboard with you! It has some great' +
-            ' things!'
-        }
-      ]
-    };
+    * @property thereAreUnexpiredNotifications Whether or not there are unexpired 
+    *           notifications, used to change class in template to notify use
+    * type {boolean}
+    */
+    $scope.thereAreUnexpiredNotifications = false;
 
+    $rootScope.$on(notificationReceivedEvent, function(event, data){
+      //first check to see if there are any notifications
+      if(data._embedded){
+        //If the messages are already in an array
+        if(data._embedded.item instanceof Array) {
+          $scope.messages = data._embedded.item;
+        }
+        //If the messages are not in an array (for ng-repeat)
+        else{
+          $scope.messages.push(data._embedded.item);
+        }
+        $scope.thereAreUnexpiredNotifications = true;
+      }
+    });
+
+
+    $scope.dismissNotification = function(a){
+      for(var b in $scope.messages){
+        if($scope.messages[b].id === a.id){
+          //update the backend so other apps know message has been dismissed
+          models.dismissNotification(a);
+          //delete local message from scope
+          $scope.messages.splice(b, 1);
+        }
+      }
+      if($scope.messages.length === 0){
+        // no messages, switch bell icon in template
+        $scope.thereAreUnexpiredNotifications = false;
+      }
+
+    };
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -254,3 +277,14 @@ app.directive('ozpToolbar', function(){
    }
   };
 });
+
+/** 
+ * Filter for converting date to user friendly format
+*/
+app.filter('cmdate', [
+  '$filter', function($filter) {
+    return function(input, format) {
+      return $filter('date')(new Date(input), format) + ' ' + String(String(new Date()).split('(')[1]).split(')')[0];
+    };
+  }
+]);

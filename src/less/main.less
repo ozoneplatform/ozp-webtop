@@ -659,6 +659,10 @@ body > div.classBanner:last-of-type {
 
 }
 
+.dropdown-menu > li > a > i {
+  margin-right:8px;
+}
+
 .icon-pencil-grayLightest.pull-right {
 
   &:hover, &:focus{
@@ -788,4 +792,42 @@ body > div.classBanner:last-of-type {
             max-width: 32px;
         }
     }
+}
+
+//taken from ozp-react-commons
+.UserNotifications {
+  padding: 0;
+  max-height: 251px;
+  overflow-y: auto;
+}
+
+.UserNotification {
+  padding: 7px;
+}
+
+.UserNotification > {
+  padding: 0 10px !important;
+}
+
+.UserNotification > .close:hover, .UserNotification > .close:focus {
+  color: white;
+}
+
+.UserNotification > .created-by {
+  margin: 0;
+  font-weight: 500;
+}
+
+.UserNotification > .message {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.UserNotification > .Time {
+  margin-left: 5px;
+}
+
+.appToolbarIcon {
+  height: 32px;
+  width: 32px;
 }

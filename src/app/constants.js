@@ -89,4 +89,11 @@ angular.module('ozpWebtop.constants')
  * @property initialDataReceived
  * @type String
  */
-.constant('initialDataReceivedEvent', 'initialDataReceived');
+.constant('initialDataReceivedEvent', 'initialDataReceived')
+
+/**
+ * Event fired when app and dashboard data is initially retrieved
+ * @property initialDataReceived
+ * @type String
+ */
+.constant('notificationReceivedEvent', 'notificationReceived');

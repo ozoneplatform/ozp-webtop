@@ -40,21 +40,6 @@ angular.module('ozpWebtop.editDashboardModal').controller(
       return $scope.dashboard.layout !== $scope.originalLayout;
     };
 
-     /**
-     * Handler invoked when dialog Create Dashboard is selected
-     *
-     *
-     * @method createDashboard
-     */
-    $scope.createDashboard = function() {
-        var response = {
-          'layout': $scope.dashboard.layout,
-          'name': $scope.dashboard.name
-        };
-        $modalInstance.close(response);
-      // });
-    };
-
     /**
      * Handler invoked when dialog is closed via Ok button
      *

@@ -9,12 +9,14 @@
  * @requires ozpWebtop.models
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.addApplicationsModal
+ * @requires ozpWebtop.createDashboardModal
  * @requires ozpWebtop.editDashboardModal
  * @requires ozp.common.windowSizeWatcher
  */
 angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
   'ozpWebtop.models',
   'ozpWebtop.addApplicationsModal',
+  'ozpWebtop.createDashboardModal',
   'ozpWebtop.editDashboardModal',
   'ozp.common.windowSizeWatcher']);
 
@@ -562,13 +564,13 @@ angular.module( 'ozpWebtop.appToolbar')
     $scope.openNewDashboardModal = function() {
       $scope.modalInstanceType = 'new';
       var modalInstance = $modal.open({
-        templateUrl: 'editDashboardModal/editDashboardModal.tpl.html',
-        controller: 'EditDashboardModalInstanceCtrl',
+        templateUrl: 'createDashboardModal/createDashboardModal.tpl.html',
+        controller: 'CreateDashboardModalInstanceCtrl',
         windowClass: 'app-modal-window-large',
         scope: $scope,
         resolve: {
           dashboard: function() {
-            return $scope.currentDashboard;
+            return $scope;
           }
         }
       });

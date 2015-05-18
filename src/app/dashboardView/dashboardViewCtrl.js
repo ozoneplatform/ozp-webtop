@@ -23,7 +23,7 @@ angular.module('ozpWebtop.dashboardView', ['ozpWebtop.models']);
 angular.module('ozpWebtop.dashboardView')
 
 .controller('DashboardViewCtrl', function ($scope, $state, $interval, $log,
-                                           models) {
+                                           models, maxStickyBoards) {
 
     $scope.$on('$stateChangeSuccess',
       function(event, toState, toParams/*, fromState, fromParams*/){
@@ -68,5 +68,10 @@ angular.module('ozpWebtop.dashboardView')
         $state.go(newState, {dashboardId: dashboard.id});
       }
     }
+
+    $scope.maxStickyBoards = maxStickyBoards;
+    $scope.stickyBoardsArray = function(num) {
+        return new Array(num);   
+    };
 
   });

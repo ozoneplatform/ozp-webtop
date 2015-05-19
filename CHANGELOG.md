@@ -1,3 +1,13 @@
+<a name"0.4.8"></a>
+### 0.4.8 (2015-05-19)
+
+
+#### Bug Fixes
+
+* **appToolbar:** When you delete dashboards, you were redirected to the first dashboard. Now, you ([114154da](https://github.com/ozone-development/ozp-webtop/commit/114154da))
+* **createDashboard:** Separating the Create and Edit dashboards. #469 ([91e72380](https://github.com/ozone-development/ozp-webtop/commit/91e72380))
+
+
 <a name"0.4.7"></a>
 ### 0.4.7 (2015-05-12)
 

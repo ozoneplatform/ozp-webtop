@@ -1,18 +1,14 @@
 <div class="wt-modal">
   <div class="modal-header wt-modal-header">
     <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true"><i class="icon-cross-16-white"></i></span><span class="sr-only">Close</span></button>
-    <!-- New vs Edit Dashboard -->
-    <h3 ng-show="modalInstanceType != 'new'" class="modal-title">Edit the dashboard <b>{{dashboard.name}}</b></h3>
-    <h3 ng-show="modalInstanceType == 'new'" class="modal-title">Create new dashboard</b></h3>
+    <h3 class="modal-title">Edit the dashboard <b>{{dashboard.name}}</b></h3>
   </div>
 
   <div class="modal-body wt-modal-body">
     <form role="form" class="row">
       <div class="form-group col-lg-6">
         <label for="name">Name</label>
-        <!-- New vs Edit Dashboard -->
-        <input type="text" class="form-control" id="name" ng-show="modalInstanceType != 'new'" placeholder="{{dashboard.name}}" ng-model="dashboard.name">
-        <input type="text" class="form-control" id="name" ng-show="modalInstanceType == 'new'" ng-model="dashboard.name">
+        <input type="text" class="form-control" id="name" placeholder="{{dashboard.name}}" ng-model="dashboard.name" ng-required="true">
         <small>Only the first 16 characters of the dashboard name are shown in the dashboard picker.</small>
         <small class="error" ng-show="editDashboardForm.inputName.$error.required">
           <strong>Dashboard name is required</strong>
@@ -27,7 +23,7 @@
             <i class="icon-stack-white"></i>
         </button>
       </div>
-      <div class="form-group col-lg-4 alert alert-warning" style="padding-bottom: 0;" ng-show="layoutChanged() && modalInstanceType != 'new'">
+      <div class="form-group col-lg-4 alert alert-warning" style="padding-bottom: 0;" ng-show="layoutChanged()">
           Changing the layout resets widget states
       </div>
     </form>
@@ -35,13 +31,11 @@
 
   <div class="modal-footer wt-modal-footer">
     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <span ng-show="modalInstanceType != 'new'">
+    <span>
       <button ng-show="editDashboardForm.$error.pattern || editDashboardForm.$error.required"
               class="btn btn-primary" disabled="disabled">Save Dashboard</button>
       <button ng-show="!editDashboardForm.$error.pattern && !editDashboardForm.$error.required"
               class="btn btn-primary" ng-click="ok()">Save Dashboard</button>
-    </span>
-    <button ng-show="modalInstanceType == 'new'" class="btn btn-primary" ng-click="createDashboard()">Create Dashboard</button>
     </span>
   </div>
 

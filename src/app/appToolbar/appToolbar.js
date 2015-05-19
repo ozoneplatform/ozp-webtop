@@ -9,12 +9,14 @@
  * @requires ozpWebtop.models
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.addApplicationsModal
+ * @requires ozpWebtop.createDashboardModal
  * @requires ozpWebtop.editDashboardModal
  * @requires ozp.common.windowSizeWatcher
  */
 angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
   'ozpWebtop.models',
   'ozpWebtop.addApplicationsModal',
+  'ozpWebtop.createDashboardModal',
   'ozpWebtop.editDashboardModal',
   'ozp.common.windowSizeWatcher']);
 
@@ -562,13 +564,13 @@ angular.module( 'ozpWebtop.appToolbar')
     $scope.openNewDashboardModal = function() {
       $scope.modalInstanceType = 'new';
       var modalInstance = $modal.open({
-        templateUrl: 'editDashboardModal/editDashboardModal.tpl.html',
-        controller: 'EditDashboardModalInstanceCtrl',
+        templateUrl: 'createDashboardModal/createDashboardModal.tpl.html',
+        controller: 'CreateDashboardModalInstanceCtrl',
         windowClass: 'app-modal-window-large',
         scope: $scope,
         resolve: {
           dashboard: function() {
-            return $scope.currentDashboard;
+            return $scope;
           }
         }
       });
@@ -612,10 +614,12 @@ angular.module( 'ozpWebtop.appToolbar')
         models.removeDashboard(board.id);
         // redirect user to their first board
         $scope.dashboards = models.getDashboards();
-        $state.go('dashboardview.' +
-        $scope.dashboards[0].layout + '-sticky-' +
-        $scope.dashboards[0].stickyIndex, {
-        'dashboardId': $scope.dashboards[0].id});
+        //if currentDashboard equals the daashboard being deleted's id:
+        if($scope.currentDashboard === board.id){
+          // redirect user to their first board
+          $state.go('dashboardview.' + $scope.dashboards[0].layout + '-sticky-' +
+            $scope.dashboards[0].stickyIndex, {'dashboardId': $scope.dashboards[0].id});
+        }
       }
     };
   });

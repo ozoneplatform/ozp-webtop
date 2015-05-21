@@ -48,13 +48,14 @@ angular.module('ozpWebtop.editDashboardModal').controller(
      */
     $scope.ok = function () {
       // update the dashboard layout and name
-      models.saveDashboard($scope.board);
       var response = {
         'layout': $scope.dashboard.layout,
         'stickyIndex': $scope.dashboard.stickyIndex,
         'id': $scope.dashboard.id,
-        'name': $scope.dashboard.name
+        'name': $scope.dashboard.name,
+        'frames': $scope.dashboard.frames
       };
+      models.saveDashboard(response);
       $modalInstance.close(response);
     };
 

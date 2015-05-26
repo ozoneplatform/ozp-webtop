@@ -1,3 +1,16 @@
+<a name"0.4.9"></a>
+### 0.4.9 (2015-05-26)
+
+
+#### Bug Fixes
+
+* **appToolbar:**
+  * Fix issue where if app was minimized in desktop view, when you switch to grid vi ([f50ca760](https://github.com/ozone-development/ozp-webtop/commit/f50ca760))
+  * Prevent more than the maxStickyBoards from being added to the dashboard view. #5 ([5d5d758f](https://github.com/ozone-development/ozp-webtop/commit/5d5d758f))
+* **saveDashboard:** Fixed bug where name/layout changes for dashboards were not always saved. #569 ([d9007c64](https://github.com/ozone-development/ozp-webtop/commit/d9007c64))
+* **styling:** Profile Modal Height ([df44d89d](https://github.com/ozone-development/ozp-webtop/commit/df44d89d))
+
+
 <a name"0.4.8"></a>
 ### 0.4.8 (2015-05-19)
 

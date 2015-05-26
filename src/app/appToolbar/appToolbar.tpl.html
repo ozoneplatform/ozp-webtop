@@ -5,7 +5,7 @@
             <div class="navbar-left">
                 <ul class="nav navbar-nav">
                     <li class="highlight app-toolbar-li">
-                      <a class="lrg" href="" ng-click="openApplicationsModal()">
+                      <a class="lrg" href="" ng-click="openApplicationsModal()" alt="Open Applications Modal">
                         <i class="icon-plus-18-white"></i>
                       </a>
                     </li>
@@ -13,19 +13,19 @@
                     <li class="navbar-spacer"></li>
                     <li class="dropdown dropup app-toolbar-li">
                     <!-- we start -->
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" alt="">
                         {{currentDashboard.name | limitTo : dashboardNameLength }} <i class="icon-caret-up-grayLightest"></i></a>
                       <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">Dashboards</li>
                         <li ng-repeat="board in dashboards">
-                          <a class="link-pointer"><i ng-class="{desktop:'icon-stack-grayLightest', grid:'icon-grid-grayLightest'}[board.layout]"></i>
+                          <a class="link-pointer" alt=""><i ng-class="{desktop:'icon-stack-grayLightest', grid:'icon-grid-grayLightest'}[board.layout]"></i>
                             <span ng-click="loadDashboard(board)">{{board.name | limitTo:dashboardNameLength }}</span>
                               <i class="icon-trash-grayLightest pull-right" ng-click="openDeleteDashboardModal(board)"></i>
                               <i class="icon-pencil-grayLightest pull-right" ng-click="openEditDashboardModal(board)"></i>
                           </a>
                         </li>
                         <li>
-                          <a class="caboose" class="link-pointer" href="" ng-click="openNewDashboardModal()">
+                          <a class="caboose" class="link-pointer" href="" ng-click="openNewDashboardModal()" alt="Open New Dashboard Modal">
                             <!-- TODO create dashboard view-->
                             <i class="icon-plus-14-grayLightest"></i>Create a new dashboard
                           </a>
@@ -34,10 +34,10 @@
                     </li>
                     <li class="navbar-spacer"></li>
 
-                    <li class="app" ng-repeat="app in myPinnedApps" ng-class="{true:'',false:'active', 'undefined':'active'}[app.isMinimized]">
+                    <li class="app" ng-repeat="app in myPinnedApps" ng-class="{true:'',false:'active', 'undefined':'active'}[app.isMinimized && currentDashboard.layout === 'desktop']">
                       <a tooltip="{{app.name | limitTo : 15}}"
                           ng-click="maximizeFrame(app)">
-                        <img ng-src="{{app.icon.large}}" class="appToolbarIcon"/>
+                        <img ng-src="{{app.icon.large}}" class="appToolbarIcon" alt="Application Icon"/>
                         <!-- <div ng-class="app.isMinimized && currentDashboard.layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div> -->
                       </a>
                     </li>
@@ -47,11 +47,11 @@
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
                   <li class="app-toolbar-li" ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
-                      <a href="" tooltip="Cascade Windows" tooltip-placement="top">
+                      <a href="" tooltip="Cascade Windows" tooltip-placement="top" alt="Cascade Windows tooltip">
                         <i class="icon-stack-grayLightest"></i></a>
                     </li>
                     <li class="app-toolbar-li" ng-click="toggleFullScreenMode();">
-                      <a href="" tooltip="Enter Full Screen" tooltip-placement="top">
+                      <a href="" tooltip="Enter Full Screen" tooltip-placement="top" alt="Enter Full Screen tooltip">
                         <i class="icon-maximize-grayLightest"></i></a>
                     </li>
 
@@ -61,7 +61,7 @@
     </div>
     <button class="hiddenToggle appHiddenToggle" ng-click="toggleFullScreenMode();"
         ng-class="{false: 'hide', true:''}[fullScreenMode]"
-        tooltip="Exit Full Screen" tooltip-placement="left">
+        tooltip="Exit Full Screen" tooltip-placement="left" alt="Exit Full Screen tooltip">
       <i class="icon-minimize-grayLightest"></i>
     </button>
 </div>

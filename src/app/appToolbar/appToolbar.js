@@ -138,6 +138,11 @@ angular.module( 'ozpWebtop.appToolbar')
      * @type {boolean}
      */
     $scope.previousAppsVisible = false;
+    /**
+     * @property $scope.maxStickyBoards For number of dashboards user can have
+     * @type {number}
+     */
+    $scope.maxStickyBoards = maxStickyBoards;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                           initialization
@@ -513,6 +518,7 @@ angular.module( 'ozpWebtop.appToolbar')
        * @param board the changed board object
        * @returns {*}
        */
+
        $scope.openEditDashboardModal = function(board) {
          $scope.board = board;
          $scope.modalInstanceType = 'edit';
@@ -562,41 +568,47 @@ angular.module( 'ozpWebtop.appToolbar')
        };
 
     $scope.openNewDashboardModal = function() {
-      $scope.modalInstanceType = 'new';
-      var modalInstance = $modal.open({
-        templateUrl: 'createDashboardModal/createDashboardModal.tpl.html',
-        controller: 'CreateDashboardModalInstanceCtrl',
-        windowClass: 'app-modal-window-large',
-        scope: $scope,
-        resolve: {
-          dashboard: function() {
-            return $scope;
+      if($scope.dashboards.length < maxStickyBoards){
+        $scope.modalInstanceType = 'new';
+        var modalInstance = $modal.open({
+          templateUrl: 'createDashboardModal/createDashboardModal.tpl.html',
+          controller: 'CreateDashboardModalInstanceCtrl',
+          windowClass: 'app-modal-window-large',
+          scope: $scope,
+          resolve: {
+            dashboard: function() {
+              return $scope;
+            }
           }
-        }
-      });
-
-      modalInstance.result.then(function (response) {
-        // reload current dashboard if the layout type changed (this state
-        // change will be ignored if the dashboard id and layout haven't
-        // changed)
-        var dashboardId, stickyIndex;
-        models.createDashboard(response);
-        // now get this dashboard id
-        var dashboards = models.getDashboards();
-        for (var i=0; i < dashboards.length; i++) {
-          if (dashboards[i].name === response.name) {
-            dashboardId = dashboards[i].id;
-            stickyIndex = dashboards[i].stickyIndex;
-          }
-        }
-        $state.go('dashboardview.' + response.layout + '-sticky-' + stickyIndex, {dashboardId: dashboardId});
-
-        // update the dashboard name if that changed
-        $rootScope.$broadcast(dashboardStateChangedEvent, {
-          'dashboardId': dashboardId,
-          'layout': response.layout
         });
-      });
+
+        modalInstance.result.then(function (response) {
+          // reload current dashboard if the layout type changed (this state
+          // change will be ignored if the dashboard id and layout haven't
+          // changed)
+          var dashboardId, stickyIndex;
+          models.createDashboard(response);
+          // now get this dashboard id
+          var dashboards = models.getDashboards();
+          for (var i=0; i < dashboards.length; i++) {
+            if (dashboards[i].name === response.name) {
+              dashboardId = dashboards[i].id;
+              stickyIndex = dashboards[i].stickyIndex;
+            }
+          }
+          $state.go('dashboardview.' + response.layout + '-sticky-' + stickyIndex, {dashboardId: dashboardId});
+
+          // update the dashboard name if that changed
+          $rootScope.$broadcast(dashboardStateChangedEvent, {
+            'dashboardId': dashboardId,
+            'layout': response.layout
+          });
+        });
+      }
+      else{
+        // $window.confirm('Too many dashboards, your limit it ' + maxStickyBoards);
+        alert('You cannot create more dashboards, current limit is ' + maxStickyBoards);
+      }
     };
 
     $scope.openDeleteDashboardModal = function(board) {

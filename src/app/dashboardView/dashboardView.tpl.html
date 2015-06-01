@@ -1,3 +1,7 @@
+<div ng-hide="dataLoaded" us-spinner></div>
+<div ng-show="failToLoadMessage" class="failToLoadMessage">
+  <p>The request is taking longer than usual, there may be a serverside issue.</p>
+</div>
 <div class="desktop-view" ng-show="layout === 'desktop'">
   <!-- Number of sticky views must correspond with constants.maxStickyBoards -->
   <div ui-view="desktoplayout-0" ng-show="$state.includes('dashboardview.desktop-sticky-0')"></div>

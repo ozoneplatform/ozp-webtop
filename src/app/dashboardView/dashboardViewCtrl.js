@@ -8,7 +8,7 @@
  * @module ozpWebtop.dashboardView
  *
  */
-angular.module('ozpWebtop.dashboardView', ['ozpWebtop.models']);
+angular.module('ozpWebtop.dashboardView', ['ozpWebtop.models', 'angularSpinner']);
 
 /**
  * Dashboard view controller
@@ -25,15 +25,27 @@ angular.module('ozpWebtop.dashboardView')
 .controller('DashboardViewCtrl', function ($scope, $state, $interval, $log,
                                            models, maxStickyBoards) {
 
+    $scope.intervalCount = 0;
     $scope.$on('$stateChangeSuccess',
       function(event, toState, toParams/*, fromState, fromParams*/){
         stateChangeHandler(event, toState, toParams);
     });
 
     function stateChangeHandler (event, toState, toParams) {
+      if(toState.url !== '/'){
+        $scope.dataLoaded = 'true';
+      }
+
+      //if more than 40, half second intervals (20000 ms)
+      if($scope.intervalCount >= 40){
+        $scope.failToLoadMessage = 'true';
+        $interval.cancel($scope.readyPromise);
+      }
+
       if (!models.dataCached()) {
         $log.warn('DashboardViewCtrl: delaying call to handleStateChange by 500ms - no data yet');
         $scope.readyPromise = $interval(function() {
+          $scope.intervalCount = $scope.intervalCount + 1;
           stateChangeHandler(event, toState, toParams);
         }, 500, 1);
         return;
@@ -61,6 +73,7 @@ angular.module('ozpWebtop.dashboardView')
         // Get user's dashboard data - if it's present, redirect to first
         // board. If not present, create a default board
         var dashboard = models.getCurrentDashboard();
+
         // TODO: shouldn't arbitrarily use grid mode
         var newState = 'dashboardview.' + dashboard.layout + '-sticky-' +
           dashboard.stickyIndex;
@@ -75,3 +88,8 @@ angular.module('ozpWebtop.dashboardView')
     };
 
   });
+
+angular.module('ozpWebtop.dashboardView')
+  .config(['usSpinnerConfigProvider', function (usSpinnerConfigProvider) {
+    usSpinnerConfigProvider.setDefaults({color: '#fff'});
+}]);

@@ -19,6 +19,7 @@
     "ozp-classification": "ozone-development/ozp-classification",
     "bootstrap": "ozone-development/bootstrap#18f02afee202d63699b8782ec0c737860e14b885",
     "ubuntu-fontface": "~0.1.3",
-    "icons": "ozone-development/icons"
+    "icons": "ozone-development/icons",
+    "angular-spinner":"~0.6"
   }
 }

@@ -67,6 +67,7 @@ angular.module( 'ozpWebtop', [
   'ui.router',
   'ct.ui.router.extras',
   'ui.bootstrap',
+  'angularSpinner',
   'gridster',
   'ozpIwcClient',
   'ozpClassification'

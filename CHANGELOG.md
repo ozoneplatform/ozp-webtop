@@ -1,3 +1,12 @@
+<a name"0.4.10"></a>
+### 0.4.10 (2015-06-02)
+
+
+#### Bug Fixes
+
+* **loadingIcon:** Loading icon runs until data is received and state change initiated in the dashb ([6a7b47cf](https://github.com/ozone-development/ozp-webtop/commit/6a7b47cf))
+
+
 <a name"0.4.9"></a>
 ### 0.4.9 (2015-05-26)
 

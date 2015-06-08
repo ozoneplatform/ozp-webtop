@@ -19,13 +19,15 @@ angular.module('ozpWebtop.helpModal', ['ui.bootstrap',
 * @constructor
 */
 angular.module('ozpWebtop.helpModal').controller(
-'helpModalInstanceCtrl', function($scope, $modalInstance, $window, $sce) {
+'helpModalInstanceCtrl', function($scope, $modalInstance, $window) {
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	$scope.helpUrl = $sce.trustAsResourceUrl($window.OzoneConfig.HELP_URL);
+	$scope.helpDocs = $window.OzoneConfig.HELP_DOCS;
+	$scope.helpVideo = $window.OzoneConfig.HELP_VIDEOS;
+
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// methods

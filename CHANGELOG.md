@@ -1,6 +1,18 @@
+<a name"0.4.12"></a>
+### 0.4.12 (2015-06-09)
+
+#### Bug Fixes
+
+* **helpModal:** Add Video and Document links to Help Model ([882ff3d0](https://github.com/ozone-development/ozp-webtop/commit/882ff3d0))
+
+
 <a name"0.4.11"></a>
 ### 0.4.11 (2015-06-02)
 
+#### Bug Fixes
+
+* **buildError:** Rebuilt due to build release error
+ 
 
 <a name"0.4.10"></a>
 ### 0.4.10 (2015-06-02)

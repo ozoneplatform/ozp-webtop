@@ -11,7 +11,28 @@
 			</div>
 
 			<div class="modal-body">
-				<iframe ng-src="{{helpUrl}}"/>
+
+				<container>
+				<div class="col-md-6">
+					<h4>Documents</h4>
+					<ul>
+						<li ng-repeat="(name, url) in helpDocs">
+							<a target="_blank" ng-href="{{url}}">{{name}}</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-md-6">
+					<h4>Videos</h4>
+					<ul>
+						<li ng-repeat="(name, url) in helpVideo">
+							<a target="_blank" ng-href="{{url}}">{{name}}</a>
+						</li>
+					</ul>
+					</div>
+				</container>
+				
+				<!--<iframe ng-src="{{helpUrl}}"/>-->
 			</div>
 		</div>
 

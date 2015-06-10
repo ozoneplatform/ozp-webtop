@@ -59,12 +59,19 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  dashboardStateChangedEvent,
                                                  fullScreenModeToggleEvent,
                                                  highlightFrameOnGridLayoutEvent,
-                                                 removeFramesOnDeleteEvent) {
+                                                 removeFramesOnDeleteEvent,
+                                                 tooltipDelay) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * @property toolTipDelay length of time to delay showing tooltips on hover
+     * @type number
+     */
+    $scope.toolTipDelay = tooltipDelay;
 
     /**
      * @property dashboards Dashboards for current user

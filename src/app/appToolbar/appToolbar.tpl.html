@@ -5,7 +5,7 @@
             <div class="navbar-left">
                 <ul class="nav navbar-nav">
                     <li class="highlight app-toolbar-li">
-                      <a class="lrg" href="" ng-click="openApplicationsModal()" alt="Open Applications Modal">
+                      <a class="lrg" href="" ng-click="openApplicationsModal()" tooltip="Add apps" tooltip-placement="top" tooltip-popup-delay="{{toolTipDelay}}">
                         <i class="icon-plus-18-white"></i>
                       </a>
                     </li>
@@ -47,11 +47,11 @@
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
                   <li class="app-toolbar-li" ng-click="cascadeWindows()" ng-hide="currentDashboard.layout === 'grid'">
-                      <a href="" tooltip="Cascade Windows" tooltip-placement="top" alt="Cascade Windows tooltip">
+                      <a href="" tooltip="Cascade Windows" tooltip-placement="top" tooltip-popup-delay="{{toolTipDelay}}" alt="Cascade Windows tooltip">
                         <i class="icon-stack-grayLightest"></i></a>
                     </li>
                     <li class="app-toolbar-li" ng-click="toggleFullScreenMode();">
-                      <a href="" tooltip="Enter Full Screen" tooltip-placement="top" alt="Enter Full Screen tooltip">
+                      <a href="" tooltip="Enter Full Screen" tooltip-placement="top" tooltip-popup-delay="{{toolTipDelay}}" alt="Enter Full Screen tooltip">
                         <i class="icon-maximize-14-grayLightest"></i></a>
                     </li>
 
@@ -61,7 +61,7 @@
     </div>
     <button class="hiddenToggle appHiddenToggle" ng-click="toggleFullScreenMode();"
         ng-class="{false: 'hide', true:''}[fullScreenMode]"
-        tooltip="Exit Full Screen" tooltip-placement="left" alt="Exit Full Screen tooltip">
+        tooltip="Exit Full Screen" tooltip-placement="left" tooltip-popup-delay="{{toolTipDelay}}" alt="Exit Full Screen tooltip">
       <i class="icon-minimize-14-grayLightest"></i>
     </button>
 </div>

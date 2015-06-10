@@ -32,6 +32,13 @@ angular.module('ozpWebtop.constants')
  */
 .constant('maxStickyBoards', 10)
 
+/**
+ * length of delay for tooltips to appear
+ * @property tooltipDelay
+ * @type Number
+ */
+.constant('tooltipDelay', 400)
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                              Events
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

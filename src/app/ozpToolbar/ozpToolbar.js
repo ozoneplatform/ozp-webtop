@@ -33,13 +33,18 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
  */
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope, $window, $log, $modal,
-           models, windowSizeWatcher, deviceSizeChangedEvent,
+           models, windowSizeWatcher, deviceSizeChangedEvent, tooltipDelay,
            fullScreenModeToggleEvent, restInterface, notificationReceivedEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    /**
+     * @property toolTipDelay length of time to delay showing tooltips on hover
+     * @type number
+     */
+    $scope.toolTipDelay = tooltipDelay;
     /**
      * @property usernameLength Max length of username, based on
      * current screen size
@@ -82,6 +87,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
         else{
           $scope.messages.push(data._embedded.item);
         }
+        $scope.messageCount = data._embedded.item.length;
         $scope.thereAreUnexpiredNotifications = true;
       }
     });
@@ -95,6 +101,9 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
           //delete local message from scope
           $scope.messages.splice(b, 1);
         }
+      }
+      if($scope.messageCount > 0){
+        $scope.messageCount = $scope.messageCount - 1;
       }
       if($scope.messages.length === 0){
         // no messages, switch bell icon in template

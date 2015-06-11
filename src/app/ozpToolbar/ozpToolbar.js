@@ -59,11 +59,6 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.fullScreenMode = false;
 
     /**
-     * @property user Current user's username
-     * @type {string}
-     */
-    $scope.user = 'J Smith';
-    /**
     * @property messages Messages that have not been dismissed
     * type {array}
     */
@@ -117,8 +112,6 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
 
     // register for notifications when window size changes
     windowSizeWatcher.run();
-
-    // TODO: $scope.user was coming from dashboard api
 
     $scope.$on(deviceSizeChangedEvent, function(event, value) {
       handleDeviceSizeChange(value);

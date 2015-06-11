@@ -100,7 +100,6 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
         // TODO: use actual user name or remove
         var newWebtopData = {
           'name': 'dashboards',
-          'user': 'J Smith',
           'currentDashboard': '0',
           'userSettings': {},
           'persist': true,

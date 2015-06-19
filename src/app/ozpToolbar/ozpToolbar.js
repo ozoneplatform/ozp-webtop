@@ -78,11 +78,11 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
         if(data._embedded.item instanceof Array) {
           $scope.messages = data._embedded.item;
         }
-        //If the messages are not in an array (for ng-repeat)
+        // //If the messages are not in an array (for ng-repeat)
         else{
           $scope.messages.push(data._embedded.item);
         }
-        $scope.messageCount = data._embedded.item.length;
+        $scope.messageCount = $scope.messages.length;
         $scope.thereAreUnexpiredNotifications = true;
       }
     });

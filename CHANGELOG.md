@@ -1,3 +1,13 @@
+<a name"0.4.13"></a>
+### 0.4.13 (2015-06-22)
+
+
+#### Bug Fixes
+
+* **icons:** Add multiple icon sizes for future app chrome needs ([360278f4](https://github.com/ozone-development/ozp-webtop/commit/360278f4))
+* **ozpToolbar:** Fixing issue with tooltips hiding the notifications button ([7f07d9d9](https://github.com/ozone-development/ozp-webtop/commit/7f07d9d9))
+
+
 <a name"0.4.12"></a>
 ### 0.4.12 (2015-06-09)
 

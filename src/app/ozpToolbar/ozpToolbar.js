@@ -33,13 +33,18 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
  */
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope, $window, $log, $modal,
-           models, windowSizeWatcher, deviceSizeChangedEvent,
+           models, windowSizeWatcher, deviceSizeChangedEvent, tooltipDelay,
            fullScreenModeToggleEvent, restInterface, notificationReceivedEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    /**
+     * @property toolTipDelay length of time to delay showing tooltips on hover
+     * @type number
+     */
+    $scope.toolTipDelay = tooltipDelay;
     /**
      * @property usernameLength Max length of username, based on
      * current screen size
@@ -53,11 +58,6 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
      */
     $scope.fullScreenMode = false;
 
-    /**
-     * @property user Current user's username
-     * @type {string}
-     */
-    $scope.user = 'J Smith';
     /**
     * @property messages Messages that have not been dismissed
     * type {array}
@@ -78,10 +78,11 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
         if(data._embedded.item instanceof Array) {
           $scope.messages = data._embedded.item;
         }
-        //If the messages are not in an array (for ng-repeat)
+        // //If the messages are not in an array (for ng-repeat)
         else{
           $scope.messages.push(data._embedded.item);
         }
+        $scope.messageCount = $scope.messages.length;
         $scope.thereAreUnexpiredNotifications = true;
       }
     });
@@ -96,6 +97,9 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
           $scope.messages.splice(b, 1);
         }
       }
+      if($scope.messageCount > 0){
+        $scope.messageCount = $scope.messageCount - 1;
+      }
       if($scope.messages.length === 0){
         // no messages, switch bell icon in template
         $scope.thereAreUnexpiredNotifications = false;
@@ -108,8 +112,6 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
 
     // register for notifications when window size changes
     windowSizeWatcher.run();
-
-    // TODO: $scope.user was coming from dashboard api
 
     $scope.$on(deviceSizeChangedEvent, function(event, value) {
       handleDeviceSizeChange(value);

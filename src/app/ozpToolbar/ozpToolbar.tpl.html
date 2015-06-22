@@ -3,23 +3,45 @@
   <div class="container-fluid">
     <div class="navbar-left">
       <ul class="nav navbar-nav">
-        <li><a class="lrg" ng-href="{{hudUrl}}" alt="Hud Icon"><i class="icon-home-grayLightest"></i></a></li>
-        <li><a class="lrg" ng-href="{{centerUrl}}" alt="Center Icon"><i class="icon-shopping-grayLightest"></i></a></li>
-        <li class="active"><a class="lrg" ng-href="{{webtopUrl}}" alt="WebTop Icon"><i class="icon-layout-blue"></i></a></li>
+        <li tooltip="HUD" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}"><a class="lrg" ng-href="{{hudUrl}}" alt="Hud Icon"><i class="icon-home-grayLightest"></i></a></li>
+        <li tooltip="Center" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+          <a class="lrg" ng-href="{{centerUrl}}" alt="Center Icon">
+            <i class="icon-shopping-grayLightest"></i>
+          </a>
+        </li>
+        <li class="active" tooltip="Webtop" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+          <a class="lrg" ng-href="{{webtopUrl}}" alt="WebTop Icon">
+            <i class="icon-layout-blue"></i>
+          </a>
+        </li>
       </ul>
     </div>
 
     <div class="navbar-right">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" alt="Unexpired Notification"><i ng-class="thereAreUnexpiredNotifications == true ? 'icon-bell-filled-blue' : 'icon-bell-grayLightest'"></i></a>
+        <!-- No Messages -->
+        <li ng-show="!thereAreUnexpiredNotifications" >
+          <a tooltip="No new notifications" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+            <i class="icon-bell-grayLightest" ></i>
+          </a>
+        </li>
+        <!-- Yes Messages -->
+        <li class="dropdown" ng-show="thereAreUnexpiredNotifications" >
+          <!-- singular notifications (updated when icons have numbers) -->
+          <a ng-show="messageCount == 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notification." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+            <i class="icon-bell-filled-blue"></i>
+          </a>
+          <!-- multiple notifications (updated when icons have numbers) -->
+          <a ng-show="messageCount > 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notifications." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+            <i class="icon-bell-filled-blue"></i>
+          </a>
           <ul class="dropdown-menu" ng-show="thereAreUnexpiredNotifications">
             <li class="UserNotification" ng-repeat="message in messages">
               <div>
                 <button type="button" class="close pull-right" ng-click="dismissNotification(message)" alt="Dismiss Notification">
                   <i class="icon-cross-16-white"></i>
                 </button>
-                <h5 class="created-by">OZONE</h5>
+                <h5 class="created-by">AppsMall</h5>
                 <div class="created-at">
                   <span class="Time" style="font-style: italic">{{message.createdDate | cmdate: 'MM/dd/yyyy HH:mm'}}</span>
                 </div>
@@ -30,10 +52,14 @@
             </li>
           </ul>
         <li>
-          <a href="" ng-click="openHelpModal()" data-toggle="modal" data-target="#modal_help" alt="Open Help Modal"><i class="icon-question-grayLightest"></i></a>
+          <a href="" ng-click="openHelpModal()" data-toggle="modal" data-target="#modal_help" alt="Open Help Modal" tooltip="Help" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+            <i class="icon-question-grayLightest"></i>
+          </a>
         </li>
         <li class="dropdown">
-          <a href="#" class="lrg dropdown-toggle" data-toggle="dropdown" alt=""><i class="icon-menu-grayLightest"></i></a>
+          <a href="#" class="lrg dropdown-toggle" data-toggle="dropdown" tooltip="Menu" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+            <i class="icon-menu-grayLightest"></i>
+          </a>
           <ul class="dropdown-menu">
             <li class="dropdown-header">Personalize</li>
             <li><a ng-href="{{hudUrl}}" alt="Bookmarks link"><i class="icon-ribbon-grayLightest"></i>Bookmarks</a></li>
@@ -46,7 +72,7 @@
             <li class="divider"></li>
             <li class="dropdown-header">Manage</li>
             <li><a ng-href="{{centerUrl}}/#/user-management/my-listings" alt="Listing Management link"><i class="icon-layers-grayLightest"></i>Listing Management</a></li>
-            <li><a ng-href="{{centerUrl}}/#/mall-management/categories" alt="Marketplace Settings link"><i class="icon-shopping-settings-grayLightest"></i>Marketplace Settings</a></li>
+            <li><a ng-href="{{centerUrl}}/#/mall-management/categories" alt="Center Settings link"><i class="icon-shopping-settings-grayLightest"></i>Center Settings</a></li>
             <li><a ng-href="{{metricsUrl}}" target="_blank" ng-show="isAdmin" alt="Metrics link"><i class="icon-bar-graph-2-grayLightest"></i>Metrics</a></li>
             <li><a ng-href="{{feedbackAddress}}" class="caboose" target="{{feedbackTarget}}" alt="Submit Feedback link"><i class="icon-mail"></i>Submit Feedback</a></li>
         </ul>

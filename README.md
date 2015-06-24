@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ozone-development/ozp-webtop.svg?branch=master)](https://travis-ci.org/ozone-development/ozp-webtop)
 
-Next Gen OZONE Webtop UI
+Next Gen OZONE UI
 
 ## Prerequisites
 Install Node.js and npm. Head over to [the Node.js website](http://nodejs.org/)

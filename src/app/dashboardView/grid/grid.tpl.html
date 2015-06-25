@@ -5,10 +5,13 @@
         <li gridster-item row="frame.gridLayout[deviceSize].row" col="frame.gridLayout[deviceSize].col"
             size-x="frame.gridLayout[deviceSize].sizeX" size-y="frame.gridLayout[deviceSize].sizeY"
             id="{{frame.id}}"
-            class="ozp-managed-frame">
+            class="ozp-managed-frame"
+            ng-class="{frameHighlighted: frame.highlighted}">
+          
           <ozp-chrome frame="frame"></ozp-chrome>
+          
           <iframe class="iframe-grid"
-                  ng-class="{frameHighlighted: frame.highlighted}"
+                  
                   ng-src="{{frame.trustedUrl}}" frameBorder="0">
           </iframe>
         </li>

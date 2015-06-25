@@ -55,7 +55,7 @@ if [ -z "$VERSION" ]
 else
   # extract the version from the branch name and make sure it matches the
   # version number passed in
-  BRANCH_VERSION=`echo ${BRANCH_NAME}| sed 's/release_\([0-9]*\.[0-9]*\.[0-9]*\)/\1/'`
+  BRANCH_VERSION=`echo ${BRANCH_NAME}| sed 's/tags_release_\([0-9]*\.[0-9]*\.[0-9]*\)/\1/'`
   echo "BRANCH_VERSION: ${BRANCH_VERSION}"
   if [ "${BRANCH_VERSION}" == "${VERSION}" ]
   then

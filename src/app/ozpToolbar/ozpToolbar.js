@@ -270,9 +270,9 @@ app.directive('ozpToolbar', function(){
      scope.$watch('fullScreenMode', function() {
        if (scope.fullScreenMode) {
          // TODO: a cleaner way?
-         $('body').css('margin', '16px 0px');
+         $('body').css('margin', '20px 0px');
        } else {
-         $('body').css('margin', '57px 0px');
+         $('body').css('margin', '60px 0px');
          $('.navbar-fixed-top').css('top', '20px');
        }
      });

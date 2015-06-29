@@ -70,7 +70,8 @@ angular.module( 'ozpWebtop', [
   'angularSpinner',
   'gridster',
   'ozpIwcClient',
-  'ozpClassification'
+  'ozpClassification',
+  'ngAria'
 ])
 
 .config(function($stateProvider, $urlRouterProvider,

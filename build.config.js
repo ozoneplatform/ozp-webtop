@@ -70,6 +70,7 @@ module.exports = {
       'vendor/jquery/dist/jquery.js',
       'vendor/jquery-ui/jquery-ui.min.js',
       'vendor/angular/angular.js',
+      'vendor/angular-aria/angular-aria.js',
       'vendor/spin.js/spin.js',
       'vendor/angular-spinner/angular-spinner.js',
       'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',

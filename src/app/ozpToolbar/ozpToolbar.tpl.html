@@ -26,13 +26,13 @@
           </a>
         </li>
         <!-- Yes Messages -->
-        <li class="dropdown" ng-show="thereAreUnexpiredNotifications" >
+        <li class="dropdown" ng-show="thereAreUnexpiredNotifications" dropdown>
           <!-- singular notifications (updated when icons have numbers) -->
-          <a ng-show="messageCount == 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notification." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+          <a ng-show="messageCount == 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notification." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}" dropdown-toggle>
             <i class="icon-bell-filled-blue"></i>
           </a>
           <!-- multiple notifications (updated when icons have numbers) -->
-          <a ng-show="messageCount > 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notifications." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+          <a ng-show="messageCount > 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notifications." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}" dropdown-toggle>
             <i class="icon-bell-filled-blue"></i>
           </a>
           <ul class="dropdown-menu" ng-show="thereAreUnexpiredNotifications">
@@ -56,8 +56,8 @@
             <i class="icon-question-grayLightest"></i>
           </a>
         </li>
-        <li class="dropdown">
-          <a href="#" class="lrg dropdown-toggle" data-toggle="dropdown" tooltip="Menu" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
+        <li class="dropdown" dropdown>
+          <a href="#" class="lrg dropdown-toggle" data-toggle="dropdown" tooltip="Menu" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}" dropdown-toggle>
             <i class="icon-menu-grayLightest"></i>
           </a>
           <ul class="dropdown-menu">

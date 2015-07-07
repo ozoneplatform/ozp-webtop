@@ -154,11 +154,11 @@ describe('Service: models', function () {
     expect(frame.gridLayout.md.sizeY).toEqual(2);
 
     // Nothing special about these values, just what they happen to be right now
-    expect(frame.desktopLayout.zIndex).toEqual(0);
-    expect(frame.desktopLayout.top).toEqual(100);
-    expect(frame.desktopLayout.left).toEqual(100);
-    expect(frame.desktopLayout.width).toEqual(200);
-    expect(frame.desktopLayout.height).toEqual(200);
+    expect(frame.desktopLayout.zIndex).toBeGreaterThan(0);
+    expect(frame.desktopLayout.top >= 75).toBeTruthy();
+    expect(frame.desktopLayout.left >= 75).toBeTruthy();
+    expect(frame.desktopLayout.width).toEqual(250);
+    expect(frame.desktopLayout.height).toEqual(250);
   });
 
   xit('should have a createFrame method that handles a full grid', function() {

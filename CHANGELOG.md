@@ -1,3 +1,13 @@
+<a name"0.4.17"></a>
+### 0.4.17 (2015-07-07)
+
+
+#### Bug Fixes
+
+* **gridView:** Highlight in gridview add highlight in gridveiw issue #577 ([1822fa3a](https://github.com/ozone-development/ozp-webtop/commit/1822fa3a))
+* **margins:** Change body margins to match current toolbar sizes ([c723363f](https://github.com/ozone-development/ozp-webtop/commit/c723363f))
+
+
 <a name"0.4.16"></a>
 ### 0.4.16 (2015-06-30)
 

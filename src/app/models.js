@@ -33,7 +33,8 @@ var models = angular.module('ozpWebtop.models');
  * @namespace models
  */
 models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
-                                  iwcInterface, restInterface, Utilities) {
+                                  iwcInterface, restInterface, Utilities,
+                                  dashboardMaxWidgets) {
 
   var cachedWebtopData = null;
   var cachedApplicationData = null;
@@ -292,41 +293,14 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
      * @method createFrame
      * @param dashboardId
      * @param appId
-     * @param gridMaxRows
      * @returns {new frame}
      */
-    createFrame: function(dashboardId, appId, gridMaxRows) {
+    createFrame: function(dashboardId, appId) {
       var dashboard = this.getDashboardById(dashboardId);
-      // Calculate the row to place this frame in (for grid layout)
 
-      // for the grid layout, place new app in first col of first empty row
-      // for the desktop layout, just put it on and let user move it
-
-      var newRowSmall = 0;
-      var newRowMedium = 0;
-      for (var i=0; i < dashboard.frames.length; i++) {
-        var thisNewRowSmall = dashboard.frames[i].gridLayout.sm.row +
-          dashboard.frames[i].gridLayout.sm.sizeY + 1;
-        var thisNewRowMd = dashboard.frames[i].gridLayout.md.row +
-          dashboard.frames[i].gridLayout.md.sizeY + 1;
-        if ((thisNewRowSmall + 2) > newRowSmall) {
-          newRowSmall = thisNewRowSmall;
-        }
-        if ((thisNewRowMd + 2) > newRowMedium) {
-          newRowMedium = thisNewRowMd;
-        }
-      }
-
-      if (newRowSmall > gridMaxRows) {
+      if (dashboardMaxWidgets <= dashboard.frames.length) {
         // TODO: handle error
-        $log.error('ERROR: cannot add frame to small row ' + newRowSmall +
-          ', max rows: ' + gridMaxRows);
-        return null;
-      }
-      if (newRowMedium > gridMaxRows) {
-        // TODO: handle error
-        $log.error('ERROR: cannot add frame to medium row ' + newRowMedium +
-          ', max rows: ' + gridMaxRows);
+        $log.error('ERROR: cannot add frame, too many widgets');
         return null;
       }
 
@@ -363,13 +337,11 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
         'name': appName,
         'gridLayout': {
           'sm': {
-            'row': newRowSmall,
             'col': col,
             'sizeX': 3,
             'sizeY': 1
           },
           'md': {
-            'row': newRowMedium,
             'col': col,
             'sizeX': sizeX,
             'sizeY': sizeY

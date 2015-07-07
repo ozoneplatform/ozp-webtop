@@ -60,7 +60,7 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  fullScreenModeToggleEvent,
                                                  highlightFrameOnGridLayoutEvent,
                                                  removeFramesOnDeleteEvent,
-                                                 tooltipDelay) {
+                                                 tooltipDelay, dashboardMaxWidgets) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -151,6 +151,12 @@ angular.module( 'ozpWebtop.appToolbar')
      */
     $scope.maxStickyBoards = maxStickyBoards;
 
+    /**
+     * @property $scope.maxAppsDisplayed For number of apps user can have
+     * @type {number}
+     */
+    $scope.maxAppsDisplayed = dashboardMaxWidgets;
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -161,10 +167,6 @@ angular.module( 'ozpWebtop.appToolbar')
 
     // toolbar is not hidden by default
     $scope.fullScreenMode = false;
-
-    $scope.$on(deviceSizeChangedEvent, function(event, value) {
-      $scope.handleWindowSizeChange(value);
-    });
 
     $scope.$on(dashboardStateChangedEvent, function() {
       $scope.updateApps();
@@ -200,35 +202,6 @@ angular.module( 'ozpWebtop.appToolbar')
 
 
     initializeData();
-
-    /**
-     * Handle the deviceSizeChangedEvent
-     *
-     * Update $scope.maxAppsDisplayed and invoke $scope.setPinnedApps()
-     * @method handleWindowSizeChange
-     * @param value Data from deviceSizeChangedEvent
-     */
-    $scope.handleWindowSizeChange = function(value) {
-      if (value.deviceSize === 'sm') {
-        $scope.maxAppsDisplayed = 6;
-        $scope.setPinnedApps();
-      } else if (value.deviceSize === 'md') {
-        $scope.maxAppsDisplayed = 10;
-        $scope.setPinnedApps();
-      } else if (value.deviceSize === 'lg') {
-        $scope.maxAppsDisplayed = 15;
-        $scope.setPinnedApps();
-      }
-
-      //leaving this in because it may be helpful for ticket #554/when dashboardNameLength gets smarter.
-      // if (value.deviceSize === 'sm') {
-      //   $scope.dashboardNameLength = 9;
-      // } else if (value.deviceSize === 'md') {
-      //     $scope.dashboardNameLength = 28;
-      // } else if (value.deviceSize === 'lg') {
-      //     $scope.dashboardNameLength = 48;
-      // }
-    };
 
     /**
      * Handle state change
@@ -464,7 +437,7 @@ angular.module( 'ozpWebtop.appToolbar')
           $log.warn('WARNING: Only one instance of ' + app.name + ' may be on your dashboard');
         } else {
           // TODO: use message broadcast to get grid max rows and grid max cols
-          return models.createFrame(dashboardId, app.id, 25);
+          return models.createFrame(dashboardId, app.id);
         }
       }
 

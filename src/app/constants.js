@@ -39,6 +39,13 @@ angular.module('ozpWebtop.constants')
  */
 .constant('tooltipDelay', 400)
 
+/**
+ * maximum number of widget that can be in a dashboard
+ * @property dashboardMaxWidgets
+ * @type Number
+ */
+.constant('dashboardMaxWidgets', 15)
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                              Events
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

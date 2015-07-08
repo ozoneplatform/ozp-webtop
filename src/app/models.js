@@ -300,6 +300,7 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
 
       if (dashboardMaxWidgets <= dashboard.frames.length) {
         // TODO: handle error
+        alert('You have reached the maximum number of apps per dashbaord');
         $log.error('ERROR: cannot add frame, too many widgets');
         return null;
       }
@@ -311,12 +312,42 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
 
       // for the desktop layout, just put it on and let the user move it
       var zIndex = 0;
-      var top = 100;
-      var left = 100;
-      var width = 200;
-      var height = 200;
+      var top = 75;
+      var left = 75;
+      var width = 250;
+      var height = 250;
 
+      // extend array to be able to give us max value
+      Array.prototype.max = function() {
+        return Math.max.apply(null, this);
+      };
 
+      // empty arrays built every time createFrame is called
+      var maxTopArray = [];
+      var maxLeftArray = [];
+      var maxZindexArray = [];
+
+      // loop through and populate arrays with the top, left, and zindex of all frames
+      for(var frame in dashboard.frames){
+        if(dashboard.frames.length > 0){
+          if(dashboard.frames[frame].desktopLayout){
+            maxTopArray.push(dashboard.frames[frame].desktopLayout.top);
+            maxLeftArray.push(dashboard.frames[frame].desktopLayout.left);
+            maxZindexArray.push(dashboard.frames[frame].desktopLayout.zIndex);
+          }
+        }
+      }
+
+      // set the top, left, and zindex based on the maximum values on screen
+      if (maxTopArray.length > 0){
+        top = maxTopArray.max() + 32;
+      }
+      if (maxLeftArray.length > 0){
+        left = maxLeftArray.max() + 32;
+      }
+      if (maxZindexArray.length > 0){
+        zIndex = maxZindexArray.max() + 10;
+      }
       var utils = new Utilities();
       var frameId = utils.generateUuid();
 

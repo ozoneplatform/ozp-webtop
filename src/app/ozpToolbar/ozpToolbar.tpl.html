@@ -19,23 +19,18 @@
 
     <div class="navbar-right">
       <ul class="nav navbar-nav">
-        <!-- No Messages -->
+        <!-- No Notification Message -->
         <li ng-show="!thereAreUnexpiredNotifications" >
           <a tooltip="No new notifications" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}">
             <i class="icon-bell-grayLightest" ></i>
           </a>
         </li>
-        <!-- Yes Messages -->
+        <!-- One or More Notifications Message -->
         <li class="dropdown" ng-show="thereAreUnexpiredNotifications" dropdown>
-          <!-- singular notifications (updated when icons have numbers) -->
-          <a ng-show="messageCount == 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notification." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}" dropdown-toggle>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{notificationTooltip}}" tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}" dropdown-toggle>
             <i class="icon-bell-filled-blue"></i>
           </a>
-          <!-- multiple notifications (updated when icons have numbers) -->
-          <a ng-show="messageCount > 1" href="#" class="dropdown-toggle" data-toggle="dropdown" tooltip="{{messageCount}} new notifications." tooltip-placement="bottom" tooltip-popup-delay="{{toolTipDelay}}" dropdown-toggle>
-            <i class="icon-bell-filled-blue"></i>
-          </a>
-          <ul class="dropdown-menu" ng-show="thereAreUnexpiredNotifications">
+          <ul class="dropdown-menu">
             <li class="UserNotification" ng-repeat="message in messages">
               <div>
                 <button type="button" class="close pull-right" ng-click="dismissNotification(message)" alt="Dismiss Notification">

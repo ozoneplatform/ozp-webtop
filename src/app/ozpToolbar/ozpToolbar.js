@@ -65,7 +65,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.messages = [];
 
     /**
-    * @property thereAreUnexpiredNotifications Whether or not there are unexpired 
+    * @property thereAreUnexpiredNotifications Whether or not there are unexpired
     *           notifications, used to change class in template to notify use
     * type {boolean}
     */
@@ -84,9 +84,15 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
         }
         $scope.messageCount = $scope.messages.length;
         $scope.thereAreUnexpiredNotifications = true;
+        //update notification tooltip
+        if($scope.messageCount === 1){
+          $scope.notificationTooltip = $scope.messageCount + ' new notification.';
+        }
+        else {
+          $scope.notificationTooltip = $scope.messageCount + ' new notifications.';
+        }
       }
     });
-
 
     $scope.dismissNotification = function(a){
       for(var b in $scope.messages){
@@ -99,6 +105,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
       }
       if($scope.messageCount > 0){
         $scope.messageCount = $scope.messageCount - 1;
+        $scope.notificationTooltip = $scope.messageCount + ' new notifications.';
       }
       if($scope.messages.length === 0){
         // no messages, switch bell icon in template
@@ -245,7 +252,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
        }else{
          $scope.isAdmin = false;
        }
-    }); 
+    });
   }
 );
 
@@ -280,7 +287,7 @@ app.directive('ozpToolbar', function(){
   };
 });
 
-/** 
+/**
  * Filter for converting date to user friendly format
 */
 app.filter('cmdate', [

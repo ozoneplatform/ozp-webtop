@@ -3,7 +3,7 @@
 describe('Directive: ozpButton', function () {
   // load the directive's module
   beforeEach(module('ozpWebtop.dashboardView.button'));
-  beforeEach(module('dashboardView/button/ozpbutton.tpl.html'));
+  beforeEach(module('userInterface/dashboardView/button/ozpbutton.tpl.html'));
 
   var element,
       scope;
@@ -34,4 +34,3 @@ describe('Directive: ozpButton', function () {
     expect(element.find('span').html()).toBe(scope.button.text.slice(0,8));
   }));
 });
-

@@ -24,7 +24,7 @@ angular.module('ozpWebtop.dashboardView.desktop.managedFrame')
   // Directive definition object
   return {
     restrict: 'E',
-    templateUrl: 'dashboardView/desktop/managediframe.tpl.html',
+    templateUrl: 'userInterface/dashboardView/desktop/managediframe.tpl.html',
     scope: {
       'myframe': '='
     },

@@ -21,7 +21,7 @@ angular.module('ozpWebtop.dashboardView.button')
 .directive('ozpButton', function () {
   return {
     replace: true,
-    templateUrl: 'dashboardView/button/ozpbutton.tpl.html',
+    templateUrl: 'userInterface/dashboardView/button/ozpbutton.tpl.html',
     restrict: 'E'
   };
 });

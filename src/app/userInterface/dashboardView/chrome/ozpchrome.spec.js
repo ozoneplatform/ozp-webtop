@@ -4,7 +4,7 @@ describe('Directive: ozpChrome', function () {
   // load the directive's module
   beforeEach(module('ozpWebtop.dashboardView.chrome'));
 
-  beforeEach(module('dashboardView/chrome/ozpchrome.tpl.html'));
+  beforeEach(module('userInterface/dashboardView/chrome/ozpchrome.tpl.html'));
 
   var element,
       scope;
@@ -24,4 +24,3 @@ describe('Directive: ozpChrome', function () {
     expect(element.find('img').length).toBe(1);
   }));
 });
-

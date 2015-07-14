@@ -1,11 +1,5 @@
 'use strict';
-/**
-*
-* @module ozpWebtop.profileModal
-*
-* @requires ui.bootstrap
-*
-*/
+
 angular.module('ozpWebtop.profileModal', ['ui.bootstrap',
 'ozpWebtop.models','ozpWebtop.services.restInterface']);
 /**
@@ -30,9 +24,9 @@ angular.module('ozpWebtop.profileModal').controller(
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// methods
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	
+
 	/**
-	* Gets user profile data 
+	* Gets user profile data
 	*
 	*/
 	restInterface.getProfile().then(function(data){
@@ -44,7 +38,7 @@ angular.module('ozpWebtop.profileModal').controller(
 	});
 
 /**
-	* Gets user listing data 
+	* Gets user listing data
 	*
 	*/
 	restInterface.getUserListings().then(function(data){

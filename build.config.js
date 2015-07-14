@@ -5,9 +5,9 @@ module.exports = {
   /**
    * The `build_dir` folder is where our projects are compiled during
    * development and the `compile_dir` folder is where our app resides once it's
-   * completely built. 
+   * completely built.
    * The `docs_dir` specifies where the YUIdoc documentation should be placed.
-   * The `cov_dir` specifies where the Instanbul code coverage report is placed 
+   * The `cov_dir` specifies where the Instanbul code coverage report is placed
    * (unchanged from Instanbul's default).
    */
   build_dir: 'build',
@@ -27,11 +27,11 @@ module.exports = {
   app_files: {
     js: [ 'src/**/*.js', '!src/**/*.spec.js', '!src/assets/**/*.js', '!src/OzoneConfig.js' ],
     jsunit: [ 'src/**/*.spec.js' ],
-    
+
     coffee: [ 'src/**/*.coffee', '!src/**/*.spec.coffee' ],
     coffeeunit: [ 'src/**/*.spec.coffee' ],
 
-    atpl: [ 'src/app/**/*.tpl.html' ],
+    atpl: [ 'src/app/**/*.tpl.html'],
     ctpl: [ 'src/common/**/*.tpl.html' ],
 
     html: [ 'src/index.html' ],

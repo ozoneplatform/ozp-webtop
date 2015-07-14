@@ -7,10 +7,14 @@
  * @requires ozp.common.windowSizeWatcher
  * @requires ozpWebtop.models
  */
-angular.module('ozpWebtop.ozpToolbar', [ 'ozp.common.windowSizeWatcher',
-  'ozpWebtop.models', 'ozpWebtop.settingsModal','ozpWebtop.services.restInterface']);
+angular.module('ozpWebtop.ozpToolbar', [
+  'ozp.common.windowSizeWatcher',
+  'ozpWebtop.models',
+  'ozpWebtop.settingsModal',
+  'ozpWebtop.filters',
+  'ozpWebtop.services.restInterface']);
 
-var app = angular.module( 'ozpWebtop.ozpToolbar')
+angular.module( 'ozpWebtop.ozpToolbar')
 /**
  * Controller for ozp toolbar located at the top of Webtop
  *
@@ -171,7 +175,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.openHelpModal = function(board) {
       $scope.board = board;
       var modalInstance = $modal.open({
-        templateUrl: 'helpModal/helpModal.tpl.html',
+        templateUrl: 'userInterface/helpModal/helpModal.tpl.html',
         controller: 'helpModalInstanceCtrl',
         windowClass: 'app-modal-window-large',
         scope: $scope,
@@ -198,7 +202,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.openProfileModal = function(board) {
       $scope.board = board;
       var modalInstance = $modal.open({
-        templateUrl: 'profileModal/profileModal.tpl.html',
+        templateUrl: 'userInterface/profileModal/profileModal.tpl.html',
         controller: 'profileModalInstanceCtrl',
         windowClass: 'app-modal-window',
         scope: $scope,
@@ -224,7 +228,7 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     $scope.openSettingsModal = function(board) {
       $scope.board = board;
       var modalInstance = $modal.open({
-        templateUrl: 'settingsModal/settingsModal.tpl.html',
+        templateUrl: 'userInterface/settingsModal/settingsModal.tpl.html',
         controller: 'settingsModalInstanceCtrl',
         windowClass: 'app-modal-window',
         scope: $scope,
@@ -255,45 +259,3 @@ var app = angular.module( 'ozpWebtop.ozpToolbar')
     });
   }
 );
-
-/**
- * Directive for the ozp toolbar
- *
- * ngtype: directive
- *
- * @class ozpToolbar
- * @static
- * @namespace ozpToolbar
- */
-app.directive('ozpToolbar', function(){
-  return {
-   restrict: 'E',
-   templateUrl: 'ozpToolbar/ozpToolbar.tpl.html',
-   replace: false,
-   transclude: false,
-   scope: true,
-   link: function(scope/*, elem, attrs*/) {
-
-     scope.$watch('fullScreenMode', function() {
-       if (scope.fullScreenMode) {
-         // TODO: a cleaner way?
-         $('body').css('margin', '20px 0px');
-       } else {
-         $('body').css('margin', '60px 0px');
-         $('.navbar-fixed-top').css('top', '20px');
-       }
-     });
-   }
-  };
-});
-
-/**
- * Filter for converting date to user friendly format
-*/
-app.filter('cmdate', [
-  '$filter', function($filter) {
-    return function(input, format) {
-      return $filter('date')(new Date(input), format) + ' ' + String(String(new Date()).split('(')[1]).split(')')[0];
-    };
-  }
-]);

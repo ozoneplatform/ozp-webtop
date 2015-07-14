@@ -1,0 +1,38 @@
+<div class="wt-modal profile-window" style="display: block">
+	<div class="modal-dialog help">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="cancel()">
+					<span aria-hidden="true"><i class="icon-cross-16"></i></span>
+					<span class="sr-only">Close</span>
+				</button>
+
+				<h3 class="modal-title">{{titletext}}<b>{{board.name}}</b></h3>
+			</div>
+
+			<div class="modal-body">
+
+				<container>
+					<div class="col-md-12">
+						<h4>{{message}}</h4>
+					</div>
+				</container>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="modal-footer wt-modal-footer">
+    <div>
+      <div>
+        <button class="btn btn-default" ng-click="cancel()">
+        Cancel
+        </button>
+        <button class="btn btn-primary" ng-hide="disableDeleteMessage"
+						ng-click="deleteDashboard()">Delete Dashboard
+				</button>
+      </div>
+    </div>
+
+  </div>
+</div>

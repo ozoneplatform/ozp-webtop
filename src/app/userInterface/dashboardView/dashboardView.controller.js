@@ -21,8 +21,7 @@ angular.module('ozpWebtop.dashboardView', ['ozpWebtop.models', 'angularSpinner']
  * @param {Object} $scope an Angular scope
  */
 angular.module('ozpWebtop.dashboardView')
-
-.controller('DashboardViewCtrl', function ($scope, $state, $interval, $log,
+  .controller('DashboardViewCtrl', function ($scope, $state, $interval, $log,
                                            models, maxStickyBoards) {
 
     $scope.intervalCount = 0;
@@ -84,12 +83,7 @@ angular.module('ozpWebtop.dashboardView')
 
     $scope.maxStickyBoards = maxStickyBoards;
     $scope.stickyBoardsArray = function(num) {
-        return new Array(num);   
+        return new Array(num);
     };
 
   });
-
-angular.module('ozpWebtop.dashboardView')
-  .config(['usSpinnerConfigProvider', function (usSpinnerConfigProvider) {
-    usSpinnerConfigProvider.setDefaults({color: '#fff'});
-}]);

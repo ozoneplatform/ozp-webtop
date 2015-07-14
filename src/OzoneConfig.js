@@ -8,17 +8,17 @@ window.OzoneConfig = {
     'METRICS_URL': '/path/to/metrics',
     'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop',
     'HELP_DOCS': {
-    	'Help doc 1': '/path/to/document', 
+    	'Help doc 1': '/path/to/document',
     	'Help doc 2': '/path/to/document',
     	'Help doc 3': '/path/to/document',
     	'Help doc 4': '/path/to/document',
     	'Help doc 5': '/path/to/document'
     },
     'HELP_VIDEOS': {
-    	'Video 1': '/path/to/video', 
+    	'Video 1': '/path/to/video',
     	'Video 2': '/path/to/video',
     	'Video 3': '/path/to/video',
     	'Video 4': '/path/to/video',
     	'Video 5': '/path/to/video'
-    }   
+    }
 };

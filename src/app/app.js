@@ -22,7 +22,7 @@
  * @requires ozpWebtop.dashboardView.chrome
  * @requires ozpWebtop.dashboardView.desktop
  * @requires ozpWebtop.dashboardView.desktop.managedFrame
- * * @requires ozpWebtop.dashboardView
+ * @requires ozpWebtop.dashboardView
  * @requires ozpWebtop.dashboardView.grid
  * @requires ozpWebtop.addApplicationsModal
  * @requires ozpWebtop.editDashboardModal
@@ -37,6 +37,7 @@
  * @requires gridster
  * @requires ozpIwcClient
  * @requires ozpClassification
+ * @requires filters
  */
 angular.module( 'ozpWebtop', [
   'ozp.common.ellipticalFilter',
@@ -63,7 +64,9 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.helpModal',
   'ozpWebtop.editDashboardModal',
   'ozpWebtop.createDashboardModal',
+  'ozpWebtop.deleteDashboardModal',
   'ozpWebtop.urlWidgetLauncher',
+  'ozpWebtop.filters',
   'ui.router',
   'ct.ui.router.extras',
   'ui.bootstrap',
@@ -89,7 +92,7 @@ angular.module( 'ozpWebtop', [
     states.push({name: 'dashboardview', url: '/',
       views: {
         '@': {controller: 'DashboardViewCtrl',
-          templateUrl: 'dashboardView/dashboardView.tpl.html'}
+          templateUrl: 'userInterface/dashboardView/dashboardView.tpl.html'}
     }});
 
     // Sticky views
@@ -104,7 +107,7 @@ angular.module( 'ozpWebtop', [
         sticky: true
       };
       gridState.views[gridViewName] = {controller: 'GridCtrl',
-        templateUrl: 'dashboardView/grid/grid.tpl.html'};
+        templateUrl: 'userInterface/dashboardView/grid/grid.tpl.html'};
 
       states.push(gridState);
 
@@ -116,7 +119,7 @@ angular.module( 'ozpWebtop', [
         sticky: true
       };
       desktopState.views[desktopViewName] = {controller: 'DesktopCtrl',
-        templateUrl: 'dashboardView/desktop/desktop.tpl.html'};
+        templateUrl: 'userInterface/dashboardView/desktop/desktop.tpl.html'};
 
       states.push(desktopState);
     }
@@ -163,7 +166,7 @@ angular.module( 'ozpWebtop', [
         }
       });
       // Get the notifications on load.
-      // TODO when there is a way to communicate changes from the server to the 
+      // TODO when there is a way to communicate changes from the server to the
       //      application show notification updates live
       restInterface.getNotifications().then(function(notifications) {
         $rootScope.$broadcast(notificationReceivedEvent, notifications);

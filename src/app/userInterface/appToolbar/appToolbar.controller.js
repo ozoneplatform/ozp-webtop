@@ -13,7 +13,9 @@
  * @requires ozpWebtop.editDashboardModal
  * @requires ozp.common.windowSizeWatcher
  */
-angular.module('ozpWebtop.appToolbar', ['ui.router', 'ui.bootstrap',
+angular.module('ozpWebtop.appToolbar', [
+  'ui.router',
+  'ui.bootstrap',
   'ozpWebtop.models',
   'ozpWebtop.addApplicationsModal',
   'ozpWebtop.createDashboardModal',
@@ -410,7 +412,7 @@ angular.module( 'ozpWebtop.appToolbar')
      */
     $scope.openApplicationsModal = function() {
       var modalInstance = $modal.open({
-        templateUrl: 'addApplicationsModal/addApplicationsModal.tpl.html',
+        templateUrl: 'userInterface/addApplicationsModal/addApplicationsModal.tpl.html',
         controller: 'AddApplicationsModalInstanceCtrl',
         windowClass: 'app-modal-window-large',
         scope: $rootScope,
@@ -503,7 +505,7 @@ angular.module( 'ozpWebtop.appToolbar')
          $scope.board = board;
          $scope.modalInstanceType = 'edit';
          var modalInstance = $modal.open({
-           templateUrl: 'editDashboardModal/editDashboardModal.tpl.html',
+           templateUrl: 'userInterface/editDashboardModal/editDashboardModal.tpl.html',
            controller: 'EditDashboardModalInstanceCtrl',
            windowClass: 'app-modal-window-large',
            scope: $scope,
@@ -551,7 +553,7 @@ angular.module( 'ozpWebtop.appToolbar')
       if($scope.dashboards.length < maxStickyBoards){
         $scope.modalInstanceType = 'new';
         var modalInstance = $modal.open({
-          templateUrl: 'createDashboardModal/createDashboardModal.tpl.html',
+          templateUrl: 'userInterface/createDashboardModal/createDashboardModal.tpl.html',
           controller: 'CreateDashboardModalInstanceCtrl',
           windowClass: 'app-modal-window-large',
           scope: $scope,
@@ -591,43 +593,43 @@ angular.module( 'ozpWebtop.appToolbar')
       }
     };
 
+    /**
+      * @method openHelpModal
+      * @param board the changed board object
+      * @returns {*}
+      */
     $scope.openDeleteDashboardModal = function(board) {
-      if ($scope.dashboards.length === 1) {
-        $log.error('ERROR: You may not delete your last dashboard');
-        return;
-      } else {
-        $log.debug('dashboards remaining: ' + $scope.dashboards.length);
-      }
-      var msg = 'Are you sure you want to delete dashboard ' +
-          board.name + '? This action cannot be undone';
-      if ($window.confirm(msg)) {
-        // Notify the grid controller to remove its widgets.
-        $rootScope.$broadcast(removeFramesOnDeleteEvent, {'dashboardId': board.id});
-        models.removeDashboard(board.id);
-        // redirect user to their first board
-        $scope.dashboards = models.getDashboards();
-        //if currentDashboard equals the daashboard being deleted's id:
-        if($scope.currentDashboard === board.id){
-          // redirect user to their first board
-          $state.go('dashboardview.' + $scope.dashboards[0].layout + '-sticky-' +
-            $scope.dashboards[0].stickyIndex, {'dashboardId': $scope.dashboards[0].id});
+      $scope.board = board;
+      $scope.board.shit = 'cats';
+      var modalInstance = $modal.open({
+        templateUrl: 'userInterface/deleteDashboardModal/deleteDashboardModal.tpl.html',
+        controller: 'deleteDashboardModalCtrl',
+        windowClass: 'app-modal-window-large',
+        scope: $scope,
+        resolve: {
+          dashboard: function() {
+            return $scope.response;
+          }
         }
-      }
+      });
+
+      modalInstance.result.then(function (response) {
+          if (response === 'delete') {
+            // Notify the grid controller to remove its widgets.
+            $rootScope.$broadcast(removeFramesOnDeleteEvent, {'dashboardId': board.id});
+            models.removeDashboard(board.id);
+            // redirect user to their first board
+            $scope.dashboards = models.getDashboards();
+            //if currentDashboard equals the daashboard being deleted's id:
+            console.log('booger', $scope.currentDashboard);
+            console.log('booger2', board.id);
+            if($scope.currentDashboard.id === board.id){
+              console.log('deleting dashboard!!!!!!');
+              // redirect user to their first board
+              $state.go('dashboardview.' + $scope.dashboards[0].layout + '-sticky-' +
+                $scope.dashboards[0].stickyIndex, {'dashboardId': $scope.dashboards[0].id});
+            }
+          }
+      });
     };
   });
-
-/**
- * Directive for the application toolbar
- *
- * ngtype: directive
- *
- * @class appToolbar
- * @static
- */
-angular.module( 'ozpWebtop.appToolbar')
-    .directive('appToolbar',function(){
-    return {
-        restrict: 'E',
-        templateUrl: 'appToolbar/appToolbar.tpl.html'
-    };
-});

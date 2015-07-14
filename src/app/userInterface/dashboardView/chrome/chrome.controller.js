@@ -11,7 +11,7 @@ angular.module('ozpWebtop.dashboardView.chrome', [
   'ozpWebtop.constants',
   'ozpWebtop.models']);
 
-var chrome = angular.module('ozpWebtop.dashboardView.chrome');
+angular.module('ozpWebtop.dashboardView.chrome')
 
 /**
  * ChromeCtrl aids the ozpChrome directive in knowing its location
@@ -27,7 +27,7 @@ var chrome = angular.module('ozpWebtop.dashboardView.chrome');
  * @param dashboardStateChangedEvent event name
  * @namespace dashboardView
  */
-chrome.controller('ChromeCtrl', function ($scope, $rootScope, $log, models,
+.controller('ChromeCtrl', function ($scope, $rootScope, $log, models,
                                     dashboardStateChangedEvent) {
 
   // need to get initial data from frame - can't rely on getting the
@@ -90,25 +90,4 @@ chrome.controller('ChromeCtrl', function ($scope, $rootScope, $log, models,
       'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
   };
 
-});
-
-/**
- * Directive for chrome (bar appearing across the top of each widget)
- *
- * ngtype: directive
- *
- * @class ozpChrome
- * @static
- * @namespace dashboardView
- */
-chrome.directive('ozpChrome', function () {
-  return {
-    templateUrl: 'dashboardView/chrome/ozpchrome.tpl.html',
-    restrict: 'E',
-    replace: true,
-    controller: 'ChromeCtrl',
-    scope: {
-      'frame': '='
-    }
-  };
 });

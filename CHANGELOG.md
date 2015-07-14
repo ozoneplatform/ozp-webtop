@@ -1,3 +1,14 @@
+<a name"0.4.18"></a>
+### 0.4.18 (2015-07-14)
+
+
+#### Bug Fixes
+
+* **cascadeNewApps:** Newly added widgets cascade by default. #567 ([0eb791a9](https://github.com/ozone-development/ozp-webtop/commit/0eb791a9))
+* **dashboardColumns:** Did away with columns that were causing problems with adding widgets in desktop  ([c23508e7](https://github.com/ozone-development/ozp-webtop/commit/c23508e7))
+* **notifications:** Notification dropdowns work again for 0, 1, or multiple notifications. #606 ([afe49fc4](https://github.com/ozone-development/ozp-webtop/commit/afe49fc4))
+
+
 <a name"0.4.17"></a>
 ### 0.4.17 (2015-07-07)
 

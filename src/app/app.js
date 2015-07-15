@@ -51,6 +51,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.constants',
   'ozpWebtop.services.ozpInterface',
   'ozpWebtop.models',
+  'ozpWebtop.services.widgets',
   'ozpWebtop.appToolbar',
   'ozpWebtop.ozpToolbar',
   'ozpWebtop.dashboardView.button',
@@ -135,6 +136,11 @@ angular.module( 'ozpWebtop', [
       multiple webtop instances is not well supported
      */
     states.push({name: 'url-launch-app', url: '/launchApp/:appId',
+      controller: 'UrlWidgetLauncherCtrl'});
+
+    //for the url-lauch-folder route appId is the individual appID, dashName is
+    //  new dashboard name
+    states.push({name: 'url-launch-folder', url: '/launchFolder?dashName&appIds',
       controller: 'UrlWidgetLauncherCtrl'});
 
     angular.forEach(states, function(state) { $stateProvider.state(state); });

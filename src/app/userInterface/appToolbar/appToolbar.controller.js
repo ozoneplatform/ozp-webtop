@@ -62,7 +62,8 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  fullScreenModeToggleEvent,
                                                  highlightFrameOnGridLayoutEvent,
                                                  removeFramesOnDeleteEvent,
-                                                 tooltipDelay, dashboardMaxWidgets) {
+                                                 tooltipDelay, dashboardMaxWidgets,
+                                                 widgetService) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

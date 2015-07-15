@@ -32,9 +32,14 @@ var models = angular.module('ozpWebtop.models');
  * @static
  * @namespace models
  */
+<<<<<<< HEAD
 models.factory('models', function($sce, $log, $http, $window, useIwc,
                                   iwcInterface, restInterface, Utilities,
                                   dashboardMaxWidgets) {
+=======
+models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
+                                  iwcInterface, restInterface, Utilities) {
+>>>>>>> chore(appToolbar): Removing some logging messages that were left in
 
   var cachedWebtopData = null;
   var cachedApplicationData = null;
@@ -130,7 +135,7 @@ models.factory('models', function($sce, $log, $http, $window, useIwc,
       }
     },
     /**
-     * Get all webtop data
+     * Get all webtop data via deep copy
      *
      * @method getWebtopData
      * @returns webtop data
@@ -272,6 +277,7 @@ models.factory('models', function($sce, $log, $http, $window, useIwc,
       return this.saveFrame(frame);
     },
     /**
+<<<<<<< HEAD
      * Check to see if an application is already on a given dashboard
      * @method isAppOnDashboard
      * @param dashboardId
@@ -402,6 +408,8 @@ models.factory('models', function($sce, $log, $http, $window, useIwc,
       }
     },
     /**
+=======
+>>>>>>> chore(appToolbar): Removing some logging messages that were left in
      * Remove a frame from a dashboard
      * @method removeFrame
      * @param frameId
@@ -621,7 +629,9 @@ models.factory('models', function($sce, $log, $http, $window, useIwc,
         dashboard.layout = 'grid';
       }
       var dashboardData = this.getWebtopData();
+
       var dashboardId = this.getNewDashboardId();
+
       var nextStickyIndex = this.getNextStickyIndex(dashboard.layout);
       $log.debug('creating new board with sticky slot ' + nextStickyIndex);
       var newBoard = {
@@ -629,13 +639,14 @@ models.factory('models', function($sce, $log, $http, $window, useIwc,
         'id': dashboardId,
         'stickyIndex': nextStickyIndex,
         'layout': dashboard.layout,
-        'frames': [
-        ]
+        'frames': []
       };
+
       var dashboards = this.getDashboards();
       dashboards.push(newBoard);
       dashboardData.dashboards = dashboards;
       return setWebtopData(dashboardData);
+      // return {'dashboardId':dashboardId, 'nextStickyIndex':nextStickyIndex };
     },
     /**
      * Get the next available id for a new dashboard
@@ -645,10 +656,13 @@ models.factory('models', function($sce, $log, $http, $window, useIwc,
      */
     getNewDashboardId: function() {
       var dashboards = this.getDashboards();
+
       var existingIds = [];
       var newId = -1;
       // just a simple test to determine if the dashboardData is valid. Should
       // do something better eventually
+      console.log('$$$$$');
+      console.log(dashboards);
       if (Object.prototype.toString.call( dashboards ) === '[object Array]') {
         for (var i=0; i < dashboards.length; i++) {
           existingIds.push(Number(dashboards[i].id));

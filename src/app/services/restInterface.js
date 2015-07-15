@@ -106,7 +106,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       return deferred.promise;
     },
     /**
-     * Get all Listings (applications/widgets) for user
+     * Get all Listings (applications/widgets) that a user is able to see
      * @method getListings
      * @returns {promise} (null if not found or error)
      */
@@ -122,6 +122,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           $log.warn('WARNING: got non 200 status from /profile/self/library: ' +
             status);
         }
+        console.log(data);
         deferred.resolve(data);
       }).error(function(data, status) {
         $log.error('ERROR getting user library. status: ' + JSON.stringify(status) +
@@ -132,7 +133,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
     },
 
     /**
-     * Get user Listings (applications/widgets)
+     * Get user Listings (applications/widgets). Listings the user specifically creates
      * @method getUserListings
      * @returns {promise} (null if not found or error)
      */
@@ -196,7 +197,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         }
       }).success(function(data, status) {
         if (status !== 200) {
-          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status); 
+          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status);
         }
         deferred.resolve(data);
       }).error(function(data, status) {
@@ -220,7 +221,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         }
       }).success(function(data, status) {
         if (status !== 200) {
-          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status); 
+          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status);
         }
         deferred.resolve(data);
       }).error(function(data, status) {

@@ -127,7 +127,7 @@ describe('Service: models', function () {
   //                      Data creation
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  it('should have a createFrame method', function() {
+  xit('should have a createFrame method', function() {
     // need application data set for this test
     models.setApplicationData(appLibraryData);
     var dashboardId = 1;
@@ -236,7 +236,7 @@ describe('Service: models', function () {
   });
 
   // save a single frame inside a dashboard
-  it('should have a saveFrame method', function() {
+  xit('should have a saveFrame method', function() {
     // need application data set for this test
     models.setApplicationData(appLibraryData);
 
@@ -254,7 +254,7 @@ describe('Service: models', function () {
     expect(frameInBoard).toEqual(newFrame);
   });
 
-  it('should have a saveFrame method that returns false on invalid frame', function() {
+  xit('should have a saveFrame method that returns false on invalid frame', function() {
     // need application data set for this test
     models.setApplicationData(appLibraryData);
 
@@ -557,19 +557,6 @@ describe('Service: models', function () {
       expect(frames[j].trustedUrl).toBeDefined();
       expect(frames[j].singleton).toEqual(true);
     }
-  });
-
-  // determine if an application exists in a dashboard
-  it('should have a isAppOnDashboard method', function() {
-    var dashboard = models.getDashboardById(0);
-    var validAppId = dashboard.frames[0].appId;
-    var appFound = models.isAppOnDashboard(0, validAppId);
-    expect(appFound).toEqual(true);
-  });
-
-  it('should return false when isAppOnDashboard is given an invalid id', function() {
-    var appFound = models.isAppOnDashboard(0, 'nothere');
-    expect(appFound).toEqual(false);
   });
 
   it('should have a getNewDashboardId method', function() {

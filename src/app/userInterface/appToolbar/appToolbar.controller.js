@@ -600,7 +600,6 @@ angular.module( 'ozpWebtop.appToolbar')
       */
     $scope.openDeleteDashboardModal = function(board) {
       $scope.board = board;
-      $scope.board.shit = 'cats';
       var modalInstance = $modal.open({
         templateUrl: 'userInterface/deleteDashboardModal/deleteDashboardModal.tpl.html',
         controller: 'deleteDashboardModalCtrl',
@@ -621,10 +620,7 @@ angular.module( 'ozpWebtop.appToolbar')
             // redirect user to their first board
             $scope.dashboards = models.getDashboards();
             //if currentDashboard equals the daashboard being deleted's id:
-            console.log('booger', $scope.currentDashboard);
-            console.log('booger2', board.id);
             if($scope.currentDashboard.id === board.id){
-              console.log('deleting dashboard!!!!!!');
               // redirect user to their first board
               $state.go('dashboardview.' + $scope.dashboards[0].layout + '-sticky-' +
                 $scope.dashboards[0].stickyIndex, {'dashboardId': $scope.dashboards[0].id});

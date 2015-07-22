@@ -32,7 +32,7 @@ var models = angular.module('ozpWebtop.models');
  * @static
  * @namespace models
  */
-models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
+models.factory('models', function($sce, $log, $http, $window, useIwc,
                                   iwcInterface, restInterface, Utilities,
                                   dashboardMaxWidgets) {
 
@@ -287,6 +287,18 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
       }
       return false;
     },
+    overMaxWidgets: function(dashboardId){
+      var dashboard = this.getDashboardById(dashboardId);
+
+      if (dashboardMaxWidgets <= dashboard.frames.length) {
+        // TODO: handle error
+        $log.error('ERROR: cannot add frame, too many widgets');
+        return true;
+      }
+      else {
+        return false;
+      }
+    },
     /**
      * Create a new frame in a dashboard for a given application
      * Creates a frame with with both grid and desktop layout data
@@ -298,98 +310,96 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
     createFrame: function(dashboardId, appId) {
       var dashboard = this.getDashboardById(dashboardId);
 
-      if (dashboardMaxWidgets <= dashboard.frames.length) {
-        // TODO: handle error
-        alert('You have reached the maximum number of apps per dashbaord');
-        $log.error('ERROR: cannot add frame, too many widgets');
+      if(this.overMaxWidgets(dashboardId) === true) {
         return null;
       }
+      else {
+        // by default, new frames will have minimal size
+        var col = 0;
+        var sizeX = 2;
+        var sizeY = 2;
 
-      // by default, new frames will have minimal size
-      var col = 0;
-      var sizeX = 2;
-      var sizeY = 2;
+        // for the desktop layout, just put it on and let the user move it
+        var zIndex = 0;
+        var top = 75;
+        var left = 75;
+        var width = 250;
+        var height = 250;
 
-      // for the desktop layout, just put it on and let the user move it
-      var zIndex = 0;
-      var top = 75;
-      var left = 75;
-      var width = 250;
-      var height = 250;
+        var MaxArray = [];
+        MaxArray.max =  function(){
+          return Math.max.apply(null, this);
+        };
 
-      // extend array to be able to give us max value
-      Array.prototype.max = function() {
-        return Math.max.apply(null, this);
-      };
+        // empty arrays built every time createFrame is called
+        var maxTopArray = MaxArray;
+        var maxLeftArray = MaxArray;
+        var maxZindexArray = MaxArray;
 
-      // empty arrays built every time createFrame is called
-      var maxTopArray = [];
-      var maxLeftArray = [];
-      var maxZindexArray = [];
-
-      // loop through and populate arrays with the top, left, and zindex of all frames
-      for(var frame in dashboard.frames){
-        if(dashboard.frames.length > 0){
-          if(dashboard.frames[frame].desktopLayout){
-            maxTopArray.push(dashboard.frames[frame].desktopLayout.top);
-            maxLeftArray.push(dashboard.frames[frame].desktopLayout.left);
-            maxZindexArray.push(dashboard.frames[frame].desktopLayout.zIndex);
+        // loop through and populate arrays with the top, left, and zindex of all frames
+        for(var frame in dashboard.frames){
+          if(dashboard.frames.length > 0){
+            if(dashboard.frames[frame].desktopLayout){
+              maxTopArray.push(dashboard.frames[frame].desktopLayout.top);
+              maxLeftArray.push(dashboard.frames[frame].desktopLayout.left);
+              maxZindexArray.push(dashboard.frames[frame].desktopLayout.zIndex);
+            }
           }
         }
-      }
 
-      // set the top, left, and zindex based on the maximum values on screen
-      if (maxTopArray.length > 0){
-        top = maxTopArray.max() + 32;
-      }
-      if (maxLeftArray.length > 0){
-        left = maxLeftArray.max() + 32;
-      }
-      if (maxZindexArray.length > 0){
-        zIndex = maxZindexArray.max() + 10;
-      }
-      var utils = new Utilities();
-      var frameId = utils.generateUuid();
-
-      // get the name for this app (if this app is later deleted, at least
-      // we can tell the user what it is called)
-      var appName = 'unknown';
-      var applicationData = this.getApplicationData();
-      for (var a=0; a < applicationData.length; a++) {
-        if (applicationData[a].id === appId) {
-          appName = applicationData[a].name;
+        // set the top, left, and zindex based on the maximum values on screen
+        if (maxTopArray.length > 0){
+          top = maxTopArray.max() + 32;
         }
-      }
+        if (maxLeftArray.length > 0){
+          left = maxLeftArray.max() + 32;
+        }
+        if (maxZindexArray.length > 0){
+          zIndex = maxZindexArray.max() + 10;
+        }
+        var utils = new Utilities();
+        var frameId = utils.generateUuid();
 
-      // update the dashboard with this app
-      var newApp = {
-        'appId': appId,
-        'id': frameId,
-        'name': appName,
-        'gridLayout': {
-          'sm': {
-            'col': col,
-            'sizeX': 3,
-            'sizeY': 1
+        // get the name for this app (if this app is later deleted, at least
+        // we can tell the user what it is called)
+        var appName = 'unknown';
+        var applicationData = this.getApplicationData();
+        for (var a=0; a < applicationData.length; a++) {
+          if (applicationData[a].id === appId) {
+            appName = applicationData[a].name;
+          }
+        }
+
+        // update the dashboard with this app
+        var newApp = {
+          'appId': appId,
+          'id': frameId,
+          'name': appName,
+          'gridLayout': {
+            'sm': {
+              'col': col,
+              'sizeX': 3,
+              'sizeY': 1
+            },
+            'md': {
+              'col': col,
+              'sizeX': sizeX,
+              'sizeY': sizeY
+            }
           },
-          'md': {
-            'col': col,
-            'sizeX': sizeX,
-            'sizeY': sizeY
+          'desktopLayout': {
+            'zIndex': zIndex,
+            'top': top,
+            'left': left,
+            'width': width,
+            'height': height
           }
-        },
-        'desktopLayout': {
-          'zIndex': zIndex,
-          'top': top,
-          'left': left,
-          'width': width,
-          'height': height
-        }
-      };
+        };
 
-      dashboard.frames.push(newApp);
-      this.saveDashboard(dashboard);
-      return newApp;
+        dashboard.frames.push(newApp);
+        this.saveDashboard(dashboard);
+        return newApp;
+      }
     },
     /**
      * Remove a frame from a dashboard

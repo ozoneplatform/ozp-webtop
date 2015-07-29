@@ -415,7 +415,7 @@ angular.module( 'ozpWebtop.appToolbar')
         templateUrl: 'userInterface/addApplicationsModal/addApplicationsModal.tpl.html',
         controller: 'AddApplicationsModalInstanceCtrl',
         windowClass: 'app-modal-window-large',
-        scope: $rootScope,
+        scope: $scope,
         resolve: {
           apps: function() {
             return $scope.apps;
@@ -437,9 +437,24 @@ angular.module( 'ozpWebtop.appToolbar')
         var isOnDashboard = models.isAppOnDashboard(dashboardId, app.id);
         if (isOnDashboard && app.singleton) {
           $log.warn('WARNING: Only one instance of ' + app.name + ' may be on your dashboard');
-        } else {
-          // TODO: use message broadcast to get grid max rows and grid max cols
-          return models.createFrame(dashboardId, app.id);
+        }
+        else {
+          if(models.overMaxWidgets(dashboardId) === false){
+              models.createFrame(dashboardId, app.id);
+          }
+          else {
+            $modal.open({
+              templateUrl: 'userInterface/appWarningModal/appWarningModal.tpl.html',
+              controller: 'appWarningModal',
+              size: 'md',
+              scope: $scope,
+              resolve: {
+                apps: function() {
+                  return $scope;
+                }
+              }
+            });
+          }
         }
       }
 
@@ -487,7 +502,8 @@ angular.module( 'ozpWebtop.appToolbar')
           $log.debug('issuing dashboardStateChangedEvent');
           $rootScope.$broadcast(dashboardStateChangedEvent, {
             'dashboardId': $scope.currentDashboard.id,
-            'layout': $scope.currentDashboard.layout});
+            'layout': $scope.currentDashboard.layout
+          });
         }
 
       });

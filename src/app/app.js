@@ -27,6 +27,7 @@
  * @requires ozpWebtop.addApplicationsModal
  * @requires ozpWebtop.editDashboardModal
  * @requires ozpWebtop.createDashboardModal
+ * @requires ozpWebtop.appWarningModal
  * @requires ozpWebtop.profileModal
  * @requires ozpWebtop.settingsModal
  * @requires ozpWebtop.helpModal
@@ -65,6 +66,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.editDashboardModal',
   'ozpWebtop.createDashboardModal',
   'ozpWebtop.deleteDashboardModal',
+  'ozpWebtop.appWarningModal',
   'ozpWebtop.urlWidgetLauncher',
   'ozpWebtop.filters',
   'ui.router',

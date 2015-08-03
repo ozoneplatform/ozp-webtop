@@ -3,6 +3,7 @@ window.OzoneConfig = {
     'CENTER_URL': 'https://ozone-development.github.io/ozp-center',
     'DEVELOPER_RESOURCES_URL': '#',
     'FEEDBACK_ADDRESS': 'mailto:person@address.com',
+    'HELPDESK_ADDRESS': 'http://localhost/helpdesk',
     'HUD_URL': 'https://ozone-development.github.io/ozp-hud',
     'IWC_URL': 'https://ozone-development.github.io/iwc',
     'METRICS_URL': '/path/to/metrics',

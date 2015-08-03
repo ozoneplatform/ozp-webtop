@@ -138,10 +138,16 @@ angular.module( 'ozpWebtop.ozpToolbar')
     $scope.metricsUrl = $window.OzoneConfig.METRICS_URL;
     $scope.developerResourcesUrl = $window.OzoneConfig.DEVELOPER_RESOURCES_URL;
     $scope.feedbackAddress = $window.OzoneConfig.FEEDBACK_ADDRESS;
+    $scope.helpdeskAddress = $window.OzoneConfig.HELPDESK_ADDRESS;
     $scope.feedbackTarget = '_blank';
+    $scope.helpdeskTarget = '_blank';
 
     if($scope.feedbackAddress.substring(0,7)=== 'mailto:'){
       $scope.feedbackTarget = '_self';
+    }
+
+    if($scope.helpdeskAddress.substring(0,7)=== 'mailto:'){
+      $scope.helpdeskTarget = '_self';
     }
 
 

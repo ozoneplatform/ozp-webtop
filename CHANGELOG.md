@@ -1,3 +1,17 @@
+<a name"1.0.1"></a>
+### 1.0.1 (2015-08-04)
+
+
+#### Bug Fixes
+
+* **maxWidgetsAlert:** Added a modal that serves as an alert message, letting users know they have reac ([c7661fda](https://github.com/ozone-development/ozp-webtop/commit/c7661fda))
+
+
+#### Features
+
+* **Menu:** Add helpdesk link to dropdown menu ([d231f660](https://github.com/ozone-development/ozp-webtop/commit/d231f660))
+
+
 <a name"1.0.0"></a>
 ## 1.0.0 (2015-07-22)
 

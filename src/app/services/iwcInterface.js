@@ -7,7 +7,10 @@
  * @requires ozp.common.iwc.client
  */
 angular.module('ozpWebtop.services.iwcInterface', [
-  'ozp.common.iwc.client']);
+  'ozp.common.iwc.client',
+  'ozpWebtop.constants',
+  'ozpWebtop.models',
+  'ozpWebtop.iwcIntentModal']);
 
 var app = angular.module('ozpWebtop.services.iwcInterface');
 
@@ -21,12 +24,62 @@ var app = angular.module('ozpWebtop.services.iwcInterface');
  * @param $q ng $q service
  * @param $log ng $log service
  * @param iwcConnectedClient IWC client service
+ * @param restConnectedClient REST service
  * @namespace services
  */
-app.factory('iwcInterface', function($q, $log, iwcConnectedClient) {
+app.factory('iwcInterface', function ($log, $modal,$document, iwcConnectedClient) {
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //                           initialization
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // flag to ensure multiple IWC set requests are not made concurrently
   var readyToSet = true;
+
+  // Registers the webtop to open a modal and handle IWC intent choosing.
+  // If called to handle opening an intent chooser, webtop will show the modal only if the document is in focus.
+  // If not, it will let the IWC try some other bus connection to handle the intent choosing.
+  iwcConnectedClient.getClient().then(function (client) {
+    function onIntentChoosing(data) {
+      return new Promise(function (res, rej) {
+        if (data.entity && data.entity.inFlightIntent && (data.entity.force || $document[0].hasFocus())) {
+          $modal.open({
+            templateUrl: 'userInterface/iwcIntentModal/iwcIntentModal.tpl.html',
+            controller: 'iwcIntentModalInstanceCtrl',
+            windowClass: 'app-modal-window-small',
+            resolve: {
+              client: function () {
+                return client;
+              },
+              inFlightIntent: function () {
+                return data.entity.inFlightIntent;
+              }
+            }
+          });
+          res();
+        } else {
+          // Fail silently, webtop wasn't in focus. Another IWC bus connection will handle the choosing.
+          rej();
+        }
+      });
+    }
+
+    var registrationData = {
+      contentType: 'application/vnd.ozp-iwc-intent-handler-v1+json',
+      entity: {
+        label: 'Webtop\'s intent chooser'
+      }
+    };
+
+    client.intents().register('/inFlightIntent/chooser/choose', registrationData, onIntentChoosing)
+        .catch(function (err) {
+      $log.error('Error handling IWC intent choosing:', err);
+    });
+  });
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //                          methods
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /**
    * Get resource from IWC bus
@@ -37,16 +90,17 @@ app.factory('iwcInterface', function($q, $log, iwcConnectedClient) {
    */
   function _getData(dst, resource) {
     $log.debug('iwcClient.api(' + dst + ').get(' + resource + ')');
-    return iwcConnectedClient.getClient().then(function(client) {
+    return iwcConnectedClient.getClient().then(function (client) {
       return client.api(dst)
-        .get(resource)
-        .then(function (reply) {
-          return reply.entity;
-        });
-    }).catch(function(error) {
+          .get(resource)
+          .then(function (reply) {
+            return reply.entity;
+          });
+    }).catch(function (error) {
       $log.error('Error getting IWC data: ' + error);
     });
   }
+
   /**
    * Set resource on IWC bus
    * @param dst IWC destination like data.api
@@ -59,19 +113,19 @@ app.factory('iwcInterface', function($q, $log, iwcConnectedClient) {
     if (readyToSet) {
       readyToSet = false;
       $log.debug('iwcClient.api(' + dst + ').set(' + resource + ')');
-      iwcConnectedClient.getClient().then(function(client) {
+      iwcConnectedClient.getClient().then(function (client) {
         client.api(dst)
-          .set(resource, setData)
-          .then(function (response) {
-            if (response.response === 'ok') {
-              readyToSet = true;
-            } else {
-              $log.error('ERROR: setting data for ' + resource + ' in ' +
-                dst + ', response: ' + response);
-              readyToSet = true;
-            }
-          });
-      }).catch(function(error) {
+            .set(resource, setData)
+            .then(function (response) {
+              if (response.response === 'ok') {
+                readyToSet = true;
+              } else {
+                $log.error('ERROR: setting data for ' + resource + ' in ' +
+                    dst + ', response: ' + response);
+                readyToSet = true;
+              }
+            });
+      }).catch(function (error) {
         $log.error('ERROR setting IWC data: ' + error);
       });
       return true;
@@ -80,7 +134,7 @@ app.factory('iwcInterface', function($q, $log, iwcConnectedClient) {
   }
 
   function _appendApplicationData(appResource, appListings) {
-    return _getData('system.api', appResource).then(function(appData) {
+    return _getData('system.api', appResource).then(function (appData) {
       appListings.push(appData);
     });
   }
@@ -129,9 +183,9 @@ app.factory('iwcInterface', function($q, $log, iwcConnectedClient) {
      * @method getListings
      * @returns {promise} (null if not found or error)
      */
-    getListings: function() {
+    getListings: function () {
       var appListings = [];
-      return _getData('system.api', '/application').then(function(myApps) {
+      return _getData('system.api', '/application').then(function (myApps) {
         return myApps.reduce(function (previous, current) {
           return previous.then(function () {
             var promise = _appendApplicationData(current, appListings);
@@ -142,10 +196,29 @@ app.factory('iwcInterface', function($q, $log, iwcConnectedClient) {
         }, Promise.resolve()).then(function () {
           // all application data obtained
           // $log.debug('app listings: ' + appListings);
-          // TODO: this doesn't match the getListings interface in restInterface.js
-          return {'apps': appListings};
+          return appListings;
         });
       });
+    },
+    /**
+     * Get user Profile
+     * @method getProfile
+     * @returns {promise}
+     */
+    getProfile: function () {
+      return _getData('system.api', '/user').catch(function (err) {
+        $log.error('ERROR getting user profile. status: ' + JSON.stringify(err.status) +
+            ', data: ' + JSON.stringify(err.message));
+      });
+    },
+    /**
+     * Get user Listings (applications/widgets)
+     * @method getUserListings
+     * @returns {promise} (null if not found or error)
+     */
+    getUserListings: function () {
+      //@TODO
+      return Promise.resolve({});
     }
   };
 });

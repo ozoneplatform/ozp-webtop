@@ -1,23 +1,21 @@
 'use strict';
 
 angular.module('ozpWebtop.profileModal', ['ui.bootstrap',
-'ozpWebtop.models','ozpWebtop.services.restInterface']);
+'ozpWebtop.models','ozpWebtop.services.ozpInterface']);
 /**
 * Controller for profile modal
 *
 * @param $scope
 * @param $modalInstance
-* @param $restInterface
+* @param ozpInterface interface for backend communication
 * @constructor
 */
 angular.module('ozpWebtop.profileModal').controller(
-'profileModalInstanceCtrl', function($scope, $window, $modalInstance, restInterface) {
-
+'profileModalInstanceCtrl', function($scope, $window, $modalInstance, ozpInterface) {
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                           initialization
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 	$scope.centerUrl = $window.OzoneConfig.CENTER_URL;
 
 
@@ -29,7 +27,8 @@ angular.module('ozpWebtop.profileModal').controller(
 	* Gets user profile data
 	*
 	*/
-	restInterface.getProfile().then(function(data){
+
+	ozpInterface.getProfile().then(function(data){
 		var getProfile = data;
 
 		$scope.profileName = getProfile.displayName;
@@ -37,11 +36,10 @@ angular.module('ozpWebtop.profileModal').controller(
 		$scope.profileEmail = getProfile.email;
 	});
 
-/**
+	/**
 	* Gets user listing data
-	*
 	*/
-	restInterface.getUserListings().then(function(data){
+	ozpInterface.getUserListings().then(function(data){
 		  $scope.getUserListings = data._embedded.item;
 
 		 $scope.listingImg = data.imageMediumUrl;

@@ -12,7 +12,7 @@ angular.module('ozpWebtop.ozpToolbar', [
   'ozpWebtop.models',
   'ozpWebtop.settingsModal',
   'ozpWebtop.filters',
-  'ozpWebtop.services.restInterface']);
+  'ozpWebtop.services.ozpInterface']);
 
 angular.module( 'ozpWebtop.ozpToolbar')
 /**
@@ -32,13 +32,14 @@ angular.module( 'ozpWebtop.ozpToolbar')
  * @param windowSizeWatcher notify when window size changes
  * @param deviceSizeChangedEvent event name
  * @param fullScreenModeToggleEvent event name
+ * @param ozpInterface module for backend communication
  * @namespace ozpToolbar
  *
  */
 .controller('OzpToolbarCtrl',
   function($scope, $rootScope, $window, $log, $modal,
            models, windowSizeWatcher, deviceSizeChangedEvent, tooltipDelay,
-           fullScreenModeToggleEvent, restInterface, notificationReceivedEvent) {
+           fullScreenModeToggleEvent, ozpInterface, notificationReceivedEvent) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                            $scope properties
@@ -256,7 +257,7 @@ angular.module( 'ozpWebtop.ozpToolbar')
       * @property isAdmin indicates if the user is an admin
       * @property isOrgSteward indicates if the user is an org steward
       */
-     restInterface.getProfile().then(function(d){
+    ozpInterface.getProfile().then(function(d){
        var userRole=d.highestRole;
        if(userRole === 'ADMIN'){
           $scope.isAdmin = true;

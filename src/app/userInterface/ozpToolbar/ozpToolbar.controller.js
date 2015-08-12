@@ -253,14 +253,20 @@ angular.module( 'ozpWebtop.ozpToolbar')
 
 
     /**
-      * @property isAdmin indicates if the metrics link in ozpToolbar should be hidden
+      * @property isAdmin indicates if the user is an admin
+      * @property isOrgSteward indicates if the user is an org steward
       */
      restInterface.getProfile().then(function(d){
        var userRole=d.highestRole;
-       if(userRole === 'ADMIN' || userRole === 'METRICS'){
-          $scope.isAdmin =  true;
+       if(userRole === 'ADMIN'){
+          $scope.isAdmin = true;
        }else{
-         $scope.isAdmin = false;
+          $scope.isAdmin = false;
+       }
+       if(userRole === 'ORG_STEWARD'){
+           $scope.isOrgSteward = true;
+       }else{
+           $scope.isOrgSteward = false;
        }
     });
   }

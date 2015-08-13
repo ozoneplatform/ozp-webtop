@@ -22,7 +22,7 @@
               <h4>Visit Center to discover new apps that you can start using.</h4>
               <img ng-src="assets/img/O3Marketplace_Logo_Dark_small.png" alt="AppsMall Center Image" />
             </span>
-            <li ng-repeat="app in applications">
+            <li ng-repeat="app in applications | orderBy: 'name'">
               <span ng-click="appSelected(app)" class="link-pointer"
                   ng-class="{addappselected: isAppSelected(app)}"
                   tooltip-placement="right" tooltip="{{app.descriptionShort}}">

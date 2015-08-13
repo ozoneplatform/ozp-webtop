@@ -27,29 +27,10 @@ angular.module('ozpWebtop.addApplicationsModal').controller(
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
-     * Return a list of apps sorted in alphabetical order
-     *
-     * @method sortApps
-     * @param apps Array of applications to sort
-     * @returns {[]}
-     */
-    function sortApps(apps) {
-      return apps.sort(function(a, b) {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-
-    /**
      * @property applications The user's applications, sorted alphabetically
      * @type {[]}
      */
-    $scope.applications = sortApps(apps);
+    $scope.applications = apps;
 
     /**
      * @property selectedApps The applications selected to add
@@ -161,4 +142,3 @@ angular.module('ozpWebtop.addApplicationsModal').controller(
     };
 
 });
-

@@ -18,7 +18,7 @@ var app = angular.module('ozp.common.iwc.client');
  * @class iwcConnectedClient
  * @constructor
  * @param $q ng $q service
- * @param iwcClient iwcClient service from ozp-iwc-angular library
+ * @param iwcClient iwcClient service from ozp-iwc library
  * @namespace ozp.common.iwc
  */
 app.factory('iwcConnectedClient', function($q, $location, $window, $log, iwcClient) {

@@ -14,7 +14,7 @@
     "angular-gridster": "~0.9.11",
     "jquery-ui": "~1.11.0",
     "console-polyfill": "latest",
-    "ozp-iwc-angular": "ozone-development/ozp-iwc-angular#master",
+    "ozp-iwc": "ozone-development/ozp-iwc",
     "ozp-classification": "ozone-development/ozp-classification",
     "bootstrap": "ozone-development/bootstrap#18f02afee202d63699b8782ec0c737860e14b885",
     "ubuntu-fontface": "~0.1.3",

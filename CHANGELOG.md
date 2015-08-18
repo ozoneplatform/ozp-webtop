@@ -1,3 +1,18 @@
+<a name"1.0.3"></a>
+### 1.0.3 (2015-08-18)
+
+
+#### Bug Fixes
+
+* **dropdownMenu:** Displayed links should match those of center and hud #618, #619 ([b0152ae6](https://github.com/ozone-development/ozp-webtop/commit/b0152ae6))
+* **sorting:** After clicking plus sign apps should displayed in case-insensitive sorted order  ([b4c73b76](https://github.com/ozone-development/ozp-webtop/commit/b4c73b76))
+
+
+#### Features
+
+* **iwc:** Moved to ozp-iwc hosted angular libs. ([c1c39134](https://github.com/ozone-development/ozp-webtop/commit/c1c39134))
+
+
 <a name"1.0.2"></a>
 ### 1.0.2 (2015-08-11)
 

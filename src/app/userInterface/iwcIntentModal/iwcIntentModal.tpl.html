@@ -1,0 +1,48 @@
+<div class="wt-modal add-apps-style" id="modal_openApps">
+  <div class="modal-header wt-modal-header">
+    <button type="button" class="close" ng-click="cancel()">
+      <span aria-hidden="true"><i class="icon-cross-14-grayLightest"></i> </span>
+      <span class="sr-only">Close</span>
+    </button>
+    <h3 class="modal-title">Intent Chooser</h3>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <span tooltip-placement="right" tooltip="TODO">
+              Intent Type: {{type}}
+            </span>
+          </div>
+          <div class="col-md-12">
+            <span tooltip-placement="right" tooltip="TODO">
+              Intent Action: {{action}}
+            </span>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="modal-body wt-modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 add-apps-list">
+          <ul id="triple">
+            <li ng-repeat="handler in handlerChoices">
+              <span ng-click="handlerSelected(handler)" class="link-pointer"
+                  ng-class="{addappselected: isHandlerSelected(handler)}">
+                <img ng-src="{{handler.entity.icon}}" height="20" width="20" />
+                {{handler.entity.label}}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer wt-modal-footer">
+    <button class="btn btn-default" ng-disabled="!selectedHandler" ng-click="useHandlerAlways()">
+      Use Always
+    </button>
+    <button class="btn btn-primary" ng-disabled="!selectedHandler" ng-click="useHandler()">
+      Use once
+    </button>
+  </div>
+</div>

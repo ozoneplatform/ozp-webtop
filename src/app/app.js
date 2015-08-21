@@ -29,6 +29,7 @@
  * @requires ozpWebtop.createDashboardModal
  * @requires ozpWebtop.appWarningModal
  * @requires ozpWebtop.profileModal
+ * @requires ozpWebtop.iwcIntentModal
  * @requires ozpWebtop.settingsModal
  * @requires ozpWebtop.helpModal
  * @requires ozpWebtop.urlWidgetLauncher
@@ -48,8 +49,7 @@ angular.module( 'ozpWebtop', [
   'templates-app',
   'templates-common',
   'ozpWebtop.constants',
-  'ozpWebtop.services.iwcInterface',
-  'ozpWebtop.services.restInterface',
+  'ozpWebtop.services.ozpInterface',
   'ozpWebtop.models',
   'ozpWebtop.appToolbar',
   'ozpWebtop.ozpToolbar',
@@ -61,6 +61,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.dashboardView.grid',
   'ozpWebtop.addApplicationsModal',
   'ozpWebtop.profileModal',
+  'ozpWebtop.iwcIntentModal',
   'ozpWebtop.settingsModal',
   'ozpWebtop.helpModal',
   'ozpWebtop.editDashboardModal',
@@ -141,7 +142,7 @@ angular.module( 'ozpWebtop', [
   })
 
 .run( function run ($rootScope, $state, $http, $window, $log,
-                    models, restInterface, useIwc, initialDataReceivedEvent, notificationReceivedEvent) {
+                    models, ozpInterface, initialDataReceivedEvent, notificationReceivedEvent) {
 
     $rootScope.$state = $state;
 
@@ -153,9 +154,9 @@ angular.module( 'ozpWebtop', [
       the only time we will go to the server (and wait for a response) for
       Listing data and/or webtop data
      */
-    restInterface.getListings().then(function(listings) {
-      models.setApplicationData(listings);
-      restInterface.getWebtopData().then(function(webtopData) {
+      ozpInterface.getListings().then(function(listings) {
+        models.setApplicationData(listings);
+        ozpInterface.getWebtopData().then(function(webtopData) {
         if (webtopData) {
           models.setInitialWebtopData(webtopData);
           $log.info('application listings and dashboard data retrieved - ready to start');
@@ -170,7 +171,7 @@ angular.module( 'ozpWebtop', [
       // Get the notifications on load.
       // TODO when there is a way to communicate changes from the server to the
       //      application show notification updates live
-      restInterface.getNotifications().then(function(notifications) {
+      ozpInterface.getNotifications().then(function(notifications) {
         $rootScope.$broadcast(notificationReceivedEvent, notifications);
       });
     });

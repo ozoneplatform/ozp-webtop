@@ -1,3 +1,12 @@
+<a name"1.0.4"></a>
+### 1.0.4 (2015-08-25)
+
+
+#### Features
+
+* **ozpInterface:** Added interface variable for IWC integration. ([103378d2](https://github.com/ozone-development/ozp-webtop/commit/103378d2))
+
+
 <a name"1.0.3"></a>
 ### 1.0.3 (2015-08-18)
 

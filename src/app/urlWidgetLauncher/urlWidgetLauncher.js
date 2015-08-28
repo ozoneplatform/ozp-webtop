@@ -24,7 +24,7 @@ var app = angular.module( 'ozpWebtop.urlWidgetLauncher');
  *
  */
 app.controller('UrlWidgetLauncherCtrl',
-  function($scope, $q, $state, $log, $interval, models, widgetService, restInterface) {
+  function($scope, $rootScope, $q, $state, $log, $interval, models, widgetService, restInterface, libraryDataUpdatedEvent) {
 
     $scope.$on('$stateChangeSuccess',
       function(event, toState, toParams) {
@@ -37,22 +37,21 @@ app.controller('UrlWidgetLauncherCtrl',
     });
 
     $scope.launchFolder = function(toParams){
-
       //if no data... get data
       if (!models.dataCached()) {
-        $log.warn('UrlWidgetLauncherCtrl: delaying call to handleStateChange by 500ms - no data yet');
-        $scope.handleStateChangeInterval = $interval(function() {
-          $scope.handleStateChange(toParams);
+        $scope.handleLaunchFolderInterval = $interval(function() {
+          $scope.launchFolder(toParams);
         }, 500, 1);
         return;
       }
-      if ($scope.handleStateChangeInterval) {
-        $interval.cancel($scope.handleStateChangeInterval);
+      if ($scope.handleLaunchFolderInterval) {
+        $interval.cancel($scope.handleLaunchFolderInterval);
       }
 
       //array of objects for widgets, {id:<#>, uuid:<alphanumeric>}
-      $scope.widgetArray = JSON.parse(toParams.appIds);
+      $scope.widgetArray = JSON.parse(decodeURI(toParams.appIds));
 
+      $log.debug('widgetArray, ', $scope.widgetArray);
       //create a new dashboard object based on folder name that we can pass to the backend
       $scope.newDashboard = {
         name: toParams.dashName
@@ -65,7 +64,6 @@ app.controller('UrlWidgetLauncherCtrl',
 
       //dashboard created, now request all the dashboards from the backend
       var dashboards = models.getDashboards();
-      //
       for (var i=0; i < dashboards.length; i++) {
         if (dashboards[i].name === toParams.dashName) {
           $scope.dashboardId = dashboards[i].id;
@@ -77,34 +75,34 @@ app.controller('UrlWidgetLauncherCtrl',
         if (angular.isArray(inArray) && inArray.length > 0) {
           widgetService.bookmarkWidget(inArray[0].id)
             .then(
-            function(result) {
-              $log.info('Bookmarking Widget, ', result);
-              inArray.shift();
-              bookmark(inArray);
-            },
-            function(data) {
-              $log.warn('Error Bookmarking Widget: ', data);
-            }
-          );
+              function() {
+                inArray.shift();
+                bookmark(inArray);
+              }
+            );
+        }
+        if(inArray.length === 0) {
+          $rootScope.$broadcast(libraryDataUpdatedEvent);
         }
       }
-      bookmark($scope.widgetArray);
+      bookmark(JSON.parse(decodeURI($scope.widgetArray)));
 
       //set new webtop data because new bookmarks
-      restInterface.getWebtopData().then(function(webtopData) {
-        $log.info('Setting Webtop Data');
-        console.log(webtopData);
-        models.setInitialWebtopData(webtopData);
+      $scope.$on(libraryDataUpdatedEvent, function(){
+        restInterface.getListings().then(function(listings) {
+          $log.debug('Setting Webtop Data');
+          models.setApplicationData(listings);
+          // add the apps to the newly minted dashboard
+          for (var a=0; a < JSON.parse($scope.widgetArray).length; a++) {
+            widgetService.createFrame($scope.dashboardId, JSON.parse($scope.widgetArray)[a].uuid);
+          }
+
+          // redirect user to new dashboard (grid view by default)
+          $state.go('dashboardview.grid-sticky-' + $scope.stickyIndex, {
+            'dashboardId': $scope.dashboardId});
+        });
       });
 
-      // add the apps to the newly minted dashboard
-      for (var a=0; a < $scope.widgetArray.length; a++) {
-        widgetService.createFrame($scope.dashboardId, $scope.widgetArray[a].uuid);
-      }
-
-      // redirect user to new dashboard (grid view by default)
-      $state.go('dashboardview.grid-sticky-' + $scope.stickyIndex, {
-        'dashboardId': $scope.dashboardId});
     };
     /*
       handles single apps into current dashboard

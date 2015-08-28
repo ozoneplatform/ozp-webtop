@@ -4,10 +4,7 @@ var widgets = angular.module('ozpWebtop.services.widgets',[
     'ozp.common.utilities', 'ozpWebtop.constants', 'ozpWebtop.services.iwcInterface',
     'ozpWebtop.services.restInterface', 'ozpWebtop.models']);
 
-  widgets.factory('widgetService', function($rootScope, $http, $q, $log, $window, Utilities, models, dashboardMaxWidgets){
-
-    var runningProcessName = null;
-    var runningStatus = null;
+  widgets.factory('widgetService', function($log, $window, Utilities, models, dashboardMaxWidgets, restInterface){
 
     this.overMaxWidgets = function(dashboardId){
       var dashboard = models.getDashboardById(dashboardId);
@@ -141,64 +138,8 @@ var widgets = angular.module('ozpWebtop.services.widgets',[
     };
 
     this.bookmarkWidget = function(widgetId) {
-      var deferred = $q.defer();
-      var libraryEntryJson = {
-        'listing': {
-          'id': String(widgetId)
-        }
-      };
-
-        $http({
-          method: 'POST',
-          url: $window.OzoneConfig.API_URL + '/api/profile/self/library',
-          data: JSON.stringify(libraryEntryJson),
-          withCredentials: true,
-          headers: {'Content-Type': 'application/json'}
-        }).success(function(data) {
-          console.log(data);
-          deferred.resolve(data);  // jshint ignore:line
-      }).error(function(data, status) {
-        console.log('fail in bookmark' , data);
-          if (status === 404) {
-          } else {
-           $log.error('ERROR getting dashboard data. status: ' + JSON.stringify(status) + ', data: ' + JSON.stringify(data));
-            return false;
-          }
-          deferred.resolve({});
-      });
-      return deferred.promise;
+      return restInterface.createLibraryEntry(widgetId);
     };
 
-    /*
-      This is a toggle that is intended to prevent the backend from being hit too many times in a row.
-      We were running in to issues where multiple update requests to the backend would return errors
-      This way, you can call updatingBackend with a unique value for each request name and not move on
-      to a seperate request until this responds 'false'.
-
-    */
-    this.updatingBackend = function(processName) {
-      // if no processes are updating the backend
-      if(runningProcessName === null){
-        $log.debug('Starting process ', processName);
-        //set the runningMethodName to be the passed in process name
-        runningStatus = true;
-        runningProcessName = processName;
-        return runningStatus;
-      }
-      //if the input processName is the same as the running process name
-      if(processName === runningProcessName){
-        //End the running status flag
-        runningStatus = !runningStatus;
-        runningProcessName = null;
-
-        $log.debug('Toggle process ', processName, ' to ', runningStatus);
-        return runningStatus;
-      }
-
-      else {
-        // The processName does not equal the running flag, so leave it as false
-        return runningStatus;
-      }
-    };
     return this;
 });

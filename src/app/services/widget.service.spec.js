@@ -45,7 +45,6 @@ describe('Service: widget', function () {
 
   it('should have a createFrame method', function() {
     // need application data set for this test
-    console.log('here');
     models.setApplicationData(appLibraryData);
     var dashboardId = 1;
     var appId = '12345678';
@@ -78,19 +77,6 @@ describe('Service: widget', function () {
     expect(frame.desktopLayout.height).toEqual(250);
   });
 
-  xit('should have a createFrame method that handles a full grid', function() {
-    // If all the rows in the grid are used up, this should return null and
-    // add nothing to the dashboard
-    var dashboardId = 0;
-    var appId = '12345678';
-    var dashboard = models.getDashboardById(dashboardId);
-    var framesBefore = dashboard.frames.length;
-    var frame = widgets.createFrame(dashboardId, appId);
-    dashboard = models.getDashboardById(dashboardId);
-    var framesAfter = dashboard.frames.length;
-    expect(frame).toBeNull();
-    expect(framesBefore).toEqual(framesAfter);
-  });
   // determine if an application exists in a dashboard
   it('should have a isAppOnDashboard method', function() {
     var dashboard = models.getDashboardById(0);
@@ -103,4 +89,5 @@ describe('Service: widget', function () {
     var appFound = widgets.isAppOnDashboard(0, 'nothere');
     expect(appFound).toEqual(false);
   });
+
 });

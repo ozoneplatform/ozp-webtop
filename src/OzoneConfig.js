@@ -1,11 +1,11 @@
 window.OzoneConfig = {
-    'API_URL': 'marketplace',
+    'API_URL': 'https://www.owfgoss.org/ng/dev/mp',
     'CENTER_URL': 'https://ozone-development.github.io/ozp-center',
     'DEVELOPER_RESOURCES_URL': '#',
     'FEEDBACK_ADDRESS': 'mailto:person@address.com',
     'HELPDESK_ADDRESS': 'http://localhost/helpdesk',
     'HUD_URL': 'https://ozone-development.github.io/ozp-hud',
-    'IWC_URL': 'iwc',
+    'IWC_URL': 'https://ozone-development.github.io/iwc',
     'METRICS_URL': '/path/to/metrics',
     'METRICS_WEBTOP_SITE_ID': 3,
     'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop',

@@ -34,8 +34,8 @@ describe('App Toolbar', function () {
     $rootScope.$apply();
   }));
 
-  // it('should expose $scope.apps', function() {
-  //   expect(scope.apps).toBeDefined();
-  // });
+  it('should expose $scope.apps', function() {
+    expect(scope.apps).toBeDefined();
+  });
 
 });

@@ -127,53 +127,6 @@ describe('Service: models', function () {
   //                      Data creation
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  xit('should have a createFrame method', function() {
-    // need application data set for this test
-    models.setApplicationData(appLibraryData);
-    var dashboardId = 1;
-    var appId = '12345678';
-    var frame = models.createFrame(dashboardId, appId);
-    var frameFromBoard = models.getFrameById(frame.id);
-    // Check that the frame returned has also been saved in the dashboard
-    expect(frame).toEqual(frameFromBoard);
-    // Generated frameId should be a uuid
-    var re = /\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/;
-    expect(frame.id.match(re)).not.toBeNull();
-
-    expect(frame.appId).toEqual(appId);
-    // TODO: test this better - row should be one greater than the currently
-    // used row
-    // expect(frame.gridLayout.sm.row).toEqual(5);
-    expect(frame.gridLayout.sm.col).toEqual(0);
-    expect(frame.gridLayout.sm.sizeX).toEqual(3);
-    expect(frame.gridLayout.sm.sizeY).toEqual(1);
-
-    // expect(frame.gridLayout.md.row).toEqual(4);
-    expect(frame.gridLayout.md.col).toEqual(0);
-    expect(frame.gridLayout.md.sizeX).toEqual(2);
-    expect(frame.gridLayout.md.sizeY).toEqual(2);
-
-    // Nothing special about these values, just what they happen to be right now
-    expect(frame.desktopLayout.zIndex).toBeGreaterThan(0);
-    expect(frame.desktopLayout.top >= 75).toBeTruthy();
-    expect(frame.desktopLayout.left >= 75).toBeTruthy();
-    expect(frame.desktopLayout.width).toEqual(250);
-    expect(frame.desktopLayout.height).toEqual(250);
-  });
-
-  xit('should have a createFrame method that handles a full grid', function() {
-    // If all the rows in the grid are used up, this should return null and
-    // add nothing to the dashboard
-    var dashboardId = 0;
-    var appId = '12345678';
-    var dashboard = models.getDashboardById(dashboardId);
-    var framesBefore = dashboard.frames.length;
-    var frame = models.createFrame(dashboardId, appId);
-    dashboard = models.getDashboardById(dashboardId);
-    var framesAfter = dashboard.frames.length;
-    expect(frame).toBeNull();
-    expect(framesBefore).toEqual(framesAfter);
-  });
 
   it('should have a createDashboard method', function() {
     var dashboard = {};
@@ -233,62 +186,6 @@ describe('Service: models', function () {
   // save a single dashboard
   it('should have a saveDashboard method', function() {
     expect(models.saveDashboard).toBeDefined();
-  });
-
-  // save a single frame inside a dashboard
-  xit('should have a saveFrame method', function() {
-    // need application data set for this test
-    models.setApplicationData(appLibraryData);
-
-    // create a new frame and save to dashboard
-    var dashboardId = '0';
-    var appId = '12345678';
-    var newFrame = models.createFrame(dashboardId, appId);
-    // modify new frame and save
-    newFrame.appId = '98765';
-    newFrame.gridLayout.sm.sizeY = 4;
-    newFrame.gridLayout.md.sizeY = 2;
-    var frameSaved = models.saveFrame(newFrame);
-    expect(frameSaved).toBeDefined();
-    var frameInBoard = models.getFrameById(newFrame.id);
-    expect(frameInBoard).toEqual(newFrame);
-  });
-
-  xit('should have a saveFrame method that returns false on invalid frame', function() {
-    // need application data set for this test
-    models.setApplicationData(appLibraryData);
-
-    // if a frameid is given that does not match any frames in the user's
-    // dashboards, false is returned and no update is performed
-    // modify new frame and save
-    var dashboardId = 0;
-    var appId = '12345678';
-    var newFrame = models.createFrame(dashboardId, appId);
-    var dashboardsBefore = models.getDashboards();
-    newFrame.id = '3848583992';
-    var frameSaved = models.saveFrame(newFrame);
-    var dashboardsAfter = models.getDashboards();
-    expect(frameSaved).toEqual(false);
-    expect(dashboardsBefore).toEqual(dashboardsAfter);
-  });
-
-  // update the current dashboard
-  xit('should have a updateCurrentDashboardName method - return false on invalid dashboard name', function() {
-    // test a dashboard that doesn't exist
-    var update = models.updateCurrentDashboardName('doesntexist');
-    expect(update).toEqual(false);
-  });
-
-  xit('should have a updateCurrentDashboardName method', function() {
-    var currentDashboard = models.getCurrentDashboardName();
-    var dashboard = models.getDashboardById(1);
-    var newCurrent = dashboard.name;
-    expect(currentDashboard).not.toEqual(newCurrent);
-    expect(newCurrent).toBeTruthy();
-    var update = models.updateCurrentDashboardName(newCurrent);
-    expect(update).toEqual(true);
-    var updatedCurrentName = models.getCurrentDashboardName();
-    expect(updatedCurrentName).toEqual(newCurrent);
   });
 
   // update the desktop layout of a frame

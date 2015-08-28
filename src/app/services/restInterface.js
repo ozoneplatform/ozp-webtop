@@ -122,7 +122,6 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           $log.warn('WARNING: got non 200 status from /profile/self/library: ' +
             status);
         }
-        console.log(data);
         deferred.resolve(data);
       }).error(function(data, status) {
         $log.error('ERROR getting user library. status: ' + JSON.stringify(status) +
@@ -228,6 +227,28 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         $log.error('ERROR getting user notifications. status: ' + JSON.stringify(status) +
           ', data: ' + JSON.stringify(data));
         deferred.reject(data);
+      });
+      return deferred.promise;
+    },
+    createLibraryEntry: function(widgetId){
+      var deferred = $q.defer();
+      var libraryEntryJson = {
+        'listing': {
+          'id': String(widgetId)
+        }
+      };
+
+      $http({
+        method: 'POST',
+        url: $window.OzoneConfig.API_URL + '/api/profile/self/library',
+        data: JSON.stringify(libraryEntryJson),
+        withCredentials: true,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data) {
+        deferred.resolve(data);  // jshint ignore:line
+      }).error(function(data, status) {
+        $log.error('ERROR getting dashboard data. status: ' + JSON.stringify(status) + ', data: ' + JSON.stringify(data));
+        deferred.resolve({});
       });
       return deferred.promise;
     }

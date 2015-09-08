@@ -110,4 +110,9 @@ angular.module('ozpWebtop.constants')
  * @property initialDataReceived
  * @type String
  */
-.constant('notificationReceivedEvent', 'notificationReceived');
+.constant('notificationReceivedEvent', 'notificationReceived')
+
+/**
+ * Event fired when app and dashboard data is updated
+ */
+.constant('libraryDataUpdatedEvent');

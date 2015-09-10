@@ -60,7 +60,6 @@
             <li><a ng-href="{{hudUrl}}" alt="Bookmarks link"><i class="icon-ribbon-grayLightest"></i>Bookmarks</a></li>
             <li><a href="" ng-click="openProfileModal()" alt="Profile link"><i class="icon-head-grayLightest"></i>Profile</a></li>
             <li><a href="" ng-click="openSettingsModal()" alt="Settings link"><i class="icon-cog-grayLightest"></i>Settings</a></li>
-            <li><a ng-href="{{helpdeskAddress}}" target="{{helpdeskTarget}}" alt="Contact Help Desk link"><i class="icon-speech-bubble-grayLightest"></i>Contact Help Desk</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">Create</li>
             <li><a ng-href="{{centerUrl}}/#/edit" alt="Submit a Listing link"><i class="icon-square-plus-grayLightest"></i>Submit a Listing</a></li>
@@ -70,7 +69,7 @@
             <li><a ng-href="{{centerUrl}}/#/user-management/my-listings" alt="Listing Management link"><i class="icon-layers-grayLightest"></i>Listing Management</a></li>
             <li><a ng-href="{{centerUrl}}/#/mall-management/categories" ng-show="isAdmin" alt="Center Settings link"><i class="icon-shopping-settings-grayLightest"></i>Center Settings</a></li>
             <li><a ng-href="{{metricsUrl}}" target="_blank" ng-show="isAdmin || isOrgSteward" alt="Metrics link"><i class="icon-bar-graph-2-grayLightest"></i>Metrics</a></li>
-            <li><a ng-href="{{feedbackAddress}}" class="caboose" target="{{feedbackTarget}}" alt="Submit Feedback link"><i class="icon-lightbulb-grayLightest"></i>Submit Feedback</a></li>
+            <li><a href="" ng-click="openContactModal()" alt="Contact link" class="caboose"><i class="icon-speech-bubble-grayLightest"></i>Contact</a></li>
         </ul>
         </li>
       </ul>

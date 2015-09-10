@@ -1,0 +1,70 @@
+<div class="wt-modal contact-window" style="display: block">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()">
+                    <span aria-hidden="true"><i class="icon-cross-16"></i></span>
+                    <span class="sr-only">Close</span>
+                </button>
+
+                <h3 class="modal-title">Contact</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="contacts-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-3">
+                                <i class="icon-question-60-grayLighter"/>
+                            </div>
+                            <div class="col-md-9">
+                                <h3>Need Help?</h3>
+                                <p>Check out our <a ng-href={{HELP_URL}} target={{HELP_URL_TARGET}}> Help Center </a> for tips and instructions on using the AppsMall platform, or contact the help desk for dedicated support.</p>
+                                <a class="btn btn-primary btn-block" ng-href={{HELPDESK_ADDRESS}} target={{HELPDESK_ADDRESS_TARGET}}>Contact Help Desk</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-3">
+                                <i class="icon-lightbulb-60-grayLighter"/>
+                            </div>
+                            <div class="col-md-9">
+                                <h3>Request a Feature</h3>
+                                <p>We want this platform to work better and smarter for you. Is there something we could add to make your workflow easier? Let us know.</p>
+                                <a class="btn btn-primary btn-block" ng-href={{REQUEST_ADDRESS}} target={{REQUEST_ADDRESS_TARGET}}>Submit a Request</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-3">
+                                <i class="icon-microphone-60-grayLighter"/>
+                            </div>
+                            <div class="col-md-9">
+                                <h3>Have Feedback?</h3>
+                                <p>The microphone is yours. We would love to hear how AppsMall works for you! Email us any feedback, comments, and critique.</p>
+                                <a class="btn btn-primary btn-block" ng-href={{FEEDBACK_ADDRESS}} target={{FEEDBACK_ADDRESS_TARGET}}>Give Feedback</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-3">
+                                <i class="icon-speech-bubble-60-grayLighter"/>
+                            </div>
+                            <div class="col-md-9">
+                                <h3>Connect With Us</h3>
+                                <p>Want to know the latest? Stay up to date with AppsMall through any of our social networks. We'll keep you in the loop.</p>
+                                <span class="btn-row">
+                                    <a class="btn btn-primary" ng-href={{SOCIAL_CHIRP_ADDRESS}} target={{SOCIAL_CHIRP_ADDRESS_TARGET}}>Chirp</a>
+                                    <a class="btn btn-primary" ng-href={{SOCIAL_PIN_ADDRESS}} target={{SOCIAL_PIN_ADDRESS_TARGET}}>Pin</a>
+                                    <a class="btn btn-primary" ng-href={{SOCIAL_CHAT_ADDRESS}} target={{SOCIAL_CHAT_ADDRESS_TARGET}>Chat</a>
+                                    <a class="btn btn-primary" ng-href={{SOCIAL_BLOG_ADDRESS}} target={{SOCIAL_BLOG_ADDRESS_TARGET}}>Blog</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

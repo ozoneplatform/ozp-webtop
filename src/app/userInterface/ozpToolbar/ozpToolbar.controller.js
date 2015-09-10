@@ -227,6 +227,34 @@ angular.module( 'ozpWebtop.ozpToolbar')
     };
 
 
+
+    /**
+      * @method openContactModal
+      * @param board the changed board object
+      * @returns {*}
+      */
+    $scope.openContactModal = function(board) {
+      $scope.board = board;
+      var modalInstance = $modal.open({
+        templateUrl: 'userInterface/contactModal/contactModal.tpl.html',
+        controller: 'contactModalInstanceCtrl',
+        windowClass: 'app-modal-window',
+        scope: $scope,
+        resolve: {
+          dashboard: function() {
+            // return $scope.board;
+            return $scope.board;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+
+      });
+    };
+
+
+
      /**
       * @method opensettingsModal
       * @param board the changed board object

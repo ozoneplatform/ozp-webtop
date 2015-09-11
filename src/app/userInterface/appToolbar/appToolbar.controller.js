@@ -184,6 +184,7 @@ angular.module( 'ozpWebtop.appToolbar')
         } else {
           return;
         }
+        initializeData();
         $scope.handleStateChange(toParams.dashboardId, layoutType);
     });
 

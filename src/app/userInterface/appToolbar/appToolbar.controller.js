@@ -20,7 +20,8 @@ angular.module('ozpWebtop.appToolbar', [
   'ozpWebtop.addApplicationsModal',
   'ozpWebtop.createDashboardModal',
   'ozpWebtop.editDashboardModal',
-  'ozp.common.windowSizeWatcher']);
+  'ozp.common.windowSizeWatcher',
+  'ozpWebtop.services.widgets']);
 
 /**
  * Application toolbar on the bottom of Webtop. Contains a menu for adding
@@ -62,7 +63,8 @@ angular.module( 'ozpWebtop.appToolbar')
                                                  fullScreenModeToggleEvent,
                                                  highlightFrameOnGridLayoutEvent,
                                                  removeFramesOnDeleteEvent,
-                                                 tooltipDelay, dashboardMaxWidgets) {
+                                                 tooltipDelay, dashboardMaxWidgets,
+                                                 widgetService) {
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -434,13 +436,13 @@ angular.module( 'ozpWebtop.appToolbar')
        */
       function addAppToDashboard(app, dashboardId) {
         // check if the app is already on the current dashboard
-        var isOnDashboard = models.isAppOnDashboard(dashboardId, app.id);
+        var isOnDashboard = widgetService.isAppOnDashboard(dashboardId, app.id);
         if (isOnDashboard && app.singleton) {
           $log.warn('WARNING: Only one instance of ' + app.name + ' may be on your dashboard');
         }
         else {
-          if(models.overMaxWidgets(dashboardId) === false){
-              models.createFrame(dashboardId, app.id);
+          if(widgetService.overMaxWidgets(dashboardId) === false){
+              widgetService.createFrame(dashboardId, app.id);
           }
           else {
             $modal.open({

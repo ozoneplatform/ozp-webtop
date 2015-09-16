@@ -34,9 +34,8 @@
                     </li>
                     <li class="navbar-spacer"></li>
 
-                    <li class="app" ng-repeat="app in myPinnedApps" ng-class="{true:'',false:'active', 'undefined':'active'}[app.isMinimized && currentDashboard.layout === 'desktop']">
-                      <a tooltip="{{app.name | limitTo : 15}}"
-                          ng-click="maximizeFrame(app)">
+                    <li class="app" ng-repeat="app in myPinnedApps">
+                      <a tooltip="{{app.name | limitTo : 15}}">
                         <img ng-src="{{app.icon.large}}" class="appToolbarIcon" alt="Application Icon"/>
                         <!-- <div ng-class="app.isMinimized && currentDashboard.layout === 'desktop'? 'app-toolbar-inactive-app' : 'app-toolbar-active-app'">&nbsp</div> -->
                       </a>

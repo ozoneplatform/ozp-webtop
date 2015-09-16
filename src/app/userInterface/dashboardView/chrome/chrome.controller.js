@@ -71,20 +71,11 @@ angular.module('ozpWebtop.dashboardView.chrome')
   };
 
   /**
-   * Hide a frame on the dashboard
-   * @method minimizeFrame
+   * Maximize/return to normal widget window
+   * @method toggleFrameFullscreen
    */
-  $scope.minimizeFrame = function(){
-    models.toggleFrameKey($scope.frame.id, 'isMinimized');
-    $rootScope.$broadcast(dashboardStateChangedEvent, {
-      'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
-  };
 
-  /**
-   * Show a frame on the dashboard
-   * @method maximizeFrame
-   */
-  $scope.maximizeFrame = function(){
+  $scope.toggleFrameFullscreen = function(){
     models.toggleFrameKey($scope.frame.id, 'isMaximized');
     $rootScope.$broadcast(dashboardStateChangedEvent, {
       'dashboardId': $scope.dashboardId, 'layout': $scope.layout});

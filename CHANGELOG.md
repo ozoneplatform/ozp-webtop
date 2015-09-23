@@ -1,3 +1,17 @@
+<a name"1.0.5"></a>
+### 1.0.5 (2015-09-23)
+
+
+#### Bug Fixes
+
+* **modal:** Remove modal CSS overriding global bootstrap CSS padding ([82264f46](https://github.com/ozone-development/ozp-webtop/commit/82264f46))
+
+
+#### Features
+
+* **Contacts Modal:** Created a modal to house contacts for feedback, help, feature requests, and soci ([22e3f565](https://github.com/ozone-development/ozp-webtop/commit/22e3f565))
+
+
 <a name"1.0.4"></a>
 ### 1.0.4 (2015-08-25)
 

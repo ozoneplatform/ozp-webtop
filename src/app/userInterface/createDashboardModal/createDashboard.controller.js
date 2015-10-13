@@ -26,7 +26,7 @@ angular.module('ozpWebtop.createDashboardModal').controller(
     //                            $scope properties
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     $scope.newDashboard = {
-      name: 'New Dashboard',
+      name: 'Dashboard ' + Math.floor((Math.random()+0.10)*101).toString(),
       layout: 'grid'
     };
 

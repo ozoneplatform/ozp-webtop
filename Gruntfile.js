@@ -624,22 +624,22 @@ module.exports = function ( grunt ) {
       },
       tarDevVersion: {
          command: [
-           './packageRelease.sh webtop-dev build <%= pkg.version %>'
+           './packageRelease.sh new-backend-webtop-dev build <%= pkg.version %>'
          ].join('&&')
        },
       tarProdVersion: {
          command: [
-           './packageRelease.sh webtop-prod bin <%= pkg.version %>'
+           './packageRelease.sh new-backend-webtop-prod bin <%= pkg.version %>'
          ].join('&&')
        },
        tarDevDate: {
          command: [
-           './packageRelease.sh webtop-dev build'
+           './packageRelease.sh new-backend-webtop-dev build'
          ].join('&&')
        },
        tarProdDate: {
          command: [
-           './packageRelease.sh webtop-prod bin'
+           './packageRelease.sh new-backend-webtop-prod bin'
          ].join('&&')
        }
     },

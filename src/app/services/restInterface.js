@@ -34,7 +34,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
     /**
      * Set all webtop data
      *
-     * This method uses HTTP requests directly on the api/profile/self/data
+     * This method uses HTTP requests directly on the
      * endpoint intented for use exclusively by IWC
      *
      * If another PUT request is already processing, this method will simply
@@ -48,12 +48,12 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       if (readyToPut) {
         readyToPut = false;
         // TODO: change dashboard-data to ozp-webtop-data
-        var url = $window.OzoneConfig.API_URL + '/api/profile/self/data/dashboard-data';
+        var url = $window.OzoneConfig.API_URL + '/iwc-api/self/data/dashboard-data/';
         var req = {
           method: 'PUT',
           url: url,
           headers: {
-            'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
+            'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
           },
           data: webtopData,
           withCredentials: true
@@ -75,7 +75,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
     /**
      * Get all webtop data
      *
-     * This method uses HTTP requests directly on the api/profile/self/data
+     * This method uses HTTP requests directly on the
      * endpoint intented for use exclusively by IWC
      *
      * @method getWebtopData
@@ -85,14 +85,14 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       var deferred = $q.defer();
       $http.get(
         // TODO: change dashboard-data to ozp-webtop-data
-        $window.OzoneConfig.API_URL + '/api/profile/self/data/dashboard-data', {
+        $window.OzoneConfig.API_URL + '/iwc-api/self/data/dashboard-data/', {
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
+            'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
           }
         }).success(function(data, status) {
           if (status !== 200) {
-            $log.warn('WARNING: got non 200 status from /profile/self/data/dashboard-data: ' + status);
+            $log.warn('WARNING: got non 200 status from iwc-api/self/data/dashboard-data/: ' + status);
           }
           deferred.resolve(JSON.parse(data['entity']));  // jshint ignore:line
       }).error(function(data, status) {
@@ -112,14 +112,14 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
      */
     getListings: function() {
       var deferred = $q.defer();
-      $http.get($window.OzoneConfig.API_URL + '/api/profile/self/library', {
+      $http.get($window.OzoneConfig.API_URL + '/api/self/library/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-library-v1+json'
+          'Content-Type': 'application/vnd.ozp-library-v2+json'
         }
       }).success(function(data, status) {
         if (status !== 200) {
-          $log.warn('WARNING: got non 200 status from /profile/self/library: ' +
+          $log.warn('WARNING: got non 200 status from api/self/library/: ' +
             status);
         }
         deferred.resolve(data);
@@ -138,14 +138,14 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
      */
     getUserListings: function() {
       var deferred = $q.defer();
-      $http.get($window.OzoneConfig.API_URL + '/api/profile/self/listing', {
+      $http.get($window.OzoneConfig.API_URL + '/api/self/listing/', {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
         }
       }).success(function(data, status) {
         if (status !== 200) {
-          $log.warn('WARNING: got non 200 status from /profile/self/listing: ' +
+          $log.warn('WARNING: got non 200 status from api/self/listing/: ' +
             status);
         }
         deferred.resolve(data);
@@ -164,15 +164,15 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
        */
     getProfile: function(){
       var deferred = $q.defer();
-      $http.get($window.OzoneConfig.API_URL + '/api/profile/self', {
+      $http.get($window.OzoneConfig.API_URL + '/api/self/profile/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-profile-v1+json'
+          'Content-Type': 'application/vnd.ozp-profile-v2+json'
         }
 
       }).success(function(data, status){
         if (status !== 200) {
-          $log.warn('WARNING: got non 200 status from /profile/self: ' + status);
+          $log.warn('WARNING: got non 200 status from api/self/profile/: ' + status);
         }
         deferred.resolve(data);
       }).error(function(data, status) {
@@ -189,14 +189,14 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
      */
     getNotifications: function() {
       var deferred = $q.defer();
-      $http.get($window.OzoneConfig.API_URL + '/api/profile/self/notification', {
+      $http.get($window.OzoneConfig.API_URL + '/api/self/notification/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
+          'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
         }
       }).success(function(data, status) {
         if (status !== 200) {
-          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status);
+          $log.warn('WARNING: got a non 200 status from api/self/notification/ ' + status);
         }
         deferred.resolve(data);
       }).error(function(data, status) {
@@ -213,14 +213,14 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
      */
     dismissNotification: function(notification){
       var deferred = $q.defer();
-      $http.delete($window.OzoneConfig.API_URL + '/api/profile/self/notification/' + notification.id, {
+      $http.delete($window.OzoneConfig.API_URL + '/api/self/notification/' + notification.id + '/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-iwc-data-object-v1+json'
+          'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
         }
       }).success(function(data, status) {
-        if (status !== 200) {
-          $log.warn('WARNING: got a non 200 status from /profile/self/notification ' + status);
+        if (status !== 204) {
+          $log.warn('WARNING: got a non 204 status from DELETE api/self/notification/<id>/ ' + status);
         }
         deferred.resolve(data);
       }).error(function(data, status) {
@@ -240,7 +240,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
 
       $http({
         method: 'POST',
-        url: $window.OzoneConfig.API_URL + '/api/profile/self/library',
+        url: $window.OzoneConfig.API_URL + '/api/self/library/',
         data: JSON.stringify(libraryEntryJson),
         withCredentials: true,
         headers: {'Content-Type': 'application/json'}

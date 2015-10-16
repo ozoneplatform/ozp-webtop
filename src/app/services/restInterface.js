@@ -55,7 +55,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           headers: {
             'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
           },
-          data: webtopData,
+          data: {'entity': webtopData},
           withCredentials: true
         };
 

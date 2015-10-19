@@ -50,6 +50,8 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         // TODO: change dashboard-data to ozp-webtop-data
         var url = $window.OzoneConfig.API_URL + '/iwc-api/self/data/dashboard-data/';
         var requestData = {'entity': webtopData};
+        // requestData must be valid JSON
+        requestData = JSON.parse(JSON.stringify(requestData))
         var req = {
           method: 'PUT',
           url: url,

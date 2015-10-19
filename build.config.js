@@ -18,10 +18,10 @@ module.exports = {
   /**
    * This is a collection of file patterns that refer to our app code (the
    * stuff in `src/`). These file paths are used in the configuration of
-   * build tasks. `js` is all project javascript, less tests. `ctpl` contains
+   * build tasks. `js` is all project javascript, sass tests. `ctpl` contains
    * our reusable components' (`src/common`) template HTML files, while
    * `atpl` contains the same, but for our app's code. `html` is just our
-   * main HTML file, `less` is our main stylesheet, and `unit` contains our
+   * main HTML file, `sass` is our main stylesheet, and `unit` contains our
    * app's unit tests.
    */
   app_files: {
@@ -35,7 +35,7 @@ module.exports = {
     ctpl: [ 'src/common/**/*.tpl.html' ],
 
     html: [ 'src/index.html' ],
-    less: 'src/less/main.less'
+    sass: ['src/sass/main.scss']
   },
 
   /**
@@ -92,8 +92,8 @@ module.exports = {
       'vendor/jquery-ui/themes/ui-darkness/theme.css',
       'vendor/angular-gridster/dist/angular-gridster.min.css'
     ],
-    assets: [
-      'vendor/ubuntu-fontface/**'
+    font: [
+      'vendor/ubuntu-fontface/fonts/**'
     ]
   }
 };

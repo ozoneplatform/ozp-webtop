@@ -16,7 +16,7 @@
     "console-polyfill": "latest",
     "ozp-iwc": "ozone-development/ozp-iwc",
     "ozp-classification": "ozone-development/ozp-classification",
-    "bootstrap": "https://github.com/ozone-development/ozp-bootstrap.git#master",
+    "bootstrap": "https://github.com/ozone-development/ozp-bootstrap-sass.git#master",
     "ubuntu-fontface": "~0.1.3",
     "icons": "ozone-development/ozp-icons",
     "angular-spinner": "0.6.1",

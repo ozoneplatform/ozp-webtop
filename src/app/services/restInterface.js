@@ -51,7 +51,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         var url = $window.OzoneConfig.API_URL + '/iwc-api/self/data/dashboard-data/';
         var requestData = {'entity': webtopData};
         // requestData must be valid JSON
-        requestData = JSON.parse(JSON.stringify(requestData))
+        requestData = JSON.parse(JSON.stringify(requestData));
         var req = {
           method: 'PUT',
           url: url,
@@ -102,7 +102,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           if (status === 404) {
           } else {
            $log.error('ERROR getting dashboard data. status: ' + JSON.stringify(status) + ', data: ' + JSON.stringify(data));
-            return false;
+           return false;
           }
           deferred.resolve({});
       });

@@ -94,7 +94,7 @@ app.controller('UrlWidgetLauncherCtrl',
           models.setApplicationData(listings);
           // add the apps to the newly minted dashboard
           for (var a=0; a < JSON.parse($scope.widgetArray).length; a++) {
-            widgetService.createFrame($scope.dashboardId, JSON.parse($scope.widgetArray)[a].uuid);
+            widgetService.createFrame($scope.dashboardId, JSON.parse($scope.widgetArray)[a].id);
           }
 
           // redirect user to new dashboard (grid view by default)

@@ -4,56 +4,31 @@
  * the Grunt configuration that is automatically processed.
  */
 
-// Path to vendor files (normally installed in bower_components/) relative to
-// this file
-@vendor-path: '../../vendor';
-// Path to Icons
-@vendor-path-icons: '@{vendor-path}/icons/dist/css/sprite';
-// Path to Ubuntu Fonts
-@vendor-path-ubuntu-font: '@{vendor-path}/ubuntu-fontface/ubuntu';
-
-
 // Import vendor libraries
-@import '@{vendor-path-icons}';
-@import '@{vendor-path-ubuntu-font}';
-
-// Path to Ubuntu fonts (will be used directly in generated CSS and must be
-// relative to the html file that will load the CSS
-@UbuntuFontsPath: '../vendor/ubuntu-fontface/fonts';
-
-
-// Bootstrap, colors, fonts
-
-// Exclude glyphicons and carousel from Bootstrap
-@import '_bootstrap';
-@import 'ubuntu-font';
+@import '../../vendor/icons/dist/css/sprite.scss';
+@import '../../vendor/ubuntu-fontface/_ubuntu.scss';
+@import '../../vendor/bootstrap/assets/stylesheets/_bootstrap-dark.scss';
 
 /**
  * This is our main variables file. We must include it last so we can overwrite
  * any variable definitions in our imported stylesheets.
  */
 
-@import 'variables.less';
-
+@import 'variables';
 
 html {
   height: 100%;
   width: 100%;
   font-weight: 300;
-  // Always show scroll bar - prevents nasty issue with gridster where the
-  // screen continuously changes size ~once per second
-//overflow: -moz-scrollbars-vertical;
-//overflow-y: scroll;
-//overflow-y: hidden;
 }
 
 // bring back vertical dividers in bootstrap 3.0
 // http://stackoverflow.com/questions/19203816/vertical-divider-wont-work-in-bootstrap-3-0
 .navbar .divider-vertical {
-  height: @navbar-height;
+  height: $navbar-height;
   margin: 0 9px;
-  border-right: 1px solid @white;
-  border-left: 1px solid @gray-lightest;
+  border-right: 1px solid $white;
+  border-left: 1px solid $gray-lightest;
 }
 
 .navbar-inverse .divider-vertical {
@@ -71,15 +46,15 @@ html {
 // Caboose
 .navbar-default .navbar-nav .dropdown-menu > li > a.caboose {
 
-    background-color: @gray-dark !important;
+    background-color: $gray-dark !important;
 
     > .icon-mail {
-        .icon-mail-grayLightest;
+        @extend .icon-mail-grayLightest;
     }
 
     &:hover, &:focus {
         > .icon-mail {
-            .icon-mail-white;
+            @extend .icon-mail-white;
         }
     }
 }
@@ -89,11 +64,11 @@ html {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 input.ng-invalid {
-  border: 1px solid @red;
+  border: 1px solid $red;
 }
 
 .error {
-  color: @red;
+  color: $red;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -127,7 +102,7 @@ input.ng-invalid {
 
 // no dashes for use with ng-class conditional
 .addappselected {
-  background-color: @blue-dark;
+  background-color: $blue-dark;
   padding: 5px 10px;
   margin-left: 0 !important;
   -webkit-border-radius: 15px;
@@ -154,16 +129,13 @@ input.ng-invalid {
 
 // Grid view
 .gridster-container-settings {
-  background-color: @body-bg;
+  background-color: $body-bg;
   width: 100%;
 }
 
 .frameHighlighted {
-  //border-style: solid !important;
   border-width: 5px !important;
   box-shadow: 0 0 15px #009dd3 !important;
-  //border-color: #009dd3 !important;
-  //list-style-position: outside;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -173,15 +145,15 @@ input.ng-invalid {
   position: fixed;
   margin-top: 0;
   margin-bottom: 0;
-  bottom: @classification-banner; // height of the classification banner
+  bottom: $classification-banner; // height of the classification banner
   width: 100%;
-  height: @navbar-height + 4px;
+  height: $navbar-height + 4px;
   z-index: 200;
 }
 
 .app-toolbar-ng-include {
   padding-top: 75px;
-  background-color: @body-bg;
+  background-color: $body-bg;
 }
 
 .navbar-default .navbar-nav > li.app-toolbar-li > a {
@@ -191,7 +163,7 @@ input.ng-invalid {
   border-bottom: 4px solid transparent;
 
   &:hover, &:focus{
-    border-bottom: 4px solid @blue;
+    border-bottom: 4px solid $blue;
   }
 }
 
@@ -202,17 +174,16 @@ button.hiddenToggle.appHiddenToggle.ng-scope{
   border-bottom: 4px solid transparent;
 
   &:hover, &:focus{
-    border-bottom: 4px solid @blue;
+    border-bottom: 4px solid $blue;
 
     > .icon-minimize-14-grayLightest{
-      .icon-minimize-14-white;
+      @extend .icon-minimize-14-white;
     }
   }
 }
 
 .navbar .navbar-nav > .app > a {
   padding: 0 0 2px 0;
-  // margin: -2px 5px 0 5px;
   margin: 0 2px 0 2px;
 }
 .navbar .navbar-nav > .app.active > a,
@@ -223,14 +194,14 @@ button.hiddenToggle.appHiddenToggle.ng-scope{
   opacity: 1.0;
   border-top: none;
   padding-top: 4px;
-  border-bottom: 4px solid @blue !important;
+  border-bottom: 4px solid $blue !important;
 }
 
 .highlight {
-  background-color: @blue;
+  background-color: $blue;
 
   &:hover, &:focus{
-    background-color:@blue-dark;
+    background-color:$blue-dark;
   }
 
 }
@@ -267,21 +238,21 @@ button.hiddenToggle.appHiddenToggle.ng-scope{
   right: 0;
   position: fixed;
   z-index: 10000;
-  background-color: @gray-darker;
+  background-color: $gray-darker;
   border: none;
-  color: @white;
+  color: $white;
 }
 
 .layout-icon-active {
   position: relative;
   height: 2px;
   top: 10px;
-  background-color: @blue;
+  background-color: $blue;
 }
 
 .layout-icon-inactive {
-  .layout-icon-active;
-  background-color: @gray-base;
+  @extend .layout-icon-active;
+  background-color: $gray-base;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -312,9 +283,9 @@ body > div.classBanner:last-of-type {
 .ozp-managed-frame {
     position: absolute;
     box-sizing: border-box;
-    background-color: @gray-darkest;
+    background-color: $gray-darkest;
     margin: 1px;
-    border: 1px solid @gray-base;
+    border: 1px solid $gray-base;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -324,8 +295,8 @@ body > div.classBanner:last-of-type {
 }
 
 .ozp-chrome {
-    background: @gray-darkest;
-    color: @white;
+    background: $gray-darkest;
+    color: $white;
     font-size: 10pt;
     height: 32px;
     cursor: default;
@@ -362,28 +333,28 @@ body > div.classBanner:last-of-type {
     background: transparent;
     padding-left: 3px;
     padding-right: 3px;
-    color: @gray-light;
+    color: $gray-light;
     font-size: 10px;
 }
 
 .ozp-chrome > .chrome-controls > .btn:hover,
 .ozp-chrome > .chrome-controls > .btn:active {
-    color: @white;
+    color: $white;
 
     > .icon-plus-10-white{
-      .icon-plus-10-blue;
+      @extend .icon-plus-10-blue;
     }
     > .icon-minus-10-white{
-      .icon-minus-10-blue;
+      @extend .icon-minus-10-blue;
     }
     > .icon-cross-10-white{
-      .icon-cross-10-blue;
+      @extend .icon-cross-10-blue;
     }
     > .icon-minimize-10-white{
-      .icon-minimize-10-blue;
+      @extend .icon-minimize-10-blue;
     }
     > .icon-maximize-10-white{
-      .icon-maximize-10-blue;
+      @extend .icon-maximize-10-blue;
     }
 
 }
@@ -422,14 +393,14 @@ body > div.classBanner:last-of-type {
   width: 100% !important;
   height: auto !important;
   left: 0 !important;
-  top: @navbar-height + @classification-banner !important;
-  bottom: @navbar-height  + @classification-banner !important;
+  top: $navbar-height + $classification-banner !important;
+  bottom: $navbar-height  + $classification-banner !important;
   position: fixed;
   z-index: 999999;
 }
 
 .fullWidthTopHidden {
-  top: @classification-banner !important;
+  top: $classification-banner !important;
 }
 
 .hide {
@@ -437,24 +408,24 @@ body > div.classBanner:last-of-type {
 }
 
 .dashHiddenToggle {
-  top: @classification-banner;
+  top: $classification-banner;
 }
 
 .appHiddenToggle {
-  bottom: @classification-banner + 4px;
+  bottom: $classification-banner + 4px;
   padding-right: 4px;
 }
 
 .appToggle {
-  bottom: @classification-banner !important;
+  bottom: $classification-banner !important;
 }
 
 .dashToggle {
-  top: @classification-banner !important;
+  top: $classification-banner !important;
 }
 
 .grid-toolbar-padding {
-  padding-bottom: @navbar-height;
+  padding-bottom: $navbar-height;
 }
 
 .ozp-managed-frame .ng-scope {
@@ -505,7 +476,7 @@ body > div.classBanner:last-of-type {
 }
 
 .navbar-inverse .navbar-nav .open .dropdown-menu > li, .dropdown-header {
-  color: @blue !important;
+  color: $blue !important;
 }
 .modal-content {
   border: none;
@@ -556,46 +527,46 @@ body > div.classBanner:last-of-type {
         > a, > a:hover, > a:focus {
 
             > .icon-caret-up-grayLightest{
-              .icon-caret-up-blue;
+              @extend .icon-caret-up-blue;
             }
 
             > .icon-menu-grayLightest{
-              .icon-menu-blue;
+              @extend .icon-menu-blue;
             }
         }
     }
     a:hover, a:focus {
 
         > .icon-home-grayLightest{
-          .icon-home-white;
+          @extend .icon-home-white;
         }
 
         > .icon-shopping-grayLightest{
-          .icon-shopping-white;
+          @extend .icon-shopping-white;
         }
 
         > .icon-bell-grayLightest{
-          .icon-bell-white;
+          @extend .icon-bell-white;
         }
 
         > .icon-question-grayLightest{
-          .icon-question-white;
+          @extend .icon-question-white;
         }
 
         > .icon-menu-grayLightest{
-          .icon-menu-white;
+          @extend .icon-menu-white;
         }
 
         > .icon-maximize-14-grayLightest{
-          .icon-maximize-14-white;
+          @extend .icon-maximize-14-white;
         }
 
         > .icon-minimize-14-grayLightest{
-          .icon-minimize-14-white;
+          @extend  .icon-minimize-14-white;
         }
 
         > .icon-stack-grayLightest{
-          .icon-stack-white;
+          @extend .icon-stack-white;
         }
    }
 }
@@ -605,35 +576,35 @@ body > div.classBanner:last-of-type {
   &:hover, &:focus {
 
     > .icon-ribbon-grayLightest{
-      .icon-ribbon-white;
+      @extend .icon-ribbon-white;
     }
 
     > .icon-head-grayLightest{
-      .icon-head-white;
+      @extend .icon-head-white;
     }
 
     > .icon-cog-grayLightest{
-      .icon-cog-white;
+      @extend .icon-cog-white;
     }
 
     > .icon-square-plus-grayLightest{
-      .icon-square-plus-white;
+      @extend .icon-square-plus-white;
     }
 
     > .icon-cloud-grayLightest{
-      .icon-cloud-white;
+      @extend .icon-cloud-white;
     }
 
     > .icon-layers-grayLightest{
-      .icon-layers-white;
+      @extend .icon-layers-white;
     }
 
     > .icon-shopping-settings-grayLightest{
-      .icon-shopping-settings-white;
+      @extend .icon-shopping-settings-white;
     }
 
     > .icon-bar-graph-2-grayLightest{
-      .icon-bar-graph-2-white;
+      @extend .icon-bar-graph-2-white;
     }
 
   }
@@ -644,20 +615,20 @@ body > div.classBanner:last-of-type {
 
     &:hover, &:focus {
       > .icon-caret-up-grayLightest {
-        .icon-caret-up-white;
+        @extend .icon-caret-up-white;
       }
     }
 }
 
 .dropup.open > .dropdown-toggle.ng-binding {
   border-top:0px;
-  border-bottom: 4px solid @blue;
+  border-bottom: 4px solid $blue;
 
   .dropdown-menu > li > a.caboose{
 
     &:hover, &:focus {
       >  .icon-plus-14-grayLightest{
-        .icon-plus-14-white;
+        @extend .icon-plus-14-white;
       }
     }
   }
@@ -671,7 +642,7 @@ body > div.classBanner:last-of-type {
 .icon-pencil-grayLightest.pull-right {
 
   &:hover, &:focus{
-    .icon-pencil-blue;
+    @extend .icon-pencil-blue;
   }
 
 }
@@ -679,7 +650,7 @@ body > div.classBanner:last-of-type {
 .icon-cross-14-grayLightest.pull-right {
 
   &:hover, &:focus{
-    .icon-cross-14-blue;
+    @extend .icon-cross-14-blue;
   }
 
 }
@@ -687,16 +658,16 @@ body > div.classBanner:last-of-type {
 .icon-trash-grayLightest.pull-right {
 
   &:hover, &:focus{
-    .icon-trash-blue;
+    @extend .icon-trash-blue;
   }
 
 }
 
 .close .icon-cross-16 {
-    .icon-cross-16-white;
+    @extend .icon-cross-16-white;
 
   &:hover, &:focus{
-    .icon-cross-16-blue;
+    @extend .icon-cross-16-blue;
   }
 
 }
@@ -706,22 +677,22 @@ body > div.classBanner:last-of-type {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-@profile-body-height: 350px;
+$profile-body-height: 350px;
 
 // App Modal Window
 // Fixes modal sizing issue with UI Bootstrap
-@media(min-width: @screen-sm-min){
+@media(min-width: $screen-sm-min){
   .app-modal-window-large .modal-dialog {
-    width: @modal-md;
+    width: $modal-md;
   }
 }
 
-@media(min-width: @screen-md-min){
+@media(min-width: $screen-md-min){
     .app-modal-window-large .modal-dialog {
-    width: @modal-lg;
+    width: $modal-lg;
   }
   .modal-dialog {
-    width: @modal-lg;
+    width: $modal-lg;
   }
 }
 
@@ -750,11 +721,11 @@ body > div.classBanner:last-of-type {
 .profile-window {
     .modal-body {
         overflow-y: auto;
-        height: @profile-body-height;
+        height: $profile-body-height;
     }
 
     .modal-content {
-      border: 1px solid @gray-darker;
+      border: 1px solid $gray-darker;
     }
 }
 
@@ -795,7 +766,7 @@ body > div.classBanner:last-of-type {
 
 .owned-listings {
     > ul {
-        .list-unstyled;
+        @extend .list-unstyled;
         margin-top: 20px;
     }
 

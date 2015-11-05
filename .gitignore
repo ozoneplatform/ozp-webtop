@@ -37,3 +37,4 @@ docs/
 
 demoApps/ozoneBus
 *.tar.gz
+.sass-cache

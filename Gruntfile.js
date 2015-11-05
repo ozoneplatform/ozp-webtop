@@ -18,7 +18,7 @@
  */
 
 
-module.exports = function ( grunt ) {
+module.exports = function(grunt) {
 
   /**
    * Load required Grunt tasks. These are installed based on the versions listed
@@ -35,7 +35,7 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-coffee');
-  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-gh-pages');
@@ -48,7 +48,7 @@ module.exports = function ( grunt ) {
   /**
    * Load in our build configuration file.
    */
-  var userConfig = require( './build.config.js' );
+  var userConfig = require('./build.config.js');
 
   /**
    * This is the configuration object Grunt uses to give each plugin its
@@ -67,8 +67,7 @@ module.exports = function ( grunt ) {
      * pairs are evaluated based on this very configuration object.
      */
     meta: {
-      banner:
-        '/**\n' +
+      banner: '/**\n' +
         ' * <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         ' * <%= pkg.homepage %>\n' +
         ' *\n' +
@@ -84,9 +83,9 @@ module.exports = function ( grunt ) {
       options: {
         dest: 'CHANGELOG.md',
         version: '<%= pkg.version %>'
-        // maybe use this again later, but for now, just set version manually
-        // in bower.json and package.json
-        // version: '<%= changelogVersion %>'
+          // maybe use this again later, but for now, just set version manually
+          // in bower.json and package.json
+          // version: '<%= changelogVersion %>'
       }
     },
 
@@ -130,108 +129,89 @@ module.exports = function ( grunt ) {
      */
     copy: {
       build_app_assets: {
-        files: [
-          {
-            src: [ '**' ],
-            dest: '<%= build_dir %>/assets/',
-            cwd: 'src/assets',
-            expand: true
-          }
-        ]
+        files: [{
+          src: ['**'],
+          dest: '<%= build_dir %>/assets/',
+          cwd: 'src/assets',
+          expand: true
+        }]
       },
       build_vendor_assets: {
-        files: [
-          {
-            src: [ '<%= vendor_files.assets %>' ],
-            dest: '<%= build_dir %>/assets/',
-            cwd: '.',
-            expand: true,
-            flatten: true
-          },
-          {
-            src: [ '*.svg' ],
-            dest: '<%= build_dir %>/assets/svg/',
-            cwd: 'vendor/icons/dist/css/svg',
-            expand: true,
-            flatten: true
-          }
-        ]
+        files: [{
+          src: ['*.svg'],
+          dest: '<%= build_dir %>/assets/svg/',
+          cwd: 'vendor/icons/dist/css/svg',
+          expand: true,
+          flatten: true
+        },{
+          src: ['<%= vendor_files.font %>'],
+          dest: '<%= build_dir %>/assets/fonts/',
+          flatten: true,
+          cwd: '.',
+          expand: true
+        }]
       },
       // jquery-ui doesn't support LESS so there's no way to easily override
       // the image path references in the css, hence this manual copy
       build_jquery_ui_images: {
-        files: [
-          {
-            src: ['vendor/jquery-ui/themes/ui-darkness/images/*'],
-            dest: '<%= build_dir %>/assets/images/',
-            cwd: '.',
-            expand: true,
-            flatten: true
-          }
-        ]
+        files: [{
+          src: ['vendor/jquery-ui/themes/ui-darkness/images/*'],
+          dest: '<%= build_dir %>/assets/images/',
+          cwd: '.',
+          expand: true,
+          flatten: true
+        }]
       },
       build_appjs: {
-        files: [
-          {
-            src: [ '<%= app_files.js %>' ],
-            dest: '<%= build_dir %>/',
-            cwd: '.',
-            expand: true
-          },
-          {
-            src: ['OzoneConfig.js'],
-            dest: '<%= build_dir %>',
-            cwd: 'src/',
-            expand: true
-          }
-        ]
+        files: [{
+          src: ['<%= app_files.js %>'],
+          dest: '<%= build_dir %>/',
+          cwd: '.',
+          expand: true
+        }, {
+          src: ['OzoneConfig.js'],
+          dest: '<%= build_dir %>',
+          cwd: 'src/',
+          expand: true
+        }]
       },
       build_vendorjs: {
-        files: [
-          {
-            src: [ '<%= vendor_files.js %>' ],
-            dest: '<%= build_dir %>/',
-            cwd: '.',
-            expand: true
-          }
-        ]
+        files: [{
+          src: ['<%= vendor_files.js %>'],
+          dest: '<%= build_dir %>/',
+          cwd: '.',
+          expand: true
+        }]
       },
       compile_assets: {
-        files: [
-          {
-            src: [ '**' ],
-            dest: '<%= compile_dir %>/assets',
-            cwd: '<%= build_dir %>/assets',
-            expand: true
-          },
-          {
-            src: ['OzoneConfig.js'],
-            dest: '<%= compile_dir %>',
-            cwd: 'src',
-            expand: true
-          }
-        ]
+        files: [{
+          src: ['**'],
+          dest: '<%= compile_dir %>/assets',
+          cwd: '<%= build_dir %>/assets',
+          expand: true
+        }, {
+          src: ['OzoneConfig.js'],
+          dest: '<%= compile_dir %>',
+          cwd: 'src',
+          expand: true
+        }]
       },
       docs: {
-        files: [
-          {
-            src: [ '**'],
-            dest: '<%= build_dir %>/docs',
-            cwd: '<%= docs_dir %>',
-            expand: true
-          }
-        ]
+        files: [{
+          src: ['**'],
+          dest: '<%= build_dir %>/docs',
+          cwd: '<%= docs_dir %>',
+          expand: true
+        }]
       },
       // so that they're deployed on gh-pages
       tools: {
-        files: [
-          {
-            src: ['**'],
-            dest: '<%= build_dir %>/tools',
-            cwd: 'tools',
-            expand: true
-          }
-        ]
+        files: [{
+          src: ['**'],
+          dest: '<%= build_dir %>/tools',
+          cwd: 'tools',
+          expand: true
+        }]
       }
     },
 
@@ -284,7 +264,7 @@ module.exports = function ( grunt ) {
         },
         expand: true,
         cwd: '.',
-        src: [ '<%= app_files.coffee %>' ],
+        src: ['<%= app_files.coffee %>'],
         dest: '<%= build_dir %>',
         ext: '.js'
       }
@@ -296,14 +276,12 @@ module.exports = function ( grunt ) {
      */
     ngmin: {
       compile: {
-        files: [
-          {
-            src: [ '<%= app_files.js %>' ],
-            cwd: '<%= build_dir %>',
-            dest: '<%= build_dir %>',
-            expand: true
-          }
-        ]
+        files: [{
+          src: ['<%= app_files.js %>'],
+          cwd: '<%= build_dir %>',
+          dest: '<%= build_dir %>',
+          expand: true
+        }]
       }
     },
 
@@ -322,14 +300,18 @@ module.exports = function ( grunt ) {
     },
 
     /**
-     * `grunt-contrib-less` handles our LESS compilation and uglification automatically.
-     * Only our `main.less` file is included in compilation; all other files
+     * `grunt-sass` handles our SASS compilation and uglification automatically.
+     * Only our `main.sass` file is included in compilation; all other files
      * must be imported from this file.
      */
-    less: {
-      build: {
+    sass: {
+      options: {
+        style: 'expanded'
+      },
+      dist: {
         files: {
-          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
+          // '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css':'<%= app_files.scss %>'
+          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css':'src/sass/main.scss'
         }
       }
     },
@@ -409,12 +391,12 @@ module.exports = function ( grunt ) {
     coffeelint: {
       src: {
         files: {
-          src: [ '<%= app_files.coffee %>' ]
+          src: ['<%= app_files.coffee %>']
         }
       },
       test: {
         files: {
-          src: [ '<%= app_files.coffeeunit %>' ]
+          src: ['<%= app_files.coffeeunit %>']
         }
       }
     },
@@ -433,7 +415,7 @@ module.exports = function ( grunt ) {
         options: {
           base: 'src/app'
         },
-        src: [ '<%= app_files.atpl %>' ],
+        src: ['<%= app_files.atpl %>'],
         dest: '<%= build_dir %>/templates-app.js'
       },
 
@@ -444,7 +426,7 @@ module.exports = function ( grunt ) {
         options: {
           base: 'src/common'
         },
-        src: [ '<%= app_files.ctpl %>' ],
+        src: ['<%= app_files.ctpl %>'],
         dest: '<%= build_dir %>/templates-common.js'
       }
     },
@@ -577,7 +559,7 @@ module.exports = function ( grunt ) {
         dir: '<%= compile_dir %>',
         src: [
           '<%= concat.compile_js.dest %>',
-         // '<%= vendor_files.css %>', // ARW
+          // '<%= vendor_files.css %>', // ARW
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ]
       }
@@ -605,43 +587,43 @@ module.exports = function ( grunt ) {
      */
     shell: {
       buildVersionFile: {
-          command: [
-            'echo "Version: <%= pkg.version %>" > <%= build_dir %>/version.txt',
-            'echo "Git hash: " >> <%= build_dir %>/version.txt',
-            'git rev-parse HEAD >> <%= build_dir %>/version.txt',
-            'echo Date: >> <%= build_dir %>/version.txt',
-            'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= build_dir %>/version.txt'
-          ].join('&&')
+        command: [
+          'echo "Version: <%= pkg.version %>" > <%= build_dir %>/version.txt',
+          'echo "Git hash: " >> <%= build_dir %>/version.txt',
+          'git rev-parse HEAD >> <%= build_dir %>/version.txt',
+          'echo Date: >> <%= build_dir %>/version.txt',
+          'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= build_dir %>/version.txt'
+        ].join('&&')
       },
       compileVersionFile: {
-          command: [
-            'echo "Version: <%= pkg.version %>" > <%= compile_dir %>/version.txt',
-            'echo "Git hash: " >> <%= compile_dir %>/version.txt',
-            'git rev-parse HEAD >> <%= compile_dir %>/version.txt',
-            'echo Date: >> <%= compile_dir %>/version.txt',
-            'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= compile_dir %>/version.txt'
-          ].join('&&')
+        command: [
+          'echo "Version: <%= pkg.version %>" > <%= compile_dir %>/version.txt',
+          'echo "Git hash: " >> <%= compile_dir %>/version.txt',
+          'git rev-parse HEAD >> <%= compile_dir %>/version.txt',
+          'echo Date: >> <%= compile_dir %>/version.txt',
+          'git rev-parse HEAD | xargs git show -s --format=%ci >> <%= compile_dir %>/version.txt'
+        ].join('&&')
       },
       tarDevVersion: {
-         command: [
-           './packageRelease.sh webtop-dev build <%= pkg.version %>'
-         ].join('&&')
-       },
+        command: [
+          './packageRelease.sh webtop-dev build <%= pkg.version %>'
+        ].join('&&')
+      },
       tarProdVersion: {
-         command: [
-           './packageRelease.sh webtop-prod bin <%= pkg.version %>'
-         ].join('&&')
-       },
-       tarDevDate: {
-         command: [
-           './packageRelease.sh webtop-dev build'
-         ].join('&&')
-       },
-       tarProdDate: {
-         command: [
-           './packageRelease.sh webtop-prod bin'
-         ].join('&&')
-       }
+        command: [
+          './packageRelease.sh webtop-prod bin <%= pkg.version %>'
+        ].join('&&')
+      },
+      tarDevDate: {
+        command: [
+          './packageRelease.sh webtop-dev build'
+        ].join('&&')
+      },
+      tarProdDate: {
+        command: [
+          './packageRelease.sh webtop-prod bin'
+        ].join('&&')
+      }
     },
     yuidoc: {
       compile: {
@@ -686,7 +668,7 @@ module.exports = function ( grunt ) {
        */
       gruntfile: {
         files: 'Gruntfile.js',
-        tasks: [ 'jshint:gruntfile' ],
+        tasks: ['jshint:gruntfile'],
         options: {
           livereload: false
         }
@@ -700,7 +682,7 @@ module.exports = function ( grunt ) {
         files: [
           '<%= app_files.js %>'
         ],
-        tasks: [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs', 'yuidoc' ]
+        tasks: ['jshint:src', 'karma:unit:run', 'copy:build_appjs', 'yuidoc']
       },
 
       /**
@@ -711,7 +693,7 @@ module.exports = function ( grunt ) {
         files: [
           '<%= app_files.coffee %>'
         ],
-        tasks: [ 'coffeelint:src', 'coffee:source', 'karma:unit:run', 'copy:build_appjs' ]
+        tasks: ['coffeelint:src', 'coffee:source', 'karma:unit:run', 'copy:build_appjs']
       },
 
       /**
@@ -722,15 +704,15 @@ module.exports = function ( grunt ) {
         files: [
           'src/assets/**/*'
         ],
-        tasks: [ 'copy:build_app_assets', 'copy:build_vendor_assets' ]
+        tasks: ['copy:build_app_assets', 'copy:build_vendor_assets']
       },
 
       /**
        * When index.html changes, we need to compile it.
        */
       html: {
-        files: [ '<%= app_files.html %>' ],
-        tasks: [ 'index:build' ]
+        files: ['<%= app_files.html %>'],
+        tasks: ['index:build']
       },
 
       /**
@@ -741,15 +723,15 @@ module.exports = function ( grunt ) {
           '<%= app_files.atpl %>',
           '<%= app_files.ctpl %>'
         ],
-        tasks: [ 'html2js' ]
+        tasks: ['html2js']
       },
 
       /**
        * When the CSS files change, we need to compile and minify them.
        */
-      less: {
-        files: [ 'src/**/*.less' ],
-        tasks: [ 'less:build', 'concat:build_css' ]
+      sass: {
+        files: ['src/**/*.scss'],
+        tasks: ['sass', 'concat:build_css']
       },
 
       /**
@@ -760,7 +742,7 @@ module.exports = function ( grunt ) {
         files: [
           '<%= app_files.jsunit %>'
         ],
-        tasks: [ 'jshint:test', 'karma:unit:run' ],
+        tasks: ['jshint:test', 'karma:unit:run'],
         options: {
           livereload: false
         }
@@ -774,7 +756,7 @@ module.exports = function ( grunt ) {
         files: [
           '<%= app_files.coffeeunit %>'
         ],
-        tasks: [ 'coffeelint:test', 'karma:unit:run' ],
+        tasks: ['coffeelint:test', 'karma:unit:run'],
         options: {
           livereload: false
         }
@@ -784,7 +766,7 @@ module.exports = function ( grunt ) {
   };
 
   // TODO: why this funky syntax? Just to combine two JS objects ... ?
-  grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
+  grunt.initConfig(grunt.util._.extend(taskConfig, userConfig));
 
   /**
    * In order to make it safe to just compile or copy *only* what was changed,
@@ -793,13 +775,13 @@ module.exports = function ( grunt ) {
    * `delta`) and then add a new task called `watch` that does a clean build
    * before watching for changes.
    */
-  grunt.renameTask( 'watch', 'delta' );
-  grunt.registerTask( 'watch', [ 'build', 'karma:unit', 'delta' ] );
+  grunt.renameTask('watch', 'delta');
+  grunt.registerTask('watch', ['build', 'karma:unit', 'delta']);
 
   /**
    * The default task is to build and compile.
    */
-  grunt.registerTask( 'default', [ 'build', 'compile' ] );
+  grunt.registerTask('default', ['build', 'compile']);
 
   /**
    * The `build` task gets your app ready to run for development and testing.
@@ -811,7 +793,7 @@ module.exports = function ( grunt ) {
    *    build_dir/
    * - run jshint linter on all .js files in src/
    * - run coffeelint on all .coffee files in src/
-   * - compile less file (src/less/main.less) into css in file
+   * - compile sass file (src/sass/main.scss) into css in file
    *    build_dir/assets/<pkg.name>-<pkg.version>.css (also compresses by removing
    *    spaces and cleans by running clean-css)
    * - compile YUIdoc documentation from source
@@ -831,8 +813,8 @@ module.exports = function ( grunt ) {
    * - use karma to run all tests in 'singleRun' mode, which will launch the
    *    specified browser(s), run the tests, and close the browser(s)
    */
-  grunt.registerTask( 'build', [
-    'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build', 'yuidoc',
+  grunt.registerTask('build', [
+    'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'sass', 'yuidoc',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
     'copy:build_jquery_ui_images', 'copy:build_appjs', 'copy:build_vendorjs',
     'copy:docs', 'copy:tools', 'index:build', 'karmaconfig', 'karma:continuous',
@@ -844,7 +826,7 @@ module.exports = function ( grunt ) {
    * minifying your code.
    *
    * - compress/minify the concatenated css file
-   *  (same as less:build task, but with css compression and minification)
+   *  (same as sass task, but with css compression and minification)
    * - copy build_dir/assets to compile_dir/assets
    * - run ngmin (pre-minification for AngularJS) - https://github.com/btford/ngmin
    *    Runs over all JS files in src/ other than tests and assets and puts them
@@ -854,9 +836,9 @@ module.exports = function ( grunt ) {
    * - compile index.html with three files: the uglified js file above,
    *    vendor css (in build.config.js), and build_dir/assets/<pkg.name>-<pkg.version>.css
    */
-  grunt.registerTask( 'compile', [
+  grunt.registerTask('compile', [
     'cssmin', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify',
-    'index:compile','shell:compileVersionFile'
+    'index:compile', 'shell:compileVersionFile'
   ]);
 
   grunt.registerTask('serve', [
@@ -900,18 +882,18 @@ module.exports = function ( grunt ) {
   /**
    * A utility function to get all app JavaScript sources.
    */
-  function filterForJS ( files ) {
-    return files.filter( function ( file ) {
-      return file.match( /\.js$/ );
+  function filterForJS(files) {
+    return files.filter(function(file) {
+      return file.match(/\.js$/);
     });
   }
 
   /**
    * A utility function to get all app CSS sources.
    */
-  function filterForCSS ( files ) {
-    return files.filter( function ( file ) {
-      return file.match( /\.css$/ );
+  function filterForCSS(files) {
+    return files.filter(function(file) {
+      return file.match(/\.css$/);
     });
   }
 
@@ -921,7 +903,7 @@ module.exports = function ( grunt ) {
    * releaseType: 'patch', 'minor', or 'major'
    */
   function setChangelogVersion(releaseType) {
-    var version = grunt.config( 'pkg.version').split('.');
+    var version = grunt.config('pkg.version').split('.');
     var major = version[0];
     var minor = version[1];
     var patch = version[2].split('-')[0];
@@ -931,20 +913,20 @@ module.exports = function ( grunt ) {
       var newPatchVersion = (Number(patch) + 1).toString();
       // existing major and minior versions stay the same, increment patch
       newVersion = major + '.' + minor + '.' + newPatchVersion;
-      grunt.config( 'changelogVersion',  newVersion);
+      grunt.config('changelogVersion', newVersion);
       return true;
     } else if (releaseType === 'minor') {
       var newMinorVersion = (Number(minor) + 1).toString();
       // existing major version stays the same, increment minor version, reset
       // patch version to 0
       newVersion = major + '.' + newMinorVersion + '.0';
-      grunt.config( 'changelogVersion',  newVersion);
+      grunt.config('changelogVersion', newVersion);
       return true;
     } else if (releaseType === 'major') {
       var newMajorVersion = (Number(major) + 1).toString();
       // increment major version, reset minor and patch versions to 0
       newVersion = newMajorVersion + '.0.0';
-      grunt.config( 'changelogVersion',  newVersion);
+      grunt.config('changelogVersion', newVersion);
       return true;
     } else {
       console.log('ERROR: invalid releaseType: ' + releaseType);
@@ -958,22 +940,22 @@ module.exports = function ( grunt ) {
    * the list into variables for the template to use and then runs the
    * compilation.
    */
-  grunt.registerMultiTask( 'index', 'Process index.html template', function () {
-    var dirRE = new RegExp( '^('+grunt.config('build_dir')+'|'+grunt.config('compile_dir')+')\/', 'g' );
-    var jsFiles = filterForJS( this.filesSrc ).map( function ( file ) {
-      return file.replace( dirRE, '' );
+  grunt.registerMultiTask('index', 'Process index.html template', function() {
+    var dirRE = new RegExp('^(' + grunt.config('build_dir') + '|' + grunt.config('compile_dir') + ')\/', 'g');
+    var jsFiles = filterForJS(this.filesSrc).map(function(file) {
+      return file.replace(dirRE, '');
     });
-    var cssFiles = filterForCSS( this.filesSrc ).map( function ( file ) {
-      return file.replace( dirRE, '' );
+    var cssFiles = filterForCSS(this.filesSrc).map(function(file) {
+      return file.replace(dirRE, '');
     });
 
     grunt.file.copy('src/index.html', this.data.dir + '/index.html', {
-      process: function ( contents ) {
-        return grunt.template.process( contents, {
+      process: function(contents) {
+        return grunt.template.process(contents, {
           data: {
             scripts: jsFiles,
             styles: cssFiles,
-            version: grunt.config( 'pkg.version' )
+            version: grunt.config('pkg.version')
           }
         });
       }
@@ -985,12 +967,12 @@ module.exports = function ( grunt ) {
    * run, we use grunt to manage the list for us. The `karma/*` files are
    * compiled as grunt templates for use by Karma. Yay!
    */
-  grunt.registerMultiTask( 'karmaconfig', 'Process karma config templates', function () {
-    var jsFiles = filterForJS( this.filesSrc );
+  grunt.registerMultiTask('karmaconfig', 'Process karma config templates', function() {
+    var jsFiles = filterForJS(this.filesSrc);
 
-    grunt.file.copy( 'karma/karma-unit.tpl.js', grunt.config( 'build_dir' ) + '/karma-unit.js', {
-      process: function ( contents ) {
-        return grunt.template.process( contents, {
+    grunt.file.copy('karma/karma-unit.tpl.js', grunt.config('build_dir') + '/karma-unit.js', {
+      process: function(contents) {
+        return grunt.template.process(contents, {
           data: {
             scripts: jsFiles
           }

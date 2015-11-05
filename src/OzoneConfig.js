@@ -1,6 +1,7 @@
 window.OzoneConfig = {
     'API_URL': 'https://www.owfgoss.org/ng/dev/mp',
-    'HELP_URL': 'https://localhost:8088/dist/assets/PlaceholderUserGuide.pdf',
+    'APPLICATION_NAME': 'AppsMall Webtop',
+    'HELP_URL': 'http://localhost:8888/#/',
     'CENTER_URL': 'https://ozone-development.github.io/ozp-center',
     'DEVELOPER_RESOURCES_URL': '#',
     'FEEDBACK_ADDRESS': 'mailto:person@address.com',

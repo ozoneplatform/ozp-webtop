@@ -1,3 +1,12 @@
+<a name"1.0.7"></a>
+### 1.0.7 (2015-11-11)
+
+
+#### Features
+
+* **Help Articles:** Help articles integration ([9c2c84fd](https://github.com/ozone-development/ozp-webtop/commit/9c2c84fd))
+
+
 <a name"1.0.6"></a>
 ### 1.0.6 (2015-10-14)
 

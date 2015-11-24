@@ -19,15 +19,24 @@ angular.module('ozpWebtop.helpModal', ['ui.bootstrap',
 * @constructor
 */
 angular.module('ozpWebtop.helpModal').controller(
-'helpModalInstanceCtrl', function($scope, $modalInstance, $window, $sce) {
+'helpModalInstanceCtrl', function($scope, $modalInstance, $window, $sce, restInterface) {
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //                           initialization
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	var UserRole = {
+		USER: 0,
+		ORG_STEWARD: 1,
+		ADMIN: 2
+	};
 
-	$scope.APPLICATION_NAME = $window.OzoneConfig.APPLICATION_NAME;
-	$scope.HELPDESK_ADDRESS = $window.OzoneConfig.HELPDESK_ADDRESS;
-	$scope.HELP_URL = $sce.trustAsResourceUrl($window.OzoneConfig.HELP_URL);
+	restInterface.getProfile().then(function(userObject){
+		$scope.APPLICATION_NAME = $window.OzoneConfig.APPLICATION_NAME;
+		$scope.HELPDESK_ADDRESS = $window.OzoneConfig.HELPDESK_ADDRESS;
+		$scope.HELP_URL = $sce.trustAsResourceUrl($window.OzoneConfig.HELP_URL + UserRole[userObject.highestRole]);
+	});
+
+	// console.log($scope.HELP_URL);
 
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

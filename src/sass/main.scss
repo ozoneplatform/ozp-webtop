@@ -43,22 +43,6 @@ html {
   }
 }
 
-// Caboose
-.navbar-default .navbar-nav .dropdown-menu > li > a.caboose {
-
-    background-color: $gray-dark !important;
-
-    > .icon-mail {
-        @extend .icon-mail-grayLightest;
-    }
-
-    &:hover, &:focus {
-        > .icon-mail {
-            @extend .icon-mail-white;
-        }
-    }
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                        edit dashboard modal
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -677,8 +661,6 @@ body > div.classBanner:last-of-type {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-$profile-body-height: 350px;
-
 // App Modal Window
 // Fixes modal sizing issue with UI Bootstrap
 @media(min-width: $screen-sm-min){
@@ -694,39 +676,6 @@ $profile-body-height: 350px;
   .modal-dialog {
     width: $modal-lg;
   }
-}
-
-
-.modal-body {
-    position: relative;
-    > iframe {
-        height: 90%;
-        min-height: 550px;
-        width: 100%;
-        border: 0;
-    }
-}
-
-
-.modal-dialog .help {
-    .modal-body {
-        padding: 0px auto;
-    }
-}
-
-.modal-dialog {
-    height: 90%;
-}
-
-.profile-window {
-    .modal-body {
-        overflow-y: auto;
-        height: $profile-body-height;
-    }
-
-    .modal-content {
-      border: 1px solid $gray-darker;
-    }
 }
 
 .profile-info {

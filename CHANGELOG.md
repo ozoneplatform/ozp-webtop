@@ -1,3 +1,21 @@
+<a name"1.0.8"></a>
+### 1.0.8 (2015-11-25)
+
+
+#### Bug Fixes
+
+* **styling:**
+  * remove override webtop css controlling iframe size ([97919c78](https://github.com/ozone-development/ozp-webtop/commit/97919c78))
+  * Change help modal iframe size ([5ced4ff0](https://github.com/ozone-development/ozp-webtop/commit/5ced4ff0))
+  * Correct the syntax for comments ([84da894e](https://github.com/ozone-development/ozp-webtop/commit/84da894e))
+  * Help modal style/language updates to maintain consistency ([5b2fcdf9](https://github.com/ozone-development/ozp-webtop/commit/5b2fcdf9))
+
+
+#### Features
+
+* **roleBasedHelp:** Added role-based help to webtop ([7b82ae17](https://github.com/ozone-development/ozp-webtop/commit/7b82ae17))
+
+
 <a name"1.0.7"></a>
 ### 1.0.7 (2015-11-11)
 

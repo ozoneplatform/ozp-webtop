@@ -56,7 +56,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           method: 'PUT',
           url: url,
           headers: {
-            'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
+            'Content-Type': 'application/vnd.ozp-iwc-data-object+json'
           },
           data: requestData,
           withCredentials: true
@@ -91,7 +91,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         $window.OzoneConfig.API_URL + '/iwc-api/self/data/dashboard-data/', {
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
+            'Accept': 'application/vnd.ozp-iwc-data-object+json'
           }
         }).success(function(data, status) {
           if (status !== 200) {
@@ -118,7 +118,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       $http.get($window.OzoneConfig.API_URL + '/api/self/library/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-library-v2+json'
+          'Content-Type': 'application/json'
         }
       }).success(function(data, status) {
         if (status !== 200) {
@@ -170,7 +170,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       $http.get($window.OzoneConfig.API_URL + '/api/self/profile/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-profile-v2+json'
+          'Content-Type': 'application/json'
         }
 
       }).success(function(data, status){
@@ -195,7 +195,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       $http.get($window.OzoneConfig.API_URL + '/api/self/notification/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
+          'Content-Type': 'application/json'
         }
       }).success(function(data, status) {
         if (status !== 200) {
@@ -219,7 +219,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
       $http.delete($window.OzoneConfig.API_URL + '/api/self/notification/' + notification.id + '/', {
         withCredentials: true,
         headers: {
-          'Content-Type': 'application/vnd.ozp-iwc-data-object-v2+json'
+          'Content-Type': 'application/json'
         }
       }).success(function(data, status) {
         if (status !== 204) {

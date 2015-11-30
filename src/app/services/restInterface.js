@@ -56,7 +56,8 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           method: 'PUT',
           url: url,
           headers: {
-            'Content-Type': 'application/vnd.ozp-iwc-data-object+json'
+            //'Content-Type': 'application/vnd.ozp-iwc-data-object+json'
+            'Content-Type': 'application/json'
           },
           data: requestData,
           withCredentials: true
@@ -91,7 +92,8 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         $window.OzoneConfig.API_URL + '/iwc-api/self/data/dashboard-data/', {
           withCredentials: true,
           headers: {
-            'Accept': 'application/vnd.ozp-iwc-data-object+json'
+            //'Accept': 'application/vnd.ozp-iwc-data-object+json'
+            'Accept': 'application/json'
           }
         }).success(function(data, status) {
           if (status !== 200) {

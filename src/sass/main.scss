@@ -55,6 +55,16 @@ input.ng-invalid {
   color: $red;
 }
 
+.btn-default.active,
+.btn-default:hover {
+    > .icon-grid-blueDark {
+      @extend .icon-grid-white;
+    }
+    > .icon-stack-blueDark {
+      @extend .icon-stack-white;
+    }
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //                        add applications modal
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -319,29 +329,7 @@ body > div.classBanner:last-of-type {
     padding-right: 3px;
     color: $gray-light;
     font-size: 10px;
-}
-
-.ozp-chrome > .chrome-controls > .btn:hover,
-.ozp-chrome > .chrome-controls > .btn:active {
-    color: $white;
-
-    > .icon-plus-10-white{
-      @extend .icon-plus-10-blue;
-    }
-    > .icon-minus-10-white{
-      @extend .icon-minus-10-blue;
-    }
-    > .icon-cross-10-white{
-      @extend .icon-cross-10-blue;
-    }
-    > .icon-minimize-10-white{
-      @extend .icon-minimize-10-blue;
-    }
-    > .icon-maximize-10-white{
-      @extend .icon-maximize-10-blue;
-    }
-
-}
+}c
 
 .desktop-view {
   // TODO: this is not correct, as it guarantees the desktop layout portion of
@@ -648,7 +636,7 @@ body > div.classBanner:last-of-type {
 }
 
 .close .icon-cross-16 {
-    @extend .icon-cross-16-white;
+    @extend .icon-cross-16-grayDark;
 
   &:hover, &:focus{
     @extend .icon-cross-16-blue;

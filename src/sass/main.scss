@@ -87,6 +87,7 @@ input.ng-invalid {
 // no dashes for use with ng-class conditional
 .addappselected {
   background-color: $blue-dark;
+  color: $white;
   padding: 5px 10px;
   margin-left: 0 !important;
   -webkit-border-radius: 15px;

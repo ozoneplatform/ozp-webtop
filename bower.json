@@ -18,7 +18,7 @@
     "ozp-classification": "ozone-development/ozp-classification",
     "bootstrap": "https://github.com/ozone-development/ozp-bootstrap-sass.git#master",
     "ubuntu-fontface": "~0.1.3",
-    "icons": "ozone-development/ozp-icons",
+    "icons": "ozone-development/ozp-icons#master",
     "angular-spinner": "0.6.1",
     "angular-aria": "~1.4.1"
   },

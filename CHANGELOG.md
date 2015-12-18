@@ -1,3 +1,18 @@
+<a name"1.0.9"></a>
+### 1.0.9 (2015-12-18)
+
+
+#### Bug Fixes
+
+* **bug:**
+  * Fix icon in edit dashboard modal ([1588ef92](https://github.com/ozone-development/ozp-webtop/commit/1588ef92))
+  * Force webtop to update to latest ozp-icons to pull in new color icon, small colo ([b7cc791b](https://github.com/ozone-development/ozp-webtop/commit/b7cc791b))
+  * Specify white text on selected apps in add modal ([15cdf0fc](https://github.com/ozone-development/ozp-webtop/commit/15cdf0fc))
+* **styling:**
+  * Remove stray c character ([544bb48e](https://github.com/ozone-development/ozp-webtop/commit/544bb48e))
+  * Make adjustments to work with new light themed ozp-bootstrap-sass modals ([2e6b66f8](https://github.com/ozone-development/ozp-webtop/commit/2e6b66f8))
+
+
 <a name"1.0.8"></a>
 ### 1.0.8 (2015-11-25)
 

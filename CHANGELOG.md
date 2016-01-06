@@ -1,3 +1,12 @@
+<a name"1.0.10"></a>
+### 1.0.10 (2016-01-06)
+
+
+#### Bug Fixes
+
+* **help:** Remove 5px of extra space ([db053213](https://github.com/ozone-development/ozp-webtop/commit/db053213))
+
+
 <a name"1.0.9"></a>
 ### 1.0.9 (2015-12-18)
 

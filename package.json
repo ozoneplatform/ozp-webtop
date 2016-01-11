@@ -52,7 +52,7 @@
   "scripts": {
     "build": "grunt build",
     "compile": "grunt compile",
-    "bower": "bower install",
+    "bower": "bower install --config.interactive=false",
     "tarDevVersion": "grunt shell:tarDevVersion",
     "tarProdVersion": "grunt shell:tarProdVersion",
     "tarDevDate": "grunt shell:tarDevDate",

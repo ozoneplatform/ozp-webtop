@@ -667,61 +667,46 @@ body > div.classBanner:last-of-type {
   }
 }
 
-.profile-info {
-    dd, dt {
-        display: inline;
+.profile-window {
+    .modal-body {
+        overflow-y: auto;
+        max-height: 400px;
     }
 
-    dt::after {
-        content: ": ";
-    }
-
-    dd::after {
-        //\A is an escape sequence for newline
-        content: "\A";
-        white-space: pre-line;
-    }
-
-    > dl {
-        margin-bottom: 40px;
-    }
-}
-
-.contacts-info {
-    i {
-        position: relative;
-        left: 0px;
-        margin-top:20px;
-    }
-
-    .btn-row {
-      a{
-        width: 20%;
-        margin-right: 5px;
-      }
+    .modal-body:after { 
+       content: "."; 
+       visibility: hidden; 
+       display: block; 
+       height: 0; 
+       clear: both;
     }
 }
 
 .owned-listings {
+    border-left: 1px solid $gray-lighter;
+
     > ul {
         @extend .list-unstyled;
         margin-top: 20px;
     }
 
-    h4 {
-        margin-bottom: 0px;
-        font-size: 18px;
-        margin-top: 10px;
-    }
-
     .listing {
-        margin: 10px 0;
+        margin: 5px 0;
 
         img {
             margin-right: 10px;
-            max-height: 32px;
-            max-width: 32px;
+            height: 32px;
+            width: 32px;
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .owned-listings {
+        border-left: none;
+        border-top: 1px solid #dbdcdd;
+        padding-top: 15px;
+        margin-top: 20px;
     }
 }
 

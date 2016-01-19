@@ -7,10 +7,6 @@
 * **styling:** Add layout to profile modal ([d8f73ef4](https://github.com/ozone-development/ozp-webtop/commit/d8f73ef4))
 
 
-<a name"1.0.11"></a>
-### 1.0.11 (2016-01-19)
-
-
 <a name"1.0.10"></a>
 ### 1.0.10 (2016-01-06)
 

@@ -11,25 +11,24 @@
 			</div>
 
 			<div class="modal-body">
-					<section class="profile-info">
-						<dl>
-						    <dt>Name</dt><dd>{{profileName}}</dd>
-						    <dt>Username</dt><dd>{{profileUsername}}</dd>
-						    <dt>Email</dt><dd>{{profileEmail}}</dd>
-						</dl>
-							<section class="owned-listings">
-								<header>
-								  <h4> {{profileName}}'s Listings</h4>
-								  <small> A list of the Center listings that this user owns</small>
-								</header>
-							  		<ul ng-show="getUserListings.length" ng-repeat="list in getUserListings"> 
-							  			<li> 
-							  				
-							  				<img ng-src="{{list.imageMediumUrl}}"> &nbsp;<a target="_blank" ng-href="{{centerUrl}}/#/home?listing={{list.id}}&action=view&tab=overview">{{list.title}}</a>
-							  			</li>
-							  		</ul>
-							</section>
-					</section>
+				<section>
+                    <div class="col-md-4 col-sm-6">
+                        <i class="icon-head-60-grayLighter" />
+                        <h2>{{profileName}}</h2>
+                        <p><b>{{profileUsername}}</b><br />{{profileEmail}}</p>
+                    </div>
+                    <div class="col-md-8 col-sm-6 owned-listings">
+                        <h4>{{profileName}}'s Listings</h4>
+                        <ul ng-show="getUserListings.length" ng-repeat="list in getUserListings"> 
+				  			<li>
+				  				<a target="_blank" ng-href="{{centerUrl}}/#/home?listing={{list.id}}&action=view&tab=overview">
+                                    <img ng-src="{{list.imageMediumUrl}}"> &nbsp;{{list.title}}
+                                </a>
+				  			</li>
+				  		</ul>
+                        <p ng-hide="getUserListings.length">You have not created any listings yet. To start, submit a listing from the global menu.</p>
+                    </div>
+                </section>
 			</div>
 		</div>
 

@@ -29,7 +29,7 @@ describe('Service: widget', function () {
 
     widgets = _widgetService_;
 
-    $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/api/profile/self/data/dashboard-data')
+    $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/api/self/data/dashboard-data/')
                             .respond({});
 
     jasmine.getJSONFixtures().fixturesPath='base/testData';

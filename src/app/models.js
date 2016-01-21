@@ -72,12 +72,13 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
       }
       var apps = [];
       for (var i=0; i < applicationData.length; i++) {
-        apps.push({'name': applicationData[i].listing.title, 'id': applicationData[i].listing.uuid,
+        // TODO: get shortDescription, state, type from backend
+        apps.push({'name': applicationData[i].listing.title, 'id': applicationData[i].listing.id,
         'description': 'Description', 'descriptionShort': 'Short description', 'state': 'active', 'type': 'application',
         'uiHints': {'width': 200, 'height': 200, 'singleton': false}, 'icons': {
-            'small': applicationData[i].listing.imageSmallUrl, 'large': applicationData[i].listing.imageMediumUrl},
+            'small': applicationData[i].listing.small_icon.url, 'large': applicationData[i].listing.large_icon.url},
           'launchUrls': {
-            'default': applicationData[i].listing.launchUrl}});
+            'default': applicationData[i].listing.launch_url}});
       }
       cachedApplicationData = apps;
     },

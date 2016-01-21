@@ -17,7 +17,7 @@ describe('App Toolbar', function () {
   beforeEach(inject(function($rootScope, $controller, $httpBackend, $window, models) {
     scope = $rootScope.$new();
 
-    $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/api/profile/self/data/dashboard-data')
+    $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/api/self/data/dashboard-data/')
                             .respond({});
 
     jasmine.getJSONFixtures().fixturesPath='base/testData';

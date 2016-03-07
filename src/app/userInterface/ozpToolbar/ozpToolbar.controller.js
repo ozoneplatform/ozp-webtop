@@ -10,7 +10,6 @@
 angular.module('ozpWebtop.ozpToolbar', [
   'ozp.common.windowSizeWatcher',
   'ozpWebtop.models',
-  'ozpWebtop.settingsModal',
   'ozpWebtop.filters',
   'ozpWebtop.services.ozpInterface']);
 
@@ -253,32 +252,6 @@ angular.module( 'ozpWebtop.ozpToolbar')
       });
     };
 
-
-
-     /**
-      * @method opensettingsModal
-      * @param board the changed board object
-      * @returns {*}
-      */
-    $scope.openSettingsModal = function(board) {
-      $scope.board = board;
-      var modalInstance = $modal.open({
-        templateUrl: 'userInterface/settingsModal/settingsModal.tpl.html',
-        controller: 'settingsModalInstanceCtrl',
-        windowClass: 'app-modal-window',
-        scope: $scope,
-        resolve: {
-          dashboard: function() {
-            // return $scope.board;
-            return $scope.board;
-          }
-        }
-      });
-
-      modalInstance.result.then(function () {
-
-      });
-    };
 
 
     /**

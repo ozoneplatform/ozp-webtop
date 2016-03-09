@@ -1,6 +1,6 @@
 module.exports = function ( karma ) {
   karma.set({
-    /** 
+    /**
      * From where to look for files, starting with the location of this file.
      */
     basePath: '../',
@@ -9,6 +9,7 @@ module.exports = function ( karma ) {
      * This is the list of file patterns to load into the browser during testing.
      */
     files: [
+      'vendor/humps/humps.js',
       'vendor/jquery/dist/jquery.js',   // added by ARW - useful for testing
                                         // purposes since jqLite is gimped (e.g.
                                         // their find method). Must be loaded
@@ -59,7 +60,7 @@ module.exports = function ( karma ) {
     runnerPort: 9100,
     urlRoot: '/',
 
-    /** 
+    /**
      * Disable file watching by default.
      */
     autoWatch: false,

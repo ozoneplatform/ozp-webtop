@@ -24,6 +24,8 @@ var app = angular.module('ozpWebtop.services.restInterface');
  */
 app.factory('restInterface', function($window, $log, $http, $q, $interval) {
 
+  var humps = $window.humps;
+
   // flag to ensure multiple PUT requests are not made concurrently
   var readyToPut = true;
 
@@ -50,6 +52,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         // TODO: change dashboard-data to ozp-webtop-data
         var url = $window.OzoneConfig.API_URL + '/iwc-api/self/data/dashboard-data/';
         var requestData = {'entity': webtopData};
+        // requestData = humps.decamelizeKeys(requestData);
         // requestData must be valid JSON
         requestData = JSON.parse(JSON.stringify(requestData));
         var req = {
@@ -127,6 +130,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           $log.warn('WARNING: got non 200 status from api/self/library/: ' +
             status);
         }
+        // data = humps.camelizeKeys(data);
         deferred.resolve(data);
       }).error(function(data, status) {
         $log.error('ERROR getting user library. status: ' + JSON.stringify(status) +
@@ -153,6 +157,8 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           $log.warn('WARNING: got non 200 status from api/self/listing/: ' +
             status);
         }
+        // data = humps.camelizeKeys(data);
+
         deferred.resolve(data);
       }).error(function(data, status) {
         $log.error('ERROR getting user listing. status: ' + JSON.stringify(status) +
@@ -179,6 +185,8 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         if (status !== 200) {
           $log.warn('WARNING: got non 200 status from api/self/profile/: ' + status);
         }
+        data = humps.camelizeKeys(data);
+
         deferred.resolve(data);
       }).error(function(data, status) {
         $log.error('ERROR getting user profile. status: ' + JSON.stringify(status) +
@@ -203,6 +211,8 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
         if (status !== 200) {
           $log.warn('WARNING: got a non 200 status from api/self/notification/ ' + status);
         }
+        // data = humps.camelizeKeys(data);
+
         deferred.resolve(data);
       }).error(function(data, status) {
         $log.error('ERROR getting user notifications. status: ' + JSON.stringify(status) +
@@ -218,15 +228,20 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
      */
     dismissNotification: function(notification){
       var deferred = $q.defer();
-      $http.delete($window.OzoneConfig.API_URL + '/api/self/notification/' + notification.id + '/', {
+      var dismissData = {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
         }
-      }).success(function(data, status) {
+      };
+
+      // dismissData = humps.camelizeKeys(dismissData);
+      $http.delete($window.OzoneConfig.API_URL + '/api/self/notification/' + notification.id + '/', dismissData).success(function(data, status) {
         if (status !== 204) {
           $log.warn('WARNING: got a non 204 status from DELETE api/self/notification/<id>/ ' + status);
         }
+        // data = humps.camelizeKeys(data);
+
         deferred.resolve(data);
       }).error(function(data, status) {
         $log.error('ERROR getting user notifications. status: ' + JSON.stringify(status) +

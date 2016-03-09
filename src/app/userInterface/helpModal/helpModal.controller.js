@@ -27,7 +27,8 @@ angular.module('ozpWebtop.helpModal').controller(
 	var UserRole = {
 		USER: 0,
 		ORG_STEWARD: 1,
-		ADMIN: 2
+		ADMIN: 2,
+		APPS_MALL_STEWARD: 2,
 	};
 
 	restInterface.getProfile().then(function(userObject){

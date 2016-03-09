@@ -31,7 +31,6 @@
  * @requires ozpWebtop.profileModal
  * @requires ozpWebtop.contactModal
  * @requires ozpWebtop.iwcIntentModal
- * @requires ozpWebtop.settingsModal
  * @requires ozpWebtop.helpModal
  * @requires ozpWebtop.urlWidgetLauncher
  * @requires ui.router
@@ -65,7 +64,6 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.profileModal',
   'ozpWebtop.contactModal',
   'ozpWebtop.iwcIntentModal',
-  'ozpWebtop.settingsModal',
   'ozpWebtop.helpModal',
   'ozpWebtop.editDashboardModal',
   'ozpWebtop.createDashboardModal',

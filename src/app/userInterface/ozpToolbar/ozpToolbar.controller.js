@@ -260,7 +260,7 @@ angular.module( 'ozpWebtop.ozpToolbar')
       */
     ozpInterface.getProfile().then(function(d){
        var userRole=d.highestRole;
-       if(userRole === 'ADMIN'){
+       if(userRole === 'ADMIN' || userRole === 'APPS_MALL_STEWARD'){
           $scope.isAdmin = true;
        }else{
           $scope.isAdmin = false;

@@ -1,3 +1,13 @@
+<a name"1.1.2"></a>
+### 1.1.2 (2016-03-09)
+
+
+#### Bug Fixes
+
+* **Help:** Fixed invalid role for appsmall stewards ([56ea5e06](https://github.com/ozone-development/ozp-webtop/commit/56ea5e06))
+* **NavBar:** Fixes navbar not working for APPS_MALL_STEWARD ([aa876db9](https://github.com/ozone-development/ozp-webtop/commit/aa876db9))
+
+
 <a name"1.1.1"></a>
 ### 1.1.1 (2016-03-03)
 

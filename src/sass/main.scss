@@ -421,7 +421,7 @@ body > div.classBanner:last-of-type {
   display: block;
   position: relative;
   width: 100%;
-  height: calc(100% - 7px);
+  height: calc(100% - 32px);
 }
 
 .ui-draggable-iframeFix {
@@ -673,11 +673,11 @@ body > div.classBanner:last-of-type {
         max-height: 400px;
     }
 
-    .modal-body:after { 
-       content: "."; 
-       visibility: hidden; 
-       display: block; 
-       height: 0; 
+    .modal-body:after {
+       content: ".";
+       visibility: hidden;
+       display: block;
+       height: 0;
        clear: both;
     }
 }

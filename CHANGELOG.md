@@ -1,3 +1,12 @@
+<a name"1.1.3"></a>
+### 1.1.3 (2016-03-16)
+
+
+#### Bug Fixes
+
+* **profileModal:** Put real data in modal for new backend #534 ([0ac40eec](https://github.com/ozone-development/ozp-webtop/commit/0ac40eec))
+
+
 <a name"1.1.2"></a>
 ### 1.1.2 (2016-03-09)
 

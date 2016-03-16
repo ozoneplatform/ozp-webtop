@@ -32,20 +32,16 @@ angular.module('ozpWebtop.profileModal').controller(
 		var getProfile = data;
 
 		$scope.profileName = getProfile.displayName;
-		$scope.profileUsername = getProfile.username;
-		$scope.profileEmail = getProfile.email;
+		$scope.profileUsername = getProfile.user.username;
+		$scope.profileEmail = getProfile.user.email;
 	});
 
 	/**
 	* Gets user listing data
 	*/
 	ozpInterface.getUserListings().then(function(data){
-		  $scope.getUserListings = data._embedded.item;
-
-		 $scope.listingImg = data.imageMediumUrl;
+		$scope.getUserListings = data;
 	});
-
-
 	/**
 	* Handler invoked when dialog is closed via Ok button
 	*

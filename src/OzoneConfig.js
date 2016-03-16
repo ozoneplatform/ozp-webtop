@@ -1,5 +1,5 @@
 window.OzoneConfig = {
-    'API_URL': 'https://www.owfgoss.org/ng/dev/mp',
+    'API_URL': 'https://localhost:4440',
     'APPLICATION_NAME': 'AppsMall Webtop',
     'HELP_URL': 'http://localhost:8888/#/',
     'CENTER_URL': 'https://ozone-development.github.io/ozp-center',
@@ -15,7 +15,7 @@ window.OzoneConfig = {
     'IWC_URL': 'https://ozone-development.github.io/iwc',
     'METRICS_URL': '/path/to/metrics',
     'METRICS_WEBTOP_SITE_ID': 3,
-    'WEBTOP_URL': 'https://ozone-development.github.io/ozp-webtop',
+    'WEBTOP_URL': 'https://localhost:4440/webtop',
     'HELP_DOCS': {
     	'Help doc 1': '/path/to/document',
     	'Help doc 2': '/path/to/document',

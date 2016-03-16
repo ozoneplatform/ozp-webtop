@@ -19,10 +19,10 @@
                     </div>
                     <div class="col-md-8 col-sm-6 owned-listings">
                         <h4>{{profileName}}'s Listings</h4>
-                        <ul ng-show="getUserListings.length" ng-repeat="list in getUserListings"> 
-				  			<li>
-				  				<a target="_blank" ng-href="{{centerUrl}}/#/home?listing={{list.id}}&action=view&tab=overview">
-                                    <img ng-src="{{list.imageMediumUrl}}"> &nbsp;{{list.title}}
+                        <ul ng-show="getUserListings.length" ng-repeat="list in getUserListings">
+				  			<li class="listing col-md-6">
+				  				<a target="_blank" ng-href="{{centerUrl}}/#/home/?/?=&listing={{list.id}}&action=view&tab=overview">
+                                    <img ng-src="{{list.large_icon.url}}"> &nbsp;{{list.title}}
                                 </a>
 				  			</li>
 				  		</ul>

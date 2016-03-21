@@ -76,16 +76,9 @@ angular.module( 'ozpWebtop.ozpToolbar')
     $scope.thereAreUnexpiredNotifications = false;
 
     $rootScope.$on(notificationReceivedEvent, function(event, data){
-      //first check to see if there are any notifications
-      if(data._embedded){
-        //If the messages are already in an array
-        if(data._embedded.item instanceof Array) {
-          $scope.messages = data._embedded.item;
-        }
-        // //If the messages are not in an array (for ng-repeat)
-        else{
-          $scope.messages.push(data._embedded.item);
-        }
+      //check to see if there are any notifications
+           $scope.messages = data;
+
         $scope.messageCount = $scope.messages.length;
         $scope.thereAreUnexpiredNotifications = true;
         //update notification tooltip
@@ -95,7 +88,7 @@ angular.module( 'ozpWebtop.ozpToolbar')
         else {
           $scope.notificationTooltip = $scope.messageCount + ' new notifications.';
         }
-      }
+
     });
 
     $scope.dismissNotification = function(a){

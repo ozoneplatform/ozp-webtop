@@ -1,3 +1,12 @@
+<a name"1.1.4"></a>
+### 1.1.4 (2016-03-21)
+
+
+#### Bug Fixes
+
+* **Notification:**  Make notifications from new backend display ([74086726](https://github.com/ozone-development/ozp-webtop/commit/74086726))
+
+
 <a name"1.1.3"></a>
 ### 1.1.3 (2016-03-16)
 

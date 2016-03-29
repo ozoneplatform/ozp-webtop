@@ -73,7 +73,6 @@ angular.module( 'ozpWebtop.ozpToolbar')
     *           notifications, used to change class in template to notify use
     * type {boolean}
     */
-    $scope.thereAreUnexpiredNotifications = false;
 
     $rootScope.$on(notificationReceivedEvent, function(event, data){
       //check to see if there are any notifications
@@ -82,7 +81,10 @@ angular.module( 'ozpWebtop.ozpToolbar')
         $scope.messageCount = $scope.messages.length;
         $scope.thereAreUnexpiredNotifications = true;
         //update notification tooltip
-        if($scope.messageCount === 1){
+        if($scope.messages.length === 0){
+          // no messages, switch bell icon in template
+          $scope.thereAreUnexpiredNotifications = false;
+        }else if($scope.messageCount === 1){
           $scope.notificationTooltip = $scope.messageCount + ' new notification.';
         }
         else {

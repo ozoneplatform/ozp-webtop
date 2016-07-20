@@ -712,36 +712,81 @@ body > div.classBanner:last-of-type {
 
 //taken from ozp-react-commons
 .UserNotifications {
-  padding: 0;
-  max-height: 251px;
-  overflow-y: auto;
+    $notification-height: 71px;
+    $divider-height: (9px * 2) + 1px;
+    $notifications-visible: 7;
+
+    padding: 0;
+    width: 400px;
+    max-height: ($notification-height + $divider-height) * $notifications-visible;
+    overflow-y: auto;
+
+  .btn {
+    margin: 5px 15px 15px 0;
+    float: right;
+  }
 }
 
 .UserNotification {
-  padding: 7px;
+    padding: 15px;
+    color: $gray-light;
+    
+    .btn {
+        margin: 5px 5px 0 0;
+        float: left;
+    }
+    
+    > {
+        padding: 0 10px !important;
+
+        .close {
+
+            margin-top: 0;
+            margin-right: 0;
+
+            > .icon-cross-16 {
+
+                @extend .icon-cross-16-grayLightest;
+            }
+
+            &:hover, &:focus {
+
+                    > .icon-cross-16 {
+
+                        @extend .icon-cross-16-blue;
+                        cursor: pointer;
+                    }
+            }
+        }
+
+    }
+
+    .created-by {
+        margin: 10px 0 0 0;
+        font-weight: 500;
+        color: $white;
+    }
+
+    .message {
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+
+    .created-at {
+        @extend .small;
+        font-style: italic;
+        color: $gray-lighter;
+
+            > span.Time {
+                padding-left: 5px;
+            }
+    }
+        
+    a {
+        color: $white;
+    }
 }
 
-.UserNotification > {
-  padding: 0 10px !important;
-}
-
-.UserNotification > .close:hover, .UserNotification > .close:focus {
-  color: white;
-}
-
-.UserNotification > .created-by {
-  margin: 0;
-  font-weight: 500;
-}
-
-.UserNotification > .message {
-  margin-top: 5px;
-  margin-bottom: 0;
-}
-
-.UserNotification > .Time {
-  margin-left: 5px;
-}
 
 .appToolbarIcon {
   height: 32px;

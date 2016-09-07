@@ -7,7 +7,7 @@
       "large_icon": {
         "url": "https://www.owfgoss.org/ng/dev/mp/api/image/8b7366ba-5d3a-4a94-b623-7cafd563f9e1.png"
       },
-      "launch_url": "http://ozone-development.github.io/ozp-demo/frameit/#/",
+      "launch_url": "http://aml-development.github.io/ozp-demo/frameit/#/",
       "title": "FrameIt",
       "id": 28
     },
@@ -21,7 +21,7 @@
       "large_icon": {
         "url": "https://www.owfgoss.org/ng/dev/mp/api/image/8b7366ba-5d3a-4a94-b623-7cafd563f9e1.png"
       },
-      "launch_url": "http://ozone-development.github.io/ozp-demo/chart/index.html",
+      "launch_url": "http://aml-development.github.io/ozp-demo/chart/index.html",
       "title": "Stock Price Charter",
       "id": 27
     },
@@ -35,7 +35,7 @@
       "large_icon": {
         "url": "https://www.owfgoss.org/ng/dev/mp/api/image/8b7366ba-5d3a-4a94-b623-7cafd563f9e1.png"
       },
-      "launch_url": "http://ozone-development.github.io/ozp-demo/stockTrader/index.html",
+      "launch_url": "http://aml-development.github.io/ozp-demo/stockTrader/index.html",
       "title": "Stock Trader",
       "id": 26
     },

@@ -21,15 +21,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/AirMail.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/AirMail16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/AirMail32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/AirMail.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/frameit/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/frameit/index.html",
       "test": ""
 
     },
@@ -57,15 +57,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/BreadBasket.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/BreadBasket16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/BreadBasket32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/BreadBasket.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/breadBasket/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/breadBasket/index.html",
       "test": ""
 
     },
@@ -94,15 +94,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChartCourse.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/ChartCourse16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/ChartCourse32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/ChartCourse.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/chartCourse/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/chartCourse/index.html",
       "test": ""
 
     },
@@ -131,15 +131,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/ChatterBox.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/ChatterBox16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/ChatterBox32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/ChatterBox.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/chatterBox/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/chatterBox/index.html",
       "test": ""
 
     },
@@ -167,15 +167,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Clipboard.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Clipboard16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Clipboard32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Clipboard.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/clipboard/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/clipboard/index.html",
       "test": ""
 
     },
@@ -203,15 +203,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/HatchLatch.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/HatchLatch16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/HatchLatch32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/HatchLatch.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/hatchLatch/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/hatchLatch/index.html",
       "test": ""
 
     },
@@ -239,15 +239,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JotSpot.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/JotSpot16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/JotSpot32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/JotSpot.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/jotSpot/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/jotSpot/index.html",
       "test": ""
 
     },
@@ -275,15 +275,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/JournalForge.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/JournalForge16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/JournalForge32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/JournalForge.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/journalForge/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/journalForge/index.html",
       "test": ""
 
     },
@@ -312,15 +312,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/LunarLantern.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/LunarLantern16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/LunarLantern32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/LunarLantern.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/lunarLantern/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/lunarLantern/index.html",
       "test": ""
 
     },
@@ -348,15 +348,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MAPP.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MAPP16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MAPP32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MAPP.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/mapp/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/mapp/index.html",
       "test": ""
 
     },
@@ -384,15 +384,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Manilla.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Manilla16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Manilla32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Manilla.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/manilla/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/manilla/index.html",
       "test": ""
 
     },
@@ -420,15 +420,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MusicBox.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MusicBox16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MusicBox32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MusicBox.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/musicBox/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/musicBox/index.html",
       "test": ""
 
     },
@@ -456,15 +456,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/MyCalc.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MyCalc16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MyCalc32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/MyCalc.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/myCalc/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/myCalc/index.html",
       "test": ""
 
     },
@@ -492,15 +492,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Photogenic.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Photogenic16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Photogenic32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Photogenic.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/photogenic/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/photogenic/index.html",
       "test": ""
 
     },
@@ -528,15 +528,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Playback.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Playback16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Playback32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Playback.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/playback/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/playback/index.html",
       "test": ""
 
     },
@@ -565,15 +565,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PlotPossum.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/PlotPossum16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/PlotPossum32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/PlotPossum.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/plotPossum/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/plotPossum/index.html",
       "test": ""
 
     },
@@ -602,15 +602,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/PrimeSight.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/PrimeSight16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/PrimeSight32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/PrimeSight.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/primeSight/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/primeSight/index.html",
       "test": ""
 
     },
@@ -639,15 +639,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/SearchWell.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/SearchWell16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/SearchWell32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/SearchWell.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/searchWell/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/searchWell/index.html",
       "test": ""
 
     },
@@ -676,15 +676,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/Skybox.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Skybox16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Skybox32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/Skybox.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/skybox/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/skybox/index.html",
       "test": ""
 
     },
@@ -713,15 +713,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/TreeNote.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/TreeNote16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/TreeNote32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/TreeNote.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/treeNote/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/treeNote/index.html",
       "test": ""
 
     },
@@ -750,15 +750,15 @@
 
     ],
     "icons": {
-      "small": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs16.png",
-      "large": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs32.png",
-      "banner": "https://raw.githubusercontent.com/ozone-development/center-ui/master/app/images/sample-listings/WhiteboardGraphs.png"
+      "small": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/WhiteboardGraphs16.png",
+      "large": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/WhiteboardGraphs32.png",
+      "banner": "https://raw.githubusercontent.com/ozoneplatform/ozp-center/master/app/images/sample-listings/WhiteboardGraphs.png"
     },
     "screenShots": [
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/centerSampleListings/whiteboardGraphs/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/centerSampleListings/whiteboardGraphs/index.html",
       "test": ""
 
     },
@@ -795,7 +795,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/circle/circle.html",
+      "default": "http://aml-development.github.io/ozp-demo/circle/circle.html",
       "test": ""
 
     },
@@ -832,7 +832,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/square/square.html",
+      "default": "http://aml-development.github.io/ozp-demo/square/square.html",
       "test": ""
 
     },
@@ -868,7 +868,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/text/text.html",
+      "default": "http://aml-development.github.io/ozp-demo/text/text.html",
       "test": ""
 
     },
@@ -904,7 +904,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/mbrot/mbrot.html",
+      "default": "http://aml-development.github.io/ozp-demo/mbrot/mbrot.html",
       "test": ""
 
     },
@@ -1015,7 +1015,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=green",
+      "default": "http://aml-development.github.io/ozp-demo/bouncingBalls/index.html?color=green",
       "test": ""
 
     },
@@ -1052,7 +1052,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=blue",
+      "default": "http://aml-development.github.io/ozp-demo/bouncingBalls/index.html?color=blue",
       "test": ""
 
     },
@@ -1089,7 +1089,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=red",
+      "default": "http://aml-development.github.io/ozp-demo/bouncingBalls/index.html?color=red",
       "test": ""
 
     },
@@ -1126,7 +1126,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/bouncingBalls/index.html?color=black",
+      "default": "http://aml-development.github.io/ozp-demo/bouncingBalls/index.html?color=black",
       "test": ""
 
     },
@@ -1162,7 +1162,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/incidentList/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/incidentList/index.html",
       "test": ""
 
     },
@@ -1199,7 +1199,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/greekAnalysis/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/greekAnalysis/index.html",
       "test": ""
 
     },
@@ -1236,7 +1236,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/stockTrader/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/stockTrader/index.html",
       "test": ""
 
     },
@@ -1273,7 +1273,7 @@
 
     ],
     "launchUrls": {
-      "default": "http://ozone-development.github.io/ozp-demo/chart/index.html",
+      "default": "http://aml-development.github.io/ozp-demo/chart/index.html",
       "test": ""
 
     },

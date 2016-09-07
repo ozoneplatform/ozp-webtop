@@ -2,15 +2,15 @@
   "author": "OZONE",
   "name": "ozpwebtop",
   "version": "1.1.6",
-  "homepage": "https://github.com/ozone-development/ozp-webtop",
+  "homepage": "https://github.com/ozoneplatform/ozp-webtop",
   "licenses": {
     "type": "Apache-2.0",
     "url": "https://spdx.org/licenses/Apache-2.0"
   },
-  "bugs": "https://github.com/ozone-development/ozp-webtop/issues",
+  "bugs": "https://github.com/ozoneplatform/ozp-webtop/issues",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ozone-development/ozp-webtop.git"
+    "url": "git@github.com:ozoneplatform/ozp-webtop.git"
   },
   "dependencies": {
     "es6-promise": "~1.0.0"

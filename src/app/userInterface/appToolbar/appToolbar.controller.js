@@ -613,6 +613,18 @@ angular.module( 'ozpWebtop.appToolbar')
     };
 
     /**
+      * @method toggleFrameMinimized
+      * @param app the app to minimize/restore
+      */
+    $scope.toggleFrameMinimized = function (app) {
+      models.toggleFrameKey(app.id, 'isMinimized');
+      $rootScope.$broadcast(dashboardStateChangedEvent, {
+        'dashboardId': $scope.currentDashboard.id,
+        'layout': $scope.currentDashboard.layout
+      });
+    };
+    
+    /**
       * @method openHelpModal
       * @param board the changed board object
       * @returns {*}

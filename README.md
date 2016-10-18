@@ -24,8 +24,6 @@ Development tasks are run with Grunt:
  - `grunt serve`
      * Launch Webtop locally (see Important Links section below)
  - `grunt build` - build and execute unit tests
- - `grunt gh-pages` - run after a `grunt build` to publish the build files to
- [gh-pages](http://ozoneplatform.github.io/ozp-webtop/)
  - `grunt release:type` and `git push --tags` to create a patch, minor, or
  major release (updates changelog, versions, and creates tag)
  - `grunt run` - serve the production version of the application
@@ -34,7 +32,6 @@ Run `grunt -h` for a full list of Grunt tasks
 
 ## Important Links
 * [local](http://localhost:9100)
-* [gh-pages](http://ozoneplatform.github.io/ozp-webtop/tools/index.html)
 
 ## Use of IWC
 By default, IWC is used to to retrieve the application information

@@ -51,6 +51,7 @@ angular.module( 'ozpWebtop', [
   'ozpWebtop.constants',
   'ozpWebtop.services.ozpInterface',
   'ozpWebtop.models',
+  'ozpWebtop.services.responseObserver',
   'ozpWebtop.services.widgets',
   'ozpWebtop.appToolbar',
   'ozpWebtop.ozpToolbar',
@@ -82,9 +83,11 @@ angular.module( 'ozpWebtop', [
 ])
 
 .config(function($stateProvider, $urlRouterProvider,
-                 $logProvider, maxStickyBoards) {
+                 $logProvider, maxStickyBoards, $httpProvider) {
 
     $logProvider.debugEnabled(true);
+
+    $httpProvider.interceptors.push('responseObserver');
 
     /*
     To avoid losing the internal state of widgets as users switch between

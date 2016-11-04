@@ -88,6 +88,7 @@ angular.module( 'ozpWebtop', [
     $logProvider.debugEnabled(true);
 
     $httpProvider.interceptors.push('responseObserver');
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     /*
     To avoid losing the internal state of widgets as users switch between

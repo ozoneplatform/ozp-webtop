@@ -90,6 +90,9 @@ angular.module( 'ozpWebtop', [
     $httpProvider.interceptors.push('responseObserver');
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
     /*
     To avoid losing the internal state of widgets as users switch between
     dashboards, we leverage the 'sticky state' capabilities of ui-router-extras

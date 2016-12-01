@@ -15,7 +15,7 @@
     "jquery-ui": "~1.11.0",
     "console-polyfill": "latest",
     "ozp-iwc": "aml-development/ozp-iwc",
-    "ozp-classification": "aml-development/ozp-classification",
+    "ozp-classification": "git+http://dev1.vistronix.com:9080/ozp/ozp-classification",
     "bootstrap": "https://github.com/aml-development/ozp-bootstrap-sass.git#master",
     "ubuntu-fontface": "~0.1.3",
     "icons": "aml-development/ozp-icons",

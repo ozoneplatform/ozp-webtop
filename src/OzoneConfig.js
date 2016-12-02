@@ -16,6 +16,7 @@ window.OzoneConfig = {
     'METRICS_URL': '/path/to/metrics',
     'METRICS_WEBTOP_SITE_ID': 3,
     'WEBTOP_URL': 'http://localhost:9000',
+    'SYSTEM_HIGH_CLASSIFICATION': 'U',
     'HELP_DOCS': {
     	'Help doc 1': '/path/to/document',
     	'Help doc 2': '/path/to/document',

@@ -159,6 +159,8 @@ angular.module( 'ozpWebtop', [
 
     $rootScope.$state = $state;
 
+    $rootScope.systemHighClassification = $window.OzoneConfig.SYSTEM_HIGH_CLASSIFICATION;
+
     // TODO: flag to optionally use IWC
 
     /*

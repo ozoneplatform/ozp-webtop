@@ -81,4 +81,16 @@ angular.module('ozpWebtop.dashboardView.chrome')
       'dashboardId': $scope.dashboardId, 'layout': $scope.layout});
   };
 
+  /**
+   * Minimize/return to normal widget window
+   * @method toggleFrameMinimized
+   */
+  $scope.toggleFrameMinimized = function () {
+      models.toggleFrameKey($scope.frame.id, 'isMinimized');
+      $rootScope.$broadcast(dashboardStateChangedEvent, {
+        'dashboardId': $scope.dashboardId,
+        'layout': $scope.layout
+      });
+  };
+  
 });

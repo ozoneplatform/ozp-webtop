@@ -18,6 +18,28 @@ frontend app dependencies with Bower:
 
     cd ozp-webtop
     npm install && bower install
+    
+## Getting Webtop to run Locally
+It cannot be run with Sudo (locally)
+
+1. Have installed:
+    `nvm 5.3.0`
+    `npm 3.3.12`
+    `gulp 3.9.0`
+    `node 5.3.0`
+2. bower
+    - If you run `which bower` and it returns something move on to step XXXXXX
+    - Otherwise: go into `.npmrc` and change it to `prefix = ${HOME}/npm-global`
+        - installing bower with `npm install -g bower` it should go to your home directory (if it works, delete it). 
+        - Set your path variable to `${HOME}/npm-global/bin`
+    - now isntall with `(sudo) npm install -g bower grunt-cli` in npm 5.3.0 (use `nvm use 5.3.0`)
+    - Also may need to run `sudo chown -R $USER:$GROUP ~/.npm ` and `sudo chown -R $USER:$GROUP ~/.config ` if not owned by current user. may need to do for the /tmp/user folder as well
+3. Run `npm install && bower install`
+4. go into `/ozp-webtop/src/OzoneConfig.js` and change the API_URL to `http://localhost:8001`
+5. Run grunt serve
+    - If there is an enospc error, you may need to run `echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
+    
+    
 
 ## Grunt Tasks
 Development tasks are run with Grunt:

@@ -1,4 +1,15 @@
 
+### 1.1.9 (None) 
+
+#### Fixes  
+* **webtop**:  stop json parse errors in webtop browser console and allow webtop to load user bookmarks ([f8a18625](https://github.com/aml-development/ozp-webtop/commit/f8a18625ab59a8e08113af32a34fc8edd4082218))     
+
+#### Merge Pull Requests  
+* Merge pull request #685 from aml-development/fix_webtop ([162a8003](https://github.com/aml-development/ozp-webtop/commit/162a80031be6e039d244c5fca4d3bc91b0aa81cb))         
+
+#### Changes  
+* Update Readme for running locally instructions ([c75284c2](https://github.com/aml-development/ozp-webtop/commit/c75284c2abcc6c3e701c89489041c11fb6b8ded9))     
+
 ### 1.1.8 (2017-09-13)           
 
 ### 1.1.7 (2017-09-13)           

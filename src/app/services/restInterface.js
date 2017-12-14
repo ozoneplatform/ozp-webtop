@@ -102,7 +102,7 @@ app.factory('restInterface', function($window, $log, $http, $q, $interval) {
           if (status !== 200) {
             $log.warn('WARNING: got non 200 status from iwc-api/self/data/dashboard-data/: ' + status);
           }
-          deferred.resolve(JSON.parse(data['entity']));  // jshint ignore:line
+          deferred.resolve(data['entity']);  // jshint ignore:line
       }).error(function(data, status) {
           if (status === 404) {
           } else {

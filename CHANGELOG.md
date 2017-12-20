@@ -1,5 +1,10 @@
 
-### 1.1.9 (None) 
+### 1.1.10 (None) 
+
+#### Fixes  
+* fixing typo ([5bf1056b](https://github.com/aml-development/ozp-webtop/commit/5bf1056b11da5219ac2f74352d7cc33c63ded48c))             
+
+### 1.1.9 (2017-12-14) 
 
 #### Fixes  
 * **webtop**:  stop json parse errors in webtop browser console and allow webtop to load user bookmarks ([f8a18625](https://github.com/aml-development/ozp-webtop/commit/f8a18625ab59a8e08113af32a34fc8edd4082218))     

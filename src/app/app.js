@@ -82,9 +82,13 @@ angular.module( 'ozpWebtop', [
 ])
 
 .config(function($stateProvider, $urlRouterProvider,
-                 $logProvider, maxStickyBoards) {
+                 $logProvider, $httpProvider, maxStickyBoards) {
 
     $logProvider.debugEnabled(true);
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
     /*
     To avoid losing the internal state of widgets as users switch between
@@ -152,7 +156,10 @@ angular.module( 'ozpWebtop', [
 
     $rootScope.$state = $state;
 
+    $rootScope.systemHighClassification = $window.OzoneConfig.SYSTEM_HIGH_CLASSIFICATION;
+
     // TODO: flag to optionally use IWC
+    $http.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
 
     /*
       First, get Listing data for the apps/widgets that have been bookmarked by
@@ -182,3 +189,25 @@ angular.module( 'ozpWebtop', [
       });
     });
 });
+
+function getCookie(cookieName) {
+    var cookieValue = null;
+
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+
+        $.each(cookies, function(index, cookie) {
+            cookie = $.trim(cookie);
+
+            // Does this cookie string begin with the cookieName we want?
+            if (cookie.substring(0, cookieName.length + 1) === (cookieName + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(cookieName.length + 1));
+
+                // Returning false breaks out of $.each
+                return false;
+            }
+        });
+    }
+
+    return cookieValue;
+}

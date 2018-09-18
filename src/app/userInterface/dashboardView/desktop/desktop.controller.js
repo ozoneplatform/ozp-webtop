@@ -157,6 +157,7 @@ angular.module('ozpWebtop.dashboardView.desktop')
         return;
       }
       $scope.currentDashboardId = toParams.dashboardId;
+      models.setCurrentDashboard($scope.currentDashboardId);
       reloadDashboard();
       initialized = true;
     }
@@ -268,28 +269,19 @@ angular.module('ozpWebtop.dashboardView.desktop')
         $log.warn('Dashboard changed, but no dashboards exist');
         return;
       }
-      for (var i=0; i < $scope.dashboards.length; i++) {
-        if ($scope.dashboards[i].id.toString() === $scope.currentDashboardId) {
-          $scope.currentDashboard = $scope.dashboards[i];
-          $scope.currentDashboardId = $scope.currentDashboard.id;
-          $scope.frames = $scope.currentDashboard.frames;
 
-          // Merge application data (app name, icons, descriptions, url, etc)
-          // with dashboard app data
-          models.mergeApplicationData($scope.frames);
+      $scope.currentDashboard = models.getCurrentDashboard();
+      $scope.currentDashboardId = $scope.currentDashboard.id;
+      $scope.frames = $scope.currentDashboard.frames;
+      models.mergeApplicationData($scope.frames);
+      $scope.max = {};
+      sortFrames();
+      $scope.max.zIndex = $scope.frames.length - 1;
 
-          $scope.max = {};
-
-          sortFrames();
-
-          for (var k = 0, len = $scope.frames.length; k < len; k++) {
-            $scope.frames[k].desktopLayout.zIndex = k;
-          }
-          $scope.max.zIndex = $scope.frames.length - 1;
-        }
-      }
       $rootScope.$broadcast(dashboardStateChangedEvent, {
-        'dashboardId': $scope.currentDashboardId, 'layout': 'desktop'});
+        dashboardId: $scope.currentDashboardId,
+        layout: 'desktop'
+      });
     }
 
     /**

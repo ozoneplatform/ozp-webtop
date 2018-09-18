@@ -73,12 +73,27 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
       var apps = [];
       for (var i=0; i < applicationData.length; i++) {
         // TODO: get shortDescription, state, type from backend
-        apps.push({'name': applicationData[i].listing.title, 'id': applicationData[i].listing.id,
-        'description': 'Description', 'descriptionShort': 'Short description', 'state': 'active', 'type': 'application',
-        'uiHints': {'width': 200, 'height': 200, 'singleton': false}, 'icons': {
-            'small': applicationData[i].listing.small_icon.url, 'large': applicationData[i].listing.large_icon.url},
-          'launchUrls': {
-            'default': applicationData[i].listing.launch_url}});
+        apps.push({
+          description: 'Description',
+          descriptionShort: 'Short description',
+          icons: {
+            small: applicationData[i].listing.small_icon.url,
+            large: applicationData[i].listing.large_icon.url
+          },
+          id: applicationData[i].listing.id,
+          launchUrls: {
+            default: applicationData[i].listing.launch_url
+          },
+          name: applicationData[i].listing.title,
+          state: 'active',
+          type: 'application',
+          uiHints: {
+            width: 200,
+            height: 200,
+            singleton: false
+          },
+          uniqueName: applicationData[i].listing.unique_name
+        });
       }
       cachedApplicationData = apps;
     },
@@ -303,6 +318,12 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
      */
     updateDashboard: function(updatedDashboard) {
       var dashboard = this.getDashboardById(updatedDashboard.id);
+
+      if(updatedDashboard.name == null || updatedDashboard.name === '') {
+          $log.error("Dashboard name cannot be null");
+          return false;
+      }
+
       dashboard.name = updatedDashboard.name;
       // if the layout changes, we need to change the stickyIndex too
       if (dashboard.layout !== updatedDashboard.layout) {
@@ -381,6 +402,11 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
      * @returns {}
      */
     saveDashboard: function(dashboard) {
+      if(dashboard.name == null || dashboard.name === '') {
+        $log.error("Dashboard name cannot be null");
+        return false;
+      }
+
       var foundDashboard = false;
       var dashboards = this.getDashboards();
       for (var i=0; i < dashboards.length; i++) {
@@ -488,6 +514,11 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
      * @returns {}
      */
     createDashboard: function(dashboard) {
+      if(dashboard.name == null || dashboard.name === '') {
+          $log.error("Dashboard name cannot be null");
+          return false;
+      }
+
       if(!dashboard.layout){
         dashboard.layout = 'grid';
       }
@@ -583,6 +614,9 @@ models.factory('models', function($sce, $q, $log, $http, $window, useIwc,
         return null;
       }
       return this.getDashboardById(dashboardData.currentDashboard);
+    },
+    setCurrentDashboard: function(dashboardId) {
+      cachedWebtopData.currentDashboard = dashboardId;
     },
     cascadeWindows: function(dashboardId, origin, frameSize) {
       var topOffset = 30;

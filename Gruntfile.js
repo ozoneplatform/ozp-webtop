@@ -354,7 +354,7 @@ module.exports = function(grunt) {
         'eqeqeq': true,
         'immed': true,
         'indent': 2,
-        'latedef': true,
+        'latedef': 'nofunc',
         'newcap': true,
         'noarg': true,
         'quotmark': 'single',
@@ -979,6 +979,18 @@ module.exports = function(grunt) {
         });
       }
     });
+  });
+
+  grunt.registerTask('test', 'Test with karma', function(type) {
+    type = type || 'continuous';
+
+    grunt.task.run([
+      'clean',
+      'html2js',
+      'jshint',
+      'karmaconfig',
+      'karma:' + type
+    ]);
   });
 
 };

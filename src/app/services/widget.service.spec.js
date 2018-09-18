@@ -73,8 +73,8 @@ describe('Service: widget', function () {
     expect(frame.desktopLayout.zIndex).toBeGreaterThan(0);
     expect(frame.desktopLayout.top >= 75).toBeTruthy();
     expect(frame.desktopLayout.left >= 75).toBeTruthy();
-    expect(frame.desktopLayout.width).toEqual(250);
-    expect(frame.desktopLayout.height).toEqual(250);
+    expect(frame.desktopLayout.width).toEqual(500);
+    expect(frame.desktopLayout.height).toEqual(500);
   });
 
   // determine if an application exists in a dashboard

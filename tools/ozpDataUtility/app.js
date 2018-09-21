@@ -6,7 +6,7 @@ angular.module('OzpDataUtility').controller('MainController', ['ozpIwcClient']);
 angular.module('OzpDataUtility').controller('MainController', function($scope, $rootScope, $http, $interval, iwcClient) {
 
   $scope.ozpBusInfo = {
-    'url': 'http://ozone-development.github.io/iwc',
+    'url': 'http://ozoneplatform.github.io/iwc',
     'connected': false
   };
 

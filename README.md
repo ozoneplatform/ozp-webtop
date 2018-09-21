@@ -1,6 +1,7 @@
-# ozp-webtop
+## Interested in becoming a contributor? 
+Fork the code for this repository. Make your changes and submit a pull request. The Ozone team will review your pull request and evaluate if it should be part of the project. For more information on the patch process please review the Patch Process at https://ozone.nextcentury.com/patch_process.
 
-[![Build Status](https://travis-ci.org/ozone-development/ozp-webtop.svg?branch=master)](https://travis-ci.org/ozone-development/ozp-webtop)
+# ozp-webtop
 
 Next Gen OZONE Webtop UI
 
@@ -48,8 +49,6 @@ Development tasks are run with Grunt:
  - `grunt serve`
      * Launch Webtop locally (see Important Links section below)
  - `grunt build` - build and execute unit tests
- - `grunt gh-pages` - run after a `grunt build` to publish the build files to
- [gh-pages](http://ozone-development.github.io/ozp-webtop/)
  - `grunt release:type` and `git push --tags` to create a patch, minor, or
  major release (updates changelog, versions, and creates tag)
  - `grunt run` - serve the production version of the application
@@ -58,13 +57,12 @@ Run `grunt -h` for a full list of Grunt tasks
 
 ## Important Links
 * [local](http://localhost:9100)
-* [gh-pages](http://ozone-development.github.io/ozp-webtop/tools/index.html)
 
 ## Use of IWC
 By default, IWC is used to to retrieve the application information
 (`system.api`) and to store the dashboard data (`data.api`). To check on the
  status of IWC, marketplace, and the backend, as well as to reset the
- data, use the [OZP Data Utility](http://ozone-development.github.io/ozp-webtop/tools/ozpDataUtility/index.html)
+ data, use the [OZP Data Utility](http://ozoneplatform.github.io/ozp-webtop/tools/ozpDataUtility/index.html)
 
 ## Use of ng-boilerplate
 This app was created from the
@@ -77,7 +75,7 @@ Currently, Webtop is semi-responsive, supporting devices >= 768px ('small'
 devices, as defined by Bootstrap)
 
 ## Contributing
-See the [wiki](https://github.com/ozone-development/ozp-webtop/wiki/Pull-Request-Checklist)
+See the [wiki](https://github.com/ozoneplatform/ozp-webtop/wiki/Pull-Request-Checklist)
  for a list of guidelines for submitting pull requests
 
 ## Copyrights

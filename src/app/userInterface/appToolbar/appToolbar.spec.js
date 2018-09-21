@@ -1,7 +1,7 @@
 'use strict';
 
 describe('App Toolbar', function () {
-
+  var models;
   var scope;
 
   // use IWC for tests?
@@ -14,7 +14,8 @@ describe('App Toolbar', function () {
   // load the filter's module
   beforeEach(module('ozpWebtop.appToolbar'));
 
-  beforeEach(inject(function($rootScope, $controller, $httpBackend, $window, models) {
+  beforeEach(inject(function($injector, $rootScope, $controller, $httpBackend, $window) {
+    models = $injector.get('models');
     scope = $rootScope.$new();
 
     $httpBackend.when('PUT', $window.OzoneConfig.API_URL + '/api/self/data/dashboard-data/')
@@ -36,6 +37,26 @@ describe('App Toolbar', function () {
 
   it('should expose $scope.apps', function() {
     expect(scope.apps).toBeDefined();
+  });
+
+  describe('#toggleFrameMinimized', function() {
+    beforeEach(function() {
+      spyOn(models, 'toggleFrameKey');
+    });
+
+    it('should call `toggleFrameKey` on the models service with the app\'s ID', function() {
+      scope.toggleFrameMinimized({ id: 'my-frame' });
+      expect(models.toggleFrameKey).toHaveBeenCalledWith('my-frame', 'isMinimized');
+    });
+
+    it('should emit a dashboardStateChangedEvent', inject(function($rootScope, dashboardStateChangedEvent) {
+      scope.toggleFrameMinimized({ id: 'another-frame' });
+
+      expect($rootScope.$broadcast).toHaveBeenCalledWith(dashboardStateChangedEvent, {
+        dashboardId: scope.currentDashboard.id,
+        layout: scope.currentDashboard.layout
+      });
+    }));
   });
 
 });

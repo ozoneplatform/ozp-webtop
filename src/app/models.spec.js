@@ -148,6 +148,13 @@ describe('Service: models', function () {
     expect(newBoard.frames).toEqual([]);
   });
 
+  it('should have a createDashboard method that fails when name is empty', function() {
+    var dashboard = {};
+    dashboard.name = '';
+    var response = models.createDashboard(dashboard);
+    expect(response).toEqual(false);
+  });
+
   it('should have a createDashboard method with desktop layout', function() {
     var dashboard = {};
     dashboard.name = 'My Second New Dashboard';
@@ -206,6 +213,17 @@ describe('Service: models', function () {
     expect(frame.desktopLayout.zIndex).toEqual(newZIndex);
     expect(frame.desktopLayout.width).toEqual(newWidth);
     expect(frame.desktopLayout.height).toEqual(newHeight);
+  });
+
+    // dashboard name can not be empty string
+  it('Dashboard name can not be empty string', function() {
+    var dashboardOld = models.getDashboardById(0);
+    var dashboard = models.getDashboardById(0);
+    dashboard.name = '';
+    var update = models.updateDashboard(dashboard);
+    var dashboardNew = models.getDashboardById(0);
+    expect(update).toEqual(false);
+    expect(dashboardNew).toEqual(dashboardOld);
   });
 
   it('should have a updateDesktopFrame method that returns false on invalid frame id', function() {
